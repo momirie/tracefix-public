@@ -1,0 +1,462 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-22T19:54:48+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 4 of 6 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "e8e9d458139715e247d84cdc0baa728d643f7c3d"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "425f423d30fe208fd60f5781e099f5e7fd574af1"
+  },
+  "issue": {
+    "title": "Taxonomic hierarchy incorrect for certain cases",
+    "sha256": "049a791deef8b876a4e8afff00275a5fe6d578c6b4c5b7883fac2a687491625a"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "At L1, the evidence shows the bug was reproduced: a test fails before the fix and passes after it, with no regressions or breaking inputs found, but the tests did not kill enough mutants to reach L2 and the guard stage reported the fix as not guarded. The most important thing to check next is the output changes in kraken_biom.handle_program_options and kraken_biom.main, which the Judge labelled s…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 3.56,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 5.71,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 48.38,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 4 of 6 mutants; 80% is needed",
+      "duration_s": 106.28,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.667,
+        "repro_kill_rate": 0.667,
+        "pr_kill_rate": null,
+        "mutants": 6,
+        "killed": 4,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-5eed730ef502",
+          "m-d512d732547f",
+          "m-10193500bebf",
+          "m-25cfa0d5198c"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.8,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 4 of 6 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 12 untouched tests that passed before the fix fails after it",
+      "duration_s": 3.01,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 12,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.98,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 20
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "2 input(s) compared on 2 function(s): 2 changed with the fix; not complete: kraken_biom.py: module-level code that computes a value changed (line 36); what uses it is not compared",
+      "duration_s": 27.88,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "finished": 2,
+        "inputs_compared": 2,
+        "changes": 2,
+        "groups": 2,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 6 inputs against 11 properties",
+      "duration_s": 182.9,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 6,
+        "properties_counted": 11,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "kraken_biom.handle_program_options",
+      "kind": "output",
+      "count": 1,
+      "before": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [-k REPORTS_FP] [--max {D,P,C,O,F,G,S}]\\n                   [--min {D,P,C,O,F,G,S}] [-o OUTPUT_FP] [--otu_fp OTU_FP]\\n                   [--fmt {hdf5,json,tsv}] [--gzip] [--version] [-v]\\n                   [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-rs38q7z6/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-rs38q7z6/report.xml/n'",
+      "after": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [--max {D,P,C,O,F,G,S}] [--min {D,P,C,O,F,G,S}]\\n                   [-o OUTPUT_FP] [--otu_fp OTU_FP] [--fmt {hdf5,json,tsv}]\\n                   [--gzip] [--version] [-v]\\n                   kraken_reports [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-9gcrtvt1/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-9gcrtvt1/report.xml/n'",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "suspicious",
+          "reason": "The issue concerns only taxonomic hierarchy parsing. Removing the -k/--kraken_reports_fp option and making kraken_reports required (nargs '+') changes the CLI usage text, and nothing in the issue asks for that."
+        }
+      ],
+      "examples": [
+        {
+          "call": "handle_program_options()",
+          "before": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [-k REPORTS_FP] [--max {D,P,C,O,F,G,S}]\\n                   [--min {D,P,C,O,F,G,S}] [-o OUTPUT_FP] [--otu_fp OTU_FP]\\n                   [--fmt {hdf5,json,tsv}] [--gzip] [--version] [-v]\\n                   [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-rs38q7z6/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-rs38q7z6/report.xml/n'",
+          "after": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [--max {D,P,C,O,F,G,S}] [--min {D,P,C,O,F,G,S}]\\n                   [-o OUTPUT_FP] [--otu_fp OTU_FP] [--fmt {hdf5,json,tsv}]\\n                   [--gzip] [--version] [-v]\\n                   kraken_reports [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-9gcrtvt1/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-9gcrtvt1/report.xml/n'"
+        }
+      ]
+    },
+    {
+      "function": "kraken_biom.main",
+      "kind": "output",
+      "count": 1,
+      "before": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [-k REPORTS_FP] [--max {D,P,C,O,F,G,S}]\\n                   [--min {D,P,C,O,F,G,S}] [-o OUTPUT_FP] [--otu_fp OTU_FP]\\n                   [--fmt {hdf5,json,tsv}] [--gzip] [--version] [-v]\\n                   [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-rs38q7z6/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-rs38q7z6/report.xml/n'",
+      "after": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [--max {D,P,C,O,F,G,S}] [--min {D,P,C,O,F,G,S}]\\n                   [-o OUTPUT_FP] [--otu_fp OTU_FP] [--fmt {hdf5,json,tsv}]\\n                   [--gzip] [--version] [-v]\\n                   kraken_reports [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-9gcrtvt1/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-9gcrtvt1/report.xml/n'",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c2",
+          "label": "suspicious",
+          "reason": "main's changed usage output comes from the unrequested removal of -k and the switch to nargs '+'. The fix also changed max>=min validation; the issue is only about lineage assignment from indentation."
+        }
+      ],
+      "examples": [
+        {
+          "call": "main()",
+          "before": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [-k REPORTS_FP] [--max {D,P,C,O,F,G,S}]\\n                   [--min {D,P,C,O,F,G,S}] [-o OUTPUT_FP] [--otu_fp OTU_FP]\\n                   [--fmt {hdf5,json,tsv}] [--gzip] [--version] [-v]\\n                   [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-rs38q7z6/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-rs38q7z6/report.xml/n'",
+          "after": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [--max {D,P,C,O,F,G,S}] [--min {D,P,C,O,F,G,S}]\\n                   [-o OUTPUT_FP] [--otu_fp OTU_FP] [--fmt {hdf5,json,tsv}]\\n                   [--gzip] [--version] [-v]\\n                   kraken_reports [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-9gcrtvt1/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-9gcrtvt1/report.xml/n'"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-1d0efd51f6d4",
+      "origin": "model",
+      "file": "kraken_biom.py",
+      "line": 107,
+      "original": "    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth if x[0] in ranks}",
+      "replacement": "    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth}",
+      "description": "Unnamed ranks are no longer filtered out of the taxon dict.",
+      "diff": "--- a/kraken_biom.py\n+++ b/kraken_biom.py\n@@ -106,3 +106,3 @@\n     # Create a tax_lvl dict for the named ranks.\n-    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth if x[0] in ranks}\n+    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth}\n     return(tax_lvl)\n",
+      "words": "kraken_biom.py:107: changing `    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth if x[0] in ...` to `    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth}` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "handle_program_options()",
+          "fix": "raises SystemExit",
+          "mutant": "raises SystemExit"
+        },
+        {
+          "call": "main()",
+          "fix": "raises SystemExit",
+          "mutant": "raises SystemExit"
+        }
+      ]
+    },
+    {
+      "id": "m-1059cbc025d4",
+      "origin": "model",
+      "file": "kraken_biom.py",
+      "line": 385,
+      "original": "    if ranks.index(args.max) >= ranks.index(args.min):",
+      "replacement": "    if ranks.index(args.max) > ranks.index(args.min):",
+      "description": "Equal max and min ranks are no longer rejected.",
+      "diff": "--- a/kraken_biom.py\n+++ b/kraken_biom.py\n@@ -384,3 +384,3 @@\n \n-    if ranks.index(args.max) >= ranks.index(args.min):\n+    if ranks.index(args.max) > ranks.index(args.min):\n         msg = \"ERROR: Max and Min ranks are out of order: {} < {}\"\n",
+      "words": "kraken_biom.py:385: changing `    if ranks.index(args.max) >= ranks.index(args.min):` to `    if ranks.index(args.max) > ranks.index(args.min):` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "handle_program_options()",
+          "fix": "raises SystemExit",
+          "mutant": "raises SystemExit"
+        },
+        {
+          "call": "main()",
+          "fix": "raises SystemExit",
+          "mutant": "raises SystemExit"
+        }
+      ]
+    },
+    {
+      "id": "m-e02840de7ec6",
+      "origin": "rule",
+      "file": "kraken_biom.py",
+      "line": 274,
+      "original": "    descr = \"\"\"\\\n    Create BIOM-format tables (http://biom-format.org) from Kraken output \n    (http://ccb.jhu.edu/software/kraken/).\n\n    The program takes as input, one or more files output from th...",
+      "replacement": "    return None",
+      "description": "rule: body of `handle_program_options` -> `return None`",
+      "diff": "--- a/kraken_biom.py\n+++ b/kraken_biom.py\n@@ -273,101 +273,3 @@\n def handle_program_options():\n-    descr = \"\"\"\\\n-    Create BIOM-format tables (http://biom-format.org) from Kraken output \n-    (http://ccb.jhu.edu/software/kraken/).\n-\n-    The program takes as input, one or more files output from the kraken-report\n-    tool. Each file is parsed and the counts for each OTU (operational taxonomic\n-    unit) are recorded, along with database ID (e.g. NCBI), and lineage. The\n-    extracted data are then stored in a BIOM table where each count is linked\n-    to the Sample and OTU it belongs to. Sample IDs are extracted from the input\n-    filenames (everything up to the '.').\n-\n-    OTUs are defined by the --max and --min arguments. By default these are\n-    set to Order and Species respectively. This means that counts assigned\n-    directly to an Order, Family, or Genus are recorded under the associated\n-    OTU ID, and counts assigned at or below the Species level are assigned to\n-    the OTU ID for the species. Setting a minimum rank below Species is not yet\n-    available.\n-\n-    The BIOM format currently has two major versions. Version 1.0 uses the \n-    JSON (JavaScript Object Notation) format as a base. Version 2.x uses the\n-    HDF5 (Hierarchical Data Format v5) as a base. The output format can be\n-    specified with the --fmt option. Note that a tab-separated (tsv) output\n-    format is also available. The resulting file will not contain most of the\n-    metadata, but can be opened by spreadsheet programs.\n-\n-    Version 2 of the BIOM format is used by default for output, but requires the\n... 75 more lines",
+      "words": "kraken_biom.py:274: changing `    descr = \"\"\"\\\n    Create BIOM-format tables (http://biom-...` to `    return None` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "handle_program_options()",
+          "fix": "raises SystemExit",
+          "mutant": "returns None"
+        },
+        {
+          "call": "main()",
+          "fix": "raises SystemExit",
+          "mutant": "raises AttributeError"
+        }
+      ]
+    },
+    {
+      "id": "m-f883b1d22f6b",
+      "origin": "rule",
+      "file": "kraken_biom.py",
+      "line": 376,
+      "original": "    args = handle_program_options()\n\n    if args.fmt == 'hdf5' and not HAVE_H5PY:\n        args.fmt = 'json'\n        msg = \"\"\"\\\n        Library 'h5py' not found, unable to write BIOM 2.x (HDF5) files.\n...",
+      "replacement": "    return None",
+      "description": "rule: body of `main` -> `return None`",
+      "diff": "--- a/kraken_biom.py\n+++ b/kraken_biom.py\n@@ -375,43 +375,3 @@\n def main():\n-    args = handle_program_options()\n-\n-    if args.fmt == 'hdf5' and not HAVE_H5PY:\n-        args.fmt = 'json'\n-        msg = \"\"\"\\\n-        Library 'h5py' not found, unable to write BIOM 2.x (HDF5) files.\n-        Defaulting to BIOM 1.0 (JSON).\"\"\"\n-        print(twdd(msg))\n-\n-    if ranks.index(args.max) >= ranks.index(args.min):\n-        msg = \"ERROR: Max and Min ranks are out of order: {} < {}\"\n-        sys.exit(msg.format(args.max, args.min))\n-\n-    # load all kraken-report files and parse them\n-    sample_counts, taxa = process_samples(args.kraken_reports, \n-                                          max_rank=args.max, \n-                                          min_rank=args.min)\n-\n-    # create new BIOM table from sample counts and taxon ids\n-    # add taxonomy strings to row (taxon) metadata\n-    biomT = create_biom_table(sample_counts, taxa)\n-\n-    out_fp = write_biom(biomT, args.output_fp, args.fmt, args.gzip)\n-\n-    if args.otu_fp:\n-        try:\n... 17 more lines",
+      "words": "kraken_biom.py:376: changing `    args = handle_program_options()\n\n    if args.fmt == 'hdf...` to `    return None` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "handle_program_options()",
+          "fix": "raises SystemExit",
+          "mutant": "raises SystemExit"
+        },
+        {
+          "call": "main()",
+          "fix": "raises SystemExit",
+          "mutant": "returns None"
+        }
+      ]
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "kraken_biom.py": [
+        9,
+        15,
+        36,
+        84,
+        98,
+        99,
+        100,
+        103,
+        105,
+        107,
+        108,
+        122,
+        132,
+        133,
+        136,
+        334,
+        335,
+        336,
+        385,
+        390
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 15,
+        "total": 20
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack handle_program_options: it takes no parameters to vary",
+    "Break My Fix could not attack main: it takes no parameters to vary",
+    "the behaviour diff could not compare parse_tax_lvl: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 9,
+    "input_tokens": 84432,
+    "output_tokens": 23239,
+    "cost_estimate": {
+      "usd": 0.7236,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: style example test/test_biom_create.py truncated to 6000 characters for the prompt",
+    "guard: only the first 10 of 24 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "kraken_biom.parse_tax_lvl",
+      "path": "kraken_biom.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "kraken_biom.parse_kraken_report",
+      "path": "kraken_biom.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 6,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

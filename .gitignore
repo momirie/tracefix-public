@@ -1,0 +1,28 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+build/
+dist/
+*.egg-info/
+
+# Local-only settings and secrets (don't rely on a personal global ignore file).
+.claude/settings.local.json
+.env
+.env.*
+
+# Coverage reports (see .vscode/settings.json).
+.coverage
+coverage.xml
+
+# Benchmark harness (M10): downloaded rows, per-task work folders and model recordings stay local.
+benchmarks/cache/
+benchmarks/work/
+benchmarks/recordings/
+
+# Project Pythons 3.9/3.10 for the old-Python tests (scripts/old_pythons.py).
+.old-pythons/
+.testmondata*

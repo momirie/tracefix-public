@@ -1,0 +1,167 @@
+{
+ "instance_id": "aburrell__ocbpy-144",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 96.811,
+ "suite_timeout": 291,
+ "source_hunks": 8,
+ "variants": [
+  {
+   "index": 0,
+   "path": "ocbpy/_boundary.py",
+   "old_start": 1281,
+   "old_len": 7,
+   "label": "partial",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "ocbpy/_boundary.py",
+     "function": "DualBoundary.set_good_ind"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "ocbpy/_boundary.py",
+   "old_start": 1289,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "ocbpy/_boundary.py",
+     "function": "DualBoundary.set_good_ind"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "ocbpy/instruments/vort.py",
+   "old_start": 10,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "ocbpy/instruments/vort.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "ocbpy/instruments/vort.py",
+   "old_start": 222,
+   "old_len": 6,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "ocbpy/instruments/vort.py",
+     "function": "load_vorticity_ascii_data"
+    }
+   ]
+  }
+ ],
+ "kept": 0,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 27815,
+   "label": "no_effect",
+   "failing": 2,
+   "kept": true,
+   "functions": [
+    {
+     "path": "debug_issue.py",
+     "function": null
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "debug_dual_boundary_pairing"
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "debug_specific_timestamp"
+    },
+    {
+     "path": "ocbpy/_boundary.py",
+     "function": "DualBoundary.rec_ind"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_dual_boundary_issue"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_vort2ascii_with_dual_boundary"
+    }
+   ],
+   "differs": [
+    {
+     "path": "debug_issue.py",
+     "function": null
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "debug_dual_boundary_pairing"
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "debug_specific_timestamp"
+    },
+    {
+     "path": "ocbpy/_boundary.py",
+     "function": "DualBoundary.rec_ind"
+    },
+    {
+     "path": "ocbpy/_boundary.py",
+     "function": "DualBoundary.set_good_ind"
+    },
+    {
+     "path": "ocbpy/instruments/vort.py",
+     "function": null
+    },
+    {
+     "path": "ocbpy/instruments/vort.py",
+     "function": "load_vorticity_ascii_data"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_dual_boundary_issue"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_vort2ascii_with_dual_boundary"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "728bfcbc9fa45e3ec152bcd5146291527a657b88",
+  "gold": "a1efb7188d5a475430fb7324f3aebd2115b9dc4d",
+  "v0": "1a5739089fb6ff142d94ca607f351d9645884f6f",
+  "agent_wrong": "cce69834bc2c0d8af60dc5eb0f66afaf2f28f48e"
+ },
+ "seconds": 776.313
+}

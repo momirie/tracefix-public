@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-04T15:12:30+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 2 of 5 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "c83f46e2f35095d00ea5e05dde1142b7a318c719"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "8fbba14bca194d1622e5e4feb19a0c96500945ac"
+  },
+  "issue": {
+    "title": "[Feature]: Add default value for `axes` argument in `add_missing_bounds()`",
+    "sha256": "5e34051b2ded3da2f878642d1649eb4ee2d1e78bec2e230750ba9a8f04197cba"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": null
+  },
+  "summary": {
+    "text": "The evidence shows the problem was reproduced: a test fails before the fix (when `add_missing_bounds()` is called without an `axes` argument) and passes after it, with no regressions found and the changed lines covered. The tests did not kill enough mutants to reach L2, and the behaviour-diff and break-my-fix stages were inconclusive, so next check that the tests cover both calling styles: `add_m…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 22.13,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 24.43,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 159.75,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 5 mutants; 80% is needed",
+      "duration_s": 336.74,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.4,
+        "repro_kill_rate": 0.2,
+        "pr_kill_rate": null,
+        "mutants": 5,
+        "killed": 2,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-12521bef4a70",
+          "m-b7c1db91f4f0"
+        ],
+        "rule_mutants": 3,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 5 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 294 untouched tests that passed before the fix fails after it",
+      "duration_s": 22.18,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 294,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 19.41,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 5
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: BoundsAccessor.add_missing_bounds: the comparison did not finish",
+      "duration_s": 34.7,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 63.8,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 0,
+        "properties_counted": 8,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-6461075234d7",
+      "origin": "model",
+      "file": "xcdat/bounds.py",
+      "line": 176,
+      "original": "            axes = [\"X\", \"Y\", \"T\", \"Z\"]",
+      "replacement": "            axes = [\"X\", \"Y\", \"T\"]",
+      "description": "Default axes omit \"Z\", so Z bounds are not added by default.",
+      "diff": "--- a/xcdat/bounds.py\n+++ b/xcdat/bounds.py\n@@ -175,3 +175,3 @@\n         if axes is None:\n-            axes = [\"X\", \"Y\", \"T\", \"Z\"]\n+            axes = [\"X\", \"Y\", \"T\"]\n         # Handle single axis string input\n",
+      "words": "xcdat/bounds.py:176: changing `            axes = [\"X\", \"Y\", \"T\", \"Z\"]` to `            axes = [\"X\", \"Y\", \"T\"]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-5b551471403f",
+      "origin": "model",
+      "file": "xcdat/bounds.py",
+      "line": 179,
+      "original": "            axes = [axes]",
+      "replacement": "            axes = [axes[0]]",
+      "description": "Takes only the first element of the axes input instead of wrapping the whole value.",
+      "diff": "--- a/xcdat/bounds.py\n+++ b/xcdat/bounds.py\n@@ -178,3 +178,3 @@\n         elif isinstance(axes, str):\n-            axes = [axes]\n+            axes = [axes[0]]\n \n",
+      "words": "xcdat/bounds.py:179: changing `            axes = [axes]` to `            axes = [axes[0]]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-4f7d34f72d12",
+      "origin": "model",
+      "file": "xcdat/bounds.py",
+      "line": 176,
+      "original": "            axes = [\"X\", \"Y\", \"T\", \"Z\"]",
+      "replacement": "            axes = [\"X\", \"Y\", \"Z\"]",
+      "description": "Default axes omit \"T\", so time bounds are not added by default.",
+      "diff": "--- a/xcdat/bounds.py\n+++ b/xcdat/bounds.py\n@@ -175,3 +175,3 @@\n         if axes is None:\n-            axes = [\"X\", \"Y\", \"T\", \"Z\"]\n+            axes = [\"X\", \"Y\", \"Z\"]\n         # Handle single axis string input\n",
+      "words": "xcdat/bounds.py:176: changing `            axes = [\"X\", \"Y\", \"T\", \"Z\"]` to `            axes = [\"X\", \"Y\", \"Z\"]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "xcdat/bounds.py": [
+        127,
+        175,
+        176,
+        178,
+        179
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 5,
+        "total": 5
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 29480,
+    "output_tokens": 5486,
+    "cost_estimate": {
+      "usd": 0.1986,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "xcdat.bounds.BoundsAccessor.add_missing_bounds",
+      "path": "xcdat/bounds.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

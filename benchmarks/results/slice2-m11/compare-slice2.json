@@ -1,0 +1,1496 @@
+{
+ "all": {
+  "pairs": {
+   "wrong_fixes": 48,
+   "correct_fixes": 85
+  },
+  "wrong_fixes": {
+   "b_only": 1,
+   "a_only": 0,
+   "sign_test_p": "1/2 (0.5000)"
+  },
+  "not_green_lit": {
+   "partial": {
+    "b_only": 0,
+    "a_only": 0,
+    "sign_test_p": "1/1 (1.0000)"
+   },
+   "agent_wrong": {
+    "b_only": 0,
+    "a_only": 0,
+    "sign_test_p": "1/1 (1.0000)"
+   }
+  },
+  "levels": {
+   "agent_ok": {
+    "up": 0,
+    "down": 2,
+    "same": 36
+   },
+   "agent_wrong": {
+    "up": 0,
+    "down": 0,
+    "same": 20
+   },
+   "gold": {
+    "up": 4,
+    "down": 4,
+    "same": 39
+   },
+   "partial": {
+    "up": 0,
+    "down": 0,
+    "same": 28
+   }
+  },
+  "a": {
+   "leftover_found": {
+    "n": 3,
+    "of": 48
+   },
+   "false_alarm": {
+    "n": 8,
+    "of": 85
+   },
+   "unreviewed": {
+    "n": 0,
+    "of": 85
+   },
+   "unpaired": 1,
+   "set_aside": 11,
+   "misses": {
+    "leftover outside every function": 2,
+    "leftover's function a target, not attacked": 1,
+    "leftover's function not a target": 2,
+    "no input ran": 1,
+    "no_effect: nothing attackable left": 39
+   },
+   "reachable_misses": 2,
+   "headline": {
+    "correct_false_alarm": {
+     "n": 8,
+     "of": 85
+    },
+    "correct_unreviewed": {
+     "n": 0,
+     "of": 85
+    },
+    "agent_ok_false_alarm": {
+     "n": 2,
+     "of": 38
+    },
+    "partial_caught": {
+     "n": 19,
+     "of": 28
+    },
+    "partial_not_green_lit": {
+     "n": 26,
+     "of": 28
+    },
+    "partial_leftover_found": {
+     "n": 3,
+     "of": 28
+    },
+    "agent_wrong_caught": {
+     "n": 6,
+     "of": 20
+    },
+    "agent_wrong_not_green_lit": {
+     "n": 16,
+     "of": 20
+    },
+    "agent_wrong_leftover_found": {
+     "n": 0,
+     "of": 20
+    }
+   },
+   "gold_at_least_l2": {
+    "n": 12,
+    "of": 47
+   },
+   "guard_mutants": {
+    "valid_mutants": {
+     "n": 115,
+     "mean": 5.061,
+     "median": 5.0,
+     "p90": 8.0,
+     "max": 10.0
+    },
+    "gold_valid_mutants": {
+     "n": 45,
+     "mean": 4.733,
+     "median": 4.0,
+     "p90": 7.0,
+     "max": 9.0
+    },
+    "valid_mutants_not_stopped": {
+     "n": 115,
+     "mean": 5.061,
+     "median": 5.0,
+     "p90": 8.0,
+     "max": 10.0
+    },
+    "gold_valid_mutants_not_stopped": {
+     "n": 45,
+     "mean": 4.733,
+     "median": 4.0,
+     "p90": 7.0,
+     "max": 9.0
+    },
+    "one_mutant_from_flipping": {
+     "n": 49,
+     "of": 115
+    },
+    "gold_one_mutant_from_flipping": {
+     "n": 23,
+     "of": 45
+    }
+   },
+   "no_input": {
+    "n": 33,
+    "of": 144
+   },
+   "seconds": {
+    "n": 144,
+    "mean": 442.331,
+    "median": 217.415,
+    "p90": 847.985,
+    "max": 4852.969
+   },
+   "timeouts": 0,
+   "seconds_with_timeouts": {
+    "n": 144,
+    "mean": 442.331,
+    "median": 217.415,
+    "p90": 847.985,
+    "max": 4852.969
+   },
+   "blind": {
+    "statuses": {},
+    "rule_would_cap_at_l1": {}
+   },
+   "doubt": {
+    "findings": {
+     "agent_ok": {},
+     "agent_wrong": {},
+     "gold": {},
+     "partial": {}
+    },
+    "pre_existing": {
+     "agent_ok": {},
+     "agent_wrong": {},
+     "gold": {},
+     "partial": {}
+    },
+    "rules": {
+     "any": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 0,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 0,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 10
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 0,
+       "of": 8
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 10
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 3
+      }
+     },
+     "os_limit": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 0,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 0,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 10
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 0,
+       "of": 8
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 10
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 3
+      }
+     },
+     "finished_object": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 0,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 0,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 10
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 0,
+       "of": 8
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 10
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 3
+      }
+     },
+     "refused": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 0,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 0,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 10
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 0,
+       "of": 8
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 10
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 3
+      }
+     }
+    }
+   },
+   "tricky_strings": {
+    "findings": {
+     "agent_ok": {
+      "n": 0,
+      "of": 4
+     },
+     "agent_wrong": {
+      "n": 0,
+      "of": 5
+     },
+     "gold": {
+      "n": 0,
+      "of": 10
+     },
+     "partial": {
+      "n": 0,
+      "of": 9
+     }
+    },
+    "pre_existing": {
+     "agent_ok": {
+      "n": 0,
+      "of": 1
+     },
+     "agent_wrong": {
+      "n": 0,
+      "of": 1
+     },
+     "gold": {
+      "n": 0,
+      "of": 0
+     },
+     "partial": {
+      "n": 0,
+      "of": 1
+     }
+    },
+    "labels": {
+     "agent_ok": {},
+     "agent_wrong": {},
+     "gold": {},
+     "partial": {}
+    },
+    "leftovers_only_through_them": {
+     "n": 0,
+     "of": 3
+    }
+   }
+  },
+  "b": {
+   "leftover_found": {
+    "n": 4,
+    "of": 48
+   },
+   "false_alarm": {
+    "n": 7,
+    "of": 85
+   },
+   "unreviewed": {
+    "n": 0,
+    "of": 85
+   },
+   "unpaired": 0,
+   "set_aside": 11,
+   "misses": {
+    "leftover outside every function": 2,
+    "leftover's function a target, not attacked": 1,
+    "leftover's function not a target": 2,
+    "no input ran": 1,
+    "no_effect: nothing attackable left": 38
+   },
+   "reachable_misses": 2,
+   "headline": {
+    "correct_false_alarm": {
+     "n": 7,
+     "of": 85
+    },
+    "correct_unreviewed": {
+     "n": 0,
+     "of": 85
+    },
+    "agent_ok_false_alarm": {
+     "n": 2,
+     "of": 38
+    },
+    "partial_caught": {
+     "n": 19,
+     "of": 28
+    },
+    "partial_not_green_lit": {
+     "n": 26,
+     "of": 28
+    },
+    "partial_leftover_found": {
+     "n": 4,
+     "of": 28
+    },
+    "agent_wrong_caught": {
+     "n": 6,
+     "of": 20
+    },
+    "agent_wrong_not_green_lit": {
+     "n": 16,
+     "of": 20
+    },
+    "agent_wrong_leftover_found": {
+     "n": 0,
+     "of": 20
+    }
+   },
+   "gold_at_least_l2": {
+    "n": 11,
+    "of": 47
+   },
+   "guard_mutants": {
+    "valid_mutants": {
+     "n": 118,
+     "mean": 5.102,
+     "median": 5.0,
+     "p90": 8.0,
+     "max": 9.0
+    },
+    "gold_valid_mutants": {
+     "n": 48,
+     "mean": 5.208,
+     "median": 5.0,
+     "p90": 8.0,
+     "max": 9.0
+    },
+    "valid_mutants_not_stopped": {
+     "n": 39,
+     "mean": 7.077,
+     "median": 7.0,
+     "p90": 9.0,
+     "max": 9.0
+    },
+    "gold_valid_mutants_not_stopped": {
+     "n": 19,
+     "mean": 6.895,
+     "median": 7.0,
+     "p90": 9.0,
+     "max": 9.0
+    },
+    "one_mutant_from_flipping": {
+     "n": 87,
+     "of": 118
+    },
+    "gold_one_mutant_from_flipping": {
+     "n": 35,
+     "of": 48
+    }
+   },
+   "no_input": {
+    "n": 31,
+    "of": 144
+   },
+   "seconds": {
+    "n": 144,
+    "mean": 402.984,
+    "median": 190.227,
+    "p90": 848.906,
+    "max": 4286.046
+   },
+   "timeouts": 1,
+   "seconds_with_timeouts": {
+    "n": 145,
+    "mean": 449.866,
+    "median": 194.016,
+    "p90": 882.922,
+    "max": 7200.766
+   },
+   "blind": {
+    "statuses": {
+     "agent_ok": {
+      "fails_differently": 2,
+      "fails_on_head": 2,
+      "not_reproduced_on_base": 1,
+      "not_run": 1,
+      "reproduced": 32
+     },
+     "agent_wrong": {
+      "fails_differently": 1,
+      "fails_on_head": 7,
+      "not_reproduced_on_base": 1,
+      "not_run": 1,
+      "reproduced": 10
+     },
+     "gold": {
+      "fails_differently": 3,
+      "fails_on_head": 6,
+      "not_reproduced_on_base": 1,
+      "not_run": 4,
+      "reproduced": 33
+     },
+     "partial": {
+      "fails_differently": 7,
+      "fails_on_head": 4,
+      "not_run": 16,
+      "reproduced": 1
+     }
+    },
+    "rule_would_cap_at_l1": {
+     "agent_ok": {
+      "n": 0,
+      "of": 8
+     },
+     "agent_wrong": {
+      "n": 2,
+      "of": 4
+     },
+     "gold": {
+      "n": 3,
+      "of": 11
+     },
+     "partial": {
+      "n": 2,
+      "of": 2
+     }
+    }
+   },
+   "doubt": {
+    "findings": {
+     "agent_ok": {
+      "finished_object": 1,
+      "refused": 1
+     },
+     "agent_wrong": {
+      "os_limit": 1,
+      "refused": 1
+     },
+     "gold": {
+      "finished_object": 1,
+      "refused": 2
+     },
+     "partial": {
+      "os_limit": 1
+     }
+    },
+    "pre_existing": {
+     "agent_ok": {
+      "refused": 1
+     },
+     "agent_wrong": {},
+     "gold": {},
+     "partial": {}
+    },
+    "rules": {
+     "any": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 2,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 2,
+        "of": 6
+       },
+       "gold": {
+        "n": 1,
+        "of": 9
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 3,
+       "of": 7
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 9
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 4
+      }
+     },
+     "os_limit": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 0,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 1,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 9
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 0,
+       "of": 7
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 9
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 4
+      }
+     },
+     "finished_object": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 1,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 0,
+        "of": 6
+       },
+       "gold": {
+        "n": 1,
+        "of": 9
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 2,
+       "of": 7
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 9
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 4
+      }
+     },
+     "refused": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 1,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 1,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 9
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 1,
+       "of": 7
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 9
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 4
+      }
+     }
+    }
+   },
+   "tricky_strings": {
+    "findings": {
+     "agent_ok": {
+      "n": 0,
+      "of": 4
+     },
+     "agent_wrong": {
+      "n": 1,
+      "of": 5
+     },
+     "gold": {
+      "n": 1,
+      "of": 9
+     },
+     "partial": {
+      "n": 0,
+      "of": 7
+     }
+    },
+    "pre_existing": {
+     "agent_ok": {
+      "n": 0,
+      "of": 1
+     },
+     "agent_wrong": {
+      "n": 0,
+      "of": 1
+     },
+     "gold": {
+      "n": 0,
+      "of": 0
+     },
+     "partial": {
+      "n": 0,
+      "of": 1
+     }
+    },
+    "labels": {
+     "agent_ok": {},
+     "agent_wrong": {
+      "false_alarm": 1
+     },
+     "gold": {
+      "false_alarm": 1
+     },
+     "partial": {}
+    },
+    "leftovers_only_through_them": {
+     "n": 0,
+     "of": 4
+    }
+   }
+  },
+  "live_spend_usd": {
+   "a": 60.56,
+   "b": 10.58
+  }
+ },
+ "dev": {
+  "pairs": {
+   "wrong_fixes": 48,
+   "correct_fixes": 85
+  },
+  "wrong_fixes": {
+   "b_only": 1,
+   "a_only": 0,
+   "sign_test_p": "1/2 (0.5000)"
+  },
+  "not_green_lit": {
+   "partial": {
+    "b_only": 0,
+    "a_only": 0,
+    "sign_test_p": "1/1 (1.0000)"
+   },
+   "agent_wrong": {
+    "b_only": 0,
+    "a_only": 0,
+    "sign_test_p": "1/1 (1.0000)"
+   }
+  },
+  "levels": {
+   "agent_ok": {
+    "up": 0,
+    "down": 2,
+    "same": 36
+   },
+   "agent_wrong": {
+    "up": 0,
+    "down": 0,
+    "same": 20
+   },
+   "gold": {
+    "up": 4,
+    "down": 4,
+    "same": 39
+   },
+   "partial": {
+    "up": 0,
+    "down": 0,
+    "same": 28
+   }
+  },
+  "a": {
+   "leftover_found": {
+    "n": 3,
+    "of": 48
+   },
+   "false_alarm": {
+    "n": 8,
+    "of": 85
+   },
+   "unreviewed": {
+    "n": 0,
+    "of": 85
+   },
+   "unpaired": 1,
+   "set_aside": 11,
+   "misses": {
+    "leftover outside every function": 2,
+    "leftover's function a target, not attacked": 1,
+    "leftover's function not a target": 2,
+    "no input ran": 1,
+    "no_effect: nothing attackable left": 39
+   },
+   "reachable_misses": 2,
+   "headline": {
+    "correct_false_alarm": {
+     "n": 8,
+     "of": 85
+    },
+    "correct_unreviewed": {
+     "n": 0,
+     "of": 85
+    },
+    "agent_ok_false_alarm": {
+     "n": 2,
+     "of": 38
+    },
+    "partial_caught": {
+     "n": 19,
+     "of": 28
+    },
+    "partial_not_green_lit": {
+     "n": 26,
+     "of": 28
+    },
+    "partial_leftover_found": {
+     "n": 3,
+     "of": 28
+    },
+    "agent_wrong_caught": {
+     "n": 6,
+     "of": 20
+    },
+    "agent_wrong_not_green_lit": {
+     "n": 16,
+     "of": 20
+    },
+    "agent_wrong_leftover_found": {
+     "n": 0,
+     "of": 20
+    }
+   },
+   "gold_at_least_l2": {
+    "n": 12,
+    "of": 47
+   },
+   "guard_mutants": {
+    "valid_mutants": {
+     "n": 115,
+     "mean": 5.061,
+     "median": 5.0,
+     "p90": 8.0,
+     "max": 10.0
+    },
+    "gold_valid_mutants": {
+     "n": 45,
+     "mean": 4.733,
+     "median": 4.0,
+     "p90": 7.0,
+     "max": 9.0
+    },
+    "valid_mutants_not_stopped": {
+     "n": 115,
+     "mean": 5.061,
+     "median": 5.0,
+     "p90": 8.0,
+     "max": 10.0
+    },
+    "gold_valid_mutants_not_stopped": {
+     "n": 45,
+     "mean": 4.733,
+     "median": 4.0,
+     "p90": 7.0,
+     "max": 9.0
+    },
+    "one_mutant_from_flipping": {
+     "n": 49,
+     "of": 115
+    },
+    "gold_one_mutant_from_flipping": {
+     "n": 23,
+     "of": 45
+    }
+   },
+   "no_input": {
+    "n": 33,
+    "of": 144
+   },
+   "seconds": {
+    "n": 144,
+    "mean": 442.331,
+    "median": 217.415,
+    "p90": 847.985,
+    "max": 4852.969
+   },
+   "timeouts": 0,
+   "seconds_with_timeouts": {
+    "n": 144,
+    "mean": 442.331,
+    "median": 217.415,
+    "p90": 847.985,
+    "max": 4852.969
+   },
+   "blind": {
+    "statuses": {},
+    "rule_would_cap_at_l1": {}
+   },
+   "doubt": {
+    "findings": {
+     "agent_ok": {},
+     "agent_wrong": {},
+     "gold": {},
+     "partial": {}
+    },
+    "pre_existing": {
+     "agent_ok": {},
+     "agent_wrong": {},
+     "gold": {},
+     "partial": {}
+    },
+    "rules": {
+     "any": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 0,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 0,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 10
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 0,
+       "of": 8
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 10
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 3
+      }
+     },
+     "os_limit": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 0,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 0,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 10
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 0,
+       "of": 8
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 10
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 3
+      }
+     },
+     "finished_object": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 0,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 0,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 10
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 0,
+       "of": 8
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 10
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 3
+      }
+     },
+     "refused": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 0,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 0,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 10
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 0,
+       "of": 8
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 10
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 3
+      }
+     }
+    }
+   },
+   "tricky_strings": {
+    "findings": {
+     "agent_ok": {
+      "n": 0,
+      "of": 4
+     },
+     "agent_wrong": {
+      "n": 0,
+      "of": 5
+     },
+     "gold": {
+      "n": 0,
+      "of": 10
+     },
+     "partial": {
+      "n": 0,
+      "of": 9
+     }
+    },
+    "pre_existing": {
+     "agent_ok": {
+      "n": 0,
+      "of": 1
+     },
+     "agent_wrong": {
+      "n": 0,
+      "of": 1
+     },
+     "gold": {
+      "n": 0,
+      "of": 0
+     },
+     "partial": {
+      "n": 0,
+      "of": 1
+     }
+    },
+    "labels": {
+     "agent_ok": {},
+     "agent_wrong": {},
+     "gold": {},
+     "partial": {}
+    },
+    "leftovers_only_through_them": {
+     "n": 0,
+     "of": 3
+    }
+   }
+  },
+  "b": {
+   "leftover_found": {
+    "n": 4,
+    "of": 48
+   },
+   "false_alarm": {
+    "n": 7,
+    "of": 85
+   },
+   "unreviewed": {
+    "n": 0,
+    "of": 85
+   },
+   "unpaired": 0,
+   "set_aside": 11,
+   "misses": {
+    "leftover outside every function": 2,
+    "leftover's function a target, not attacked": 1,
+    "leftover's function not a target": 2,
+    "no input ran": 1,
+    "no_effect: nothing attackable left": 38
+   },
+   "reachable_misses": 2,
+   "headline": {
+    "correct_false_alarm": {
+     "n": 7,
+     "of": 85
+    },
+    "correct_unreviewed": {
+     "n": 0,
+     "of": 85
+    },
+    "agent_ok_false_alarm": {
+     "n": 2,
+     "of": 38
+    },
+    "partial_caught": {
+     "n": 19,
+     "of": 28
+    },
+    "partial_not_green_lit": {
+     "n": 26,
+     "of": 28
+    },
+    "partial_leftover_found": {
+     "n": 4,
+     "of": 28
+    },
+    "agent_wrong_caught": {
+     "n": 6,
+     "of": 20
+    },
+    "agent_wrong_not_green_lit": {
+     "n": 16,
+     "of": 20
+    },
+    "agent_wrong_leftover_found": {
+     "n": 0,
+     "of": 20
+    }
+   },
+   "gold_at_least_l2": {
+    "n": 11,
+    "of": 47
+   },
+   "guard_mutants": {
+    "valid_mutants": {
+     "n": 118,
+     "mean": 5.102,
+     "median": 5.0,
+     "p90": 8.0,
+     "max": 9.0
+    },
+    "gold_valid_mutants": {
+     "n": 48,
+     "mean": 5.208,
+     "median": 5.0,
+     "p90": 8.0,
+     "max": 9.0
+    },
+    "valid_mutants_not_stopped": {
+     "n": 39,
+     "mean": 7.077,
+     "median": 7.0,
+     "p90": 9.0,
+     "max": 9.0
+    },
+    "gold_valid_mutants_not_stopped": {
+     "n": 19,
+     "mean": 6.895,
+     "median": 7.0,
+     "p90": 9.0,
+     "max": 9.0
+    },
+    "one_mutant_from_flipping": {
+     "n": 87,
+     "of": 118
+    },
+    "gold_one_mutant_from_flipping": {
+     "n": 35,
+     "of": 48
+    }
+   },
+   "no_input": {
+    "n": 31,
+    "of": 144
+   },
+   "seconds": {
+    "n": 144,
+    "mean": 402.984,
+    "median": 190.227,
+    "p90": 848.906,
+    "max": 4286.046
+   },
+   "timeouts": 1,
+   "seconds_with_timeouts": {
+    "n": 145,
+    "mean": 449.866,
+    "median": 194.016,
+    "p90": 882.922,
+    "max": 7200.766
+   },
+   "blind": {
+    "statuses": {
+     "agent_ok": {
+      "fails_differently": 2,
+      "fails_on_head": 2,
+      "not_reproduced_on_base": 1,
+      "not_run": 1,
+      "reproduced": 32
+     },
+     "agent_wrong": {
+      "fails_differently": 1,
+      "fails_on_head": 7,
+      "not_reproduced_on_base": 1,
+      "not_run": 1,
+      "reproduced": 10
+     },
+     "gold": {
+      "fails_differently": 3,
+      "fails_on_head": 6,
+      "not_reproduced_on_base": 1,
+      "not_run": 4,
+      "reproduced": 33
+     },
+     "partial": {
+      "fails_differently": 7,
+      "fails_on_head": 4,
+      "not_run": 16,
+      "reproduced": 1
+     }
+    },
+    "rule_would_cap_at_l1": {
+     "agent_ok": {
+      "n": 0,
+      "of": 8
+     },
+     "agent_wrong": {
+      "n": 2,
+      "of": 4
+     },
+     "gold": {
+      "n": 3,
+      "of": 11
+     },
+     "partial": {
+      "n": 2,
+      "of": 2
+     }
+    }
+   },
+   "doubt": {
+    "findings": {
+     "agent_ok": {
+      "finished_object": 1,
+      "refused": 1
+     },
+     "agent_wrong": {
+      "os_limit": 1,
+      "refused": 1
+     },
+     "gold": {
+      "finished_object": 1,
+      "refused": 2
+     },
+     "partial": {
+      "os_limit": 1
+     }
+    },
+    "pre_existing": {
+     "agent_ok": {
+      "refused": 1
+     },
+     "agent_wrong": {},
+     "gold": {},
+     "partial": {}
+    },
+    "rules": {
+     "any": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 2,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 2,
+        "of": 6
+       },
+       "gold": {
+        "n": 1,
+        "of": 9
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 3,
+       "of": 7
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 9
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 4
+      }
+     },
+     "os_limit": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 0,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 1,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 9
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 0,
+       "of": 7
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 9
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 4
+      }
+     },
+     "finished_object": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 1,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 0,
+        "of": 6
+       },
+       "gold": {
+        "n": 1,
+        "of": 9
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 2,
+       "of": 7
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 9
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 4
+      }
+     },
+     "refused": {
+      "would_leave_counterexample": {
+       "agent_ok": {
+        "n": 1,
+        "of": 5
+       },
+       "agent_wrong": {
+        "n": 1,
+        "of": 6
+       },
+       "gold": {
+        "n": 0,
+        "of": 9
+       },
+       "partial": {
+        "n": 0,
+        "of": 19
+       }
+      },
+      "false_alarms_gone": {
+       "n": 1,
+       "of": 7
+      },
+      "real_bug_findings_dropped": {
+       "n": 0,
+       "of": 9
+      },
+      "leftovers_lost": {
+       "n": 0,
+       "of": 4
+      }
+     }
+    }
+   },
+   "tricky_strings": {
+    "findings": {
+     "agent_ok": {
+      "n": 0,
+      "of": 4
+     },
+     "agent_wrong": {
+      "n": 1,
+      "of": 5
+     },
+     "gold": {
+      "n": 1,
+      "of": 9
+     },
+     "partial": {
+      "n": 0,
+      "of": 7
+     }
+    },
+    "pre_existing": {
+     "agent_ok": {
+      "n": 0,
+      "of": 1
+     },
+     "agent_wrong": {
+      "n": 0,
+      "of": 1
+     },
+     "gold": {
+      "n": 0,
+      "of": 0
+     },
+     "partial": {
+      "n": 0,
+      "of": 1
+     }
+    },
+    "labels": {
+     "agent_ok": {},
+     "agent_wrong": {
+      "false_alarm": 1
+     },
+     "gold": {
+      "false_alarm": 1
+     },
+     "partial": {}
+    },
+    "leftovers_only_through_them": {
+     "n": 0,
+     "of": 4
+    }
+   }
+  }
+ }
+}

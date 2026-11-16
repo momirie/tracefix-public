@@ -1,0 +1,139 @@
+{
+ "instance_id": "modm-io__lbuild-11",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 1.367,
+ "suite_timeout": 120,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "lbuild/main.py",
+   "old_start": 24,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "lbuild/main.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "lbuild/node.py",
+   "old_start": 308,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "lbuild/node.py",
+     "function": "BaseNode._resolve_dependencies"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "lbuild/parser.py",
+   "old_start": 220,
+   "old_len": 7,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "lbuild/parser.py",
+     "function": "Parser.find_any"
+    }
+   ]
+  }
+ ],
+ "kept": 2,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 44072,
+   "label": "no_effect",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "lbuild/parser.py",
+     "function": "Parser.find_modules"
+    }
+   ],
+   "differs": [
+    {
+     "path": "lbuild/main.py",
+     "function": null
+    },
+    {
+     "path": "lbuild/node.py",
+     "function": "BaseNode._resolve_dependencies"
+    },
+    {
+     "path": "lbuild/parser.py",
+     "function": "Parser.find_any"
+    },
+    {
+     "path": "lbuild/parser.py",
+     "function": "Parser.find_modules"
+    }
+   ]
+  },
+  {
+   "kind": "agent_ok",
+   "source_row": 27741,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "lbuild/parser.py",
+     "function": "Parser.find_any"
+    },
+    {
+     "path": "lbuild/parser.py",
+     "function": "Parser.find_modules"
+    }
+   ],
+   "differs": [
+    {
+     "path": "lbuild/main.py",
+     "function": null
+    },
+    {
+     "path": "lbuild/node.py",
+     "function": "BaseNode._resolve_dependencies"
+    },
+    {
+     "path": "lbuild/parser.py",
+     "function": "Parser.find_any"
+    },
+    {
+     "path": "lbuild/parser.py",
+     "function": "Parser.find_modules"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "b27975301922834e0173369873cd705673391708",
+  "gold": "253e72afe8df14ef9fc99fdcf721804d68860794",
+  "v2": "5f58009ccf9de613ced8a8cbd9c5cf90cf9fa832",
+  "agent_wrong": "84391a9bb465f49ea6ec8354fce2b4302bd25d62",
+  "agent_ok": "edabcf6d595aa60c32c43976c5957a75ba989d09"
+ },
+ "seconds": 32.969
+}

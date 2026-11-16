@@ -1,0 +1,32 @@
+{
+ "instance_id": "opsmill__infrahub-sdk-python-47",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; ModuleNotFoundError fastapi",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "anyio.pytest_plugin",
+  "infrahub_sdk.pytest_plugin.plugin",
+  "pytest_asyncio.plugin",
+  "pytest_clarity.plugin",
+  "pytest_httpx",
+  "time_machine",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 2,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 17.657
+}

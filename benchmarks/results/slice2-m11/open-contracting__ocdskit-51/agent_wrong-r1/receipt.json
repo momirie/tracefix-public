@@ -1,0 +1,447 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T22:59:34+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: tests/commands/test_mapping_sheet.py::test_command passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "c7aa01345a2d8b7c140faddf06412d34c1c707f6"
+  },
+  "head": {
+    "ref": "tf-agent_wrong",
+    "sha": "5f1721a576a6930e01a55619ad8b891bd5f79a29"
+  },
+  "issue": {
+    "title": "mapping-sheet: script omits original description when a reference is used for an object",
+    "sha256": "16e5061586f299b970735dfc1be22d6612db2861e3b7c9d7cd87115aa4ab907f"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the issue, but the fix introduced a regression: tests/commands/test_mapping_sheet.py::test_command passed before the fix and fails after it. Check whether that test's expected output needs updating for the new \"reference\" rows or whether the fix broke existing mapping-sheet behaviour, and note that the reproduction was not confirmed as guarded by the fix.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 3.36,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 2.85,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 11.54,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 3 mutants; 80% is needed",
+      "duration_s": 95.67,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 7,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.6,
+        "rule_kinds": [
+          "body: 1 of 1 killed",
+          "compare: 0 of 1 killed",
+          "logic: 0 of 2 killed",
+          "negate_if: 1 of 2 killed",
+          "arithmetic: 2 of 2 killed",
+          "membership: 1 of 1 killed",
+          "drop_call: 1 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "constant",
+          "loop",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "1 confirmed: tests/commands/test_mapping_sheet.py::test_command",
+      "duration_s": 19.36,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/commands/test_mapping_sheet.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 12,
+        "not_run": 0,
+        "regressions": 1,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.55,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 38
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call (Command.handle.display_properties: a nested function: it can't be imported, not attacked yet)",
+      "duration_s": 0.05,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call (Command.handle.display_properties: a nested function: it can't be imported, not attacked yet)",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "fails_on_head",
+      "reason": "attempt 2: fails the same way before and after the fix",
+      "duration_s": 11.9,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/commands/test_mapping_sheet.py",
+      "test": "test_command",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert 'section,path....1,uri,,,\\r\\n' == 'section,path....1,uri,,,\\r\\n'",
+      "line": 9
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-c1e6df20f988",
+      "origin": "model",
+      "file": "ocdskit/cli/commands/mapping_sheet.py",
+      "line": 63,
+      "original": "original_title = original_ref.get('title', field + '*')",
+      "replacement": "original_title = original_ref.get('title', field)",
+      "description": "Default title for reference row loses the asterisk.",
+      "diff": "--- a/ocdskit/cli/commands/mapping_sheet.py\n+++ b/ocdskit/cli/commands/mapping_sheet.py\n@@ -62,3 +62,3 @@\n                     original_ref = reference_info[field]\n-                    original_title = original_ref.get('title', field + '*')\n+                    original_title = original_ref.get('title', field)\n                     original_description = original_ref.get('description', '')\n",
+      "words": "ocdskit/cli/commands/mapping_sheet.py:63: changing `original_title = original_ref.get('title', field + '*')` to `original_title = original_ref.get('title', field)` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-d99337964283",
+      "origin": "model",
+      "file": "ocdskit/cli/commands/mapping_sheet.py",
+      "line": 73,
+      "original": "'type': 'reference'",
+      "replacement": "'type': 'unknown'",
+      "description": "Reference row gets wrong type value.",
+      "diff": "--- a/ocdskit/cli/commands/mapping_sheet.py\n+++ b/ocdskit/cli/commands/mapping_sheet.py\n@@ -72,3 +72,3 @@\n                         'description': original_description,\n-                        'type': 'reference'\n+                        'type': 'unknown'\n                     }\n",
+      "words": "ocdskit/cli/commands/mapping_sheet.py:73: changing `'type': 'reference'` to `'type': 'unknown'` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-3cac6f759086",
+      "origin": "model",
+      "file": "ocdskit/cli/commands/mapping_sheet.py",
+      "line": 78,
+      "original": "original_row['values'] = obj[field]['format']",
+      "replacement": "original_row['values'] = ''",
+      "description": "Format value dropped from reference row.",
+      "diff": "--- a/ocdskit/cli/commands/mapping_sheet.py\n+++ b/ocdskit/cli/commands/mapping_sheet.py\n@@ -77,3 +77,3 @@\n                     if 'format' in obj[field]:\n-                        original_row['values'] = obj[field]['format']\n+                        original_row['values'] = ''\n                     elif 'enum' in obj[field]:\n",
+      "words": "ocdskit/cli/commands/mapping_sheet.py:78: changing `original_row['values'] = obj[field]['format']` to `original_row['values'] = ''` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-073644e4aaa9",
+      "origin": "rule",
+      "file": "ocdskit/cli/commands/mapping_sheet.py",
+      "line": 99,
+      "original": "                    maxn = 'n' if obj[field].get('type') == 'array' else '1'",
+      "replacement": "                    maxn = 'n' if obj[field].get('type') != 'array' else '1'",
+      "description": "rule: `==` -> `!=`",
+      "diff": "--- a/ocdskit/cli/commands/mapping_sheet.py\n+++ b/ocdskit/cli/commands/mapping_sheet.py\n@@ -98,3 +98,3 @@\n                               ('string' in obj[field]['type'] or 'integer' in obj[field]['type']))\n-                    maxn = 'n' if obj[field].get('type') == 'array' else '1'\n+                    maxn = 'n' if obj[field].get('type') != 'array' else '1'\n                     minn = '1' if required else '0'\n",
+      "words": "ocdskit/cli/commands/mapping_sheet.py:99: changing `                    maxn = 'n' if obj[field].get('type') == ...` to `                    maxn = 'n' if obj[field].get('type') != ...` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-84c3bf1dd374",
+      "origin": "rule",
+      "file": "ocdskit/cli/commands/mapping_sheet.py",
+      "line": 97,
+      "original": "                    required = field in required_fields or ('type' in obj[field] and ",
+      "replacement": "                    required = field in required_fields and ('type' in obj[field] and ",
+      "description": "rule: `or` -> `and`",
+      "diff": "--- a/ocdskit/cli/commands/mapping_sheet.py\n+++ b/ocdskit/cli/commands/mapping_sheet.py\n@@ -96,3 +96,3 @@\n                     # Set range for reference (same logic as regular fields)\n-                    required = field in required_fields or ('type' in obj[field] and \n+                    required = field in required_fields and ('type' in obj[field] and \n                               ('string' in obj[field]['type'] or 'integer' in obj[field]['type']))\n",
+      "words": "ocdskit/cli/commands/mapping_sheet.py:97: changing `                    required = field in required_fields or (...` to `                    required = field in required_fields and ...` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    },
+    {
+      "id": "m-f59d7e051db3",
+      "origin": "rule",
+      "file": "ocdskit/cli/commands/mapping_sheet.py",
+      "line": 97,
+      "original": "                    required = field in required_fields or ('type' in obj[field] and ",
+      "replacement": "                    required = field in required_fields or ('type' in obj[field] or ",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/ocdskit/cli/commands/mapping_sheet.py\n+++ b/ocdskit/cli/commands/mapping_sheet.py\n@@ -96,3 +96,3 @@\n                     # Set range for reference (same logic as regular fields)\n-                    required = field in required_fields or ('type' in obj[field] and \n+                    required = field in required_fields or ('type' in obj[field] or \n                               ('string' in obj[field]['type'] or 'integer' in obj[field]['type']))\n",
+      "words": "ocdskit/cli/commands/mapping_sheet.py:97: changing `                    required = field in required_fields or (...` to `                    required = field in required_fields or (...` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    },
+    {
+      "id": "m-5d93a1f8298c",
+      "origin": "rule",
+      "file": "ocdskit/cli/commands/mapping_sheet.py",
+      "line": 89,
+      "original": "                    if original_description:",
+      "replacement": "                    if not (original_description):",
+      "description": "rule: `original_description` -> `not (original_description)`",
+      "diff": "--- a/ocdskit/cli/commands/mapping_sheet.py\n+++ b/ocdskit/cli/commands/mapping_sheet.py\n@@ -88,3 +88,3 @@\n                     # Handle markdown links in original description\n-                    if original_description:\n+                    if not (original_description):\n                         links = find_md_links(original_description)\n",
+      "words": "ocdskit/cli/commands/mapping_sheet.py:89: changing `                    if original_description:` to `                    if not (original_description):` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "negate_if"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "ocdskit/cli/commands/mapping_sheet.py": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        60,
+        62,
+        63,
+        64,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        77,
+        78,
+        79,
+        80,
+        81,
+        83,
+        84,
+        86,
+        89,
+        90,
+        91,
+        92,
+        94,
+        97,
+        98,
+        99,
+        100,
+        101,
+        104,
+        105,
+        106,
+        108
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 30,
+        "total": 38
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call (Command.handle.display_properties: a nested function: it can't be imported, not attacked yet))",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call (Command.handle.display_properties: a nested function: it can't be imported, not attacked yet))",
+    "Break My Fix could not attack Command.handle.display_properties: a nested function: it can't be imported, not attacked yet",
+    "the behaviour diff could not compare Command.handle.display_properties: a nested function: it can't be imported, not attacked yet"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 30714,
+    "output_tokens": 5313,
+    "cost_estimate": {
+      "usd": 0.1195,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 7 of the 10 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 23 rule mutants were run",
+    "guard: 2 of the rule mutant kills were crashes on the mutated line"
+  ],
+  "previous": null,
+  "attack_targets": []
+}

@@ -1,0 +1,11 @@
+{
+ "key": "5bcd2a9457aa964713a83239d62389fae836acb17cda63b3426536518aac522b",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1932,
+  "output_tokens": 71,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"The issue reports the AttributeError when PORT is unset, and the README and docstring both say an unset PORT falls back to 8080.\"}]}"
+ },
+ "role": "judge"
+}

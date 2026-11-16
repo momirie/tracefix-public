@@ -1,0 +1,15 @@
+[    0.0] tracefix: verifying 878c55e..8c47ba4 (isolation: basic)
+[    1.0] [1/9] environment: ok (0.9s)
+[    2.9] [2/9] import_check: ok (1.9s)
+[   17.6] [3/9] reproduce: reproduced (14.7s)
+[   45.8] [4/9] guard: guarded (28.2s)
+[   46.7] [5/9] regressions: none_found (0.9s)
+[   49.6] [6/9] fix_line_coverage: ok (2.9s)
+[   55.4] [7/9] behaviour_diff: compared (5.8s)
+[   73.7] [8/9] break_my_fix: found (18.4s)
+[   73.7] [9/9] integrity: clean (0.0s)
+[   73.8] summary: by judge
+[   73.8] level: COUNTEREXAMPLE
+[   73.8] Fix Receipt: COUNTEREXAMPLE (run status: ok)
+[   73.8] Summary by the Judge (advisory): The original crash was reproduced and the fix guards against it (PORT unset no longer raises, with no regressions found), but Break My Fix found that parse_port(raw='') still raises ValueError: invalid literal for int() with base 10: ''. Next, check whether an empty PORT value should also fall back to 8080 as the README describes, and handle that case.
+[   73.8] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json

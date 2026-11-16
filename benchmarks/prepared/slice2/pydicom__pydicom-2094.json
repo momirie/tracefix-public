@@ -1,0 +1,24 @@
+{
+ "instance_id": "pydicom__pydicom-2094",
+ "excluded": "base_suite_too_slow",
+ "detail": "over 180s",
+ "python": "3.10.16",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.168.5",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 196.187
+}

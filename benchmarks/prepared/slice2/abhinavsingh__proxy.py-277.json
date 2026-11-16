@@ -1,0 +1,107 @@
+{
+ "instance_id": "abhinavsingh__proxy.py-277",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 5.625,
+ "suite_timeout": 120,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "proxy/common/version.py",
+   "old_start": 8,
+   "old_len": 5,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "proxy/common/version.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "proxy/http/parser.py",
+   "old_start": 111,
+   "old_len": 8,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "proxy/http/parser.py",
+     "function": "HttpParser.set_line_attributes"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "setup.py",
+   "old_start": 10,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "setup.py",
+     "function": null
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 62442,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "proxy/http/parser.py",
+     "function": "HttpParser.set_line_attributes"
+    },
+    {
+     "path": "proxy/http/parser.py",
+     "function": "HttpParser.set_url"
+    }
+   ],
+   "differs": [
+    {
+     "path": "proxy/common/version.py",
+     "function": null
+    },
+    {
+     "path": "proxy/http/parser.py",
+     "function": "HttpParser.set_line_attributes"
+    },
+    {
+     "path": "proxy/http/parser.py",
+     "function": "HttpParser.set_url"
+    },
+    {
+     "path": "setup.py",
+     "function": null
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "f75e21c4b159f2ef7ecb421768fbf3a15bf2bee3",
+  "gold": "3fb6eaba9192e8b61894b8d6b45ed6399a7afe15",
+  "v1": "f5b91376766df50ca7f62776f471968ed3610882",
+  "agent_ok": "e493339dbb2d92bfd5c8826bfe87c76ad148be5a"
+ },
+ "seconds": 33.422
+}

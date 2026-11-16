@@ -1,0 +1,511 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T17:37:26+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks clldutils.badge.badge",
+    "Break My Fix finding 2: an input that breaks clldutils.badge.badge"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "ef7578f3f2580dca12f392e94d8cc3c8000c0737"
+  },
+  "head": {
+    "ref": "tf-agent_wrong",
+    "sha": "de2de9d75e252ec8121c75bd4da79cef88e98173"
+  },
+  "issue": {
+    "title": "The `badge` function should be more flexible",
+    "sha256": "c913352ff9bb8567fa821f844cf28c91afb6dce3dcf74333322b3030f3a03660"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.20"
+  },
+  "summary": {
+    "text": "The verifier reproduced the issue and found inputs that break the fixed `clldutils.badge.badge`: labels or messages containing dashes (e.g. label='a-b', message='1-2', or message='X-X' with an empty label) are inserted unescaped, producing ambiguous shields.io URLs such as 'https://img.shields.io/badge/a-b-1-2-green.svg'.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 2.38,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 4.35,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 34.14,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no clldutils/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 3 mutants; 80% is needed",
+      "duration_s": 81.92,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no clldutils/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 1,
+        "not_run": 6,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.7,
+        "rule_kinds": [
+          "body: 1 of 1 killed",
+          "compare: 1 of 2 killed",
+          "logic: 1 of 2 killed",
+          "negate_if: 2 of 2 killed",
+          "constant: 1 of 1 killed",
+          "arithmetic: 1 of 1 killed",
+          "membership: 0 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "loop",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 45 untouched tests that passed before the fix fails after it",
+      "duration_s": 2.5,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 45,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.48,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no clldutils/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 30
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: no input could be compared",
+      "duration_s": 18.63,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "2 finding(s), each proven by a failing repro file",
+      "duration_s": 32.72,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_2.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 482,
+        "properties_counted": 8,
+        "findings": 2,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (1 reported)",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 1
+      }
+    },
+    {
+      "name": "blind",
+      "status": "fails_on_head",
+      "reason": "attempt 1: fails the same way before and after the fix",
+      "duration_s": 14.22,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no clldutils/tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "clldutils.badge.badge",
+      "call": "badge(subject='', status='', color='green', message='1-2', label='a-b', fmt='svg', markdown=False)",
+      "input": {
+        "subject": "''",
+        "status": "''",
+        "color": "'green'",
+        "message": "'1-2'",
+        "label": "'a-b'",
+        "fmt": "'svg'",
+        "markdown": "False"
+      },
+      "outcome": "returns 'https://img.shields.io/badge/a-b-1-2-green.svg'",
+      "base_outcome": "returns 'https://img.shields.io/badge/--green.svg'",
+      "expected": null,
+      "property": {
+        "id": "t1.p5",
+        "name": "three_part_path_structure",
+        "kind": "returns",
+        "claim": "With label, message and color the URL path has exactly the three components {label}-{message}-{color}, so dashes inside label/message must not create extra separators",
+        "source": "comment",
+        "quote": "Either {message}-{color} or {label}-{message}-{color}",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 1,
+      "relation": "new with the fix: before it, this input returns 'https://img.shields.io/badge/--green.svg'",
+      "file": "findings/finding_1.py",
+      "path": "clldutils/badge.py",
+      "line": 56,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      },
+      "doubt": null
+    },
+    {
+      "number": 2,
+      "function": "clldutils.badge.badge",
+      "call": "badge(subject='', status='', color='green', message='X-X', label='', fmt='svg', markdown=False)",
+      "input": {
+        "subject": "''",
+        "status": "''",
+        "color": "'green'",
+        "message": "'X-X'",
+        "label": "''",
+        "fmt": "'svg'",
+        "markdown": "False"
+      },
+      "outcome": "returns 'https://img.shields.io/badge/X-X-green.svg'",
+      "base_outcome": "returns 'https://img.shields.io/badge/--green.svg'",
+      "expected": null,
+      "property": {
+        "id": "t1.p6",
+        "name": "two_part_path_structure",
+        "kind": "returns",
+        "claim": "With message and color but no label the URL path has the two components {message}-{color}",
+        "source": "comment",
+        "quote": "Either {message}-{color} or {label}-{message}-{color}",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 0,
+      "relation": "new with the fix: before it, this input returns 'https://img.shields.io/badge/--green.svg'",
+      "file": "findings/finding_2.py",
+      "path": "clldutils/badge.py",
+      "line": 56,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      },
+      "doubt": null
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-2fe994328634",
+      "origin": "model",
+      "file": "clldutils/badge.py",
+      "line": 57,
+      "original": "        label = label or subject",
+      "replacement": "        label = subject or label",
+      "description": "Deprecated subject overrides explicit label.",
+      "diff": "--- a/clldutils/badge.py\n+++ b/clldutils/badge.py\n@@ -56,3 +56,3 @@\n     if subject or status:\n-        label = label or subject\n+        label = subject or label\n         message = message or status\n",
+      "words": "clldutils/badge.py:57: changing `        label = label or subject` to `        label = subject or label` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-9860c2df9c8a",
+      "origin": "model",
+      "file": "clldutils/badge.py",
+      "line": 58,
+      "original": "        message = message or status",
+      "replacement": "        message = status or message",
+      "description": "Deprecated status overrides explicit message.",
+      "diff": "--- a/clldutils/badge.py\n+++ b/clldutils/badge.py\n@@ -57,3 +57,3 @@\n         label = label or subject\n-        message = message or status\n+        message = status or message\n     \n",
+      "words": "clldutils/badge.py:58: changing `        message = message or status` to `        message = status or message` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-0b31c94b0692",
+      "origin": "model",
+      "file": "clldutils/badge.py",
+      "line": 64,
+      "original": "    if label and message and color:",
+      "replacement": "    if label and message:",
+      "description": "Three-part branch taken without color, adding None color to the join.",
+      "diff": "--- a/clldutils/badge.py\n+++ b/clldutils/badge.py\n@@ -63,3 +63,3 @@\n     \n-    if label and message and color:\n+    if label and message:\n         # Full three-part badge: {label}-{message}-{color}\n",
+      "words": "clldutils/badge.py:64: changing `    if label and message and color:` to `    if label and message:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-5879b8965018",
+      "origin": "rule",
+      "file": "clldutils/badge.py",
+      "line": 56,
+      "original": "    if subject or status:",
+      "replacement": "    if subject and status:",
+      "description": "rule: `or` -> `and`",
+      "diff": "--- a/clldutils/badge.py\n+++ b/clldutils/badge.py\n@@ -55,3 +55,3 @@\n     # Handle backward compatibility - map old parameter names to new ones\n-    if subject or status:\n+    if subject and status:\n         label = label or subject\n",
+      "words": "clldutils/badge.py:56: changing `    if subject or status:` to `    if subject and status:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": "logic"
+    },
+    {
+      "id": "m-93be0a89718f",
+      "origin": "rule",
+      "file": "clldutils/badge.py",
+      "line": 86,
+      "original": "    elif not color and len(path_parts) == 1 and 'color' not in query_params:",
+      "replacement": "    elif not color and len(path_parts) == 1 and 'color' in query_params:",
+      "description": "rule: `not in` -> `in`",
+      "diff": "--- a/clldutils/badge.py\n+++ b/clldutils/badge.py\n@@ -85,3 +85,3 @@\n         query_params['color'] = color\n-    elif not color and len(path_parts) == 1 and 'color' not in query_params:\n+    elif not color and len(path_parts) == 1 and 'color' in query_params:\n         # If no color specified anywhere for message-only badge, \n",
+      "words": "clldutils/badge.py:86: changing `    elif not color and len(path_parts) == 1 and 'color' not ...` to `    elif not color and len(path_parts) == 1 and 'color' in q...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": "membership"
+    },
+    {
+      "id": "m-0ef375eb800a",
+      "origin": "rule",
+      "file": "clldutils/badge.py",
+      "line": 86,
+      "original": "    elif not color and len(path_parts) == 1 and 'color' not in query_params:",
+      "replacement": "    elif not color and len(path_parts) != 1 and 'color' not in query_params:",
+      "description": "rule: `==` -> `!=`",
+      "diff": "--- a/clldutils/badge.py\n+++ b/clldutils/badge.py\n@@ -85,3 +85,3 @@\n         query_params['color'] = color\n-    elif not color and len(path_parts) == 1 and 'color' not in query_params:\n+    elif not color and len(path_parts) != 1 and 'color' not in query_params:\n         # If no color specified anywhere for message-only badge, \n",
+      "words": "clldutils/badge.py:86: changing `    elif not color and len(path_parts) == 1 and 'color' not ...` to `    elif not color and len(path_parts) != 1 and 'color' not ...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": "compare"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "clldutils/badge.py": [
+        22,
+        56,
+        57,
+        58,
+        62,
+        64,
+        66,
+        67,
+        69,
+        70,
+        72,
+        74,
+        77,
+        78,
+        81,
+        83,
+        85,
+        86,
+        89,
+        92,
+        93,
+        94,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        105,
+        106
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 14,
+        "total": 30
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 20471,
+    "output_tokens": 8173,
+    "cost_estimate": {
+      "usd": 0.213,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 6 of the 9 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 32 rule mutants were run",
+    "guard: 1 of the rule mutant kills were crashes on the mutated line",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.20: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "clldutils.badge.badge",
+      "path": "clldutils/badge.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 482,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T22:38:00+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L2",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "the tests guard the fix: they fail when it is reverted or broken",
+    "not L3: hescorehpxml/hpxml2.py: module-level code that computes a value changed (line 185); what uses it is not compared",
+    "not L3: no changed function was compared"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "644f8f8cffa6910006c0f8d69404de33127fb7a3"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "01adc51af93b7f7a531e8eaae96322486b511769"
+  },
+  "issue": {
+    "title": "Duct Location - Garage - HPXML Translator Mapping Adjustment",
+    "sha256": "9ff81d9c32e8122cb4a8f603e2b5c484af41f889544a7360f6cb5fc4d4fd9462"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "At L2, a test reproduced the garage duct-location mapping bug (failing before the fix and passing after), and the tests fail again when the fix is reverted or broken, with no regressions found. Behaviour comparison was skipped because the change is to a module-level mapping in hescorehpxml/hpxml2.py, so next check that code relying on that mapping (and the Read the Docs HVAC distribution page the…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 10.26,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.57,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 10.12,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 7 of 7 mutants",
+      "duration_s": 30.94,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 1.0,
+        "repro_kill_rate": 1.0,
+        "pr_kill_rate": null,
+        "mutants": 7,
+        "killed": 7,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 1,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-f10bb393e68e",
+          "m-69e979666c39",
+          "m-e016be37bb5a",
+          "m-3eaa9b07e833",
+          "m-af232888b33c",
+          "m-6dd1a078c528",
+          "m-c0e018dbc4fc"
+        ],
+        "rule_mutants": 0,
+        "rule_kill_rate": null,
+        "rule_kinds": [],
+        "rule_kinds_absent": [],
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 224 untouched tests that passed before the fix fails after it",
+      "duration_s": 10.29,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 224,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.16,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 1
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call",
+      "duration_s": 0.11,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "fails_on_head",
+      "reason": "attempt 2: fails the same way before and after the fix",
+      "duration_s": 31.6,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "hescorehpxml/hpxml2.py": [
+        185
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 1,
+        "total": 1
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call)",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call)"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 6251,
+    "output_tokens": 3290,
+    "cost_estimate": {
+      "usd": 0.0496,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": []
+}

@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "case": "wrong_but_green",
+  "summary": "Switches to floor division, which fixes large values but floors negatives (-5 -> -10) against the documented truncate-toward-zero contract; the suite stays green because it has no negative cases.",
+  "receipt": {
+    "status": "ok",
+    "level": {
+      "at_most": "L2"
+    },
+    "stages": {
+      "reproduce": "reproduced",
+      "guard": "guarded"
+    },
+    "must_find": [
+      {
+        "stage": "behaviour_diff",
+        "function": "stats.buckets.bucket_of",
+        "input": {
+          "value": -5,
+          "width": 10
+        },
+        "base": "0",
+        "head": "-10",
+        "label": "suspicious"
+      }
+    ],
+    "must_not_find": [
+      "integrity_flag"
+    ]
+  },
+  "checks": [
+    {
+      "tests": "suite",
+      "ref": "base",
+      "expect": "pass"
+    },
+    {
+      "tests": "suite",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "base",
+      "expect": "fail",
+      "match": "where 100000000000000020 = bucket_of(100000000000000015, 10)"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_contract.py",
+      "ref": "base",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_contract.py",
+      "ref": "head",
+      "expect": "fail",
+      "match": "where -10 = bucket_of(-5, 10)"
+    }
+  ]
+}

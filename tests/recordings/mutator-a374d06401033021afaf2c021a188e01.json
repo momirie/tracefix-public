@@ -1,0 +1,11 @@
+{
+ "key": "a374d06401033021afaf2c021a188e01a6c1af80dc9dbbe1b6009b7fc22c12af",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 2083,
+  "output_tokens": 621,
+  "stop_reason": "end_turn",
+  "text": "{\"mutants\":[{\"path\":\"src/svc/config.py\",\"line\":34,\"original\":\"    if raw is None:\",\"replacement\":\"    if raw is not None:\",\"description\":\"Inverted None check returns default for set values and crashes on None.\"},{\"path\":\"src/svc/config.py\",\"line\":34,\"original\":\"    if raw is None:\",\"replacement\":\"    if raw is None or raw == \\\"\\\":\",\"description\":\"Handles empty string but not whitespace-only blank, so blank with spaces still fails parsing.\"},{\"path\":\"src/svc/config.py\",\"line\":35,\"original\":\"        return DEFAULT_PORT\",\"replacement\":\"        return MIN_PORT\",\"description\":\"Returns the minimum port instead of the default when unset.\"},{\"path\":\"src/svc/config.py\",\"line\":35,\"original\":\"        return DEFAULT_PORT\",\"replacement\":\"        return MAX_PORT\",\"description\":\"Returns the maximum port instead of the default when unset.\"},{\"path\":\"src/svc/config.py\",\"line\":34,\"original\":\"    if raw is None:\",\"replacement\":\"    if not raw:\",\"description\":\"Treats empty string as unset but whitespace-only blank still raises ValueError.\"},{\"path\":\"src/svc/config.py\",\"line\":34,\"original\":\"    if raw is None:\",\"replacement\":\"    if raw is None or raw == \\\"0\\\":\",\"description\":\"Treats raw \\\"0\\\" as unset, returning default instead of raising an error.\"},{\"path\":\"src/svc/config.py\",\"line\":34,\"original\":\"    if raw is None:\",\"replacement\":\"    if raw is None or raw == \\\" \\\":\",\"description\":\"Only a single-space string is treated as blank; other whitespace-only input still crashes.\"},{\"path\":\"src/svc/config.py\",\"line\":35,\"original\":\"        return DEFAULT_PORT\",\"replacement\":\"        return MIN_PORT + DEFAULT_PORT\",\"description\":\"Returns the default port offset by the minimum port when unset.\"}]}"
+ },
+ "role": "mutator"
+}

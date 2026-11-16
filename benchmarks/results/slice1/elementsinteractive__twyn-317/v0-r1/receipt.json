@@ -1,0 +1,458 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-16T12:33:08+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: tests/main/test_main.py::TestCheckDependencies.test_check_dependencies_npm_v3 passed before the fix and fails after it",
+    "regression: tests/main/test_main.py::TestCheckDependencies.test_check_dependencies_yarn passed before the fix and fails after it",
+    "regression: tests/trusted_packages/test_references.py::TestAbstractPackageReference.test_get_packages_no_cache passed before the fix and fails after it",
+    "regression: tests/trusted_packages/test_references.py::TestAbstractPackageReference.test_get_packages_downloads_when_cache_has_invalid_package_names passed before the fix and fails after it",
+    "regression: tests/trusted_packages/test_references.py::TestAbstractPackageReference.test_cache_is_saved_when_not_existing passed before the fix and fails after it",
+    "regression: tests/trusted_packages/test_references.py::TestTopPyPiReference.test_get_trusted_packages passed before the fix and fails after it",
+    "regression: tests/trusted_packages/test_references.py::TestTopPyPiReference.test__parse_no_rows passed before the fix and fails after it",
+    "regression: tests/trusted_packages/test_references.py::TestTopPyPiReference.test_empty_packages_list_exception passed before the fix and fails after it",
+    "regression: tests/trusted_packages/test_references.py::TestTopPyPiReference.test__parse_retrieves_package_names passed before the fix and fails after it",
+    "regression: tests/trusted_packages/test_references.py::TestTopNpmReference.test_get_trusted_packages_v2 passed before the fix and fails after it",
+    "regression: tests/trusted_packages/test_references.py::TestTopNpmReference.test__parse_no_rows passed before the fix and fails after it",
+    "regression: tests/trusted_packages/test_references.py::TestTopNpmReference.test_empty_packages_list_exception passed before the fix and fails after it",
+    "regression: tests/trusted_packages/test_references.py::TestTopNpmReference.test__parse_retrieves_package_names passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "640e122012020a269f3793743c2a812ff89af259"
+  },
+  "head": {
+    "ref": "tf-v0",
+    "sha": "391c5848b8a0bf0c7d6c0d8dc9bd3860d711cbd7"
+  },
+  "issue": {
+    "title": "Vendor dependencies in out repo",
+    "sha256": "61835d7a10d782278c6c1b632106481024cfc2fa378ad46cc9015303d90715fc"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "The verifier reproduced the issue, but 13 tests that passed before the fix now fail after it, including TestCheckDependencies npm_v3/yarn in tests/main/test_main.py and most of the TestAbstractPackageReference, TestTopPyPiReference and TestTopNpmReference tests in tests/trusted_packages/test_references.py. Look first at why the package-reference tests (cache handling, parsing, downloads) break un…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 3.13,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "3 changed module(s) imported from the copies (6 imports in all)",
+      "duration_s": 4.9,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 3,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 19.61,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 6 mutants; 80% is needed",
+      "duration_s": 96.91,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.333,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 6,
+        "killed": 2,
+        "survived": 4,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-cf9b0c462fa1",
+          "m-5a6c5176ea25"
+        ],
+        "rule_mutants": 4,
+        "rule_kill_rate": 0.75,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 6 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "13 confirmed: tests/main/test_main.py::TestCheckDependencies.test_check_dependencies_npm_v3, tests/main/test_main.py::TestCheckDependencies.test_check_dependencies_yarn, tests/trusted_packages/test_references.py::TestAbstractPackageReference.test_get_packages_no_cache, tests/trusted_packages/test_references.py::TestAbstractPackageReference.test_get_packages_downloads_when_cache_has_invalid_package_names, tests/trusted_packages/test_references.py::TestAbstractPackageReference.test_cache_is_saved_when_not_existing and 8 more",
+      "duration_s": 19.38,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/main/test_main.py tests/trusted_packages/test_references.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 151,
+        "not_run": 0,
+        "regressions": 13,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 4.33,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 26
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "442 input(s) compared on 3 function(s): 0 changed with the fix; not complete: src/twyn/trusted_packages/references/top_npm_reference.py: module-level code that computes a value changed (line 17, 18, 19); what uses it is not compared",
+      "duration_s": 31.71,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "finished": 3,
+        "inputs_compared": 442,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 177 inputs against 1 properties",
+      "duration_s": 30.81,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "inputs_tried": 177,
+        "properties_counted": 1,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/main/test_main.py",
+      "test": "TestCheckDependencies.test_check_dependencies_npm_v3",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: unhashable type: 'dict'",
+      "line": 381
+    },
+    {
+      "file": "tests/main/test_main.py",
+      "test": "TestCheckDependencies.test_check_dependencies_yarn",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: unhashable type: 'dict'",
+      "line": 399
+    },
+    {
+      "file": "tests/trusted_packages/test_references.py",
+      "test": "TestAbstractPackageReference.test_get_packages_no_cache",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: twyn.trusted_packages.exceptions.InvalidJSONError: `packages` key not in JSON.",
+      "line": 55
+    },
+    {
+      "file": "tests/trusted_packages/test_references.py",
+      "test": "TestAbstractPackageReference.test_get_packages_downloads_when_cache_has_invalid_package_names",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: twyn.trusted_packages.exceptions.InvalidJSONError: `packages` key not in JSON.",
+      "line": 88
+    },
+    {
+      "file": "tests/trusted_packages/test_references.py",
+      "test": "TestAbstractPackageReference.test_cache_is_saved_when_not_existing",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: twyn.trusted_packages.exceptions.InvalidJSONError: `packages` key not in JSON.",
+      "line": 111
+    },
+    {
+      "file": "tests/trusted_packages/test_references.py",
+      "test": "TestTopPyPiReference.test_get_trusted_packages",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: twyn.trusted_packages.exceptions.InvalidJSONError: `packages` key not in JSON.",
+      "line": 145
+    },
+    {
+      "file": "tests/trusted_packages/test_references.py",
+      "test": "TestTopPyPiReference.test__parse_no_rows",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: 'TopPyPiReference' object has no attribute '_parse'",
+      "line": 155
+    },
+    {
+      "file": "tests/trusted_packages/test_references.py",
+      "test": "TestTopPyPiReference.test_empty_packages_list_exception",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: type object 'TopPyPiReference' has no attribute '_parse'",
+      "line": 162
+    },
+    {
+      "file": "tests/trusted_packages/test_references.py",
+      "test": "TestTopPyPiReference.test__parse_retrieves_package_names",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: 'TopPyPiReference' object has no attribute '_parse'",
+      "line": 169
+    },
+    {
+      "file": "tests/trusted_packages/test_references.py",
+      "test": "TestTopNpmReference.test_get_trusted_packages_v2",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: unhashable type: 'dict'",
+      "line": 177
+    },
+    {
+      "file": "tests/trusted_packages/test_references.py",
+      "test": "TestTopNpmReference.test__parse_no_rows",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: 'TopNpmReference' object has no attribute '_parse'",
+      "line": 187
+    },
+    {
+      "file": "tests/trusted_packages/test_references.py",
+      "test": "TestTopNpmReference.test_empty_packages_list_exception",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: type object 'TopNpmReference' has no attribute '_parse'",
+      "line": 194
+    },
+    {
+      "file": "tests/trusted_packages/test_references.py",
+      "test": "TestTopNpmReference.test__parse_retrieves_package_names",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: 'TopNpmReference' object has no attribute '_parse'",
+      "line": 201
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-0443ca862eea",
+      "origin": "model",
+      "file": "src/twyn/trusted_packages/references/base.py",
+      "line": 78,
+      "original": "            if not packages:",
+      "replacement": "            if packages:",
+      "description": "Raises EmptyPackagesListError for non-empty downloaded lists instead of empty ones.",
+      "diff": "--- a/src/twyn/trusted_packages/references/base.py\n+++ b/src/twyn/trusted_packages/references/base.py\n@@ -77,3 +77,3 @@\n             logger.debug(\"Successfully downloaded trusted packages list from %s\", self.source)\n-            if not packages:\n+            if packages:\n                 raise EmptyPackagesListError\n",
+      "words": "src/twyn/trusted_packages/references/base.py:78: changing `            if not packages:` to `            if packages:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-2b772e4fc830",
+      "origin": "model",
+      "file": "src/twyn/trusted_packages/references/base.py",
+      "line": 84,
+      "original": "        normalized_packages = self.normalize_packages(packages)",
+      "replacement": "        normalized_packages = packages",
+      "description": "Skips normalization of package names.",
+      "diff": "--- a/src/twyn/trusted_packages/references/base.py\n+++ b/src/twyn/trusted_packages/references/base.py\n@@ -83,3 +83,3 @@\n \n-        normalized_packages = self.normalize_packages(packages)\n+        normalized_packages = packages\n         return normalized_packages\n",
+      "words": "src/twyn/trusted_packages/references/base.py:84: changing `        normalized_packages = self.normalize_packages(packag...` to `        normalized_packages = packages` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-9a1726d99a62",
+      "origin": "model",
+      "file": "src/twyn/trusted_packages/references/base.py",
+      "line": 38,
+      "original": "        response.raise_for_status()",
+      "replacement": "        pass",
+      "description": "Drops HTTP error status check so bad responses are parsed.",
+      "diff": "--- a/src/twyn/trusted_packages/references/base.py\n+++ b/src/twyn/trusted_packages/references/base.py\n@@ -37,3 +37,3 @@\n         response = requests.get(self.source)\n-        response.raise_for_status()\n+        pass\n \n",
+      "words": "src/twyn/trusted_packages/references/base.py:38: changing `        response.raise_for_status()` to `        pass` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-34de9424e2e6",
+      "origin": "model",
+      "file": "src/twyn/trusted_packages/references/base.py",
+      "line": 82,
+      "original": "            self._save_trusted_packages_to_cache_if_enabled(packages)",
+      "replacement": "            pass",
+      "description": "Downloaded packages are never saved to cache.",
+      "diff": "--- a/src/twyn/trusted_packages/references/base.py\n+++ b/src/twyn/trusted_packages/references/base.py\n@@ -81,3 +81,3 @@\n             # New packages were downloaded, we create a new entry updating all values.\n-            self._save_trusted_packages_to_cache_if_enabled(packages)\n+            pass\n \n",
+      "words": "src/twyn/trusted_packages/references/base.py:82: changing `            self._save_trusted_packages_to_cache_if_enabled(...` to `            pass` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-0443ca862eea",
+      "origin": "rule",
+      "file": "src/twyn/trusted_packages/references/base.py",
+      "line": 78,
+      "original": "            if not packages:",
+      "replacement": "            if packages:",
+      "description": "rule: drop `not`",
+      "diff": "--- a/src/twyn/trusted_packages/references/base.py\n+++ b/src/twyn/trusted_packages/references/base.py\n@@ -77,3 +77,3 @@\n             logger.debug(\"Successfully downloaded trusted packages list from %s\", self.source)\n-            if not packages:\n+            if packages:\n                 raise EmptyPackagesListError\n",
+      "words": "src/twyn/trusted_packages/references/base.py:78: changing `            if not packages:` to `            if packages:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "src/twyn/trusted_packages/references/base.py": [
+        32,
+        33,
+        37,
+        38,
+        41,
+        43,
+        66,
+        68,
+        71,
+        72,
+        73,
+        74,
+        75,
+        77,
+        78,
+        79,
+        82,
+        84
+      ],
+      "src/twyn/trusted_packages/references/top_npm_reference.py": [
+        2,
+        6,
+        17,
+        18
+      ],
+      "src/twyn/trusted_packages/references/top_pypi_reference.py": [
+        2,
+        6,
+        17,
+        18
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 10,
+        "total": 26
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 41092,
+    "output_tokens": 2733,
+    "cost_estimate": {
+      "usd": 0.1918,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: pyproject truncated to 3000 characters for the prompt"
+  ],
+  "previous": null
+}

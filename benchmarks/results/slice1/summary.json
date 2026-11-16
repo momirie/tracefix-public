@@ -1,0 +1,644 @@
+{
+ "funnel": {
+  "cases": 80,
+  "prepared": 80,
+  "excluded": {
+   "base_suite_cannot_run": 39,
+   "base_suite_too_slow": 14,
+   "hidden_tests_fail_on_gold": 4,
+   "image_not_at_base_commit": 1
+  },
+  "ready": 22,
+  "ready_with_partial": 16,
+  "isolation_at_prepare": {
+   "strict": 22
+  },
+  "setup_commit_needed": 5,
+  "runs": {
+   "gold": {
+    "api_error": 1,
+    "receipt": 30,
+    "timeout": 1
+   },
+   "partial": {
+    "api_error": 1,
+    "receipt": 22,
+    "timeout": 1
+   }
+  },
+  "receipt_status": {
+   "ok": 52
+  },
+  "exit_codes": {
+   "0": 54
+  },
+  "isolation": {
+   "strict": 52
+  },
+  "stage_errors": {}
+ },
+ "splits": {
+  "dev": 13,
+  "held_out": 7
+ },
+ "set_aside": {
+  "gold": {
+   "n": 1,
+   "of": 20
+  },
+  "partial": {
+   "n": 2,
+   "of": 14
+  },
+  "tasks": "cal-itp__benefits-3198, elementsinteractive__twyn-317"
+ },
+ "gold": {
+  "levels": {
+   "COUNTEREXAMPLE": 4,
+   "L0": 1,
+   "L1": 9,
+   "L2": 5,
+   "L3": 0,
+   "L4": 0
+  },
+  "counterexample": {
+   "n": 4,
+   "of": 19
+  },
+  "false_alarm": {
+   "n": 3,
+   "of": 19
+  },
+  "real_bug_in_gold": {
+   "n": 1,
+   "of": 19
+  },
+  "false_alarm_proposed": {
+   "n": 0,
+   "of": 19
+  },
+  "unreviewed": {
+   "n": 0,
+   "of": 19
+  },
+  "at_least_l2": {
+   "n": 5,
+   "of": 19
+  },
+  "at_least_l3": {
+   "n": 0,
+   "of": 19
+  },
+  "l4": {
+   "n": 0,
+   "of": 19
+  }
+ },
+ "partial": {
+  "levels": {
+   "COUNTEREXAMPLE": 7,
+   "L0": 2,
+   "L1": 2,
+   "L2": 1,
+   "L3": 0,
+   "L4": 0
+  },
+  "detection": {
+   "n": 7,
+   "of": 12
+  },
+  "not_green_lit": {
+   "n": 11,
+   "of": 12
+  },
+  "false_pass_l2": {
+   "n": 1,
+   "of": 12
+  },
+  "false_pass_l3": {
+   "n": 0,
+   "of": 12
+  },
+  "leftover_found": {
+   "n": 4,
+   "of": 12
+  },
+  "real_bug_by_label": {
+   "n": 1,
+   "of": 12
+  },
+  "unreviewed": {
+   "n": 0,
+   "of": 12
+  }
+ },
+ "separation": {
+  "gold_above": {
+   "n": 6,
+   "of": 12
+  },
+  "same": {
+   "n": 5,
+   "of": 12
+  },
+  "gold_below": {
+   "n": 1,
+   "of": 12
+  }
+ },
+ "reproducer": {
+  "statuses": {
+   "fix_does_not_fix": 1,
+   "not_reproduced": 1,
+   "reproduced": 18
+  },
+  "fail_to_pass": {
+   "n": 18,
+   "of": 20
+  },
+  "fix_does_not_fix": {
+   "n": 1,
+   "of": 20
+  }
+ },
+ "guard": {
+  "gold": {
+   "statuses": {
+    "guarded": 6,
+    "not_guarded": 12,
+    "skipped": 2
+   },
+   "guarded": {
+    "n": 6,
+    "of": 20
+   },
+   "kill_rate": {
+    "n": 18,
+    "mean": 0.563,
+    "median": 0.6,
+    "p90": 1.0,
+    "max": 1.0
+   },
+   "crash_only_kills": {
+    "n": 0,
+    "of": 52
+   }
+  },
+  "partial": {
+   "statuses": {
+    "guarded": 2,
+    "not_guarded": 6,
+    "skipped": 6
+   },
+   "guarded": {
+    "n": 2,
+    "of": 14
+   },
+   "kill_rate": {
+    "n": 8,
+    "mean": 0.603,
+    "median": 0.584,
+    "p90": 1.0,
+    "max": 1.0
+   },
+   "crash_only_kills": {
+    "n": 0,
+    "of": 24
+   }
+  }
+ },
+ "break_my_fix": {
+  "gold": {
+   "statuses": {
+    "found": 3,
+    "inconclusive": 4,
+    "none_found": 7,
+    "skipped": 6
+   },
+   "skip_reasons": {
+    "no target could be attacked: its objects' code can't run here: ArrayVNMetadata is not the module's own name or plain data": 1,
+    "the attack ran no input": 3,
+    "the fix changes no function Break My Fix can call": 1,
+    "the fix changes no function Break My Fix can call (ArrayVNMetadata.to_buffer_dict._json_convert: a nested function: it can't be imported, not attacked yet)": 1,
+    "the fix changes no function Break My Fix can call (Bot.__repr__: a special method (such as __init__ or __eq__): not called yet)": 1,
+    "the fix changes no function Break My Fix can call (ClientTransport.__aenter__: a special method (such as __init__ or __eq__): not called yet; ClientTransport.__": 1,
+    "the fix changes no function Break My Fix can call (FigureEight.__init__: a special method (such as __init__ or __eq__): not called yet)": 1,
+    "the fix changes no function Break My Fix can call (unyt_array.__array_ufunc__: a special method (such as __init__ or __eq__): not called yet)": 1
+   },
+   "targets": 31,
+   "inputs_per_target": 103.7,
+   "pre_existing": 0,
+   "first_l4_blocker": {}
+  },
+  "partial": {
+   "statuses": {
+    "found": 4,
+    "inconclusive": 4,
+    "none_found": 3,
+    "skipped": 3
+   },
+   "skip_reasons": {
+    "no target could be attacked: its objects' code can't run here: ArrayVNMetadata is not the module's own name or plain data": 1,
+    "the attack on rx._lazy_resolve did not finish": 1,
+    "the attack ran no input": 2,
+    "the fix changes no function Break My Fix can call": 2,
+    "the fix changes no function Break My Fix can call (FigureEight.__init__: a special method (such as __init__ or __eq__): not called yet)": 1
+   },
+   "targets": 26,
+   "inputs_per_target": 100.9,
+   "pre_existing": 0,
+   "first_l4_blocker": {}
+  }
+ },
+ "behaviour_diff": {
+  "gold": {
+   "statuses": {
+    "compared": 1,
+    "inconclusive": 7,
+    "partial": 5,
+    "skipped": 7
+   },
+   "l3_gate_open": {
+    "n": 0,
+    "of": 20
+   },
+   "first_l3_blocker": {
+    "<name>: module-level code that computes a value changed (line N); what uses it is not compared": 1,
+    "<name>: not compared (a special method (such as __init__ or __eq__): not called yet)": 2,
+    "<name>: the comparison did not finish": 1,
+    "no changed function was compared": 1
+   }
+  },
+  "partial": {
+   "statuses": {
+    "compared": 1,
+    "inconclusive": 5,
+    "partial": 5,
+    "skipped": 3
+   },
+   "l3_gate_open": {
+    "n": 0,
+    "of": 14
+   },
+   "first_l3_blocker": {
+    "<name>: not compared (a special method (such as __init__ or __eq__): not called yet)": 1
+   }
+  }
+ },
+ "report_only": {
+  "gold": {
+   "fix_line_coverage": {
+    "repro": {
+     "n": 125,
+     "of": 204
+    }
+   },
+   "regressions": {
+    "found": 2,
+    "none_found": 18
+   }
+  },
+  "partial": {
+   "fix_line_coverage": {
+    "repro": {
+     "n": 61,
+     "of": 122
+    }
+   },
+   "regressions": {
+    "found": 2,
+    "inconclusive": 1,
+    "none_found": 11
+   }
+  }
+ },
+ "cost_and_time": {
+  "usd_per_run": {
+   "n": 34,
+   "mean": 0.236,
+   "median": 0.197,
+   "p90": 0.539,
+   "max": 0.675
+  },
+  "usd_unknown": 0,
+  "usd_spent_live": 18.56,
+  "usd_spent_known": 12.56,
+  "live_attempts_cost_unknown": 2,
+  "calls": {
+   "n": 34,
+   "mean": 5.676,
+   "median": 6.0,
+   "p90": 8.0,
+   "max": 9.0
+  },
+  "tokens": {
+   "n": 34,
+   "mean": 48064.765,
+   "median": 40471.0,
+   "p90": 89825.0,
+   "max": 132846.0
+  },
+  "seconds_per_run": {
+   "n": 34,
+   "mean": 886.231,
+   "median": 389.554,
+   "p90": 2293.671,
+   "max": 4139.641
+  },
+  "seconds_per_stage": {
+   "behaviour_diff": {
+    "n": 34,
+    "mean": 103.873,
+    "median": 8.085,
+    "p90": 85.77,
+    "max": 1597.44
+   },
+   "break_my_fix": {
+    "n": 34,
+    "mean": 52.644,
+    "median": 38.07,
+    "p90": 125.9,
+    "max": 170.83
+   },
+   "environment": {
+    "n": 34,
+    "mean": 40.969,
+    "median": 17.05,
+    "p90": 108.38,
+    "max": 122.95
+   },
+   "fix_line_coverage": {
+    "n": 34,
+    "mean": 4.168,
+    "median": 4.195,
+    "p90": 9.25,
+    "max": 11.46
+   },
+   "guard": {
+    "n": 34,
+    "mean": 512.585,
+    "median": 164.56,
+    "p90": 1727.9,
+    "max": 3336.77
+   },
+   "import_check": {
+    "n": 34,
+    "mean": 8.172,
+    "median": 6.46,
+    "p90": 17.75,
+    "max": 20.48
+   },
+   "integrity": {
+    "n": 34,
+    "mean": 0.045,
+    "median": 0.02,
+    "p90": 0.12,
+    "max": 0.37
+   },
+   "regressions": {
+    "n": 34,
+    "mean": 110.449,
+    "median": 19.3,
+    "p90": 361.95,
+    "max": 514.28
+   },
+   "reproduce": {
+    "n": 34,
+    "mean": 48.481,
+    "median": 36.13,
+    "p90": 86.16,
+    "max": 174.89
+   }
+  }
+ },
+ "stability": {
+  "groups": 18,
+  "level_flips": {
+   "n": 6,
+   "of": 18
+  },
+  "counterexample_flips": {
+   "n": 2,
+   "of": 18
+  },
+  "guard_flips": {
+   "n": 4,
+   "of": 18
+  },
+  "finding_flips": {
+   "n": 4,
+   "of": 18
+  }
+ },
+ "findings": [
+  {
+   "instance_id": "MAIF__arta-50",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "the fix does not fix the bug: the reproduction test fails the same way before and after it",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "cal-itp__benefits-3198",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: tests/pytest/core/admin/test_transit.py::TestTransitAgencyAdmin.test_get_exclude[staff-expected0] passed before the fix and fails after it (and 1 more)",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "elementsinteractive__twyn-317",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: tests/main/test_main.py::TestCheckDependencies.test_check_dependencies_npm_v3 passed before the fix and fails after it (and 12 more)",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "elementsinteractive__twyn-317",
+   "run": "gold-r1",
+   "finding": 1,
+   "call": "normalize_packages(packages=set())",
+   "outcome": "returns None",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "elementsinteractive__twyn-317",
+   "run": "gold-r2",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: tests/main/test_main.py::TestCheckDependencies.test_check_dependencies_npm_v3 passed before the fix and fails after it (and 12 more)",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "elementsinteractive__twyn-317",
+   "run": "v0-r2",
+   "finding": 1,
+   "call": "normalize_packages(packages={''})",
+   "outcome": "returns None",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "itsdnns__docsight-437",
+   "run": "v1-r1",
+   "finding": 1,
+   "call": "_aggregate_period(snapshots=[{'timestamp': '2024-01-01T00:00:00Z', 'summary': {'ds_power_avg': 1.0, 'ds_snr_avg': 40.0, 'us_power_avg': 45.0, 'ds_correctable_errors': None, 'ds_uncorrectable_errors': None, 'health': 'good'}}])",
+   "outcome": "raises UnboundLocalError: cannot access local variable 'corr_errors_supported' where it is not associated with a value",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "gold-r1",
+   "finding": 1,
+   "call": "db_url(self='Env()', var='DJANGO_ENVIRON_SURELY_UNSET_VAR', default='sqlite://:memory:', extra_options={'timeout': 20})",
+   "outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "gold-r1",
+   "finding": 2,
+   "call": "db_url(self='Env()', var='DJANGO_ENVIRON_TEST_UNSET_DB_URL_XYZ', default='sqlite://:memory:', engine=None, options_cast=None, extra_options={'timeout': 20})",
+   "outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "gold-r1",
+   "finding": 3,
+   "call": "db_url_config(url='sqlite://:memory:', extra_options={'timeout': 20})",
+   "outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "gold-r1",
+   "finding": 4,
+   "call": "db_url_config(url='sqlite://:memory:', engine=None, options_cast=None, extra_options={'timeout': 20})",
+   "outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "v1-r1",
+   "finding": 1,
+   "call": "db_url(self='Env()', var='ENVIRON_TEST_UNSET_VAR_XYZ', default='postgres://user:pass@localhost:5432/db', extra_options={'pool': True})",
+   "outcome": "returns {'NAME': 'db', 'USER': 'user', 'PASSWORD': 'pass', 'HOST': 'localhost', 'PORT': 5432, 'ENGINE': 'django.db.backends.postgresql'}",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "v1-r1",
+   "finding": 2,
+   "call": "db_url(self='Env()', var='DJANGO_ENVIRON_UNSET_TEST_VAR_XYZ', default='postgres://user:pass@localhost:5432/db', extra_options={'pool': {'min_size': 2, 'max_size': 4, 'timeout': 10}})",
+   "outcome": "returns {'NAME': 'db', 'USER': 'user', 'PASSWORD': 'pass', 'HOST': 'localhost', 'PORT': 5432, 'ENGINE': 'django.db.backends.postgresql'}",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "v1-r1",
+   "finding": 3,
+   "call": "db_url(self='Env()', var='DJANGO_ENVIRON_UNSET_TEST_VAR_XYZ', default='postgres://user:pass@localhost:5432/db', engine=None, options_cast=None, extra_options={'pool': {'min_size': 2, 'max_size': 4, 'timeout': 10}})",
+   "outcome": "returns {'NAME': 'db', 'USER': 'user', 'PASSWORD': 'pass', 'HOST': 'localhost', 'PORT': 5432, 'ENGINE': 'django.db.backends.postgresql'}",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "v1-r1",
+   "finding": 4,
+   "call": "db_url_config(url='sqlite://:memory:', extra_options={'timeout': 20})",
+   "outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "omni-us__jsonargparse-770",
+   "run": "v3-r1",
+   "finding": 1,
+   "call": "set_parsing_settings(stubs_resolver_allow_py_files=True)",
+   "outcome": "returns None",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "omni-us__jsonargparse-770",
+   "run": "v3-r2",
+   "finding": 1,
+   "call": "set_parsing_settings(validate_defaults=None, parse_optionals_as_positionals=None, stubs_resolver_allow_py_files=True)",
+   "outcome": "returns None",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "zarr-developers__virtualizarr-979",
+   "run": "gold-r1",
+   "finding": 1,
+   "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={})",
+   "outcome": "raises ValueError: need a chunk grid shape if no chunks given",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "zarr-developers__virtualizarr-979",
+   "run": "v0-r1",
+   "finding": 1,
+   "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={'0': 'base64:'}, fs_root=None, shape=None)",
+   "outcome": "raises NameError: name 'base64' is not defined",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  }
+ ]
+}

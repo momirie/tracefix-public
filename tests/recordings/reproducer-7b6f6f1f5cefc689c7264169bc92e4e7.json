@@ -1,0 +1,11 @@
+{
+ "key": "7b6f6f1f5cefc689c7264169bc92e4e7a7a51b057fb7111576af72314b730c6f",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1910,
+  "output_tokens": 280,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from crm.contacts import dedupe_emails, merge_mailing_lists\\n\\n\\ndef test_dedupe_case_insensitive() -> None:\\n    result = dedupe_emails([\\\"Bob@Example.com\\\", \\\"bob@example.com\\\"])\\n    assert len(result) == 1\\n    assert result[0].lower() == \\\"bob@example.com\\\"\\n\\n\\ndef test_merge_lists_case_insensitive() -> None:\\n    result = merge_mailing_lists([\\\"Bob@Example.com\\\"], [\\\"bob@example.com\\\"])\\n    assert len(result) == 1\\n\",\"rationale\":\"Checks that emails differing only in capitalisation are deduplicated into a single contact, directly and via merge_mailing_lists. The fix only strips whitespace, so this should still fail on head.\"}"
+ },
+ "role": "reproducer"
+}

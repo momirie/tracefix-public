@@ -1,0 +1,409 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T17:29:25+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L2",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "the tests guard the fix: they fail when it is reverted or broken",
+    "not L3: AutoSummClassDocumenter._is_class_alias: before the fix it was not a method defined in class AutoSummClassDocumenter",
+    "not L3: AutoSummClassDocumenter.add_content: no input could be compared"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "354e67b443fe212401b1fc0f9e2f0d669c5852c4"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "7ace577f56cc3c0824307c80be4638f1e8ca11a3"
+  },
+  "issue": {
+    "title": "Alias Expands Nested Class Documentation",
+    "sha256": "513a925c0b6fa6f4ef2c7213adca09819b2a86a70650322ba27537f0a34fea64"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "A test reproduced the alias-expansion bug (failing before the fix, passing after) and fails again when the fix is reverted or broken, with no regressions found, but behaviour comparison was inconclusive because _is_class_alias is new and add_content had no comparable inputs. Next, review how AutoSummClassDocumenter.add_content and the new _is_class_alias decide when a class attribute is an alias,…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 4.57,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.48,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 14.45,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test-root/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 7 of 8 mutants",
+      "duration_s": 129.71,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test-root/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.875,
+        "repro_kill_rate": 0.75,
+        "pr_kill_rate": null,
+        "mutants": 8,
+        "killed": 7,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-a902da008474",
+          "m-f1f4320367b9",
+          "m-ae361d69393d",
+          "m-3890ef766c11",
+          "m-400e7f61e3a5",
+          "m-e66a455d3626",
+          "m-9b2a5cd4976a"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.6,
+        "rule_kinds": [
+          "body: 2 of 2 killed",
+          "compare: 0 of 1 killed",
+          "logic: 1 of 2 killed",
+          "negate_if: 1 of 1 killed",
+          "constant: 0 of 2 killed",
+          "membership: 1 of 1 killed",
+          "drop_call: 1 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "arithmetic",
+          "loop",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 22 untouched tests that passed before the fix fails after it",
+      "duration_s": 6.06,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 22,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.95,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test-root/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 9
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: AutoSummClassDocumenter._is_class_alias: before the fix it was not a method defined in class AutoSummClassDocumenter",
+      "duration_s": 18.43,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "no target could be attacked: its objects' code can't run here: DocumenterBridge is not the module's own name or plain data",
+      "duration_s": 25.9,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 0,
+        "properties_counted": 4,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 24.84,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test-root/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-76e5f4930488",
+      "origin": "model",
+      "file": "autodocsumm/__init__.py",
+      "line": 433,
+      "original": "            hasattr(self, 'objpath') and len(self.objpath) > 1):",
+      "replacement": "            hasattr(self, 'objpath') and len(self.objpath) > 0):",
+      "description": "Loosened objpath length check treats top-level classes as aliases.",
+      "diff": "--- a/autodocsumm/__init__.py\n+++ b/autodocsumm/__init__.py\n@@ -432,3 +432,3 @@\n             hasattr(self, 'object') and isinstance(self.object, type) and\n-            hasattr(self, 'objpath') and len(self.objpath) > 1):\n+            hasattr(self, 'objpath') and len(self.objpath) > 0):\n             # Check if parent is also a class\n",
+      "words": "autodocsumm/__init__.py:433: changing `            hasattr(self, 'objpath') and len(self.objpath) >...` to `            hasattr(self, 'objpath') and len(self.objpath) >...` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-cdcad395e77f",
+      "origin": "rule",
+      "file": "autodocsumm/__init__.py",
+      "line": 433,
+      "original": "            hasattr(self, 'objpath') and len(self.objpath) > 1):",
+      "replacement": "            hasattr(self, 'objpath') and len(self.objpath) >= 1):",
+      "description": "rule: `>` -> `>=`",
+      "diff": "--- a/autodocsumm/__init__.py\n+++ b/autodocsumm/__init__.py\n@@ -432,3 +432,3 @@\n             hasattr(self, 'object') and isinstance(self.object, type) and\n-            hasattr(self, 'objpath') and len(self.objpath) > 1):\n+            hasattr(self, 'objpath') and len(self.objpath) >= 1):\n             # Check if parent is also a class\n",
+      "words": "autodocsumm/__init__.py:433: changing `            hasattr(self, 'objpath') and len(self.objpath) >...` to `            hasattr(self, 'objpath') and len(self.objpath) >...` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-cd5f1236087f",
+      "origin": "rule",
+      "file": "autodocsumm/__init__.py",
+      "line": 421,
+      "original": "            self.add_autosummary(relative_ref_paths=True)",
+      "replacement": "            self.add_autosummary(relative_ref_paths=False)",
+      "description": "rule: `True` -> `False`",
+      "diff": "--- a/autodocsumm/__init__.py\n+++ b/autodocsumm/__init__.py\n@@ -420,3 +420,3 @@\n         if not self._is_class_alias():\n-            self.add_autosummary(relative_ref_paths=True)\n+            self.add_autosummary(relative_ref_paths=False)\n \n",
+      "words": "autodocsumm/__init__.py:421: changing `            self.add_autosummary(relative_ref_paths=True)` to `            self.add_autosummary(relative_ref_paths=False)` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-70feddeabb30",
+      "origin": "rule",
+      "file": "autodocsumm/__init__.py",
+      "line": 431,
+      "original": "        if (hasattr(self, 'parent') and self.parent is not None and",
+      "replacement": "        if (hasattr(self, 'parent') or self.parent is not None and",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/autodocsumm/__init__.py\n+++ b/autodocsumm/__init__.py\n@@ -430,3 +430,3 @@\n         # of that parent, and both are classes, then it's likely an alias\n-        if (hasattr(self, 'parent') and self.parent is not None and\n+        if (hasattr(self, 'parent') or self.parent is not None and\n             hasattr(self, 'object') and isinstance(self.object, type) and\n",
+      "words": "autodocsumm/__init__.py:431: changing `        if (hasattr(self, 'parent') and self.parent is not N...` to `        if (hasattr(self, 'parent') or self.parent is not No...` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    },
+    {
+      "id": "m-76e5f4930488",
+      "origin": "rule",
+      "file": "autodocsumm/__init__.py",
+      "line": 433,
+      "original": "            hasattr(self, 'objpath') and len(self.objpath) > 1):",
+      "replacement": "            hasattr(self, 'objpath') and len(self.objpath) > 0):",
+      "description": "rule: `1` -> `0`",
+      "diff": "--- a/autodocsumm/__init__.py\n+++ b/autodocsumm/__init__.py\n@@ -432,3 +432,3 @@\n             hasattr(self, 'object') and isinstance(self.object, type) and\n-            hasattr(self, 'objpath') and len(self.objpath) > 1):\n+            hasattr(self, 'objpath') and len(self.objpath) > 0):\n             # Check if parent is also a class\n",
+      "words": "autodocsumm/__init__.py:433: changing `            hasattr(self, 'objpath') and len(self.objpath) >...` to `            hasattr(self, 'objpath') and len(self.objpath) >...` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "autodocsumm/__init__.py": [
+        420,
+        421,
+        423,
+        431,
+        432,
+        433,
+        435,
+        437,
+        438
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 9,
+        "total": 9
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 37371,
+    "output_tokens": 6500,
+    "cost_estimate": {
+      "usd": 0.2388,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: only the first 10 of 17 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "autodocsumm.AutoSummClassDocumenter.add_content",
+      "path": "autodocsumm/__init__.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    },
+    {
+      "function": "autodocsumm.AutoSummClassDocumenter._is_class_alias",
+      "path": "autodocsumm/__init__.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "its objects' code can't run here: DocumenterBridge is not the module's own name or plain data"
+    }
+  ]
+}

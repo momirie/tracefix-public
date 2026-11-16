@@ -1,0 +1,397 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-22T11:03:32+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks mqtt_exporter.main._normalize_name_in_topic_msg"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "4126ec64830517ee43384dde82fa43d807701f57"
+  },
+  "head": {
+    "ref": "tf-agent_wrong",
+    "sha": "76d4b3ff720c372a99100edc40c7eb39a05346df"
+  },
+  "issue": {
+    "title": "Doesn't support Shelly 3EM format very well",
+    "sha256": "30d313b29c762ef5dfe77bb749b6a9c32038847e555576df2c995ada678eaade"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.10.16"
+  },
+  "summary": {
+    "text": "The verifier reproduced the bug and found an input that still breaks the fix: _normalize_name_in_topic_msg(topic='shellies/living-room-3em/emeter/0/power', payload='10') returns ('shellies/living-room-3em', {'power': '10'}), dropping the emeter index so the three phases are not told apart for a device name containing hyphens or digits. Look first at how the topic is matched for device names like…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 1.89,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.66,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 15.71,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 5 of 7 mutants; 80% is needed",
+      "duration_s": 69.69,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.714,
+        "repro_kill_rate": 0.714,
+        "pr_kill_rate": null,
+        "mutants": 7,
+        "killed": 5,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-23934037e509",
+          "m-8dee15e30a4e",
+          "m-1f0eb46bfed2",
+          "m-7ee607cff7d9",
+          "m-934250c1a475"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.7,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 5 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 10 untouched tests that passed before the fix fails after it",
+      "duration_s": 1.9,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 10,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.21,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 9
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: _normalize_name_in_topic_msg: the comparison did not finish",
+      "duration_s": 2.12,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 61.0,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 386,
+        "properties_counted": 8,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (2 reported)",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 2
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "mqtt_exporter.main._normalize_name_in_topic_msg",
+      "call": "_normalize_name_in_topic_msg(topic='shellies/living-room-3em/emeter/0/power', payload='10')",
+      "input": {
+        "topic": "'shellies/living-room-3em/emeter/0/power'",
+        "payload": "'10'"
+      },
+      "outcome": "returns ('shellies/living-room-3em', {'power': '10'})",
+      "base_outcome": "returns ('shellies/living-room-3em', {'power': '10'})",
+      "expected": null,
+      "property": {
+        "id": "t1.p1",
+        "name": "3em_phases_differentiated_any_device_name",
+        "kind": "relation",
+        "claim": "For a Shelly 3EM topic shellies/<device>/emeter/<phase>/<metric>, changing only the phase must yield a different normalized topic, so the phases can be told apart. This should hold for any device id, including real ids such as shellyem3-XXXX.",
+        "source": "issue",
+        "quote": "there's no way to either sum, or differentiate the three phases' measurements",
+        "origin": "model"
+      },
+      "also_violates": [
+        "emeter_phases_differentiated_any_device_name",
+        "emeter_phase2_differs_from_phase0"
+      ],
+      "other_inputs": 3,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 172, 173, 174, 182, 183: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "mqtt_exporter/main.py",
+      "line": 172,
+      "expect": {
+        "types": [],
+        "in_file": null
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-a382e4d88f5c",
+      "origin": "model",
+      "file": "mqtt_exporter/main.py",
+      "line": 172,
+      "original": "        if (len(info) >= 5 and ",
+      "replacement": "        if (len(info) >= 4 and ",
+      "description": "Loosened length check so 4-element topics enter the emeter branch.",
+      "diff": "--- a/mqtt_exporter/main.py\n+++ b/mqtt_exporter/main.py\n@@ -171,3 +171,3 @@\n         # Pattern: shellies/shelly-* /emeter/[0-2]/metric\n-        if (len(info) >= 5 and \n+        if (len(info) >= 4 and \n             info[0].lower() == \"shellies\" and \n",
+      "words": "mqtt_exporter/main.py:172: changing `        if (len(info) >= 5 and ` to `        if (len(info) >= 4 and ` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-043b613d06a7",
+      "origin": "model",
+      "file": "mqtt_exporter/main.py",
+      "line": 173,
+      "original": "            info[0].lower() == \"shellies\" and ",
+      "replacement": "            info[0] == \"shellies\" and ",
+      "description": "Makes the shellies prefix check case-sensitive.",
+      "diff": "--- a/mqtt_exporter/main.py\n+++ b/mqtt_exporter/main.py\n@@ -172,3 +172,3 @@\n         if (len(info) >= 5 and \n-            info[0].lower() == \"shellies\" and \n+            info[0] == \"shellies\" and \n             info[1].lower().startswith(\"shelly-\") and\n",
+      "words": "mqtt_exporter/main.py:173: changing `            info[0].lower() == \"shellies\" and ` to `            info[0] == \"shellies\" and ` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-a382e4d88f5c",
+      "origin": "rule",
+      "file": "mqtt_exporter/main.py",
+      "line": 172,
+      "original": "        if (len(info) >= 5 and ",
+      "replacement": "        if (len(info) >= 4 and ",
+      "description": "rule: `5` -> `4`",
+      "diff": "--- a/mqtt_exporter/main.py\n+++ b/mqtt_exporter/main.py\n@@ -171,3 +171,3 @@\n         # Pattern: shellies/shelly-* /emeter/[0-2]/metric\n-        if (len(info) >= 5 and \n+        if (len(info) >= 4 and \n             info[0].lower() == \"shellies\" and \n",
+      "words": "mqtt_exporter/main.py:172: changing `        if (len(info) >= 5 and ` to `        if (len(info) >= 4 and ` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-944137fc949f",
+      "origin": "rule",
+      "file": "mqtt_exporter/main.py",
+      "line": 172,
+      "original": "        if (len(info) >= 5 and ",
+      "replacement": "        if (len(info) >= 5 or ",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/mqtt_exporter/main.py\n+++ b/mqtt_exporter/main.py\n@@ -171,3 +171,3 @@\n         # Pattern: shellies/shelly-* /emeter/[0-2]/metric\n-        if (len(info) >= 5 and \n+        if (len(info) >= 5 or \n             info[0].lower() == \"shellies\" and \n",
+      "words": "mqtt_exporter/main.py:172: changing `        if (len(info) >= 5 and ` to `        if (len(info) >= 5 or ` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-92a2fafd07f8",
+      "origin": "rule",
+      "file": "mqtt_exporter/main.py",
+      "line": 173,
+      "original": "            info[0].lower() == \"shellies\" and ",
+      "replacement": "            info[0].lower() == \"shellies\" or ",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/mqtt_exporter/main.py\n+++ b/mqtt_exporter/main.py\n@@ -172,3 +172,3 @@\n         if (len(info) >= 5 and \n-            info[0].lower() == \"shellies\" and \n+            info[0].lower() == \"shellies\" or \n             info[1].lower().startswith(\"shelly-\") and\n",
+      "words": "mqtt_exporter/main.py:173: changing `            info[0].lower() == \"shellies\" and ` to `            info[0].lower() == \"shellies\" or ` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "mqtt_exporter/main.py": [
+        172,
+        173,
+        174,
+        175,
+        176,
+        178,
+        179,
+        182,
+        183
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 7,
+        "total": 9
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 23244,
+    "output_tokens": 6006,
+    "cost_estimate": {
+      "usd": 0.1926,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: only the first 10 of 24 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.10.16: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "mqtt_exporter.main._normalize_name_in_topic_msg",
+      "path": "mqtt_exporter/main.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 386,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

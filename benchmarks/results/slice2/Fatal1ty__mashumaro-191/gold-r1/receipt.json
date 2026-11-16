@@ -1,0 +1,551 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T22:28:31+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 0 of 8 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "c3c6739640533426ac08b231b747607aeb596c9c"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "4d84137f85deaa42e025440447cb48a91333da2a"
+  },
+  "issue": {
+    "title": "TypedDicts not working with `from __future__ import annotations`",
+    "sha256": "0c15e5cd0b16660a6077861462066c7212260ea746e63cab9912935a626a3da4"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "A test reproduced the TypedDict-with-postponed-annotations failure before the fix and passed after it, with no regressions found and the changed lines covered; the evidence stays at L1 because the tests did not kill enough mutants to show they guard the fix. Next, look at strengthening the tests so they fail when the fix is altered, and check the other cases named in the issue (named tuples and o…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 63.0,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "3 changed module(s) imported from the copies (6 imports in all)",
+      "duration_s": 3.08,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 3,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 13.64,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 8 mutants; 80% is needed",
+      "duration_s": 965.23,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 8,
+        "killed": 0,
+        "survived": 8,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.3,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 8 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 26251 untouched tests that passed before the fix fails after it",
+      "duration_s": 66.28,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 26251,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.72,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 33
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: mashumaro/core/meta/helpers.py: module-level code that computes a value changed (line 86); what uses it is not compared",
+      "duration_s": 3.9,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 4,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 81.87,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 5,
+        "inputs_tried": 0,
+        "properties_counted": 9,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.1,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-c0bab31f278c",
+      "origin": "model",
+      "file": "mashumaro/core/meta/helpers.py",
+      "line": 784,
+      "original": "    if not forward_module and referencing_object:",
+      "replacement": "    if forward_module and referencing_object:",
+      "description": "Inverted check on forward_module so the referencing object's module is used when a forward module exists.",
+      "diff": "--- a/mashumaro/core/meta/helpers.py\n+++ b/mashumaro/core/meta/helpers.py\n@@ -783,3 +783,3 @@\n     forward_module = getattr(referenced_type, \"__forward_module__\", None)\n-    if not forward_module and referencing_object:\n+    if forward_module and referencing_object:\n         # We can't get the module in which ForwardRef's value is defined on\n",
+      "words": "mashumaro/core/meta/helpers.py:784: changing `    if not forward_module and referencing_object:` to `    if forward_module and referencing_object:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-bca156079025",
+      "origin": "model",
+      "file": "mashumaro/core/meta/helpers.py",
+      "line": 784,
+      "original": "    if not forward_module and referencing_object:",
+      "replacement": "    if not forward_module or referencing_object:",
+      "description": "Uses 'or' instead of 'and', so referencing_object is used even when a forward module exists.",
+      "diff": "--- a/mashumaro/core/meta/helpers.py\n+++ b/mashumaro/core/meta/helpers.py\n@@ -783,3 +783,3 @@\n     forward_module = getattr(referenced_type, \"__forward_module__\", None)\n-    if not forward_module and referencing_object:\n+    if not forward_module or referencing_object:\n         # We can't get the module in which ForwardRef's value is defined on\n",
+      "words": "mashumaro/core/meta/helpers.py:784: changing `    if not forward_module and referencing_object:` to `    if not forward_module or referencing_object:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-c99310fe4983",
+      "origin": "model",
+      "file": "mashumaro/core/meta/helpers.py",
+      "line": 790,
+      "original": "            sys.modules.get(referencing_object.__module__, None),",
+      "replacement": "            sys.modules.get(referencing_object.__class__.__module__, None),",
+      "description": "Looks up the module of the object's class rather than the object itself, giving the wrong namespace.",
+      "diff": "--- a/mashumaro/core/meta/helpers.py\n+++ b/mashumaro/core/meta/helpers.py\n@@ -789,3 +789,3 @@\n         return getattr(\n-            sys.modules.get(referencing_object.__module__, None),\n+            sys.modules.get(referencing_object.__class__.__module__, None),\n             \"__dict__\",\n",
+      "words": "mashumaro/core/meta/helpers.py:790: changing `            sys.modules.get(referencing_object.__module__, N...` to `            sys.modules.get(referencing_object.__class__.__m...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-f9e5da9a85a1",
+      "origin": "model",
+      "file": "mashumaro/core/meta/helpers.py",
+      "line": 795,
+      "original": "        return getattr(forward_module, \"__dict__\", fallback)",
+      "replacement": "        return fallback",
+      "description": "Ignores the forward module namespace and always returns the fallback.",
+      "diff": "--- a/mashumaro/core/meta/helpers.py\n+++ b/mashumaro/core/meta/helpers.py\n@@ -794,2 +794,2 @@\n     else:\n-        return getattr(forward_module, \"__dict__\", fallback)\n+        return fallback\n",
+      "words": "mashumaro/core/meta/helpers.py:795: changing `        return getattr(forward_module, \"__dict__\", fallback)` to `        return fallback` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-96c97b0d9787",
+      "origin": "model",
+      "file": "mashumaro/core/meta/helpers.py",
+      "line": 781,
+      "original": "    if fallback is None:",
+      "replacement": "    if fallback is not None:",
+      "description": "Inverted fallback check, which discards a provided fallback and breaks the None default.",
+      "diff": "--- a/mashumaro/core/meta/helpers.py\n+++ b/mashumaro/core/meta/helpers.py\n@@ -780,3 +780,3 @@\n ) -> Dict[str, Any]:\n-    if fallback is None:\n+    if fallback is not None:\n         fallback = {}\n",
+      "words": "mashumaro/core/meta/helpers.py:781: changing `    if fallback is None:` to `    if fallback is not None:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-98b76b793b6f",
+      "origin": "model",
+      "file": "mashumaro/core/meta/code/builder.py",
+      "line": 338,
+      "original": "            typ, owner, self.globals",
+      "replacement": "            typ, None, self.globals",
+      "description": "Drops the owner, so the referencing module is not used for the namespace.",
+      "diff": "--- a/mashumaro/core/meta/code/builder.py\n+++ b/mashumaro/core/meta/code/builder.py\n@@ -337,3 +337,3 @@\n         globalns = get_forward_ref_referencing_globals(\n-            typ, owner, self.globals\n+            typ, None, self.globals\n         )\n",
+      "words": "mashumaro/core/meta/code/builder.py:338: changing `            typ, owner, self.globals` to `            typ, None, self.globals` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-fbf7d0ca6813",
+      "origin": "model",
+      "file": "mashumaro/jsonschema/schema.py",
+      "line": 148,
+      "original": "                get_forward_ref_referencing_globals(new_type, self.type),",
+      "replacement": "                get_forward_ref_referencing_globals(new_type),",
+      "description": "Omits the referencing type, so the module namespace fallback is lost when deriving.",
+      "diff": "--- a/mashumaro/jsonschema/schema.py\n+++ b/mashumaro/jsonschema/schema.py\n@@ -147,3 +147,3 @@\n                 new_type,\n-                get_forward_ref_referencing_globals(new_type, self.type),\n+                get_forward_ref_referencing_globals(new_type),\n                 self.__dict__,\n",
+      "words": "mashumaro/jsonschema/schema.py:148: changing `                get_forward_ref_referencing_globals(new_type...` to `                get_forward_ref_referencing_globals(new_type...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-163e3ad42cd9",
+      "origin": "model",
+      "file": "mashumaro/jsonschema/schema.py",
+      "line": 453,
+      "original": "            get_forward_ref_referencing_globals(instance.type),",
+      "replacement": "            get_forward_ref_referencing_globals(instance.type, instance.type),",
+      "description": "Passes the ForwardRef itself as the referencing object, so a wrong module namespace is used.",
+      "diff": "--- a/mashumaro/jsonschema/schema.py\n+++ b/mashumaro/jsonschema/schema.py\n@@ -452,3 +452,3 @@\n             instance.type,\n-            get_forward_ref_referencing_globals(instance.type),\n+            get_forward_ref_referencing_globals(instance.type, instance.type),\n             None,\n",
+      "words": "mashumaro/jsonschema/schema.py:453: changing `            get_forward_ref_referencing_globals(instance.typ...` to `            get_forward_ref_referencing_globals(instance.typ...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-90b8f7d2ab21",
+      "origin": "rule",
+      "file": "mashumaro/core/meta/code/builder.py",
+      "line": 337,
+      "original": "        globalns = get_forward_ref_referencing_globals(\n            typ, owner, self.globals\n        )\n        return evaluate_forward_ref(typ, globalns, self.__dict__)",
+      "replacement": "        return None",
+      "description": "rule: body of `evaluate_forward_ref` -> `return None`",
+      "diff": "--- a/mashumaro/core/meta/code/builder.py\n+++ b/mashumaro/core/meta/code/builder.py\n@@ -336,6 +336,3 @@\n     ) -> typing.Optional[typing.Type]:\n-        globalns = get_forward_ref_referencing_globals(\n-            typ, owner, self.globals\n-        )\n-        return evaluate_forward_ref(typ, globalns, self.__dict__)\n+        return None\n \n",
+      "words": "mashumaro/core/meta/code/builder.py:337: changing `        globalns = get_forward_ref_referencing_globals(\n    ...` to `        return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-72d220f47b04",
+      "origin": "rule",
+      "file": "mashumaro/core/meta/helpers.py",
+      "line": 679,
+      "original": "    parameters = inspect.signature(function).parameters\n    if arg_name is not None:\n        parameter = parameters[arg_name]\n    elif arg_pos is not None:\n        parameters.keys()\n        parameter ...",
+      "replacement": "    return None",
+      "description": "rule: body of `get_function_arg_annotation` -> `return None`",
+      "diff": "--- a/mashumaro/core/meta/helpers.py\n+++ b/mashumaro/core/meta/helpers.py\n@@ -678,18 +678,3 @@\n ) -> typing.Type:\n-    parameters = inspect.signature(function).parameters\n-    if arg_name is not None:\n-        parameter = parameters[arg_name]\n-    elif arg_pos is not None:\n-        parameters.keys()\n-        parameter = parameters[list(parameters.keys())[arg_pos]]\n-    else:\n-        raise ValueError(\"arg_name or arg_pos must be passed\")\n-    annotation = parameter.annotation\n-    if annotation is inspect.Signature.empty:\n-        raise ValueError(f\"Argument {arg_name} doesn't have annotation\")\n-    if isinstance(annotation, str):\n-        annotation = str_to_forward_ref(\n-            annotation, inspect.getmodule(function)\n-        )\n-    return annotation\n+    return None\n \n",
+      "words": "mashumaro/core/meta/helpers.py:679: changing `    parameters = inspect.signature(function).parameters\n    ...` to `    return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-8351943bc056",
+      "origin": "rule",
+      "file": "mashumaro/core/meta/helpers.py",
+      "line": 781,
+      "original": "    if fallback is None:\n        fallback = {}\n    forward_module = getattr(referenced_type, \"__forward_module__\", None)\n    if not forward_module and referencing_object:\n        # We can't get the mo...",
+      "replacement": "    return {}",
+      "description": "rule: body of `get_forward_ref_referencing_globals` -> `return {}`",
+      "diff": "--- a/mashumaro/core/meta/helpers.py\n+++ b/mashumaro/core/meta/helpers.py\n@@ -780,16 +780,2 @@\n ) -> Dict[str, Any]:\n-    if fallback is None:\n-        fallback = {}\n-    forward_module = getattr(referenced_type, \"__forward_module__\", None)\n-    if not forward_module and referencing_object:\n-        # We can't get the module in which ForwardRef's value is defined on\n-        # Python < 3.10, ForwardRef evaluation might not work properly\n-        # without this information, so we will consider the namespace of\n-        # the module in which this ForwardRef is used as globalns.\n-        return getattr(\n-            sys.modules.get(referencing_object.__module__, None),\n-            \"__dict__\",\n-            fallback,\n-        )\n-    else:\n-        return getattr(forward_module, \"__dict__\", fallback)\n+    return {}\n",
+      "words": "mashumaro/core/meta/helpers.py:781: changing `    if fallback is None:\n        fallback = {}\n    forward_m...` to `    return {}` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-96c97b0d9787",
+      "origin": "rule",
+      "file": "mashumaro/core/meta/helpers.py",
+      "line": 781,
+      "original": "    if fallback is None:",
+      "replacement": "    if fallback is not None:",
+      "description": "rule: `is` -> `is not`",
+      "diff": "--- a/mashumaro/core/meta/helpers.py\n+++ b/mashumaro/core/meta/helpers.py\n@@ -780,3 +780,3 @@\n ) -> Dict[str, Any]:\n-    if fallback is None:\n+    if fallback is not None:\n         fallback = {}\n",
+      "words": "mashumaro/core/meta/helpers.py:781: changing `    if fallback is None:` to `    if fallback is not None:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-c0bab31f278c",
+      "origin": "rule",
+      "file": "mashumaro/core/meta/helpers.py",
+      "line": 784,
+      "original": "    if not forward_module and referencing_object:",
+      "replacement": "    if forward_module and referencing_object:",
+      "description": "rule: drop `not`",
+      "diff": "--- a/mashumaro/core/meta/helpers.py\n+++ b/mashumaro/core/meta/helpers.py\n@@ -783,3 +783,3 @@\n     forward_module = getattr(referenced_type, \"__forward_module__\", None)\n-    if not forward_module and referencing_object:\n+    if forward_module and referencing_object:\n         # We can't get the module in which ForwardRef's value is defined on\n",
+      "words": "mashumaro/core/meta/helpers.py:784: changing `    if not forward_module and referencing_object:` to `    if forward_module and referencing_object:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-d7c41beed7f2",
+      "origin": "rule",
+      "file": "mashumaro/core/meta/helpers.py",
+      "line": 784,
+      "original": "    if not forward_module and referencing_object:",
+      "replacement": "    if not (not forward_module and referencing_object):",
+      "description": "rule: `not forward_module and referencing_object` -> `not (not forward_module and referencing_object)`",
+      "diff": "--- a/mashumaro/core/meta/helpers.py\n+++ b/mashumaro/core/meta/helpers.py\n@@ -783,3 +783,3 @@\n     forward_module = getattr(referenced_type, \"__forward_module__\", None)\n-    if not forward_module and referencing_object:\n+    if not (not forward_module and referencing_object):\n         # We can't get the module in which ForwardRef's value is defined on\n",
+      "words": "mashumaro/core/meta/helpers.py:784: changing `    if not forward_module and referencing_object:` to `    if not (not forward_module and referencing_object):` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-bca156079025",
+      "origin": "rule",
+      "file": "mashumaro/core/meta/helpers.py",
+      "line": 784,
+      "original": "    if not forward_module and referencing_object:",
+      "replacement": "    if not forward_module or referencing_object:",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/mashumaro/core/meta/helpers.py\n+++ b/mashumaro/core/meta/helpers.py\n@@ -783,3 +783,3 @@\n     forward_module = getattr(referenced_type, \"__forward_module__\", None)\n-    if not forward_module and referencing_object:\n+    if not forward_module or referencing_object:\n         # We can't get the module in which ForwardRef's value is defined on\n",
+      "words": "mashumaro/core/meta/helpers.py:784: changing `    if not forward_module and referencing_object:` to `    if not forward_module or referencing_object:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "mashumaro/core/meta/code/builder.py": [
+        3,
+        4,
+        337,
+        338
+      ],
+      "mashumaro/core/meta/helpers.py": [
+        5,
+        675,
+        776,
+        777,
+        778,
+        779,
+        780,
+        781,
+        782,
+        783,
+        784,
+        789,
+        790,
+        791,
+        792,
+        795
+      ],
+      "mashumaro/jsonschema/schema.py": [
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        450,
+        451,
+        452,
+        453,
+        454,
+        456,
+        457
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 20,
+        "total": 33
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "the behaviour diff could not compare get_forward_ref_referencing_globals: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 77142,
+    "output_tokens": 9200,
+    "cost_estimate": {
+      "usd": 0.4554,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 16 functions were shown",
+    "guard: only the first 10 of 12 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "mashumaro.core.meta.code.builder.CodeBuilder.evaluate_forward_ref",
+      "path": "mashumaro/core/meta/code/builder.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "mashumaro.core.meta.helpers.get_function_arg_annotation",
+      "path": "mashumaro/core/meta/helpers.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    },
+    {
+      "function": "mashumaro.core.meta.helpers.get_forward_ref_referencing_globals",
+      "path": "mashumaro/core/meta/helpers.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "mashumaro.jsonschema.schema.Instance.derive",
+      "path": "mashumaro/jsonschema/schema.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "mashumaro.jsonschema.schema.on_special_typing_primitive",
+      "path": "mashumaro/jsonschema/schema.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

@@ -1,0 +1,397 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T22:43:48+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "the fix does not fix the bug: the reproduction test fails the same way before and after it",
+    "regression: tests/client/test_headers.py::test_client_header passed before the fix and fails after it",
+    "regression: tests/client/test_headers.py::test_header_merge passed before the fix and fails after it",
+    "regression: tests/client/test_headers.py::test_header_merge_conflicting_headers passed before the fix and fails after it",
+    "regression: tests/client/test_headers.py::test_header_update passed before the fix and fails after it",
+    "regression: tests/client/test_headers.py::test_host_with_auth_and_port_in_url passed before the fix and fails after it",
+    "regression: tests/client/test_headers.py::test_host_with_non_default_port_in_url passed before the fix and fails after it",
+    "regression: tests/client/test_redirects.py::test_no_body_redirect[asyncio] passed before the fix and fails after it",
+    "regression: tests/client/test_redirects.py::test_no_body_redirect[trio] passed before the fix and fails after it",
+    "regression: tests/models/test_requests.py::test_no_content passed before the fix and fails after it",
+    "regression: tests/test_content_streams.py::test_empty_content passed before the fix and fails after it",
+    "regression: tests/test_content_streams.py::test_empty_request passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "21f533774f87292c2381376eb40f3216a48eee06"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "73ac62bd072ef2a5ced5282b4176a2f91aa6262e"
+  },
+  "issue": {
+    "title": "Sync client fails on ASGI apps with unhelpful traceback",
+    "sha256": "54139a820af0ed1f90161802c7e82cc05222e1a15f46c9892d98df1f187ca713"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier's reproduction test fails the same way before and after this fix, and 11 previously passing tests now fail, including header tests in tests/client/test_headers.py, the redirect no-body tests, and the empty-content/no-content tests. Look first at the value change in httpx._content_streams.ByteStream.get_headers, which the Judge labelled suspicious and which likely explains the empty-b…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 11.68,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 5.27,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "fix_does_not_fix",
+      "reason": "attempt 1: the test fails before and after the fix with the same failure signature, also after the model was shown the result This rests on a test written by the model claude-sonnet-5-5.",
+      "duration_s": 14.18,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "skipped",
+      "reason": "there is no reproduction test to judge the tests with (fix_does_not_fix)",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": null,
+        "repro_kill_rate": null,
+        "pr_kill_rate": null,
+        "mutants": 0,
+        "killed": 0,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 0,
+        "rule_kill_rate": null,
+        "rule_kinds": [],
+        "rule_kinds_absent": [],
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "11 confirmed: tests/client/test_headers.py::test_client_header, tests/client/test_headers.py::test_header_merge, tests/client/test_headers.py::test_header_merge_conflicting_headers, tests/client/test_headers.py::test_header_update, tests/client/test_headers.py::test_host_with_auth_and_port_in_url and 6 more",
+      "duration_s": 53.89,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/client/test_headers.py tests/client/test_redirects.py tests/models/test_requests.py tests/test_content_streams.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 478,
+        "not_run": 0,
+        "regressions": 11,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 2
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "196 input(s) compared on 1 function(s): 2 changed with the fix",
+      "duration_s": 7.25,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 196,
+        "changes": 2,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 394 inputs against 4 properties",
+      "duration_s": 9.07,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 394,
+        "properties_counted": 4,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.03,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "not_run",
+      "reason": "the main test did not reproduce the bug",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 0,
+        "test_file": null,
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "httpx._content_streams.ByteStream.get_headers",
+      "kind": "value",
+      "count": 2,
+      "before": "returns {}",
+      "after": "returns {'Content-Length': '0'}",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "suspicious",
+          "reason": "The issue is about the sync Client being handed an ASGI app (its docstring says ASGI). Nothing in it mentions Content-Length on empty bodies, so adding 'Content-Length: 0' for body='' is unrequested."
+        },
+        {
+          "change": "c2",
+          "label": "suspicious",
+          "reason": "The issue concerns ASGI apps used with the sync Client and asks nothing about ByteStream headers. Emitting 'Content-Length: 0' for b'' goes beyond what was reported."
+        }
+      ],
+      "examples": [
+        {
+          "call": "get_headers(self=\"ByteStream(body='')\")",
+          "before": "returns {}",
+          "after": "returns {'Content-Length': '0'}"
+        },
+        {
+          "call": "get_headers(self=\"ByteStream(body=b'')\")",
+          "before": "returns {}",
+          "after": "returns {'Content-Length': '0'}"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/client/test_headers.py",
+      "test": "test_client_header",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert {'headers': {...h': '0', ...}} == {'headers': {...-value', ...}}",
+      "line": 27
+    },
+    {
+      "file": "tests/client/test_headers.py",
+      "test": "test_header_merge",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert {'headers': {...h': '0', ...}} == {'headers': {...le.org', ...}}",
+      "line": 51
+    },
+    {
+      "file": "tests/client/test_headers.py",
+      "test": "test_header_merge_conflicting_headers",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert {'headers': {...h': '0', ...}} == {'headers': {...le.org', ...}}",
+      "line": 72
+    },
+    {
+      "file": "tests/client/test_headers.py",
+      "test": "test_header_update",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert {'headers': {...h': '0', ...}} == {'headers': {...le.org', ...}}",
+      "line": 93
+    },
+    {
+      "file": "tests/client/test_headers.py",
+      "test": "test_host_with_auth_and_port_in_url",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert {'headers': {...-alive', ...}} == {'headers': {...-alive', ...}}",
+      "line": 133
+    },
+    {
+      "file": "tests/client/test_headers.py",
+      "test": "test_host_with_non_default_port_in_url",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert {'headers': {...-alive', ...}} == {'headers': {...-alive', ...}}",
+      "line": 158
+    },
+    {
+      "file": "tests/client/test_redirects.py",
+      "test": "test_no_body_redirect[asyncio]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert 'content-length' not in {'accept': '*/*', 'accept-encoding': 'gzip, deflate, br', 'connection': 'keep-alive', 'content-length': '0', ...}",
+      "line": 286
+    },
+    {
+      "file": "tests/client/test_redirects.py",
+      "test": "test_no_body_redirect[trio]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: exceptiongroup.ExceptionGroup: Exceptions from Trio nursery (1 sub-exception)",
+      "line": 286
+    },
+    {
+      "file": "tests/models/test_requests.py",
+      "test": "test_no_content",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert 'Content-Length' not in Headers({'host': 'example.org', 'user-agent': 'python-httpx/0.12.1', 'accept': '*/*', 'accept-encoding': 'gzip, deflate, br', 'connection': 'keep-alive', 'content-length': '0'})",
+      "line": 11
+    },
+    {
+      "file": "tests/test_content_streams.py",
+      "test": "test_empty_content",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert {'Content-Length': '0'} == {}",
+      "line": 22
+    },
+    {
+      "file": "tests/test_content_streams.py",
+      "test": "test_empty_request",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert {'Content-Length': '0'} == {}",
+      "line": 193
+    }
+  ],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "httpx/_content_streams.py": [
+        73,
+        74
+      ]
+    },
+    "sets": [],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "guard: skipped (there is no reproduction test to judge the tests with (fix_does_not_fix))"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 35085,
+    "output_tokens": 4122,
+    "cost_estimate": {
+      "usd": 0.1893,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "httpx._content_streams.ByteStream.get_headers",
+      "path": "httpx/_content_streams.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 394,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

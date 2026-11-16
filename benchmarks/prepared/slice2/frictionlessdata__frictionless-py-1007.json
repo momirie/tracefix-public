@@ -1,0 +1,32 @@
+{
+ "instance_id": "frictionlessdata__frictionless-py-1007",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; ImportError",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "pylama.pytest",
+  "pytest_asyncio.plugin",
+  "pytest_mock",
+  "pytest_only.plugin",
+  "pytest_timeout",
+  "pytest_vcr",
+  "requests_mock.contrib._pytest_plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 18,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 23.172
+}

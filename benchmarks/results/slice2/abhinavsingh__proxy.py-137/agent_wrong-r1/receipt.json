@@ -1,0 +1,635 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T16:23:04+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 0 of 5 mutants; 80% is needed, but the existing suite could not run cleanly on the fixed code, so the rate is incomplete"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "69445a8921ba82738bde1f64e0939a34d08aaae2"
+  },
+  "head": {
+    "ref": "tf-agent_wrong",
+    "sha": "b90594032c50df01f419013c28dd538315f3ce44"
+  },
+  "issue": {
+    "title": "[HttpParser] Handle invalid/malformed request chunks from client",
+    "sha256": "f8ea962c17cbcb50b04b5d93316cea7ff73189c2ae5dbeac958aa669c19db987"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The bug was reproduced: a test fails before the fix and passes after it, and the fix changes how HttpParser.process_line raises exceptions on malformed request lines, a change the Judge labelled as intended. The most important next step is getting the existing suite to run cleanly on the fixed code, because the guard stage was inconclusive and regressions were skipped, so the mutation rate is inc…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite no_tests",
+      "duration_s": 1.18,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "no_tests",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 2.54,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 23.03,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "inconclusive",
+      "reason": "the tests killed 0 of 5 mutants; 80% is needed, but the existing suite could not run cleanly on the fixed code, so the rate is incomplete",
+      "duration_s": 47.33,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 5,
+        "killed": 0,
+        "survived": 5,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 9,
+        "rule_kill_rate": 0.111,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 5 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "skipped",
+      "reason": "no test the fix left untouched passed before it",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 0,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 1.71,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 4
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "204 input(s) compared on 1 function(s): 198 changed with the fix",
+      "duration_s": 55.56,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 204,
+        "changes": 198,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 318 inputs against 2 properties",
+      "duration_s": 46.68,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 318,
+        "properties_counted": 2,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 10
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.13,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "proxy.HttpParser.process_line",
+      "kind": "exception",
+      "count": 198,
+      "before": "raises IndexError; left its arguments as builtins.list([builtins.tuple(['self', proxy.HttpParser(body=None, buffer=b'', bytes=b'', chunk_parser=None, code=None, headers=builtins.dict({}), host=None, method=None, path=None, port=None, reason=None, state=1, total_size=0, type=3, url=None, version=b'')]), builtins.tuple(['raw', b''])])",
+      "after": "raises ProtocolException: Invalid response line b''; left its arguments as builtins.list([builtins.tuple(['self', proxy.HttpParser(body=None, buffer=b'', bytes=b'', chunk_parser=None, code=None, headers=builtins.dict({}), host=None, method=None, path=None, port=None, reason=None, state=1, total_size=0, type=3, url=None, version=None)]), builtins.tuple(['raw', b''])])",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The issue asks HttpParser to be strict about malformed lines rather than crash with IndexError; an empty response line now raises ProtocolException, the same rule applied to the response branch."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "The issue says HttpParser must ignore invalid chunks or drop the connection; an empty status line now raises ProtocolException instead of an IndexError crash."
+        },
+        {
+          "change": "c3",
+          "label": "intended",
+          "reason": "A single-token line is malformed; per the issue it should be rejected cleanly, and ProtocolException does that where IndexError crashed."
+        },
+        {
+          "change": "c4",
+          "label": "intended",
+          "reason": "A malformed one-token line now gets the strict ProtocolException handling the issue's expected behaviour asks for, replacing an IndexError."
+        },
+        {
+          "change": "c5",
+          "label": "intended",
+          "reason": "A bare CRLF line is malformed input like the issue's telnet newline; it is now rejected with ProtocolException instead of crashing with IndexError."
+        }
+      ],
+      "examples": [
+        {
+          "call": "process_line(self='HttpParser(parser_type=3)', raw=b'')",
+          "before": "raises IndexError; left its arguments as builtins.list([builtins.tuple(['self', proxy.HttpParser(body=None, buffer=b'', bytes=b'', chunk_parser=None, code=None, headers=builtins.dict({}), host=None, method=None, path=None, port=None, reason=None, state=1, total_size=0, type=3, url=None, version=b'')]), builtins.tuple(['raw', b''])])",
+          "after": "raises ProtocolException: Invalid response line b''; left its arguments as builtins.list([builtins.tuple(['self', proxy.HttpParser(body=None, buffer=b'', bytes=b'', chunk_parser=None, code=None, headers=builtins.dict({}), host=None, method=None, path=None, port=None, reason=None, state=1, total_size=0, type=3, url=None, version=None)]), builtins.tuple(['raw', b''])])"
+        },
+        {
+          "call": "process_line(self='HttpParser(parser_type=2)', raw=b'')",
+          "before": "raises IndexError; left its arguments as builtins.list([builtins.tuple(['self', proxy.HttpParser(body=None, buffer=b'', bytes=b'', chunk_parser=None, code=None, headers=builtins.dict({}), host=None, method=None, path=None, port=None, reason=None, state=1, total_size=0, type=2, url=None, version=b'')]), builtins.tuple(['raw', b''])])",
+          "after": "raises ProtocolException: Invalid response line b''; left its arguments as builtins.list([builtins.tuple(['self', proxy.HttpParser(body=None, buffer=b'', bytes=b'', chunk_parser=None, code=None, headers=builtins.dict({}), host=None, method=None, path=None, port=None, reason=None, state=1, total_size=0, type=2, url=None, version=None)]), builtins.tuple(['raw', b''])])"
+        },
+        {
+          "call": "process_line(self='HttpParser(parser_type=0)', raw=b'a')",
+          "before": "raises IndexError; left its arguments as builtins.list([builtins.tuple(['self', proxy.HttpParser(body=None, buffer=b'', bytes=b'', chunk_parser=None, code=None, headers=builtins.dict({}), host=None, method=None, path=None, port=None, reason=None, state=1, total_size=0, type=0, url=None, version=b'a')]), builtins.tuple(['raw', b'a'])])",
+          "after": "raises ProtocolException: Invalid response line b'a'; left its arguments as builtins.list([builtins.tuple(['self', proxy.HttpParser(body=None, buffer=b'', bytes=b'', chunk_parser=None, code=None, headers=builtins.dict({}), host=None, method=None, path=None, port=None, reason=None, state=1, total_size=0, type=0, url=None, version=None)]), builtins.tuple(['raw', b'a'])])"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-a1f6a0210625",
+      "origin": "model",
+      "file": "proxy.py",
+      "line": 727,
+      "original": "            if len(line) < 3:",
+      "replacement": "            if len(line) < 2:",
+      "description": "Loosened request line check so lines with only two parts are accepted.",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -726,3 +726,3 @@\n         if self.type == httpParserTypes.REQUEST_PARSER:\n-            if len(line) < 3:\n+            if len(line) < 2:\n                 raise ProtocolException('Invalid request line %r' % raw)\n",
+      "words": "proxy.py:727: changing `            if len(line) < 3:` to `            if len(line) < 2:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-e1437f300950",
+      "origin": "model",
+      "file": "proxy.py",
+      "line": 727,
+      "original": "            if len(line) < 3:",
+      "replacement": "            if len(line) <= 3:",
+      "description": "Off-by-one rejects valid request lines with exactly three parts.",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -726,3 +726,3 @@\n         if self.type == httpParserTypes.REQUEST_PARSER:\n-            if len(line) < 3:\n+            if len(line) <= 3:\n                 raise ProtocolException('Invalid request line %r' % raw)\n",
+      "words": "proxy.py:727: changing `            if len(line) < 3:` to `            if len(line) <= 3:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-be87525fba76",
+      "origin": "model",
+      "file": "proxy.py",
+      "line": 733,
+      "original": "            if len(line) < 2:",
+      "replacement": "            if len(line) < 1:",
+      "description": "Loosened response line check so single-token lines are accepted.",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -732,3 +732,3 @@\n         else:\n-            if len(line) < 2:\n+            if len(line) < 1:\n                 raise ProtocolException('Invalid response line %r' % raw)\n",
+      "words": "proxy.py:733: changing `            if len(line) < 2:` to `            if len(line) < 1:` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "HttpParser(parser_type=3).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "raises IndexError"
+        },
+        {
+          "call": "HttpParser(parser_type=2).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "raises IndexError"
+        },
+        {
+          "call": "HttpParser(parser_type=8899).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "raises IndexError"
+        }
+      ]
+    },
+    {
+      "id": "m-6b7f3ef04d7c",
+      "origin": "model",
+      "file": "proxy.py",
+      "line": 733,
+      "original": "            if len(line) < 2:",
+      "replacement": "            if len(line) <= 2:",
+      "description": "Off-by-one rejects valid response lines with exactly two parts (no reason phrase).",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -732,3 +732,3 @@\n         else:\n-            if len(line) < 2:\n+            if len(line) <= 2:\n                 raise ProtocolException('Invalid response line %r' % raw)\n",
+      "words": "proxy.py:733: changing `            if len(line) < 2:` to `            if len(line) <= 2:` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "HttpParser(parser_type=16915).process_line(raw=b'Content-Length: ')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'Content-Length: '"
+        },
+        {
+          "call": "HttpParser(parser_type=0).process_line(raw=b'Content-Length: ')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'Content-Length: '"
+        },
+        {
+          "call": "HttpParser(parser_type=-845032169578702123).process_line(raw=b'ul\\x11\\xf6\\xb1\\xc0/\\xcc\\x1a\\r\\xf3\\xae ]\\xee\"RB')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'ul\\x11\\xf6\\xb1\\xc0/\\xcc\\x1a\\r\\xf3\\xae ]\\xee\"RB'"
+        }
+      ]
+    },
+    {
+      "id": "m-06869ea9525d",
+      "origin": "model",
+      "file": "proxy.py",
+      "line": 733,
+      "original": "            if len(line) < 2:",
+      "replacement": "            if len(line) < 3:",
+      "description": "Response check requires a reason phrase, rejecting valid lines without one.",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -732,3 +732,3 @@\n         else:\n-            if len(line) < 2:\n+            if len(line) < 3:\n                 raise ProtocolException('Invalid response line %r' % raw)\n",
+      "words": "proxy.py:733: changing `            if len(line) < 2:` to `            if len(line) < 3:` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "HttpParser(parser_type=16915).process_line(raw=b'Content-Length: ')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'Content-Length: '"
+        },
+        {
+          "call": "HttpParser(parser_type=0).process_line(raw=b'Content-Length: ')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'Content-Length: '"
+        },
+        {
+          "call": "HttpParser(parser_type=-845032169578702123).process_line(raw=b'ul\\x11\\xf6\\xb1\\xc0/\\xcc\\x1a\\r\\xf3\\xae ]\\xee\"RB')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'ul\\x11\\xf6\\xb1\\xc0/\\xcc\\x1a\\r\\xf3\\xae ]\\xee\"RB'"
+        }
+      ]
+    },
+    {
+      "id": "m-94e6e64ffd5c",
+      "origin": "rule",
+      "file": "proxy.py",
+      "line": 725,
+      "original": "        line = raw.split(WHITESPACE)\n        if self.type == httpParserTypes.REQUEST_PARSER:\n            if len(line) < 3:\n                raise ProtocolException('Invalid request line %r' % raw)\n    ...",
+      "replacement": "        return None",
+      "description": "rule: body of `process_line` -> `return None`",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -724,15 +724,3 @@\n     def process_line(self, raw: bytes) -> None:\n-        line = raw.split(WHITESPACE)\n-        if self.type == httpParserTypes.REQUEST_PARSER:\n-            if len(line) < 3:\n-                raise ProtocolException('Invalid request line %r' % raw)\n-            self.method = line[0].upper()\n-            self.set_url(line[1])\n-            self.version = line[2]\n-        else:\n-            if len(line) < 2:\n-                raise ProtocolException('Invalid response line %r' % raw)\n-            self.version = line[0]\n-            self.code = line[1]\n-            self.reason = WHITESPACE.join(line[2:])\n+        return None\n \n",
+      "words": "proxy.py:725: changing `        line = raw.split(WHITESPACE)\n        if self.type ==...` to `        return None` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "HttpParser(parser_type=3).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "returns None"
+        },
+        {
+          "call": "HttpParser(parser_type=2).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "returns None"
+        },
+        {
+          "call": "HttpParser(parser_type=8899).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "returns None"
+        }
+      ]
+    },
+    {
+      "id": "m-e1437f300950",
+      "origin": "rule",
+      "file": "proxy.py",
+      "line": 727,
+      "original": "            if len(line) < 3:",
+      "replacement": "            if len(line) <= 3:",
+      "description": "rule: `<` -> `<=`",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -726,3 +726,3 @@\n         if self.type == httpParserTypes.REQUEST_PARSER:\n-            if len(line) < 3:\n+            if len(line) <= 3:\n                 raise ProtocolException('Invalid request line %r' % raw)\n",
+      "words": "proxy.py:727: changing `            if len(line) < 3:` to `            if len(line) <= 3:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-a1f6a0210625",
+      "origin": "rule",
+      "file": "proxy.py",
+      "line": 727,
+      "original": "            if len(line) < 3:",
+      "replacement": "            if len(line) < 2:",
+      "description": "rule: `3` -> `2`",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -726,3 +726,3 @@\n         if self.type == httpParserTypes.REQUEST_PARSER:\n-            if len(line) < 3:\n+            if len(line) < 2:\n                 raise ProtocolException('Invalid request line %r' % raw)\n",
+      "words": "proxy.py:727: changing `            if len(line) < 3:` to `            if len(line) < 2:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-6b4c6200e8c7",
+      "origin": "rule",
+      "file": "proxy.py",
+      "line": 727,
+      "original": "            if len(line) < 3:",
+      "replacement": "            if len(line) < 4:",
+      "description": "rule: `3` -> `4`",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -726,3 +726,3 @@\n         if self.type == httpParserTypes.REQUEST_PARSER:\n-            if len(line) < 3:\n+            if len(line) < 4:\n                 raise ProtocolException('Invalid request line %r' % raw)\n",
+      "words": "proxy.py:727: changing `            if len(line) < 3:` to `            if len(line) < 4:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-ca15fe1163e8",
+      "origin": "rule",
+      "file": "proxy.py",
+      "line": 733,
+      "original": "            if len(line) < 2:",
+      "replacement": "            if not (len(line) < 2):",
+      "description": "rule: `len(line) < 2` -> `not (len(line) < 2)`",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -732,3 +732,3 @@\n         else:\n-            if len(line) < 2:\n+            if not (len(line) < 2):\n                 raise ProtocolException('Invalid response line %r' % raw)\n",
+      "words": "proxy.py:733: changing `            if len(line) < 2:` to `            if not (len(line) < 2):` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "HttpParser(parser_type=3).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "raises IndexError"
+        },
+        {
+          "call": "HttpParser(parser_type=2).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "raises IndexError"
+        },
+        {
+          "call": "HttpParser(parser_type=8899).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "raises IndexError"
+        }
+      ]
+    },
+    {
+      "id": "m-6b7f3ef04d7c",
+      "origin": "rule",
+      "file": "proxy.py",
+      "line": 733,
+      "original": "            if len(line) < 2:",
+      "replacement": "            if len(line) <= 2:",
+      "description": "rule: `<` -> `<=`",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -732,3 +732,3 @@\n         else:\n-            if len(line) < 2:\n+            if len(line) <= 2:\n                 raise ProtocolException('Invalid response line %r' % raw)\n",
+      "words": "proxy.py:733: changing `            if len(line) < 2:` to `            if len(line) <= 2:` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "HttpParser(parser_type=16915).process_line(raw=b'Content-Length: ')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'Content-Length: '"
+        },
+        {
+          "call": "HttpParser(parser_type=0).process_line(raw=b'Content-Length: ')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'Content-Length: '"
+        },
+        {
+          "call": "HttpParser(parser_type=-845032169578702123).process_line(raw=b'ul\\x11\\xf6\\xb1\\xc0/\\xcc\\x1a\\r\\xf3\\xae ]\\xee\"RB')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'ul\\x11\\xf6\\xb1\\xc0/\\xcc\\x1a\\r\\xf3\\xae ]\\xee\"RB'"
+        }
+      ]
+    },
+    {
+      "id": "m-be87525fba76",
+      "origin": "rule",
+      "file": "proxy.py",
+      "line": 733,
+      "original": "            if len(line) < 2:",
+      "replacement": "            if len(line) < 1:",
+      "description": "rule: `2` -> `1`",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -732,3 +732,3 @@\n         else:\n-            if len(line) < 2:\n+            if len(line) < 1:\n                 raise ProtocolException('Invalid response line %r' % raw)\n",
+      "words": "proxy.py:733: changing `            if len(line) < 2:` to `            if len(line) < 1:` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "HttpParser(parser_type=3).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "raises IndexError"
+        },
+        {
+          "call": "HttpParser(parser_type=2).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "raises IndexError"
+        },
+        {
+          "call": "HttpParser(parser_type=8899).process_line(raw=b'')",
+          "fix": "raises ProtocolException: Invalid response line b''",
+          "mutant": "raises IndexError"
+        }
+      ]
+    },
+    {
+      "id": "m-06869ea9525d",
+      "origin": "rule",
+      "file": "proxy.py",
+      "line": 733,
+      "original": "            if len(line) < 2:",
+      "replacement": "            if len(line) < 3:",
+      "description": "rule: `2` -> `3`",
+      "diff": "--- a/proxy.py\n+++ b/proxy.py\n@@ -732,3 +732,3 @@\n         else:\n-            if len(line) < 2:\n+            if len(line) < 3:\n                 raise ProtocolException('Invalid response line %r' % raw)\n",
+      "words": "proxy.py:733: changing `            if len(line) < 2:` to `            if len(line) < 3:` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "HttpParser(parser_type=16915).process_line(raw=b'Content-Length: ')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'Content-Length: '"
+        },
+        {
+          "call": "HttpParser(parser_type=0).process_line(raw=b'Content-Length: ')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'Content-Length: '"
+        },
+        {
+          "call": "HttpParser(parser_type=-845032169578702123).process_line(raw=b'ul\\x11\\xf6\\xb1\\xc0/\\xcc\\x1a\\r\\xf3\\xae ]\\xee\"RB')",
+          "fix": "returns None",
+          "mutant": "raises ProtocolException: Invalid response line b'ul\\x11\\xf6\\xb1\\xc0/\\xcc\\x1a\\r\\xf3\\xae ]\\xee\"RB'"
+        }
+      ]
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "proxy.py": [
+        727,
+        728,
+        733,
+        734
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 2,
+        "total": 4
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "regressions: skipped (no test the fix left untouched passed before it)"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 43948,
+    "output_tokens": 5558,
+    "cost_estimate": {
+      "usd": 0.2709,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: the existing suite did not run cleanly on the fixed code",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "proxy.HttpParser.process_line",
+      "path": "proxy.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 318,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

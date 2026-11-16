@@ -1,0 +1,11 @@
+{
+ "key": "82eac6841a541a3d4a99d192fe7e05246324d31e3222123fa456b0c9b02d50a8",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 2719,
+  "output_tokens": 178,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from gateway.listener import Listener\\n\\n\\ndef test_port_none_does_not_crash_and_gives_default() -> None:\\n    listener = Listener()\\n    result = listener.port(None)\\n    assert result == listener.default_port\\n\",\"rationale\":\"The issue reports port(None) crashing with AttributeError and expects the default port. The test uses a default-constructed Listener and asserts that port(None) returns its own default_port, so it fails on base with AttributeError and passes on head, where 8080 is the default.\"}"
+ },
+ "role": "reproducer"
+}

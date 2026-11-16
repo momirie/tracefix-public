@@ -1,0 +1,77 @@
+{
+ "instance_id": "omni-us__jsonargparse-770",
+ "excluded": null,
+ "detail": "",
+ "python": "3.12.12",
+ "isolation": "strict",
+ "pip_changes": [
+  "anthropic - -> 1.15.0",
+  "anyio - -> 4.15.1",
+  "defusedxml - -> 0.7.1",
+  "docstring-parser - -> 0.18.0",
+  "h11 - -> 0.16.0",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis - -> 6.170.0",
+  "idna 3.11 -> 3.20",
+  "jiter - -> 0.17.0",
+  "opentelemetry-api - -> 1.45.1",
+  "pydantic 2.12.5 -> 2.14.1",
+  "pydantic-core 2.41.5 -> 2.50.1",
+  "sniffio - -> 1.3.1",
+  "sortedcontainers - -> 2.4.0",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.15.0 -> 4.16.0",
+  "typing-inspection 0.4.2 -> 0.4.4"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "pytest_subtests.plugin"
+ ],
+ "suite_seconds": 9.032,
+ "suite_timeout": 120,
+ "source_hunks": 8,
+ "variants": [
+  {
+   "index": 0,
+   "path": "jsonargparse/_common.py",
+   "old_start": 96,
+   "old_len": 6,
+   "label": "hidden_tests_pass",
+   "failing": 0
+  },
+  {
+   "index": 1,
+   "path": "jsonargparse/_common.py",
+   "old_start": 107,
+   "old_len": 6,
+   "label": "broken",
+   "failing": 10
+  },
+  {
+   "index": 2,
+   "path": "jsonargparse/_common.py",
+   "old_start": 129,
+   "old_len": 6,
+   "label": "hidden_tests_pass",
+   "failing": 0
+  },
+  {
+   "index": 3,
+   "path": "jsonargparse/_common.py",
+   "old_start": 150,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 1
+  }
+ ],
+ "kept": 3,
+ "commits": {
+  "base": "cb4e6338efbadd60f39b670cb311dbdd17ee2877",
+  "gold": "17d119b43932cf68a2e0bd969deb6a4993a468e2",
+  "v3": "6da4abbf6fbcc4206a5f80ba86223eeb511d5add"
+ },
+ "seconds": 48.641
+}

@@ -1,0 +1,27 @@
+{
+ "instance_id": "rthalley__dnspython-255",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; SyntaxError",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [
+  "=0.13",
+  "=2.1",
+  "=2.6.1"
+ ],
+ "plugins": [],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 10,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 15.797
+}

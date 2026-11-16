@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T21:45:44+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "the fix does not fix the bug: the reproduction test fails the same way before and after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "f75e21c4b159f2ef7ecb421768fbf3a15bf2bee3"
+  },
+  "head": {
+    "ref": "tf-v1",
+    "sha": "f5b91376766df50ca7f62776f471968ed3610882"
+  },
+  "issue": {
+    "title": "Broken tests on Python 3.7+ (urllib.parse behavior has changed)",
+    "sha256": "1a9973633c6b722591405c3e874223aa2c0300c03ed7877ea166a2dfe4ae851c"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier's reproduction test for the CONNECT host/port parsing failure on Python 3.7+ fails the same way before and after this fix, so the fix was not shown to resolve the bug; no regressions were found and the changed lines were covered. Next, check how the fix handles CONNECT targets like 'host:443' under the newer urllib.parse behavior, since the 'Both host and port must exist' path still…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 6.44,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 2.53,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "fix_does_not_fix",
+      "reason": "attempt 1: the test fails before and after the fix with the same failure signature, also after the model was shown the result This rests on a test written by the model claude-sonnet-5-5.",
+      "duration_s": 6.21,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no proxy/testing/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "skipped",
+      "reason": "there is no reproduction test to judge the tests with (fix_does_not_fix)",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": null,
+        "repro_kill_rate": null,
+        "pr_kill_rate": null,
+        "mutants": 0,
+        "killed": 0,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 0,
+        "rule_kill_rate": null,
+        "rule_kinds": [],
+        "rule_kinds_absent": [],
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 114 untouched tests that passed before the fix fails after it",
+      "duration_s": 24.2,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 114,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 2
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call",
+      "duration_s": 0.1,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "not_run",
+      "reason": "the main test did not reproduce the bug",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 0,
+        "test_file": null,
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "proxy/common/version.py": [
+        11
+      ],
+      "setup.py": [
+        13
+      ]
+    },
+    "sets": [],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "guard: skipped (there is no reproduction test to judge the tests with (fix_does_not_fix))",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call)",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call)"
+  ],
+  "llm": {
+    "calls": 3,
+    "input_tokens": 45259,
+    "output_tokens": 1207,
+    "cost_estimate": {
+      "usd": 0.1316,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": []
+}

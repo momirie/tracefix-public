@@ -1,0 +1,73 @@
+<!doctype html>
+<!-- The social banners' source. Each <section> is one image at its exact pixel size;
+     `node scripts/brand_banners.js` renders them to PNG files beside this file.
+     The idea is the logo's, drawn wide: many inputs pass (dots), one does not fit (the red square).
+     One red square per image, so a banner carries the wordmark at most, never the symbol
+     (docs/brand/GUIDELINES.md, "System ideas"). -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tracefix social banners</title>
+<style>
+@font-face{font-family:'Newsreader';font-weight:400 500;src:url(../../landing/assets/fonts/newsreader-latin.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-weight:400;src:url(../../landing/assets/fonts/ibm-plex-mono-latin-400.woff2) format('woff2')}
+*{box-sizing:border-box;margin:0}
+body{background:#333;display:flex;flex-direction:column;gap:24px;padding:24px;align-items:flex-start}
+/* One banner. --p is the dot pitch: a dot is 0.8 of it across, like the logo (48 in 60). */
+.b{position:relative;overflow:hidden;background:#0b0b0b;color:#f4f4f2;font-family:'Newsreader',Georgia,serif}
+.field{position:absolute;top:0;right:0;bottom:0;width:var(--fw);
+  background-image:radial-gradient(circle at center,rgba(255,255,255,.2) 0 39%,transparent 41%);
+  background-size:var(--p) var(--p);background-position:right calc(var(--p) * -.5) top var(--oy,0px);
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 70%);mask-image:linear-gradient(to right,transparent,#000 70%)}
+/* The counterexample: --c columns from the right edge, --r rows down, in the dots' own grid. */
+.cx{position:absolute;width:calc(var(--p) * .8);height:calc(var(--p) * .8);background:#cf222e;
+  right:calc(var(--p) * (var(--c) - .5) + var(--p) * .1);top:calc(var(--oy,0px) + var(--p) * var(--r) + var(--p) * .1)}
+.cx::before{content:"";position:absolute;inset:calc(var(--p) * -.1);background:#0b0b0b;z-index:-1}
+.say{position:absolute;z-index:1;font-weight:400;letter-spacing:-.02em;line-height:1.06}
+.say .soft{color:#8a8f98;display:block}
+.say.one .soft{display:inline}
+.mark{position:absolute;z-index:1}
+.sub{position:absolute;z-index:1;font-family:'IBM Plex Mono',monospace;color:#8a8f98;text-transform:uppercase;letter-spacing:.08em}
+
+/* X / Bluesky header, 3:1. The avatar covers the bottom left; phones crop top and bottom. */
+#x-header{width:1500px;height:500px;--p:50px;--fw:820px;--c:5;--r:5}
+#x-header .say{left:96px;top:104px;font-size:70px}
+
+/* LinkedIn company page cover. The company logo covers the bottom left. */
+#linkedin-company{width:1128px;height:191px;--p:24px;--fw:330px;--c:4;--r:4;--oy:-.5px}
+#linkedin-company .say{left:212px;top:76px;font-size:33px}
+
+/* LinkedIn personal profile background. The photo covers the bottom left. */
+#linkedin-personal{width:1584px;height:396px;--p:44px;--fw:540px;--c:5;--r:4}
+#linkedin-personal .mark{left:420px;top:70px;height:46px}
+#linkedin-personal .say{left:420px;top:150px;font-size:60px}
+
+/* GitHub repository social preview (also fits any 2:1 link preview). */
+#github-social{width:1280px;height:640px;--p:64px;--fw:500px;--c:3;--r:5}
+#github-social .mark{left:88px;top:76px;height:64px}
+#github-social .say{left:88px;top:222px;font-size:74px}
+#github-social .sub{left:88px;bottom:84px;font-size:19px}
+</style>
+</head>
+<body>
+<section class="b" id="x-header">
+  <div class="field"></div><div class="cx"></div>
+  <p class="say">Your fix passed CI. <span class="soft">Now let’s try to break it.</span></p>
+</section>
+<section class="b" id="linkedin-company">
+  <div class="field"></div><div class="cx"></div>
+  <p class="say one">Your fix passed CI. <span class="soft">Now let’s try to break it.</span></p>
+</section>
+<section class="b" id="linkedin-personal">
+  <div class="field"></div><div class="cx"></div>
+  <img class="mark" src="../masters/tracefix-wordmark-white.svg" alt="Tracefix">
+  <p class="say">Your fix passed CI. <span class="soft">Now let’s try to break it.</span></p>
+</section>
+<section class="b" id="github-social">
+  <div class="field"></div><div class="cx"></div>
+  <img class="mark" src="../masters/tracefix-wordmark-white.svg" alt="Tracefix">
+  <p class="say">Your fix passed CI. <span class="soft">Now let’s try to break it.</span></p>
+  <p class="sub">An open-source fix verifier for Python</p>
+</section>
+</body>
+</html>

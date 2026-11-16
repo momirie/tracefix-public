@@ -1,0 +1,23 @@
+{
+ "instance_id": "ShawHahnLab__igseq-12",
+ "excluded": "hidden_tests_fail_on_gold",
+ "detail": "2 of 3",
+ "python": "3.9.22",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 1.617,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 28.235
+}

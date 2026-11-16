@@ -1,0 +1,123 @@
+{
+ "instance_id": "NREL__hescore-hpxml-149",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "anyio.pytest_plugin"
+ ],
+ "suite_seconds": 3.571,
+ "suite_timeout": 120,
+ "source_hunks": 2,
+ "variants": [
+  {
+   "index": 0,
+   "path": "hescorehpxml/base.py",
+   "old_start": 828,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 2,
+   "functions": [
+    {
+     "path": "hescorehpxml/base.py",
+     "function": "HPXMLtoHEScoreTranslatorBase.get_building_address"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "hescorehpxml/base.py",
+   "old_start": 869,
+   "old_len": 16,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "hescorehpxml/base.py",
+     "function": "HPXMLtoHEScoreTranslatorBase.get_building_about"
+    }
+   ]
+  }
+ ],
+ "kept": 0,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 47532,
+   "label": "partial",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "debug_priority.py",
+     "function": null
+    },
+    {
+     "path": "debug_priority.py",
+     "function": "debug_priority"
+    },
+    {
+     "path": "hescorehpxml/base.py",
+     "function": "HPXMLtoHEScoreTranslatorBase.get_building_about"
+    },
+    {
+     "path": "hescorehpxml/base.py",
+     "function": "HPXMLtoHEScoreTranslatorBase.get_building_address"
+    }
+   ],
+   "differs": [
+    {
+     "path": "debug_priority.py",
+     "function": null
+    },
+    {
+     "path": "debug_priority.py",
+     "function": "debug_priority"
+    },
+    {
+     "path": "hescorehpxml/base.py",
+     "function": "HPXMLtoHEScoreTranslatorBase.get_building_address"
+    }
+   ]
+  },
+  {
+   "kind": "agent_ok",
+   "source_row": 52445,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "hescorehpxml/base.py",
+     "function": "HPXMLtoHEScoreTranslatorBase.get_building_about"
+    },
+    {
+     "path": "hescorehpxml/base.py",
+     "function": "HPXMLtoHEScoreTranslatorBase.get_building_address"
+    }
+   ],
+   "differs": [
+    {
+     "path": "hescorehpxml/base.py",
+     "function": "HPXMLtoHEScoreTranslatorBase.get_building_address"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "e5af84582b4524ad92bac0a9f153051f2d39f5eb",
+  "gold": "ef82cc422589174e37527d9d5cc16a8b9d47cf0c",
+  "v0": "0755099c39c9dbbd5be3411f8af868b43a5882e9",
+  "agent_wrong": "92bf5a62bbe65d90c0155f1be35ae2d3c25db4d5",
+  "agent_ok": "b8e863335fe72a528fed03c699ad77bacf9c77d3"
+ },
+ "seconds": 66.187
+}

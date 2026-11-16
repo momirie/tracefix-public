@@ -1,0 +1,112 @@
+{
+ "instance_id": "astropy__photutils-1943",
+ "excluded": null,
+ "detail": "",
+ "python": "3.10.16",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis 6.131.7 -> 6.168.5"
+ ],
+ "setup_files": [
+  "photutils/compiler_version.cpython-310-x86_64-linux-gnu.so",
+  "photutils/geometry/circular_overlap.cpython-310-x86_64-linux-gnu.so",
+  "photutils/geometry/core.cpython-310-x86_64-linux-gnu.so",
+  "photutils/geometry/elliptical_overlap.cpython-310-x86_64-linux-gnu.so",
+  "photutils/geometry/rectangular_overlap.cpython-310-x86_64-linux-gnu.so",
+  "photutils/version.py"
+ ],
+ "changed_files": [
+  "=0.11"
+ ],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "pytest_arraydiff.plugin",
+  "pytest_asdf.plugin",
+  "pytest_astropy.plugin",
+  "pytest_astropy_header.display",
+  "pytest_doctestplus.plugin",
+  "pytest_filter_subpackage.plugin",
+  "pytest_mock",
+  "pytest_remotedata.plugin",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 106.189,
+ "suite_timeout": 319,
+ "source_hunks": 10,
+ "variants": [
+  {
+   "index": 0,
+   "path": "photutils/detection/core.py",
+   "old_start": 39,
+   "old_len": 8,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "photutils/detection/core.py",
+     "function": "StarFinderBase._find_stars"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "photutils/detection/core.py",
+   "old_start": 83,
+   "old_len": 46,
+   "label": "partial",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "photutils/detection/core.py",
+     "function": "StarFinderBase._find_stars"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "photutils/detection/irafstarfinder.py",
+   "old_start": 416,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "photutils/detection/irafstarfinder.py",
+     "function": "_IRAFStarFinderCatalog.sky"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "photutils/detection/irafstarfinder.py",
+   "old_start": 452,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "photutils/detection/irafstarfinder.py",
+     "function": "_IRAFStarFinderCatalog.cutout_convdata"
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 41385,
+   "label": "does_not_apply",
+   "failing": 37,
+   "kept": false,
+   "functions": null,
+   "differs": null
+  }
+ ],
+ "commits": {
+  "base": "8735398edc10de91f4704f8c84e1699805ac60c3",
+  "gold": "5b241b987f119ef4464df1b3a7c6a12acb8ff46d",
+  "v1": "6ac466ff173bee99262138f0cc2e98463b25b9c1"
+ },
+ "seconds": 169.218
+}

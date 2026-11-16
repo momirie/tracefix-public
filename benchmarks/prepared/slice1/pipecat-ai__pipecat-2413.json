@@ -1,0 +1,36 @@
+{
+ "instance_id": "pipecat-ai__pipecat-2413",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; ModuleNotFoundError dotenv",
+ "python": "3.12.12",
+ "isolation": "strict",
+ "pip_changes": [
+  "anthropic - -> 1.15.0",
+  "defusedxml - -> 0.7.1",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis - -> 6.170.0",
+  "idna 3.11 -> 3.20",
+  "opentelemetry-api - -> 1.45.1",
+  "pydantic 2.12.5 -> 2.14.1",
+  "pydantic-core 2.41.5 -> 2.50.1",
+  "pyyaml - -> 6.0.3",
+  "sortedcontainers - -> 2.4.0",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.15.0 -> 4.16.0",
+  "typing-inspection 0.4.2 -> 0.4.4"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "anyio.pytest_plugin"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 2,
+ "variants": [],
+ "kept": null,
+ "commits": {},
+ "seconds": 21.609
+}

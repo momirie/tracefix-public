@@ -1,0 +1,88 @@
+{
+ "instance_id": "matthewwithanm__python-markdownify-34",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.20",
+ "isolation": "strict",
+ "pip_changes": [],
+ "setup_files": [],
+ "changed_files": [
+  "issue.md"
+ ],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "pytest_asyncio.plugin",
+  "pytest_bdd.plugin",
+  "pytest_benchmark.plugin",
+  "pytest_mock",
+  "requests_mock.contrib._pytest_plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 1.767,
+ "suite_timeout": 120,
+ "source_hunks": 2,
+ "variants": [
+  {
+   "index": 0,
+   "path": "markdownify/__init__.py",
+   "old_start": 1,
+   "old_len": 4,
+   "label": "no_effect",
+   "failing": 3,
+   "functions": [
+    {
+     "path": "markdownify/__init__.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "markdownify/__init__.py",
+   "old_start": 75,
+   "old_len": 7,
+   "label": "no_effect",
+   "failing": 2,
+   "functions": [
+    {
+     "path": "markdownify/__init__.py",
+     "function": "MarkdownConverter.process_tag"
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 17657,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "markdownify/__init__.py",
+     "function": null
+    },
+    {
+     "path": "markdownify/__init__.py",
+     "function": "MarkdownConverter.process_tag"
+    }
+   ],
+   "differs": [
+    {
+     "path": "markdownify/__init__.py",
+     "function": "MarkdownConverter.process_tag"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "7e5995e35b48023622603058fc254166115c34ab",
+  "gold": "30cd95ea5d6f06dccf3e7f17410886463efec43d",
+  "v1": "7d0599944a49032f6904da85bf2c1b10493d5b43",
+  "agent_ok": "310b8a4b39f54945e2c25e724a28b597eacaf48a"
+ },
+ "seconds": 36.828
+}

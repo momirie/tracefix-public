@@ -1,0 +1,25 @@
+# Monthly update PRs for Python dependencies (uv.lock) and the pinned GitHub Actions: ci.yml,
+# action.yml (the root folder) and report/action.yml. The example workflows in docs/examples/ are
+# not scanned; tests/test_action_yml.py keeps their pins equal to action.yml's.
+# Each PR runs the full CI and needs it green to merge, like any other change; monthly (was weekly)
+# because each run costs ~300 CI minutes (DECISIONS 2026-10-15).
+version: 2
+updates:
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    cooldown:
+      default-days: 7  # skip releases younger than a week (a hijacked release is usually caught by then)
+    groups:
+      python-dependencies:
+        patterns: ["*"]
+  - package-ecosystem: "github-actions"
+    directories: ["/", "/report"]
+    schedule:
+      interval: "monthly"
+    cooldown:
+      default-days: 7  # skip releases younger than a week (a hijacked release is usually caught by then)
+    groups:
+      github-actions:
+        patterns: ["*"]

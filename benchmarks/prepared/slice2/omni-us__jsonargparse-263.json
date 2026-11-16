@@ -1,0 +1,52 @@
+{
+ "instance_id": "omni-us__jsonargparse-263",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "pytest_asyncio.plugin",
+  "pytest_mock",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 3.972,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 51062,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "jsonargparse/loaders_dumpers.py",
+     "function": "yaml_load"
+    }
+   ],
+   "differs": [
+    {
+     "path": "jsonargparse/loaders_dumpers.py",
+     "function": "yaml_load"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "3f407662d1228d71e8d46ae76fde0449f2287334",
+  "gold": "01bd33c826f2aee2452920fb5391786764f88fa2",
+  "agent_ok": "8c386c26bb5ffbc8c7503deaf77794fd662167fb"
+ },
+ "seconds": 29.141
+}

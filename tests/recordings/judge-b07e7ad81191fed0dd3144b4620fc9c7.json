@@ -1,0 +1,11 @@
+{
+ "key": "b07e7ad81191fed0dd3144b4620fc9c7b1b2a4af681e70cffdd8cb2f10484dcf",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1671,
+  "output_tokens": 241,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"The issue says 29 Feb 2100 doesn't exist, so February 2100 must have 28 days. This is the reported bug. The fix hardcodes 2100 instead of correcting is_leap, so 2200 and 2300 likely still fail, but that does not affect this input.\"}]}"
+ },
+ "role": "judge"
+}

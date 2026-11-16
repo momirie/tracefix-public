@@ -1,0 +1,11 @@
+{
+ "key": "500b04372e821237ea20f5ee9604a16872001c20f8123d3f68dc506a42d18bf9",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1832,
+  "output_tokens": 521,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"The issue's exact example: 'Hello World!' should no longer produce the trailing-dash slug 'hello-world-'.\"},{\"change\":\"c2\",\"label\":\"intended\",\"reason\":\"The issue's rule that slugs should not carry dangling dashes from punctuation or whitespace removes the lone '-'; an empty slug is a plausible result.\"},{\"change\":\"c3\",\"label\":\"suspicious\",\"reason\":\"The new output 'a-z0-9--' ends in a double dash, the very kind of broken slug the issue complains about.\"},{\"change\":\"c4\",\"label\":\"suspicious\",\"reason\":\"'/' now joins 'posts' and 'hello' without a separator, against the docstring's 'dash-separated slug', and the trailing dash remains.\"},{\"change\":\"c5\",\"label\":\"intended\",\"reason\":\"Leading punctuation no longer leaves a stray dash, the same rule as the issue's trailing-punctuation case applied at the start.\"}]}"
+ },
+ "role": "judge"
+}

@@ -1,0 +1,201 @@
+<main id="main" tabindex="-1">
+<!-- HOME. No number is typed here: every count, cost, level and code line fills a hole from
+     scripts/site_home.py (the benchmark data, the partial_fix receipt and fixture, pyproject.toml).
+     tests/test_site_home.py fails if this file's text holds a digit outside a level name. -->
+<!-- HERO: the statement over a field of inputs being tried; the replay sits right under it -->
+<section id="top" class="hero">
+  <div class="frame">
+    <canvas class="field" id="field" aria-hidden="true"></canvas>
+    <button class="field-toggle" id="field-toggle" type="button" hidden><svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="3" height="9"/><rect x="7" y="1.5" width="3" height="9"/></svg><span>Pause background</span></button>
+    <h1 data-words><span class="l1">Your fix passed CI.</span><span class="l2">Now let’s try to break it<span class="stop" aria-hidden="true"></span><span class="sr-only">.</span></span></h1>
+    <p class="lede" data-reveal style="--d:4">Give Tracefix a bug fix from a coding agent or a person: the commit before, the commit after and the issue. It attacks the fix with inputs the tests never tried and hands back a receipt with the ones that still break it.</p>
+    <div class="ctas" data-reveal style="--d:5">
+      <a class="btn" href="#attack">Watch it break a fix</a>
+      <a class="btn-ghost" href="method/">How it decides</a>
+    </div>
+    <div class="facts" data-reveal style="--d:6">
+      <ul aria-label="What it needs"><li>Pre-alpha</li><li>Python {{python_min}}+ and pytest</li><li>An Anthropic API key</li></ul>
+      <p>Your code and the issue go to Anthropic’s API. On real fixes a live run took {{live_minutes}} and {{live_cost}} of model calls at the median, {{live_cost_max}} at most.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SET-PIECE: a browser replay of Break My Fix on the real partial_fix code -->
+<section id="attack" class="band wash" aria-labelledby="attack-h">
+  <div class="frame demo">
+    <div class="demo-col">
+      <h2 id="attack-h" data-words>The fix stops the crash. <span class="soft">PORT unset no longer takes the service down.</span></h2>
+      <p class="mute" data-reveal>The issue said the service crashed with no PORT. This fix handles a missing value, and its test passes. The docstring makes one more promise. Press the button to see whether the fix keeps it.</p>
+      <p class="mute" data-reveal style="--d:1">A blank PORT is not exotic: <code>PORT=</code> in a .env file, or an empty value in Docker or Kubernetes config, gets here as <code>''</code>.</p>
+      <figure class="panel" data-reveal style="--d:2">
+        <figcaption>{{replay_file}}</figcaption>
+        <div class="lines">
+          {{replay_code}}
+        </div>
+      </figure>
+      <ul class="nums" aria-label="The real run, from its receipt" data-reveal style="--d:3">{{real_run}}</ul>
+      <a class="more" href="receipts/{{replay_case}}/" data-reveal style="--d:3">Read the full receipt and its run</a>
+    </div>
+
+    <div class="demo-col" data-reveal style="--d:1; gap: 18px">
+      <div class="demo-bar">
+        <p id="tally" class="label" style="font-size: 14px">Inputs ready</p>
+        <p id="tally-say" class="sr-only" aria-live="polite"></p>
+        <button id="run" class="btn" type="button">Replay the attack</button>
+      </div>
+      <p class="mute" style="font-size: 14px">A replay in your browser: the fixed <code>parse_port</code>, ported line for line to JavaScript, on the inputs below. The real run executed the Python code and wrote the receipt this replay ends in.</p>
+      <div id="grid" class="grid" role="group" aria-label="Inputs tried against parse_port. Hover or focus one to see its result; arrow keys move between them."></div>
+      <form id="try" class="try" hidden>
+        <label for="try-in">Or try your own value</label>
+        <div class="try-row">
+          <span id="try-mark" class="try-mark" aria-hidden="true"></span>
+          <span class="try-pre" aria-hidden="true">PORT=</span>
+          <input id="try-in" type="text" name="port" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="try-note">
+        </div>
+        <div id="try-picks" class="try-picks" role="group" aria-label="Values to try"></div>
+        <p id="try-note" class="mute">What you type is text, as an environment variable is. A finding needs a promise: where the docstring says nothing, nothing counts against the fix.</p>
+        <output id="try-out" class="sr-only" for="try-in"></output>
+      </form>
+      <div id="read" class="read">
+        <div id="read-call">parse_port(raw=None)</div>
+        <div id="read-result" class="mute">Not tried yet. Each circle is one input.</div>
+        <noscript><div class="mute">The replay needs JavaScript. The receipt it ends in: {{finding_call}} {{finding_outcome}}, though the {{finding_source}} promises “{{finding_quote}}”.</div></noscript>
+      </div>
+    </div>
+
+    <div id="done" class="receipt" hidden>
+      <div>
+        <p class="verdict"><i class="pop" aria-hidden="true"></i>Fix Receipt: COUNTEREXAMPLE</p>
+        <p><code>{{finding_call}}</code> {{finding_outcome}}. The {{finding_source}} promises: “{{finding_quote}}”.{{finding_more}}</p>
+        <p class="mute small">A finding only counts when it comes with a pytest file that fails on the fixed code. This is the one Tracefix wrote:</p>
+      </div>
+      <figure class="panel">
+        <figcaption>{{finding_file}}</figcaption>
+        <pre class="code" tabindex="0" aria-label="{{finding_file}}">{{finding_test}}</pre>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- STANDING: where Tracefix stands on real fixes, right after the showcase, with the benchmark's
+     own caveat (council 2026-11-07: the showcase must not read better than the numbers) -->
+<section id="stands" class="band" aria-labelledby="stands-h">
+  <div class="frame pad stands">
+    <div class="stands-say">
+      <h2 id="stands-h" class="h2" data-words>Where it stands. <span class="soft">A brake, not yet a detector.</span></h2>
+      <p class="standing-line" data-reveal>{{standing_slice}}, real bug fixes from open-source Python projects. {{standing}}</p>
+      <p class="mute" data-reveal style="--d:1">{{gates_holding}} of {{gates_total}} release gates hold, so Tracefix is not released, and not yet good enough to gate merges on its own.</p>
+      <a class="more" href="benchmark/" data-reveal style="--d:2">How it was measured, and every counted miss</a>
+    </div>
+    <!-- The same counts as the sentence, one mark per fix (scripts/site_home.py standing_marks) -->
+    <div class="tallies" role="group" aria-label="The same counts, one mark per fix">
+      {{standing_marks}}
+      <p class="tally-note" data-reveal>One mark per fix. A square is a counterexample, hollow when it does not count against that fix: a false alarm, or something the merged fix does too. A circle is the level the receipt stopped at.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM: three more fixtures as tabs, each as its real receipt reports it (scripts/site_home.py) -->
+<section class="band" aria-labelledby="moves-h">
+  <div class="frame pad" style="padding-bottom: 64px">
+    <h2 id="moves-h" class="h2" data-words style="max-width: 22ch">A green fix can still be wrong. <span class="soft">More ways it happens, each a fixture with its real receipt.</span></h2>
+    <div class="cases">
+      <div id="moves" class="tablist" role="tablist" aria-label="Ways a fix goes wrong" data-reveal>
+        <button class="move" type="button" role="tab" id="butterfly" aria-controls="case" aria-selected="true"><span class="move-name">The Butterfly</span><span class="move-line">Fixes the bug and quietly moves something else.</span></button>
+        <button class="move" type="button" role="tab" id="hard-code" aria-controls="case" aria-selected="false" tabindex="-1"><span class="move-name">The Hard-Code</span><span class="move-line">Special-cases the value from the report.</span></button>
+        <button class="move" type="button" role="tab" id="lawyer" aria-controls="case" aria-selected="false" tabindex="-1"><span class="move-name">The Lawyer</span><span class="move-line">Changes the test until the test agrees.</span></button>
+      </div>
+      <div id="case" class="case" role="tabpanel" aria-labelledby="butterfly" data-reveal style="--d:1">
+        <p id="mv-issue" class="quote">{{mv_issue}}</p>
+        <figure class="panel">
+          <figcaption id="mv-file">{{mv_file}}</figcaption>
+          <div id="mv-diff" class="lines" tabindex="0" role="region" aria-labelledby="mv-file">{{mv_diff}}</div>
+        </figure>
+        <div class="finds">
+          <span class="eyebrow">The receipt says</span>
+          <span id="mv-finds">{{mv_finds}}</span>
+        </div>
+        <a id="mv-open" class="more" href="receipts/{{mv_case}}/">Open this receipt</a>
+      </div>
+    </div>
+    <script type="application/json" id="moves-data">{{moves_data}}</script>
+  </div>
+</section>
+
+<!-- INVERSION: the rule at display size and the evidence ladder. A fixture's receipt climbs it on
+     the Method page (DECISIONS 2026-11-14 "Home page cut"). -->
+<section id="levels" class="band ink" aria-labelledby="rule-h">
+  <div class="frame pad">
+    <h2 id="rule-h" class="rule" data-words>AI proposes. <span class="dim">Code decides.</span></h2>
+    <p class="rule-p" data-scrub>A model may write the tests and pick the attacks. Every level comes from running code: an exit code, a diff or a counter. Some of what runs was written by a model, and the receipt says which.</p>
+    <dl class="ladder" data-reveal-group>
+      <div style="--d:0"><dt><span class="cx-sq" aria-hidden="true"></span><span class="cx">COUNTEREXAMPLE</span></dt><dd>Proof against the fix: an input that breaks it, a regression, a weakened test, or the bug isn’t fixed.</dd></div>
+      <div style="--d:1"><dt><span class="lk">L0</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span></dt><dd>Not reproduced, the tests could not run, or tampering was detected.</dd></div>
+      <div style="--d:2"><dt><span class="lk">L1</span><span class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span></dt><dd>Reproduced: a test fails before the fix and passes after it.</dd></div>
+      <div style="--d:3"><dt><span class="lk">L2</span><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i></span></dt><dd>L1, and the tests guard the fix: revert it or plant bugs in it and they notice.</dd></div>
+      <div style="--d:4"><dt><span class="lk">L3</span><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></dt><dd>L2, and every behaviour change the diff observed is explained.</dd></div>
+      <div style="--d:5"><dt><span class="lk">L4</span><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></dt><dd>L3, and a full Break My Fix attack found nothing.{{top_rung_note}}</dd></div>
+    </dl>
+    <p class="never" data-reveal>L4 means we tried hard to break it and nothing broke. It never means “this is correct”.</p>
+    <p class="ladder-more" data-reveal><a class="more" href="method/#ladder">Put a fixture’s real receipt through the ladder</a></p>
+  </div>
+</section>
+
+<!-- INSTALL: tabbed real commands with a working copy button -->
+<section id="install" class="band" aria-labelledby="install-h">
+  <div class="frame pad install">
+    <div data-reveal>
+      <h2 id="install-h" class="h2">Point it at a fix.</h2>
+      <p class="mute">Give it the commit before the fix, the commit with it, and the issue. On real fixes a live run took {{live_minutes}} at the median ({{live_minutes_slow}}) and writes a receipt that is safe to post as a PR comment. <a href="method/#loop">What a pull request gets</a>: a check, a comment and the receipt as JSON.</p>
+      <p class="mute small">Pre-alpha. Tracefix needs Python {{python_min}}+, git {{git_min}}+ and an Anthropic API key; your code and the issue are sent to Anthropic’s API. Not released yet: the repository opens on release, so until then the clone works only for collaborators. Not on PyPI: the commands install it from a clone into your project, so the project must allow Python {{python_min}}+. Without uv: <code>pip install ~/tracefix</code>, then drop <code>uv run</code>. Project on an older Python ({{project_python_min}} or later): <code>uv tool install ~/tracefix</code> and add <code>--python .venv/bin/python</code>.</p>
+    </div>
+    <div data-reveal style="--d:1">
+      <div id="itabs" class="itabs" role="tablist" aria-label="Where to run it">
+        <button class="itab" type="button" role="tab" id="itab-0" aria-controls="term" aria-selected="true">Command line</button>
+        <button class="itab" type="button" role="tab" id="itab-1" aria-controls="term" aria-selected="false" tabindex="-1">GitHub Action</button>
+      </div>
+      <figure id="term" class="term" role="tabpanel" aria-labelledby="itab-0">
+        <div class="term-head">
+          <figcaption id="term-where">Terminal, in your project</figcaption>
+          <button id="copy" class="copy" type="button" hidden>Copy</button>
+        </div>
+        <pre id="term-code" tabindex="0" aria-label="Install commands">git clone https://github.com/momirie/tracefix ~/tracefix
+uv add --dev ~/tracefix
+export ANTHROPIC_API_KEY=sk-ant-...
+uv run tracefix verify --repo . --base main --head my-fix \
+    --issue "Service crashes at startup when PORT is not set"</pre>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ: native details ledger with the README's own answers -->
+<section id="faq" class="band" aria-labelledby="faq-h">
+  <div class="frame pad faq">
+    <div data-reveal>
+      <h2 id="faq-h" class="h2">Questions</h2>
+      <p class="closing">Try to break the next fix <span class="soft">before your users do.</span></p>
+      <a class="btn" href="talk/" style="min-height: 48px">Talk to me</a>
+      <p class="mute small">Not released yet: the GitHub repository opens on release.</p>
+    </div>
+    <div data-reveal style="--d:1">
+      <details>
+        <summary>Does it fix my bug?<span class="plus" aria-hidden="true">+</span></summary>
+        <p>No. It’s the friend who reads your fix and asks “what if the string is empty?”</p>
+      </details>
+      <details>
+        <summary>Is it an AI code reviewer?<span class="plus" aria-hidden="true">+</span></summary>
+        <p>No. Models write test code. Whether anything passed is decided by running it.</p>
+      </details>
+      <details>
+        <summary>Does it raise false alarms?<span class="plus" aria-hidden="true">+</span></summary>
+        <p>Sometimes. On the latest benchmark of real fixes, {{false_alarms}} correct fixes got a finding that was not a real bug. Every finding comes with a pytest file you can run yourself. If a receipt is wrong, <a href="talk/#feedback">tell me</a>.</p>
+      </details>
+      <details>
+        <summary>Is it safe on untrusted pull requests?<span class="plus" aria-hidden="true">+</span></summary>
+        <p>Fork pull requests run only after a maintainer adds a label, and only with strict isolation (Linux with bubblewrap). The job that posts results never holds the API key.</p>
+      </details>
+    </div>
+  </div>
+</section>
+</main>

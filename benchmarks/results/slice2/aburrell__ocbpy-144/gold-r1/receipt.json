@@ -1,0 +1,433 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T17:38:07+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: ocbpy/tests/test_boundary_dual.py::TestDualBoundaryMethodsGeneral.test_custom_ind_selection passed before the fix and fails after it",
+    "regression: ocbpy/tests/test_vort.py::TestVortLogWarnings.test_vort_unexpected_line passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "728bfcbc9fa45e3ec152bcd5146291527a657b88"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "a1efb7188d5a475430fb7324f3aebd2115b9dc4d"
+  },
+  "issue": {
+    "title": "dual boundary class can have a bad pair",
+    "sha256": "df0b89ebbdaec29b1769274cd6105d54d6735eaacf18bdeab34158668fce44bf"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The bug was reproduced, but two tests that passed before the fix now fail after it (test_boundary_dual.py::TestDualBoundaryMethodsGeneral::test_custom_ind_selection and test_vort.py::TestVortLogWarnings::test_vort_unexpected_line), and no test was shown to guard the reported failure. Start by examining why those two tests now fail, and decide whether the fix changed custom index selection or vort…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 90.19,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 3.13,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 3: fails before the fix and passes after it",
+      "duration_s": 198.39,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no ocbpy/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 3,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 3 of 9 mutants; 80% is needed",
+      "duration_s": 2524.7,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no ocbpy/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.333,
+        "repro_kill_rate": 0.333,
+        "pr_kill_rate": null,
+        "mutants": 9,
+        "killed": 3,
+        "survived": 6,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-547300c72d4e",
+          "m-d93d480e4f7e",
+          "m-105d9eddb27c"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.9,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 3 of 9 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "2 confirmed: ocbpy/tests/test_boundary_dual.py::TestDualBoundaryMethodsGeneral.test_custom_ind_selection, ocbpy/tests/test_vort.py::TestVortLogWarnings.test_vort_unexpected_line",
+      "duration_s": 583.27,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors ocbpy/tests/test_boundary_dual.py ocbpy/tests/test_vort.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 363,
+        "not_run": 0,
+        "regressions": 2,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 49.86,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no ocbpy/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 30
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "1 input(s) compared on 2 function(s): 0 changed with the fix",
+      "duration_s": 984.16,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "finished": 2,
+        "inputs_compared": 1,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack on DualBoundary.set_good_ind did not finish",
+      "duration_s": 771.2,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no ocbpy/tests/test_vort.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 4,
+        "properties_counted": 9,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.07,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "ocbpy/tests/test_boundary_dual.py",
+      "test": "TestDualBoundaryMethodsGeneral.test_custom_ind_selection",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: -1 not greater than np.int64(0)",
+      "line": 296
+    },
+    {
+      "file": "ocbpy/tests/test_vort.py",
+      "test": "TestVortLogWarnings.test_vort_unexpected_line",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: OSError: unexpected line encountered when number of entries line expected [0 1 13 14    5532.5  0.0011232   3.0527",
+      "line": 60
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-3aa5b728714d",
+      "origin": "model",
+      "file": "ocbpy/_boundary.py",
+      "line": 1293,
+      "original": "            if self.eab.rec_ind < self.eab.records:",
+      "replacement": "            if self.eab.rec_ind <= self.eab.records:",
+      "description": "Fetches the next good EAB index even when already past the end.",
+      "diff": "--- a/ocbpy/_boundary.py\n+++ b/ocbpy/_boundary.py\n@@ -1292,3 +1292,3 @@\n             # Cycle to the next good EAB index\n-            if self.eab.rec_ind < self.eab.records:\n+            if self.eab.rec_ind <= self.eab.records:\n                 self.eab.get_next_good_ocb_ind(**eab_kwargs)\n",
+      "words": "ocbpy/_boundary.py:1293: changing `            if self.eab.rec_ind < self.eab.records:` to `            if self.eab.rec_ind <= self.eab.records:` made no test fail; not compared with the fix: the run on the mutant did not finish",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-d6d0cd5bb0a8",
+      "origin": "model",
+      "file": "ocbpy/instruments/vort.py",
+      "line": 273,
+      "original": "        while len(vsplit) > 0 and vsplit[0] == \"#\":",
+      "replacement": "        while len(vsplit) > 1 and vsplit[0] == \"#\":",
+      "description": "Header lines consisting only of '#' are no longer skipped.",
+      "diff": "--- a/ocbpy/instruments/vort.py\n+++ b/ocbpy/instruments/vort.py\n@@ -272,3 +272,3 @@\n         # Cycle through any potential header lines\n-        while len(vsplit) > 0 and vsplit[0] == \"#\":\n+        while len(vsplit) > 1 and vsplit[0] == \"#\":\n             vline = fvort.readline()\n",
+      "words": "ocbpy/instruments/vort.py:273: changing `        while len(vsplit) > 0 and vsplit[0] == \"#\":` to `        while len(vsplit) > 1 and vsplit[0] == \"#\":` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-dd0a7fac6bc9",
+      "origin": "model",
+      "file": "ocbpy/instruments/vort.py",
+      "line": 282,
+      "original": "                if len(vsplit) != 4:",
+      "replacement": "                if len(vsplit) < 4:",
+      "description": "Date lines with too many columns are no longer rejected.",
+      "diff": "--- a/ocbpy/instruments/vort.py\n+++ b/ocbpy/instruments/vort.py\n@@ -281,3 +281,3 @@\n                 # This is a date line\n-                if len(vsplit) != 4:\n+                if len(vsplit) < 4:\n                     fvort.close()\n",
+      "words": "ocbpy/instruments/vort.py:282: changing `                if len(vsplit) != 4:` to `                if len(vsplit) < 4:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-adf469165368",
+      "origin": "model",
+      "file": "ocbpy/instruments/vort.py",
+      "line": 304,
+      "original": "                if len(vsplit) != 1:",
+      "replacement": "                if len(vsplit) < 1:",
+      "description": "Entry count lines with extra columns are no longer rejected.",
+      "diff": "--- a/ocbpy/instruments/vort.py\n+++ b/ocbpy/instruments/vort.py\n@@ -303,3 +303,3 @@\n                 # This is a number of entries line\n-                if len(vsplit) != 1:\n+                if len(vsplit) < 1:\n                     fvort.close()\n",
+      "words": "ocbpy/instruments/vort.py:304: changing `                if len(vsplit) != 1:` to `                if len(vsplit) < 1:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-bf2c0cf2fe8e",
+      "origin": "model",
+      "file": "ocbpy/instruments/vort.py",
+      "line": 331,
+      "original": "                        if len(vsplit) != len(bklist):",
+      "replacement": "                        if len(vsplit) < len(bklist):",
+      "description": "Data lines with extra columns are no longer rejected.",
+      "diff": "--- a/ocbpy/instruments/vort.py\n+++ b/ocbpy/instruments/vort.py\n@@ -330,3 +330,3 @@\n                         # columns\n-                        if len(vsplit) != len(bklist):\n+                        if len(vsplit) < len(bklist):\n                             fvort.close()\n",
+      "words": "ocbpy/instruments/vort.py:331: changing `                        if len(vsplit) != len(bklist):` to `                        if len(vsplit) < len(bklist):` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-3469aefafe16",
+      "origin": "model",
+      "file": "ocbpy/instruments/vort.py",
+      "line": 357,
+      "original": "        if len(vdata[vkey]) > 0:",
+      "replacement": "        if len(vdata[vkey]) > 1:",
+      "description": "Data with a single record is wrongly treated as empty and returns None.",
+      "diff": "--- a/ocbpy/instruments/vort.py\n+++ b/ocbpy/instruments/vort.py\n@@ -356,3 +356,3 @@\n     for vkey in vdata.keys():\n-        if len(vdata[vkey]) > 0:\n+        if len(vdata[vkey]) > 1:\n             vdata[vkey] = np.array(vdata[vkey])\n",
+      "words": "ocbpy/instruments/vort.py:357: changing `        if len(vdata[vkey]) > 0:` to `        if len(vdata[vkey]) > 1:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-3aa5b728714d",
+      "origin": "rule",
+      "file": "ocbpy/_boundary.py",
+      "line": 1293,
+      "original": "            if self.eab.rec_ind < self.eab.records:",
+      "replacement": "            if self.eab.rec_ind <= self.eab.records:",
+      "description": "rule: `<` -> `<=`",
+      "diff": "--- a/ocbpy/_boundary.py\n+++ b/ocbpy/_boundary.py\n@@ -1292,3 +1292,3 @@\n             # Cycle to the next good EAB index\n-            if self.eab.rec_ind < self.eab.records:\n+            if self.eab.rec_ind <= self.eab.records:\n                 self.eab.get_next_good_ocb_ind(**eab_kwargs)\n",
+      "words": "ocbpy/_boundary.py:1293: changing `            if self.eab.rec_ind < self.eab.records:` to `            if self.eab.rec_ind <= self.eab.records:` made no test fail; not compared with the fix: the run on the mutant did not finish",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "ocbpy/_boundary.py": [
+        1284,
+        1285,
+        1293,
+        1294
+      ],
+      "ocbpy/instruments/vort.py": [
+        273,
+        274,
+        275,
+        282,
+        283,
+        284,
+        285,
+        300,
+        301,
+        304,
+        305,
+        306,
+        307,
+        308,
+        315,
+        316,
+        331,
+        332,
+        333,
+        334,
+        335,
+        356,
+        357,
+        358,
+        360,
+        361
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 4,
+        "total": 30
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 82693,
+    "output_tokens": 9165,
+    "cost_estimate": {
+      "usd": 0.3632,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: only the first 10 of 28 rule mutants were run",
+    "guard: 1 of the rule mutant kills were crashes on the mutated line",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "ocbpy._boundary.DualBoundary.set_good_ind",
+      "path": "ocbpy/_boundary.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 3,
+      "finished": false,
+      "reason": ""
+    },
+    {
+      "function": "ocbpy.instruments.vort.load_vorticity_ascii_data",
+      "path": "ocbpy/instruments/vort.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 1,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-22T17:35:59+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 3 of 4 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "55a21cdb4fdc235433a0cedf93a907f5a70e6d23"
+  },
+  "head": {
+    "ref": "tf-agent_wrong",
+    "sha": "96f8e5ccaef68a14561d619dedfaa81e7d0a2d16"
+  },
+  "issue": {
+    "title": "[spark dialect] Parser doesn't handle default value for unix_timestamp function",
+    "sha256": "78572076463d346efbb9d7a362437c66dec3bf95a2a7b05304017b392411c53e"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "A test reproducing the unix_timestamp() parse failure in the Spark dialect fails before the fix and passes after it, with no regressions found, no breaking inputs found, and the fixed lines covered. The fix was not guarded (the tests did not kill enough mutants to reach L2), so the next thing to check is whether the tests actually pin down the new default behaviour, for example that unix_timestam…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 13.74,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.04,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 15.5,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 3 of 4 mutants; 80% is needed",
+      "duration_s": 131.06,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.75,
+        "repro_kill_rate": 0.5,
+        "pr_kill_rate": null,
+        "mutants": 4,
+        "killed": 3,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-bebbc390ca8c",
+          "m-f5a991ed2fae",
+          "m-7847f88994bb"
+        ],
+        "rule_mutants": 3,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 3 of 4 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 608 untouched tests that passed before the fix fails after it",
+      "duration_s": 50.77,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 608,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.17,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 7
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call (_unix_timestamp: new with the fix: nothing to compare)",
+      "duration_s": 0.25,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 3 inputs against 6 properties",
+      "duration_s": 41.36,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 3,
+        "properties_counted": 6,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-caa9882e878f",
+      "origin": "model",
+      "file": "sqlglot/dialects/hive.py",
+      "line": 43,
+      "original": "            format=Dialect[\"hive\"].format_time(Dialect[\"hive\"].time_format),",
+      "replacement": "            format=Dialect[\"hive\"].time_format,",
+      "description": "Zero-arg case uses the raw time format string instead of the formatted time expression.",
+      "diff": "--- a/sqlglot/dialects/hive.py\n+++ b/sqlglot/dialects/hive.py\n@@ -42,3 +42,3 @@\n             this=exp.CurrentTimestamp(),\n-            format=Dialect[\"hive\"].format_time(Dialect[\"hive\"].time_format),\n+            format=Dialect[\"hive\"].time_format,\n         )\n",
+      "words": "sqlglot/dialects/hive.py:43: changing `            format=Dialect[\"hive\"].format_time(Dialect[\"hive...` to `            format=Dialect[\"hive\"].time_format,` made no test fail",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "sqlglot/dialects/hive.py": [
+        37,
+        40,
+        41,
+        42,
+        43,
+        46,
+        256
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 6,
+        "total": 7
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call (_unix_timestamp: new with the fix: nothing to compare))",
+    "the behaviour diff could not compare _unix_timestamp: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 36373,
+    "output_tokens": 4544,
+    "cost_estimate": {
+      "usd": 0.2188,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "sqlglot.dialects.hive._unix_timestamp",
+      "path": "sqlglot/dialects/hive.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 3,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

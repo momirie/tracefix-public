@@ -1,0 +1,48 @@
+{
+ "instance_id": "equinor__ert-12275",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; RuntimeError",
+ "python": "3.12.12",
+ "isolation": "strict",
+ "pip_changes": [
+  "anthropic - -> 1.15.0",
+  "docstring-parser - -> 0.18.0",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis 6.148.3 -> 6.170.0",
+  "idna 3.11 -> 3.20",
+  "jiter - -> 0.17.0",
+  "pydantic 2.12.5 -> 2.14.1",
+  "pydantic-core 2.41.5 -> 2.50.1",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.15.0 -> 4.16.0",
+  "typing-inspection 0.4.2 -> 0.4.4"
+ ],
+ "setup_files": [
+  "src/ert/shared/version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "anyio.pytest_plugin",
+  "pytest_asyncio.plugin",
+  "pytest_benchmark.plugin",
+  "pytest_memray.plugin",
+  "pytest_mock",
+  "pytest_mpl.plugin",
+  "pytest_raises.pytest_raises",
+  "pytest_snapshot.plugin",
+  "pytest_timeout",
+  "pytestqt.plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "commits": {},
+ "seconds": 32.766
+}

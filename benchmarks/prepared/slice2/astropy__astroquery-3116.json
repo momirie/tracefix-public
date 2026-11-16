@@ -1,0 +1,31 @@
+{
+ "instance_id": "astropy__astroquery-3116",
+ "excluded": "base_suite_cannot_run",
+ "detail": "tampering detected in the base suite's run",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [],
+ "setup_files": [
+  "astroquery/version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "pytest_arraydiff.plugin",
+  "pytest_astropy.plugin",
+  "pytest_astropy_header.display",
+  "pytest_doctestplus.plugin",
+  "pytest_filter_subpackage.plugin",
+  "pytest_mock",
+  "pytest_remotedata.plugin",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 2,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 21.719
+}

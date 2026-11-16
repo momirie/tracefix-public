@@ -1,0 +1,340 @@
+{
+ "instance_id": "python-cmd2__cmd2-115",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 40.949,
+ "suite_timeout": 123,
+ "source_hunks": 5,
+ "variants": [
+  {
+   "index": 0,
+   "path": "cmd2.py",
+   "old_start": 1121,
+   "old_len": 9,
+   "label": "partial",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "cmd2.py",
+     "function": "Cmd.do_cmdenvironment"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "cmd2.py",
+   "old_start": 1592,
+   "old_len": 7,
+   "label": "partial",
+   "failing": 2,
+   "functions": [
+    {
+     "path": "cmd2.py",
+     "function": "Cmd.do_history"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "cmd2.py",
+   "old_start": 1602,
+   "old_len": 10,
+   "label": "partial",
+   "failing": 3,
+   "functions": [
+    {
+     "path": "cmd2.py",
+     "function": "Cmd.do_history"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "cmd2.py",
+   "old_start": 1628,
+   "old_len": 38,
+   "label": "partial",
+   "failing": 4,
+   "functions": [
+    {
+     "path": "cmd2.py",
+     "function": "Cmd.do_list"
+    },
+    {
+     "path": "cmd2.py",
+     "function": "Cmd.help_list"
+    }
+   ]
+  }
+ ],
+ "kept": 0,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 18674,
+   "label": "unsettled",
+   "failing": 52,
+   "kept": false,
+   "functions": [
+    {
+     "path": "cmd2.py",
+     "function": null
+    },
+    {
+     "path": "cmd2.py",
+     "function": "Cmd.do_history"
+    },
+    {
+     "path": "cmd2.py",
+     "function": "Cmd.do_list"
+    },
+    {
+     "path": "cmd2.py",
+     "function": "Cmd.help_list"
+    },
+    {
+     "path": "debug_history.py",
+     "function": null
+    },
+    {
+     "path": "debug_history.py",
+     "function": "StdOut.__init__"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "StdOut.clear"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "StdOut.read"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "StdOut.write"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "TestApp.__init__"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "debug_history"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "normalize"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "run_cmd"
+    },
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "final_verification.py",
+     "function": "StdOut.__init__"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "StdOut.clear"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "StdOut.read"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "StdOut.write"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "final_verification"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "normalize"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "run_cmd"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "StdOut.__init__"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "StdOut.clear"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "StdOut.read"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "StdOut.write"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "TestApp.__init__"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "normalize"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "run_cmd"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_current_behavior"
+    }
+   ],
+   "differs": [
+    {
+     "path": "cmd2.py",
+     "function": null
+    },
+    {
+     "path": "cmd2.py",
+     "function": "Cmd.do_cmdenvironment"
+    },
+    {
+     "path": "cmd2.py",
+     "function": "Cmd.do_history"
+    },
+    {
+     "path": "cmd2.py",
+     "function": "History.span"
+    },
+    {
+     "path": "debug_history.py",
+     "function": null
+    },
+    {
+     "path": "debug_history.py",
+     "function": "StdOut.__init__"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "StdOut.clear"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "StdOut.read"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "StdOut.write"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "TestApp.__init__"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "debug_history"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "normalize"
+    },
+    {
+     "path": "debug_history.py",
+     "function": "run_cmd"
+    },
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "final_verification.py",
+     "function": "StdOut.__init__"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "StdOut.clear"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "StdOut.read"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "StdOut.write"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "final_verification"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "normalize"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "run_cmd"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "StdOut.__init__"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "StdOut.clear"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "StdOut.read"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "StdOut.write"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "TestApp.__init__"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "normalize"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "run_cmd"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_current_behavior"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "a0d829e4105cd431198feb43534adaf953b090ba",
+  "gold": "e61360e53f3915e3e64b9c36129939ae78fccec1",
+  "v0": "42e25605c23a2228a31e65b7bb1e462804305bea"
+ },
+ "seconds": 300.547
+}

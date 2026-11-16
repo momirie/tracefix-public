@@ -1,0 +1,11 @@
+{
+ "key": "1ce1e35e95ad526dd01833c0d472ba391e60620e36ad84e6b2c055d77152987c",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1173,
+  "output_tokens": 164,
+  "stop_reason": "end_turn",
+  "text": "{\"summary\":\"The reproduction test fails the same way before and after this fix, and Break My Fix found that dedupe_emails(['Bob@Example.com', 'bob@example.com']) still returns both addresses, so the capitalisation duplicate from the issue remains. Look next at how crm.contacts.dedupe_emails compares emails (for example, whether it normalises case before deduplicating) and at its behaviour change, which the Judge labelled suspicious every time.\",\"flag_notes\":[]}"
+ },
+ "role": "judge"
+}

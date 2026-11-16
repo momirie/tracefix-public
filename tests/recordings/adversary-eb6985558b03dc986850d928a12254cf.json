@@ -1,0 +1,11 @@
+{
+ "key": "eb6985558b03dc986850d928a12254cfa1a31bc21c17e8376f5599a205b66898",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 4015,
+  "output_tokens": 143,
+  "stop_reason": "end_turn",
+  "text": "{\"properties\":[{\"function\":\"t1\",\"name\":\"unset_defaults\",\"kind\":\"returns\",\"claim\":\"None returns DEFAULT_PORT 8080\",\"source\":\"docstring\",\"quote\":\"Optional; if unset or blank, DEFAULT_PORT (8080) is used.\",\"when\":\"raw is None\",\"check\":\"\",\"expected\":\"8080\",\"exceptions\":[],\"transform\":\"\"}],\"strategies\":[],\"examples\":[]}"
+ },
+ "role": "adversary"
+}

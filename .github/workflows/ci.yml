@@ -1,0 +1,92 @@
+name: CI
+
+# Pull requests only, to save minutes:
+# - not on push to main: the PR's run already tested what merges, as long as the branch was up to
+#   date with main (the ruleset requires it);
+# - not on draft PRs: CI runs when the PR is marked ready for review (`ready_for_review`), and
+#   again on each push after that.
+# Run it by hand on any branch (Actions tab, `workflow_dispatch`), e.g. on main.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A newer push to the same PR cancels the run it replaces. A run by hand on main always finishes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  # Docs-only changes (everything under docs/ or a top-level *.md) skip the test jobs to save CI
+  # minutes. Tests read only tests/fixtures/**/*.md, which stays "code", and docs/examples/ (the
+  # Action's example workflows, linted and tested) is code too. When the changed files can't be
+  # listed (a run by hand), everything runs. Draft PRs skip everything, `all-checks` included.
+  changes:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ubuntu-24.04
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: filter
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          if files=$(git diff --name-only "$BASE...$HEAD") && [ -n "$files" ] \
+             && ! grep -qvE '^(docs/.*|[^/]+\.md)$' <<< "$files" \
+             && ! grep -qE '^docs/examples/' <<< "$files"; then
+            echo "code=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          fi
+          printf 'Changed files:\n%s\n' "$files"
+
+  # Linux on every PR: Python 3.11 and 3.13, each split over two jobs
+  # (private repos get 2-core runners, and the whole suite no longer fits one job's 40 minutes).
+  # The steps are in tests.yml, shared with ci-windows.yml (Windows, on demand). The runner image
+  # is pinned: bubblewrap's setup is checked on 24.04 only (NOTES: probe 26.04 before moving).
+  check:
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.13"]
+        group: [1, 2, 3]
+    # A job-level call is always read from the running commit, so zizmor's `$/` advice
+    # (for step-level actions) adds nothing here.
+    uses: ./.github/workflows/tests.yml # zizmor: ignore[self-repository]
+    with:
+      os: ubuntu-24.04
+      python: ${{ matrix.python }}
+      group: ${{ matrix.group }}
+      splits: 3
+
+  # The one check the main ruleset requires, so the matrix above can change without editing the
+  # ruleset. Passes only if `changes` succeeded and the test jobs passed, or were skipped because
+  # the change was docs-only. On a draft PR it fails (never green without tests) and says why.
+  all-checks:
+    if: always()
+    needs: [changes, check]
+    runs-on: ubuntu-24.04
+    steps:
+      - env:
+          CHANGES: ${{ needs.changes.result }}
+          CODE: ${{ needs.changes.outputs.code }}
+          CHECK: ${{ needs.check.result }}
+          DRAFT: ${{ github.event.pull_request.draft || false }}
+        run: |
+          echo "changes=$CHANGES code=$CODE check=$CHECK draft=$DRAFT"
+          if [ "$DRAFT" = true ]; then
+            echo "::error::Draft PR: CI runs when the PR is marked ready for review."
+            exit 1
+          fi
+          [ "$CHANGES" = success ] || exit 1
+          [ "$CHECK" = success ] || { [ "$CHECK" = skipped ] && [ "$CODE" = false ]; }

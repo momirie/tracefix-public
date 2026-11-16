@@ -1,0 +1,180 @@
+{
+ "misses": [
+  {
+   "slice": "slice1",
+   "instance_id": "MAIF__arta-50",
+   "run": "gold-r1",
+   "kind": "gold",
+   "level": "COUNTEREXAMPLE",
+   "why": "false_alarm",
+   "receipt": "benchmarks/results/slice1/MAIF__arta-50/gold-r1/receipt.md",
+   "notes": [
+    "fix_does_not_fix rests on a test that never reaches the fix: all four rules dicts it tries are rejected by arta's own RulesDict model at the base commit (group -> rule -> {condition: callable, action: callable}, extra keys forbidden): two nest a third level, one has a 'rule' key, and the flat one passes {'OR': [...]} as a condition, which isn't callable. RulesEngine() raises the same ValidationError before and after the fix; the hidden tests pass on gold (NOTES #29)."
+   ]
+  },
+  {
+   "slice": "slice1",
+   "instance_id": "elementsinteractive__twyn-317",
+   "run": "gold-r1",
+   "kind": "gold",
+   "level": "COUNTEREXAMPLE",
+   "why": "false_alarm",
+   "receipt": "benchmarks/results/slice1/elementsinteractive__twyn-317/gold-r1/receipt.md",
+   "notes": [
+    "Its causes besides finding 1 are 13 regressions in tests/main/test_main.py and tests/trusted_packages/test_references.py, files the PR's own test patch changed with the fix: the same 13 as gold-r2 (developer: false_alarm). Listed since NOTES #34 S5.",
+    "Calls AbstractPackageReference.normalize_packages, an @abstractmethod whose body is only a docstring, so None is expected; real references override it. Tracefix should not attack abstract methods (NOTES)."
+   ]
+  },
+  {
+   "slice": "slice1",
+   "instance_id": "zarr-developers__virtualizarr-979",
+   "run": "gold-r1",
+   "kind": "gold",
+   "level": "COUNTEREXAMPLE",
+   "why": "false_alarm",
+   "receipt": "benchmarks/results/slice1/zarr-developers__virtualizarr-979/gold-r1/receipt.md",
+   "notes": [
+    "Input {} has no inline values, so the property (inline values never raise NotImplementedError) doesn't apply; ValueError 'need a chunk grid shape if no chunks given' is ChunkManifest's deliberate validation, same on base. The raises_only check counted an unrelated exception (NOTES)."
+   ]
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "Chilipp__autodocsumm-101",
+   "run": "agent_wrong-r1",
+   "kind": "agent_wrong",
+   "level": "L2",
+   "why": "wrong_fix_reached_l2",
+   "receipt": "benchmarks/results/slice2/Chilipp__autodocsumm-101/agent_wrong-r1/receipt.md",
+   "notes": []
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "Diaoul__babelfish-50",
+   "run": "gold-r1",
+   "kind": "gold",
+   "level": "COUNTEREXAMPLE",
+   "why": "false_alarm",
+   "receipt": "benchmarks/results/slice2/Diaoul__babelfish-50/gold-r1/receipt.md",
+   "notes": [
+    "Both regressions (test_hash_eq, test_hash) assert hash(Country('US')) == hash('US'); the issue asks for frozen dataclasses and says 'This will surely be a breaking change', and the PR's test patch inverts both into *_incorrect. Intended change, not a bug: the PR's own test patch rewrites this test (set aside by the report already).",
+    "'__' is not a language code; fromietf raises the library's own LanguageReverseError, the same on base. A relation property (same code gives equal languages) counted a raise on an invalid input as a break. Input outside the domain (NOTES 40).",
+    "'script' is not a language code; ValueError \"'script' is not a valid language\" is the constructor's deliberate validation, same on base. Same pattern as #1 (NOTES 40)."
+   ]
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "Lucas-C__pre-commit-hooks-98",
+   "run": "gold-r1",
+   "kind": "gold",
+   "level": "COUNTEREXAMPLE",
+   "why": "false_alarm",
+   "receipt": "benchmarks/results/slice2/Lucas-C__pre-commit-hooks-98/gold-r1/receipt.md",
+   "notes": [
+    "license_header_index=10 in a 4-line file: an index the caller (license_found) never passes; IndexError the same on base. Input outside the domain (NOTES 40).",
+    "license_length=-1 is not a length; the function loops over nothing (as on base) while the property's slice [0:-1] reads it as 'all but the last line'. Input outside the domain (NOTES 40)."
+   ]
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "astropy__photutils-1943",
+   "run": "gold-r1",
+   "kind": "gold",
+   "level": "COUNTEREXAMPLE",
+   "why": "false_alarm",
+   "receipt": "benchmarks/results/slice2/astropy__photutils-1943/gold-r1/receipt.md",
+   "notes": [
+    "No peak survives border_width=2 (the 5.0 is not a local maximum next to the 6.0), so find_peaks warns NoDetectionsWarning and returns None, its documented behaviour, which the property allows. It shows as 'raises' only because photutils' pyproject sets pytest filterwarnings = ['error', ...] (checked at the base commit). Same on base."
+   ]
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "beeware__briefcase-645",
+   "run": "agent_wrong-r1",
+   "kind": "agent_wrong",
+   "level": "L2",
+   "why": "wrong_fix_reached_l2",
+   "receipt": "benchmarks/results/slice2/beeware__briefcase-645/agent_wrong-r1/receipt.md",
+   "notes": []
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "clld__clldutils-27",
+   "run": "gold-r1",
+   "kind": "gold",
+   "level": "COUNTEREXAMPLE",
+   "why": "false_alarm",
+   "receipt": "benchmarks/results/slice2/clld__clldutils-27/gold-r1/receipt.md",
+   "notes": [
+    "The property is about the markdown output ('markdown=True'), but the input sets markdown=False, so both calls return the bare URL and '](' can never appear; same on base. The adversary's input ignored the property's own precondition (no 'applies to this input' line was written for it)."
+   ]
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "direct-phonology__dphon-366",
+   "run": "agent_wrong-r1",
+   "kind": "agent_wrong",
+   "level": "L2",
+   "why": "wrong_fix_reached_l2",
+   "receipt": "benchmarks/results/slice2/direct-phonology__dphon-366/agent_wrong-r1/receipt.md",
+   "notes": []
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "fox-it__dissect.cstruct-88",
+   "run": "agent_ok-r1",
+   "kind": "agent_ok",
+   "level": "COUNTEREXAMPLE",
+   "why": "false_alarm",
+   "receipt": "benchmarks/results/slice2/fox-it__dissect.cstruct-88/agent_ok-r1/receipt.md",
+   "notes": [
+    "The input feeds a whole '#define A<tab>(B + C)<tab>// comment' source text to ExpressionTokenizer, which only ever receives a constant's value expression (the parser strips the directive and the comment first), so '#' being rejected is expected; same on base. The issue's example is parser input, not tokenizer input."
+   ]
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "nipy__nipype-3658",
+   "run": "agent_wrong-r1",
+   "kind": "agent_wrong",
+   "level": "L2",
+   "why": "wrong_fix_reached_l2",
+   "receipt": "benchmarks/results/slice2/nipy__nipype-3658/agent_wrong-r1/receipt.md",
+   "notes": []
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "open-contracting__ocdskit-51",
+   "run": "gold-r1",
+   "kind": "gold",
+   "level": "COUNTEREXAMPLE",
+   "why": "false_alarm",
+   "receipt": "benchmarks/results/slice2/open-contracting__ocdskit-51/gold-r1/receipt.md",
+   "notes": [
+    "test_command compares against tests/fixtures/mapping-sheet.csv, which the PR's test patch updates with the new 'reference' rows the issue asks for (it is the FAIL_TO_PASS test). Intended change, not a bug: the PR's own test patch rewrites this test (set aside by the report already)."
+   ]
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "robotpy__robotpy-cppheaderparser-44",
+   "run": "agent_ok-r1",
+   "kind": "agent_ok",
+   "level": "COUNTEREXAMPLE",
+   "why": "false_alarm",
+   "receipt": "benchmarks/results/slice2/robotpy__robotpy-cppheaderparser-44/agent_ok-r1/receipt.md",
+   "notes": [
+    "Same as gold #1 (identical code change): Verified in the source at the base commit: CppHeader.__init__ calls self.finalize() (line 3004), then deletes _precomp_macro_buf and 20 other parse-time attributes (lines 3007-3031). The attack calls finalize() a second time on that finished object, so the AttributeError is certain and no user path reaches it. The issue's own example builds fine with the fix (base could not build it). A lifecycle method called again on a finished object."
+   ]
+  },
+  {
+   "slice": "slice2",
+   "instance_id": "robotpy__robotpy-cppheaderparser-44",
+   "run": "gold-r1",
+   "kind": "gold",
+   "level": "COUNTEREXAMPLE",
+   "why": "false_alarm",
+   "receipt": "benchmarks/results/slice2/robotpy__robotpy-cppheaderparser-44/gold-r1/receipt.md",
+   "notes": [
+    "Verified in the source at the base commit: CppHeader.__init__ calls self.finalize() (line 3004), then deletes _precomp_macro_buf and 20 other parse-time attributes (lines 3007-3031). The attack calls finalize() a second time on that finished object, so the AttributeError is certain and no user path reaches it. The issue's own example builds fine with the fix (base could not build it). A lifecycle method called again on a finished object."
+   ]
+  }
+ ]
+}

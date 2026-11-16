@@ -1,0 +1,626 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-22T20:01:14+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks kraken_biom.parse_kraken_report",
+    "Break My Fix finding 2: an input that breaks kraken_biom.parse_tax_lvl",
+    "regression: test/test_biom_create.py::kraken_biom_Test.test_sample_ids passed before the fix and fails after it",
+    "regression: test/test_biom_create.py::kraken_biom_Test.test_observation_ids passed before the fix and fails after it",
+    "regression: test/test_biom_create.py::kraken_biom_Test.test_sample_counts passed before the fix and fails after it",
+    "regression: test/test_parsing.py::kraken_biom_Test.test_parse_kraken_report_O_S passed before the fix and fails after it",
+    "regression: test/test_parsing.py::kraken_biom_Test.test_parse_kraken_report_F_S passed before the fix and fails after it",
+    "regression: test/test_parsing.py::kraken_biom_Test.test_parse_kraken_report_G_S passed before the fix and fails after it",
+    "regression: test/test_parsing.py::kraken_biom_Test.test_parse_kraken_report_S passed before the fix and fails after it",
+    "regression: test/test_parsing.py::kraken_biom_Test.test_parse_kraken_report_C_G passed before the fix and fails after it",
+    "regression: test/test_parsing.py::kraken_biom_Test.test_parse_kraken_report_taxonomy passed before the fix and fails after it",
+    "regression: test/test_process_samples.py::kraken_biom_Test.test_sample_ids passed before the fix and fails after it",
+    "regression: test/test_process_samples.py::kraken_biom_Test.test_sample_counts passed before the fix and fails after it",
+    "regression: test/test_process_samples.py::kraken_biom_Test.test_taxa passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "e8e9d458139715e247d84cdc0baa728d643f7c3d"
+  },
+  "head": {
+    "ref": "tf-v0",
+    "sha": "f281fbbd7aeae6ae04baeb980ac0ab7eca47bc79"
+  },
+  "issue": {
+    "title": "Taxonomic hierarchy incorrect for certain cases",
+    "sha256": "049a791deef8b876a4e8afff00275a5fe6d578c6b4c5b7883fac2a687491625a"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the bug, but the fixed code broke 14 previously passing tests across the parsing, BIOM-creation and sample-processing suites, and parse_tax_lvl raises NameError: name 're' is not defined on a plain Chlorophyta entry. Check first whether the fix is missing an `import re`, which would likely explain both Break My Fix findings and the regressions, then re-run the suite.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 3.07,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 5.71,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 56.31,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "inconclusive",
+      "reason": "the tests killed 5 of 7 mutants; 80% is needed, but the existing suite could not run cleanly on the fixed code, so the rate is incomplete",
+      "duration_s": 119.06,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.714,
+        "repro_kill_rate": 0.714,
+        "pr_kill_rate": null,
+        "mutants": 7,
+        "killed": 5,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-a6db9fd21c0e",
+          "m-d512d732547f",
+          "m-f5c75df0364a",
+          "m-25cfa0d5198c",
+          "m-10193500bebf"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.8,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 5 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "12 confirmed: test/test_biom_create.py::kraken_biom_Test.test_sample_ids, test/test_biom_create.py::kraken_biom_Test.test_observation_ids, test/test_biom_create.py::kraken_biom_Test.test_sample_counts, test/test_parsing.py::kraken_biom_Test.test_parse_kraken_report_O_S, test/test_parsing.py::kraken_biom_Test.test_parse_kraken_report_F_S and 7 more",
+      "duration_s": 22.55,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors test/test_biom_create.py test/test_parsing.py test/test_process_samples.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 12,
+        "not_run": 0,
+        "regressions": 12,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.9,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 18
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "2 input(s) compared on 2 function(s): 2 changed with the fix; not complete: kraken_biom.py: module-level code that computes a value changed (line 36); what uses it is not compared",
+      "duration_s": 27.29,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "finished": 2,
+        "inputs_compared": 2,
+        "changes": 2,
+        "groups": 2,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "2 finding(s), each proven by a failing repro file",
+      "duration_s": 151.86,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_2.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 7,
+        "properties_counted": 11,
+        "findings": 2,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "kraken_biom.parse_kraken_report",
+      "call": "parse_kraken_report(kdata=[{'pct_reads': '0.00', 'clade_reads': '10', 'taxon_reads': '0', 'rank': '-', 'ncbi_tax': '1', 'sci_name': 'root'}, {'pct_reads': '0.00', 'clade_reads': '10', 'taxon_reads': '0', 'rank': 'D', 'ncbi_tax': '2759', 'sci_name': '  Eukaryota'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'P', 'ncbi_tax': '3041', 'sci_name': '    Chlorophyta'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '1', 'rank': 'C', 'ncbi_tax': '75966', 'sci_name': '      Trebouxiophyceae'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': '-', 'ncbi_tax': '33682', 'sci_name': '    Euglenozoa'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'O', 'ncbi_tax': '5653', 'sci_name': '      Kinetoplastida'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'F', 'ncbi_tax': '5654', 'sci_name': '        Trypanosomatidae'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'G', 'ncbi_tax': '5690', 'sci_name': '          Trypanosoma'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': '-', 'ncbi_tax': '47570', 'sci_name': '            Schizotrypanum'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'S', 'ncbi_tax': '5693', 'sci_name': '              Trypanosoma cruzi'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '1', 'rank': '-', 'ncbi_tax': '353153', 'sci_name': '                Trypanosoma cruzi strain CL Brener'}], max_rank='O', min_rank='S')",
+      "input": {
+        "kdata": "[{'pct_reads': '0.00', 'clade_reads': '10', 'taxon_reads': '0', 'rank': '-', 'ncbi_tax': '1', 'sci_name': 'root'}, {'pct_reads': '0.00', 'clade_reads': '10', 'taxon_reads': '0', 'rank': 'D', 'ncbi_tax': '2759', 'sci_name': '  Eukaryota'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'P', 'ncbi_tax': '3041', 'sci_name': '    Chlorophyta'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '1', 'rank': 'C', 'ncbi_tax': '75966', 'sci_name': '      Trebouxiophyceae'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': '-', 'ncbi_tax': '33682', 'sci_name': '    Euglenozoa'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'O', 'ncbi_tax': '5653', 'sci_name': '      Kinetoplastida'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'F', 'ncbi_tax': '5654', 'sci_name': '        Trypanosomatidae'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'G', 'ncbi_tax': '5690', 'sci_name': '          Trypanosoma'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': '-', 'ncbi_tax': '47570', 'sci_name': '            Schizotrypanum'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'S', 'ncbi_tax': '5693', 'sci_name': '              Trypanosoma cruzi'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '1', 'rank': '-', 'ncbi_tax': '353153', 'sci_name': '                Trypanosoma cruzi strain CL Brener'}]",
+        "max_rank": "'O'",
+        "min_rank": "'S'"
+      },
+      "outcome": "raises NameError: name 're' is not defined",
+      "base_outcome": "returns (OrderedDict([('5693', 1)]), OrderedDict([('5693', ['k__Eukaryota', 'p__Chlorophyta', 'c__Trebouxiophyceae', 'o__Kinetoplastida', 'f__Trypanosomatidae', 'g__Trypanosoma', 's__cruzi'])]))",
+      "expected": null,
+      "property": {
+        "id": "t2.p1",
+        "name": "taxa_ids_from_report",
+        "kind": "returns",
+        "claim": "The returned taxa are keyed on NCBI IDs present in the report, and every counted ID has a lineage",
+        "source": "docstring",
+        "quote": "a list of NCBI IDs and a formatted string representing their taxonomic hierarchies",
+        "origin": "model"
+      },
+      "also_violates": [
+        "counts_and_taxa_same_ids",
+        "recorded_only_between_max_and_min",
+        "no_unrelated_phylum_in_lineage",
+        "min_rank_gets_clade_reads"
+      ],
+      "other_inputs": 2,
+      "relation": "new with the fix: before it, this input returns (OrderedDict([('5693', 1)]), OrderedDict([('5693', ['k__Eukaryota', 'p__Chlorophyta', 'c__Trebouxiophyceae', 'o__Kinetoplastida', 'f__Trypanosomatidae', 'g__Trypanosoma', 's__cruzi'])]))",
+      "file": "findings/finding_1.py",
+      "path": "kraken_biom.py",
+      "line": 98,
+      "expect": {
+        "types": [
+          "NameError"
+        ],
+        "in_file": false
+      }
+    },
+    {
+      "number": 2,
+      "function": "kraken_biom.parse_tax_lvl",
+      "call": "parse_tax_lvl(entry={'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'P', 'ncbi_tax': '3041', 'sci_name': 'Chlorophyta'})",
+      "input": {
+        "entry": "{'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'P', 'ncbi_tax': '3041', 'sci_name': 'Chlorophyta'}"
+      },
+      "outcome": "raises NameError: name 're' is not defined",
+      "base_outcome": null,
+      "expected": null,
+      "property": {
+        "id": "t1.p4",
+        "name": "own_rank_maps_to_own_name",
+        "kind": "returns",
+        "claim": "The returned dict maps the entry's own named rank to its scientific name without the indentation, whatever was recorded before.",
+        "source": "docstring",
+        "quote": "Parse a single kraken-report entry and return a dictionary of taxa for its named ranks.",
+        "origin": "model"
+      },
+      "also_violates": [
+        "keys_are_named_ranks",
+        "top_level_entry_resets_hierarchy"
+      ],
+      "other_inputs": 2,
+      "relation": "new with the fix: the function did not exist (or did not import) before it",
+      "file": "findings/finding_2.py",
+      "path": "kraken_biom.py",
+      "line": 98,
+      "expect": {
+        "types": [
+          "NameError"
+        ],
+        "in_file": false
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "kraken_biom.handle_program_options",
+      "kind": "output",
+      "count": 1,
+      "before": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [-k REPORTS_FP] [--max {D,P,C,O,F,G,S}]\\n                   [--min {D,P,C,O,F,G,S}] [-o OUTPUT_FP] [--otu_fp OTU_FP]\\n                   [--fmt {hdf5,json,tsv}] [--gzip] [--version] [-v]\\n                   [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-fz0ax92x/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-fz0ax92x/report.xml/n'",
+      "after": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [--max {D,P,C,O,F,G,S}] [--min {D,P,C,O,F,G,S}]\\n                   [-o OUTPUT_FP] [--otu_fp OTU_FP] [--fmt {hdf5,json,tsv}]\\n                   [--gzip] [--version] [-v]\\n                   kraken_reports [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-qzioziu8/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-qzioziu8/report.xml/n'",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "suspicious",
+          "reason": "The issue is only about taxonomy hierarchy parsing. Removing the -k/--kraken_reports_fp option and changing nargs from '*' to '+' alters the CLI usage, and nothing in the issue asks for that (it looks like a reverted feature)."
+        }
+      ],
+      "examples": [
+        {
+          "call": "handle_program_options()",
+          "before": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [-k REPORTS_FP] [--max {D,P,C,O,F,G,S}]\\n                   [--min {D,P,C,O,F,G,S}] [-o OUTPUT_FP] [--otu_fp OTU_FP]\\n                   [--fmt {hdf5,json,tsv}] [--gzip] [--version] [-v]\\n                   [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-fz0ax92x/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-fz0ax92x/report.xml/n'",
+          "after": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [--max {D,P,C,O,F,G,S}] [--min {D,P,C,O,F,G,S}]\\n                   [-o OUTPUT_FP] [--otu_fp OTU_FP] [--fmt {hdf5,json,tsv}]\\n                   [--gzip] [--version] [-v]\\n                   kraken_reports [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-qzioziu8/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-qzioziu8/report.xml/n'"
+        }
+      ]
+    },
+    {
+      "function": "kraken_biom.main",
+      "kind": "output",
+      "count": 1,
+      "before": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [-k REPORTS_FP] [--max {D,P,C,O,F,G,S}]\\n                   [--min {D,P,C,O,F,G,S}] [-o OUTPUT_FP] [--otu_fp OTU_FP]\\n                   [--fmt {hdf5,json,tsv}] [--gzip] [--version] [-v]\\n                   [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-fz0ax92x/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-fz0ax92x/report.xml/n'",
+      "after": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [--max {D,P,C,O,F,G,S}] [--min {D,P,C,O,F,G,S}]\\n                   [-o OUTPUT_FP] [--otu_fp OTU_FP] [--fmt {hdf5,json,tsv}]\\n                   [--gzip] [--version] [-v]\\n                   kraken_reports [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-qzioziu8/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-qzioziu8/report.xml/n'",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c2",
+          "label": "suspicious",
+          "reason": "The issue concerns lineage assignment only. main's CLI changed (the -k option was dropped and kraken_reports is now required), which no text asks for; the fix also tightened the max/min check to '>='."
+        }
+      ],
+      "examples": [
+        {
+          "call": "main()",
+          "before": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [-k REPORTS_FP] [--max {D,P,C,O,F,G,S}]\\n                   [--min {D,P,C,O,F,G,S}] [-o OUTPUT_FP] [--otu_fp OTU_FP]\\n                   [--fmt {hdf5,json,tsv}] [--gzip] [--version] [-v]\\n                   [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-fz0ax92x/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-fz0ax92x/report.xml/n'",
+          "after": "raises SystemExit; printed nothing; wrote 'stderr usage: __main__.py [-h] [--max {D,P,C,O,F,G,S}] [--min {D,P,C,O,F,G,S}]\\n                   [-o OUTPUT_FP] [--otu_fp OTU_FP] [--fmt {hdf5,json,tsv}]\\n                   [--gzip] [--version] [-v]\\n                   kraken_reports [kraken_reports ...]\\n__main__.py: error: unrecognized arguments: -q -p --tb=long -rN --color=no -s test_tracefix_diff.py -c <tmp>/tracefix-run-qzioziu8/tracefix-empty.ini --rootdir=<copy> --confcutdir=<copy> -p tracefix_paths --junitxml=<tmp>/tracefix-run-qzioziu8/report.xml/n'"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "test/test_biom_create.py",
+      "test": "kraken_biom_Test.test_sample_ids",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 189
+    },
+    {
+      "file": "test/test_biom_create.py",
+      "test": "kraken_biom_Test.test_observation_ids",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 196
+    },
+    {
+      "file": "test/test_biom_create.py",
+      "test": "kraken_biom_Test.test_sample_counts",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 207
+    },
+    {
+      "file": "test/test_parsing.py",
+      "test": "kraken_biom_Test.test_parse_kraken_report_O_S",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 146
+    },
+    {
+      "file": "test/test_parsing.py",
+      "test": "kraken_biom_Test.test_parse_kraken_report_F_S",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 177
+    },
+    {
+      "file": "test/test_parsing.py",
+      "test": "kraken_biom_Test.test_parse_kraken_report_G_S",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 206
+    },
+    {
+      "file": "test/test_parsing.py",
+      "test": "kraken_biom_Test.test_parse_kraken_report_S",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 234
+    },
+    {
+      "file": "test/test_parsing.py",
+      "test": "kraken_biom_Test.test_parse_kraken_report_C_G",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 260
+    },
+    {
+      "file": "test/test_parsing.py",
+      "test": "kraken_biom_Test.test_parse_kraken_report_taxonomy",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 287
+    },
+    {
+      "file": "test/test_process_samples.py",
+      "test": "kraken_biom_Test.test_sample_ids",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 237
+    },
+    {
+      "file": "test/test_process_samples.py",
+      "test": "kraken_biom_Test.test_sample_counts",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 243
+    },
+    {
+      "file": "test/test_process_samples.py",
+      "test": "kraken_biom_Test.test_taxa",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 're' is not defined",
+      "line": 269
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-1d0efd51f6d4",
+      "origin": "model",
+      "file": "kraken_biom.py",
+      "line": 107,
+      "original": "    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth if x[0] in ranks}",
+      "replacement": "    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth}",
+      "description": "Drops the filter for named ranks so unnamed ranks enter the lineage.",
+      "diff": "--- a/kraken_biom.py\n+++ b/kraken_biom.py\n@@ -106,3 +106,3 @@\n     # Create a tax_lvl dict for the named ranks.\n-    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth if x[0] in ranks}\n+    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth}\n     return(tax_lvl)\n",
+      "words": "kraken_biom.py:107: changing `    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth if x[0] in ...` to `    tax_lvl = {x[0]: x[1] for x in tax_lvl_depth}` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "handle_program_options()",
+          "fix": "raises SystemExit",
+          "mutant": "raises SystemExit"
+        },
+        {
+          "call": "main()",
+          "fix": "raises SystemExit",
+          "mutant": "raises SystemExit"
+        }
+      ]
+    },
+    {
+      "id": "m-7a42eafacc56",
+      "origin": "model",
+      "file": "kraken_biom.py",
+      "line": 105,
+      "original": "    tax_lvl_depth.append((entry['rank'], name))",
+      "replacement": "    tax_lvl_depth.append((entry['rank'], entry['sci_name']))",
+      "description": "Appends the unstripped name including indentation.",
+      "diff": "--- a/kraken_biom.py\n+++ b/kraken_biom.py\n@@ -104,3 +104,3 @@\n     # Append the new taxon.\n-    tax_lvl_depth.append((entry['rank'], name))\n+    tax_lvl_depth.append((entry['rank'], entry['sci_name']))\n     # Create a tax_lvl dict for the named ranks.\n",
+      "words": "kraken_biom.py:105: changing `    tax_lvl_depth.append((entry['rank'], name))` to `    tax_lvl_depth.append((entry['rank'], entry['sci_name']))` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "handle_program_options()",
+          "fix": "raises SystemExit",
+          "mutant": "raises SystemExit"
+        },
+        {
+          "call": "main()",
+          "fix": "raises SystemExit",
+          "mutant": "raises SystemExit"
+        }
+      ]
+    },
+    {
+      "id": "m-e02840de7ec6",
+      "origin": "rule",
+      "file": "kraken_biom.py",
+      "line": 274,
+      "original": "    descr = \"\"\"\\\n    Create BIOM-format tables (http://biom-format.org) from Kraken output \n    (http://ccb.jhu.edu/software/kraken/).\n\n    The program takes as input, one or more files output from th...",
+      "replacement": "    return None",
+      "description": "rule: body of `handle_program_options` -> `return None`",
+      "diff": "--- a/kraken_biom.py\n+++ b/kraken_biom.py\n@@ -273,101 +273,3 @@\n def handle_program_options():\n-    descr = \"\"\"\\\n-    Create BIOM-format tables (http://biom-format.org) from Kraken output \n-    (http://ccb.jhu.edu/software/kraken/).\n-\n-    The program takes as input, one or more files output from the kraken-report\n-    tool. Each file is parsed and the counts for each OTU (operational taxonomic\n-    unit) are recorded, along with database ID (e.g. NCBI), and lineage. The\n-    extracted data are then stored in a BIOM table where each count is linked\n-    to the Sample and OTU it belongs to. Sample IDs are extracted from the input\n-    filenames (everything up to the '.').\n-\n-    OTUs are defined by the --max and --min arguments. By default these are\n-    set to Order and Species respectively. This means that counts assigned\n-    directly to an Order, Family, or Genus are recorded under the associated\n-    OTU ID, and counts assigned at or below the Species level are assigned to\n-    the OTU ID for the species. Setting a minimum rank below Species is not yet\n-    available.\n-\n-    The BIOM format currently has two major versions. Version 1.0 uses the \n-    JSON (JavaScript Object Notation) format as a base. Version 2.x uses the\n-    HDF5 (Hierarchical Data Format v5) as a base. The output format can be\n-    specified with the --fmt option. Note that a tab-separated (tsv) output\n-    format is also available. The resulting file will not contain most of the\n-    metadata, but can be opened by spreadsheet programs.\n-\n-    Version 2 of the BIOM format is used by default for output, but requires the\n... 75 more lines",
+      "words": "kraken_biom.py:274: changing `    descr = \"\"\"\\\n    Create BIOM-format tables (http://biom-...` to `    return None` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "handle_program_options()",
+          "fix": "raises SystemExit",
+          "mutant": "returns None"
+        },
+        {
+          "call": "main()",
+          "fix": "raises SystemExit",
+          "mutant": "raises AttributeError"
+        }
+      ]
+    },
+    {
+      "id": "m-f883b1d22f6b",
+      "origin": "rule",
+      "file": "kraken_biom.py",
+      "line": 376,
+      "original": "    args = handle_program_options()\n\n    if args.fmt == 'hdf5' and not HAVE_H5PY:\n        args.fmt = 'json'\n        msg = \"\"\"\\\n        Library 'h5py' not found, unable to write BIOM 2.x (HDF5) files.\n...",
+      "replacement": "    return None",
+      "description": "rule: body of `main` -> `return None`",
+      "diff": "--- a/kraken_biom.py\n+++ b/kraken_biom.py\n@@ -375,43 +375,3 @@\n def main():\n-    args = handle_program_options()\n-\n-    if args.fmt == 'hdf5' and not HAVE_H5PY:\n-        args.fmt = 'json'\n-        msg = \"\"\"\\\n-        Library 'h5py' not found, unable to write BIOM 2.x (HDF5) files.\n-        Defaulting to BIOM 1.0 (JSON).\"\"\"\n-        print(twdd(msg))\n-\n-    if ranks.index(args.max) >= ranks.index(args.min):\n-        msg = \"ERROR: Max and Min ranks are out of order: {} < {}\"\n-        sys.exit(msg.format(args.max, args.min))\n-\n-    # load all kraken-report files and parse them\n-    sample_counts, taxa = process_samples(args.kraken_reports, \n-                                          max_rank=args.max, \n-                                          min_rank=args.min)\n-\n-    # create new BIOM table from sample counts and taxon ids\n-    # add taxonomy strings to row (taxon) metadata\n-    biomT = create_biom_table(sample_counts, taxa)\n-\n-    out_fp = write_biom(biomT, args.output_fp, args.fmt, args.gzip)\n-\n-    if args.otu_fp:\n-        try:\n... 17 more lines",
+      "words": "kraken_biom.py:376: changing `    args = handle_program_options()\n\n    if args.fmt == 'hdf...` to `    return None` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "handle_program_options()",
+          "fix": "raises SystemExit",
+          "mutant": "raises SystemExit"
+        },
+        {
+          "call": "main()",
+          "fix": "raises SystemExit",
+          "mutant": "returns None"
+        }
+      ]
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "kraken_biom.py": [
+        36,
+        84,
+        98,
+        99,
+        100,
+        103,
+        105,
+        107,
+        108,
+        122,
+        132,
+        133,
+        136,
+        334,
+        335,
+        336,
+        385,
+        390
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 13,
+        "total": 18
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack handle_program_options: it takes no parameters to vary",
+    "Break My Fix could not attack main: it takes no parameters to vary",
+    "the behaviour diff could not compare parse_tax_lvl: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 9,
+    "input_tokens": 82907,
+    "output_tokens": 17078,
+    "cost_estimate": {
+      "usd": 0.5889,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: style example test/test_biom_create.py truncated to 6000 characters for the prompt",
+    "guard: the existing suite did not run cleanly on the fixed code",
+    "guard: only the first 10 of 24 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "kraken_biom.parse_tax_lvl",
+      "path": "kraken_biom.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 3,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "kraken_biom.parse_kraken_report",
+      "path": "kraken_biom.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 4,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

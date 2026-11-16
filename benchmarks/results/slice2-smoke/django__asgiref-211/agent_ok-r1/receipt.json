@@ -1,0 +1,283 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-22T10:30:44+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 3 of 4 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "251e9830634bdc3ee27609ea9e31505383902204"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "ae62c99d540719d9706dd6c02d8ccf223c960cd1"
+  },
+  "issue": {
+    "title": "Has StatelessServer been updated to the ASGI 3.0 spec?",
+    "sha256": "eceb67c997473478a8b3640c9ca6db91fc5c5bbbff0836962ba4430535cc8d8c"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.20"
+  },
+  "summary": {
+    "text": "The evidence shows the bug was reproduced: a test fails before the fix and passes after it, no regressions were found, and the fixed lines are covered, but the guard stage reported not_guarded and the mutation threshold for L2 was not met. The most important next step is to strengthen the tests so they catch mutants of the fix (for example, asserting StatelessServer calls the application as appli…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 9.65,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 4.23,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 19.53,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 3 of 4 mutants; 80% is needed",
+      "duration_s": 48.82,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.75,
+        "repro_kill_rate": 0.75,
+        "pr_kill_rate": null,
+        "mutants": 4,
+        "killed": 3,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 3,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-9745a8c64dad",
+          "m-dad55d3e5607",
+          "m-04523dcbec27"
+        ],
+        "rule_mutants": 1,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 3 of 4 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 45 untouched tests that passed before the fix fails after it",
+      "duration_s": 9.68,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 45,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 6
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "the behaviour diff can't run in the project's Python: the project's Python has Hypothesis 6.119.3, older than 6.141, the oldest Tracefix is tested with: upgrade it there (python -m pip install -U hypothesis)",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "Break My Fix can't run in the project's Python: the project's Python has Hypothesis 6.119.3, older than 6.141, the oldest Tracefix is tested with: upgrade it there (python -m pip install -U hypothesis)",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-97360d4e4940",
+      "origin": "model",
+      "file": "asgiref/server.py",
+      "line": 89,
+      "original": "        application_callable = guarantee_single_callable(self.application)",
+      "replacement": "        application_callable = self.application",
+      "description": "Skips wrapping the application, so double-callable apps are not adapted to single-callable.",
+      "diff": "--- a/asgiref/server.py\n+++ b/asgiref/server.py\n@@ -88,3 +88,3 @@\n         input_queue = asyncio.Queue()\n-        application_callable = guarantee_single_callable(self.application)\n+        application_callable = self.application\n         # Run it, and stash the future for later checking\n",
+      "words": "asgiref/server.py:89: changing `        application_callable = guarantee_single_callable(sel...` to `        application_callable = self.application` made no test fail",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "asgiref/server.py": [
+        6,
+        89,
+        92,
+        93,
+        94,
+        95
+      ]
+    },
+    "sets": [],
+    "notes": [
+      "not measured: the project's Python has Hypothesis 6.119.3, older than 6.141, the oldest Tracefix is tested with: upgrade it there (python -m pip install -U hypothesis)"
+    ]
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 4,
+    "input_tokens": 7841,
+    "output_tokens": 1191,
+    "cost_estimate": {
+      "usd": 0.032,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "fix_line_coverage: not measured: the project's Python has Hypothesis 6.119.3, older than 6.141, the oldest Tracefix is tested with: upgrade it there (python -m pip install -U hypothesis)"
+  ],
+  "previous": null,
+  "attack_targets": []
+}

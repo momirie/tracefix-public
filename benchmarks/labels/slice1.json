@@ -1,0 +1,121 @@
+{
+ "labels": [
+  {
+   "instance_id": "elementsinteractive__twyn-317",
+   "run": "gold-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-10-16T12:29:19+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Calls AbstractPackageReference.normalize_packages, an @abstractmethod whose body is only a docstring, so None is expected; real references override it. Tracefix should not attack abstract methods (NOTES)."
+  },
+  {
+   "instance_id": "zarr-developers__virtualizarr-979",
+   "run": "gold-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-10-16T13:24:35+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Input {} has no inline values, so the property (inline values never raise NotImplementedError) doesn't apply; ValueError 'need a chunk grid shape if no chunks given' is ChunkManifest's deliberate validation, same on base. The raises_only check counted an unrelated exception (NOTES)."
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "gold-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-10-16T18:07:01+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "db_url_config returns early for the literal 'sqlite://:memory:' (environ.py ~612-619, before URL parsing), so the fix's `if extra_options:` merge never runs and extra_options are silently dropped for that URL; the fix's own docstring says they are merged into OPTIONS after URL parsing. Minor edge case, one root cause shared by gold #1-4 and v1 #4."
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "gold-r1",
+   "finding": 2,
+   "receipt_created_at": "2026-10-16T18:07:01+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "db_url_config returns early for the literal 'sqlite://:memory:' (environ.py ~612-619, before URL parsing), so the fix's `if extra_options:` merge never runs and extra_options are silently dropped for that URL; the fix's own docstring says they are merged into OPTIONS after URL parsing. Minor edge case, one root cause shared by gold #1-4 and v1 #4."
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "gold-r1",
+   "finding": 3,
+   "receipt_created_at": "2026-10-16T18:07:01+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "db_url_config returns early for the literal 'sqlite://:memory:' (environ.py ~612-619, before URL parsing), so the fix's `if extra_options:` merge never runs and extra_options are silently dropped for that URL; the fix's own docstring says they are merged into OPTIONS after URL parsing. Minor edge case, one root cause shared by gold #1-4 and v1 #4."
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "gold-r1",
+   "finding": 4,
+   "receipt_created_at": "2026-10-16T18:07:01+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "db_url_config returns early for the literal 'sqlite://:memory:' (environ.py ~612-619, before URL parsing), so the fix's `if extra_options:` merge never runs and extra_options are silently dropped for that URL; the fix's own docstring says they are merged into OPTIONS after URL parsing. Minor edge case, one root cause shared by gold #1-4 and v1 #4."
+  },
+  {
+   "instance_id": "joke2k__django-environ-592",
+   "run": "v1-r1",
+   "finding": 4,
+   "receipt_created_at": "2026-10-16T18:13:03+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "db_url_config returns early for the literal 'sqlite://:memory:' (environ.py ~612-619, before URL parsing), so the fix's `if extra_options:` merge never runs and extra_options are silently dropped for that URL; the fix's own docstring says they are merged into OPTIONS after URL parsing. Minor edge case, one root cause shared by gold #1-4 and v1 #4."
+  },
+  {
+   "instance_id": "MAIF__arta-50",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-10-16T13:37:25+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "fix_does_not_fix rests on a test that never reaches the fix: all four rules dicts it tries are rejected by arta's own RulesDict model at the base commit (group -> rule -> {condition: callable, action: callable}, extra keys forbidden): two nest a third level, one has a 'rule' key, and the flat one passes {'OR': [...]} as a condition, which isn't callable. RulesEngine() raises the same ValidationError before and after the fix; the hidden tests pass on gold (NOTES #29)."
+  },
+  {
+   "instance_id": "mitmproxy__mitmproxy-7827",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-10-16T14:28:52+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Set aside (counted in no rate): its only causes are 38 regressions in test/mitmproxy/tools/web/test_app.py, a file the PR's own test patch changed with the fix."
+  },
+  {
+   "instance_id": "cal-itp__benefits-3198",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-10-16T16:45:01+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Set aside (counted in no rate): its only causes are 2 regressions in tests/pytest/core/admin/test_transit.py, a file the PR's own test patch changed with the fix."
+  },
+  {
+   "instance_id": "elementsinteractive__twyn-317",
+   "run": "gold-r2",
+   "finding": 0,
+   "receipt_created_at": "2026-10-20T11:33:49+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Its only causes are 13 regressions in tests/main/test_main.py and tests/trusted_packages/test_references.py, files the PR's own test patch changed with the fix (as gold-r1's regressions; set aside if it were a first repeat)."
+  },
+  {
+   "instance_id": "elementsinteractive__twyn-317",
+   "run": "v0-r2",
+   "finding": 1,
+   "receipt_created_at": "2026-10-20T11:37:16+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Same as gold-r1 #1 (developer: false_alarm): calls the @abstractmethod AbstractPackageReference.normalize_packages, whose body is only a docstring, so None is expected; here with {''} instead of set() (NOTES #30)."
+  },
+  {
+   "instance_id": "elementsinteractive__twyn-317",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-10-16T12:29:19+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Its causes besides finding 1 are 13 regressions in tests/main/test_main.py and tests/trusted_packages/test_references.py, files the PR's own test patch changed with the fix: the same 13 as gold-r2 (developer: false_alarm). Listed since NOTES #34 S5."
+  }
+ ]
+}

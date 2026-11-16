@@ -1,0 +1,11 @@
+{
+ "key": "ae51eded2e036378ef84b0440e67b00ff27c20b04319d1c5dd7d7c316a3abb78",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1747,
+  "output_tokens": 148,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from blog.slug import slugify\\n\\n\\ndef test_slugify_no_trailing_dash_for_trailing_punctuation() -> None:\\n    assert slugify(\\\"Hello World!\\\") == \\\"hello-world\\\"\\n\",\"rationale\":\"Checks that a title ending in punctuation ('Hello World!') yields 'hello-world' with no trailing dash; base returns 'hello-world-' so it fails there.\"}"
+ },
+ "role": "reproducer"
+}

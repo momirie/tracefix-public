@@ -1,0 +1,1119 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T22:18:57+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: tests/test_check_aggregate.py::test_check_aggregate_passing[components-list] passed before the fix and fails after it",
+    "regression: tests/test_check_aggregate.py::test_check_aggregate_passing[components_dict-dict] passed before the fix and fails after it",
+    "regression: tests/test_cli.py::test_cli_valid_project passed before the fix and fails after it",
+    "regression: tests/test_cli.py::test_cli_invalid_region passed before the fix and fails after it",
+    "regression: tests/test_cli.py::test_cli_non_default_folders passed before the fix and fails after it",
+    "regression: tests/test_cli.py::test_cli_custom_dimensions_runs passed before the fix and fails after it",
+    "regression: tests/test_cli.py::test_cli_custom_dimensions_fails passed before the fix and fails after it",
+    "regression: tests/test_cli.py::test_cli_empty_dimensions_run passed before the fix and fails after it",
+    "regression: tests/test_cli.py::test_cli_empty_dimensions_fails passed before the fix and fails after it",
+    "regression: tests/test_cli.py::test_cli_missing_mappings_runs passed before the fix and fails after it",
+    "regression: tests/test_cli.py::test_cli_missing_mappings_fails passed before the fix and fails after it",
+    "regression: tests/test_cli.py::test_check_region_aggregation passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_simple_codelist passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_codelist_adding_duplicate_raises passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_codelist_to_yaml passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_duplicate_code_raises passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_tagged_codelist passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_to_excel passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_to_csv passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_stray_tag_fails passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_end_whitespace_fails passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_variable_codelist_units passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_variable_codelist_multiple_units passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_to_excel_read_excel_roundtrip passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_to_yaml_from_directory passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_codelist_general_filter passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_codelist_general_filter_multiple_attributes passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_codelist_general_filter_No_Elements passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_MetaCodeList_from_directory passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_variable_codelist_with_duplicates_raises[CodeList] passed before the fix and fails after it",
+    "regression: tests/test_codelist.py::test_variable_codelist_with_duplicates_raises[VariableCodeList] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_rename[model_a] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_rename[model_c] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_empty_raises[region_processing/empty_aggregation] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_empty_raises[region_processing/rename_only] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_no_mapping passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_aggregate passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_complete[complete_processing] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_complete[complete_processing_list] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_weighted_aggregation[weighted_aggregation-exp_df0-None] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_weighted_aggregation[weighted_aggregation_rename-exp_df1-None] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_skip_aggregation[model_a-region_names0] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_processing_skip_aggregation[model_b-region_names1] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_partial_aggregation[input_data0-exp_data0-None] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_partial_aggregation[input_data1-exp_data1-None] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_partial_aggregation[input_data2-exp_data2-None] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_partial_aggregation[input_data3-exp_data3-None] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_partial_aggregation[input_data4-exp_data4-None] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_partial_aggregation[input_data5-exp_data5-None] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_partial_aggregation[input_data6-exp_data6-warning6] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_partial_aggregation[input_data7-exp_data7-warning7] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_aggregation_differences_export[input_data0-expected_difference0] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_aggregation_differences_export[input_data1-expected_difference1] passed before the fix and fails after it",
+    "regression: tests/test_core.py::test_region_aggregation_unknown_region passed before the fix and fails after it",
+    "regression: tests/test_definition.py::test_definition_with_custom_dimension passed before the fix and fails after it",
+    "regression: tests/test_definition.py::test_empty_codelist_raises passed before the fix and fails after it",
+    "regression: tests/test_definition.py::test_to_excel passed before the fix and fails after it",
+    "regression: tests/test_definition_variable.py::test_empty_codelist_raises[rename_arg_conflict-attribute 'region-aggregation' and arguments \\\\['weight'\\\\]] passed before the fix and fails after it",
+    "regression: tests/test_definition_variable.py::test_empty_codelist_raises[rename_undefined_target-Region-aggregation-target\\\\(s\\\\) \\\\['Price|Carbon (Max)'\\\\] not defined] passed before the fix and fails after it",
+    "regression: tests/test_definition_variable.py::test_unknown_weight_raises passed before the fix and fails after it",
+    "regression: tests/test_meta.py::test_MetaValidator passed before the fix and fails after it",
+    "regression: tests/test_meta.py::test_MetaValidator_Meta_Indicator_Error passed before the fix and fails after it",
+    "regression: tests/test_meta.py::test_MetaValidator_Meta_Indicator_Value_Error passed before the fix and fails after it",
+    "regression: tests/test_region_aggregation.py::test_region_processor_working[region_processor_path0] passed before the fix and fails after it",
+    "regression: tests/test_region_aggregation.py::test_region_processor_working[region_processor_path1] passed before the fix and fails after it",
+    "regression: tests/test_region_aggregation.py::test_region_processor_not_defined passed before the fix and fails after it",
+    "regression: tests/test_region_aggregation.py::test_region_processor_duplicate_model_mapping passed before the fix and fails after it",
+    "regression: tests/test_region_aggregation.py::test_region_processor_multiple_wrong_mappings passed before the fix and fails after it",
+    "regression: tests/test_region_aggregation.py::test_region_processor_exclude_model_native_overlap_raises passed before the fix and fails after it",
+    "regression: tests/test_region_aggregation.py::test_region_processor_unexpected_region_raises passed before the fix and fails after it",
+    "regression: tests/test_region_aggregation.py::test_reverse_region_aggregation passed before the fix and fails after it",
+    "regression: tests/test_required_data.py::test_RequiredDataValidator_validate_with_definition passed before the fix and fails after it",
+    "regression: tests/test_required_data.py::test_RequiredDataValidator_validate_with_definition_raises[requiredData_unknown_region.yaml-region\\\\(s\\\\).*not found.*\\\\n.*Asia] passed before the fix and fails after it",
+    "regression: tests/test_required_data.py::test_RequiredDataValidator_validate_with_definition_raises[requiredData_unknown_unit.yaml-wrong unit.*\\\\n.*'Final Energy', 'Mtoe\\\\/yr', 'EJ\\\\/yr'] passed before the fix and fails after it",
+    "regression: tests/test_required_data.py::test_RequiredDataValidator_validate_with_definition_raises[requiredData_unknown_variable.yaml-variable\\\\(s\\\\).*not found.*\\\\n.*Final Energy\\\\|Industry] passed before the fix and fails after it",
+    "regression: tests/test_testing.py::test_assert_valid_structure_requiredData_raises passed before the fix and fails after it",
+    "regression: tests/test_validation.py::test_validation passed before the fix and fails after it",
+    "regression: tests/test_validation.py::test_validation_dimensionless_unit passed before the fix and fails after it",
+    "regression: tests/test_validation.py::test_validation_brackets passed before the fix and fails after it",
+    "regression: tests/test_validation.py::test_validation_fails_variable passed before the fix and fails after it",
+    "regression: tests/test_validation.py::test_validation_fails_unit passed before the fix and fails after it",
+    "regression: tests/test_validation.py::test_validation_fails_region passed before the fix and fails after it",
+    "regression: tests/test_validation.py::test_validation_fails_region_as_int passed before the fix and fails after it",
+    "regression: tests/test_validation.py::test_validation_with_custom_dimension passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "86d38f9b4457f897445bee387554d35e45ae873e"
+  },
+  "head": {
+    "ref": "tf-v1",
+    "sha": "a9facb17cc508329cd0a78c7956dbdd2f8083d8a"
+  },
+  "issue": {
+    "title": "Using only country in nomenclature config breaks CodeList",
+    "sha256": "aa138782041dc27f468e3d21f21cba90bf1803f58a7e19ea3322d5436e78e656"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.10.16"
+  },
+  "summary": {
+    "text": "The verifier reproduced the issue, but did not show that the bug's test passes after the fix, and found 85 regressions: tests across codelist, CLI, core, region aggregation, validation and other modules passed before the fix and fail after it. Look first at the change to DataStructureConfig.repos, whose arguments changed and which looks like a shared cause of these widespread failures, for exampl…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 10.21,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "4 changed module(s) imported from the copies (8 imports in all)",
+      "duration_s": 14.45,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 4,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 48.23,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 3 mutants; 80% is needed",
+      "duration_s": 332.65,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 7,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.6,
+        "rule_kinds": [
+          "body: 2 of 2 killed",
+          "logic: 1 of 2 killed",
+          "constant: 1 of 1 killed",
+          "arithmetic: 0 of 2 killed",
+          "membership: 1 of 1 killed",
+          "drop_call: 0 of 1 killed",
+          "reraise: 1 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "negate_if",
+          "loop"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "84 confirmed: tests/test_check_aggregate.py::test_check_aggregate_passing[components-list], tests/test_check_aggregate.py::test_check_aggregate_passing[components_dict-dict], tests/test_cli.py::test_cli_valid_project, tests/test_cli.py::test_cli_invalid_region, tests/test_cli.py::test_cli_non_default_folders and 79 more",
+      "duration_s": 129.33,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/test_check_aggregate.py tests/test_cli.py tests/test_codelist.py tests/test_core.py tests/test_definition.py tests/test_definition_variable.py tests/test_meta.py tests/test_region_aggregation.py tests/test_required_data.py tests/test_testing.py tests/test_validation.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 150,
+        "not_run": 0,
+        "regressions": 84,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 7.93,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 49
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "1 input(s) compared on 1 function(s): 1 changed with the fix; not complete: DataStructureDefinition.__init__: not compared (a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 17.5,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 5,
+        "finished": 1,
+        "inputs_compared": 1,
+        "changes": 1,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "no candidate checked counts, but 1 could not be checked",
+      "duration_s": 27.83,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 5,
+        "inputs_tried": 5,
+        "properties_counted": 10,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 1,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.04,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 49.87,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "nomenclature.config.DataStructureConfig.repos",
+      "kind": "arguments",
+      "count": 1,
+      "before": "returns {}; left its arguments as builtins.list([builtins.tuple(['self', nomenclature.config.DataStructureConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, region=None, variable=None)])])",
+      "after": "returns {}; left its arguments as builtins.list([builtins.tuple(['self', nomenclature.config.DataStructureConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, region=nomenclature.config.RegionCodeListConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, country=False, dimension=None, repositories=builtins.set({})), variable=nomenclature.config.CodeListConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, dimension=None, repositories=builtins.set({})))])])",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "Return value is unchanged ({}); the only difference is that region/variable now default to empty config objects rather than None, which is the fix for the issue's 'iterate over empty region.repositories' failure and keeps the class docstring's RegionCodeListConfig type."
+        }
+      ],
+      "examples": [
+        {
+          "call": "repos(self='DataStructureConfig()')",
+          "before": "returns {}; left its arguments as builtins.list([builtins.tuple(['self', nomenclature.config.DataStructureConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, region=None, variable=None)])])",
+          "after": "returns {}; left its arguments as builtins.list([builtins.tuple(['self', nomenclature.config.DataStructureConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, region=nomenclature.config.RegionCodeListConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, country=False, dimension=None, repositories=builtins.set({})), variable=nomenclature.config.CodeListConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, dimension=None, repositories=builtins.set({})))])])"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/test_check_aggregate.py",
+      "test": "test_check_aggregate_passing[components-list]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 47
+    },
+    {
+      "file": "tests/test_check_aggregate.py",
+      "test": "test_check_aggregate_passing[components_dict-dict]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 47
+    },
+    {
+      "file": "tests/test_cli.py",
+      "test": "test_cli_valid_project",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert 1 == 0",
+      "line": 76
+    },
+    {
+      "file": "tests/test_cli.py",
+      "test": "test_cli_invalid_region",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert False",
+      "line": 85
+    },
+    {
+      "file": "tests/test_cli.py",
+      "test": "test_cli_non_default_folders",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert 1 == 0",
+      "line": 112
+    },
+    {
+      "file": "tests/test_cli.py",
+      "test": "test_cli_custom_dimensions_runs",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert 1 == 0",
+      "line": 153
+    },
+    {
+      "file": "tests/test_cli.py",
+      "test": "test_cli_custom_dimensions_fails",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert False",
+      "line": 172
+    },
+    {
+      "file": "tests/test_cli.py",
+      "test": "test_cli_empty_dimensions_run",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert 1 == 0",
+      "line": 190
+    },
+    {
+      "file": "tests/test_cli.py",
+      "test": "test_cli_empty_dimensions_fails",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert False",
+      "line": 208
+    },
+    {
+      "file": "tests/test_cli.py",
+      "test": "test_cli_missing_mappings_runs",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert 1 == 0",
+      "line": 220
+    },
+    {
+      "file": "tests/test_cli.py",
+      "test": "test_cli_missing_mappings_fails",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert False",
+      "line": 236
+    },
+    {
+      "file": "tests/test_cli.py",
+      "test": "test_check_region_aggregation",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/tracefix-run-f1kgpgyq<tmp>/pytest-of-root/pytest-0/test_check_region_aggregation0/differences.xlsx'",
+      "line": 267
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_simple_codelist",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 19
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_codelist_adding_duplicate_raises",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 30
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_codelist_to_yaml",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 52
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_duplicate_code_raises",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 68
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_tagged_codelist",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 86
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_to_excel",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 132
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_to_csv",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 148
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_stray_tag_fails",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 161
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_end_whitespace_fails",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 171
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_variable_codelist_units",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 181
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_variable_codelist_multiple_units",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 189
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_to_excel_read_excel_roundtrip",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 198
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_to_yaml_from_directory",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 217
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_codelist_general_filter",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 266
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_codelist_general_filter_multiple_attributes",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 282
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_codelist_general_filter_No_Elements",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 299
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_MetaCodeList_from_directory",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 312
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_variable_codelist_with_duplicates_raises[CodeList]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 355
+    },
+    {
+      "file": "tests/test_codelist.py",
+      "test": "test_variable_codelist_with_duplicates_raises[VariableCodeList]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 355
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_rename[model_a]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 17
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_rename[model_c]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 17
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_empty_raises[region_processing/empty_aggregation]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 55
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_empty_raises[region_processing/rename_only]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 55
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_no_mapping",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 76
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_aggregate",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 91
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_complete[complete_processing]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 132
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_complete[complete_processing_list]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 132
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_weighted_aggregation[weighted_aggregation-exp_df0-None]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 213
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_weighted_aggregation[weighted_aggregation_rename-exp_df1-None]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 213
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_skip_aggregation[model_a-region_names0]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 260
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_processing_skip_aggregation[model_b-region_names1]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 260
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_partial_aggregation[input_data0-exp_data0-None]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 385
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_partial_aggregation[input_data1-exp_data1-None]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 385
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_partial_aggregation[input_data2-exp_data2-None]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 385
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_partial_aggregation[input_data3-exp_data3-None]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 385
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_partial_aggregation[input_data4-exp_data4-None]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 385
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_partial_aggregation[input_data5-exp_data5-None]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 385
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_partial_aggregation[input_data6-exp_data6-warning6]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 385
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_partial_aggregation[input_data7-exp_data7-warning7]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 385
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_aggregation_differences_export[input_data0-expected_difference0]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 446
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_aggregation_differences_export[input_data1-expected_difference1]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 446
+    },
+    {
+      "file": "tests/test_core.py",
+      "test": "test_region_aggregation_unknown_region",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 460
+    },
+    {
+      "file": "tests/test_definition.py",
+      "test": "test_definition_with_custom_dimension",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 9
+    },
+    {
+      "file": "tests/test_definition.py",
+      "test": "test_empty_codelist_raises",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 35
+    },
+    {
+      "file": "tests/test_definition.py",
+      "test": "test_to_excel",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 67
+    },
+    {
+      "file": "tests/test_definition_variable.py",
+      "test": "test_empty_codelist_raises[rename_arg_conflict-attribute 'region-aggregation' and arguments \\\\['weight'\\\\]]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 23
+    },
+    {
+      "file": "tests/test_definition_variable.py",
+      "test": "test_empty_codelist_raises[rename_undefined_target-Region-aggregation-target\\\\(s\\\\) \\\\['Price|Carbon (Max)'\\\\] not defined]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 23
+    },
+    {
+      "file": "tests/test_definition_variable.py",
+      "test": "test_unknown_weight_raises",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 29
+    },
+    {
+      "file": "tests/test_meta.py",
+      "test": "test_MetaValidator",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 8
+    },
+    {
+      "file": "tests/test_meta.py",
+      "test": "test_MetaValidator_Meta_Indicator_Error",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 15
+    },
+    {
+      "file": "tests/test_meta.py",
+      "test": "test_MetaValidator_Meta_Indicator_Value_Error",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 28
+    },
+    {
+      "file": "tests/test_region_aggregation.py",
+      "test": "test_region_processor_working[region_processor_path0]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 106
+    },
+    {
+      "file": "tests/test_region_aggregation.py",
+      "test": "test_region_processor_working[region_processor_path1]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 106
+    },
+    {
+      "file": "tests/test_region_aggregation.py",
+      "test": "test_region_processor_not_defined",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 142
+    },
+    {
+      "file": "tests/test_region_aggregation.py",
+      "test": "test_region_processor_duplicate_model_mapping",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 158
+    },
+    {
+      "file": "tests/test_region_aggregation.py",
+      "test": "test_region_processor_multiple_wrong_mappings",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 183
+    },
+    {
+      "file": "tests/test_region_aggregation.py",
+      "test": "test_region_processor_exclude_model_native_overlap_raises",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 193
+    },
+    {
+      "file": "tests/test_region_aggregation.py",
+      "test": "test_region_processor_unexpected_region_raises",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 208
+    },
+    {
+      "file": "tests/test_region_aggregation.py",
+      "test": "test_reverse_region_aggregation",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 249
+    },
+    {
+      "file": "tests/test_required_data.py",
+      "test": "test_RequiredDataValidator_validate_with_definition",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 35
+    },
+    {
+      "file": "tests/test_required_data.py",
+      "test": "test_RequiredDataValidator_validate_with_definition_raises[requiredData_unknown_region.yaml-region\\\\(s\\\\).*not found.*\\\\n.*Asia]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 60
+    },
+    {
+      "file": "tests/test_required_data.py",
+      "test": "test_RequiredDataValidator_validate_with_definition_raises[requiredData_unknown_unit.yaml-wrong unit.*\\\\n.*'Final Energy', 'Mtoe\\\\/yr', 'EJ\\\\/yr']",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 60
+    },
+    {
+      "file": "tests/test_required_data.py",
+      "test": "test_RequiredDataValidator_validate_with_definition_raises[requiredData_unknown_variable.yaml-variable\\\\(s\\\\).*not found.*\\\\n.*Final Energy\\\\|Industry]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 60
+    },
+    {
+      "file": "tests/test_testing.py",
+      "test": "test_assert_valid_structure_requiredData_raises",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 38
+    },
+    {
+      "file": "tests/test_validation.py",
+      "test": "test_validation",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 10
+    },
+    {
+      "file": "tests/test_validation.py",
+      "test": "test_validation_dimensionless_unit",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 15
+    },
+    {
+      "file": "tests/test_validation.py",
+      "test": "test_validation_brackets",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 23
+    },
+    {
+      "file": "tests/test_validation.py",
+      "test": "test_validation_fails_variable",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 31
+    },
+    {
+      "file": "tests/test_validation.py",
+      "test": "test_validation_fails_unit",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 39
+    },
+    {
+      "file": "tests/test_validation.py",
+      "test": "test_validation_fails_region",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 47
+    },
+    {
+      "file": "tests/test_validation.py",
+      "test": "test_validation_fails_region_as_int",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: failed on setup with \"NameError: name 'CodeListConfig' is not defined\"",
+      "line": 55
+    },
+    {
+      "file": "tests/test_validation.py",
+      "test": "test_validation_with_custom_dimension",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'CodeListConfig' is not defined",
+      "line": 63
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-85694081f274",
+      "origin": "model",
+      "file": "nomenclature/codelist.py",
+      "line": 201,
+      "original": "        for repo in getattr(\n            config.definitions, name.lower(), CodeListConfig()\n        ).repositories:",
+      "replacement": "        for repo in getattr(\n            config.definitions, name, CodeListConfig()\n        ).repositories:",
+      "description": "Drops lower-casing of the dimension name so lookups of config by name may miss.",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -201,3 +201,3 @@\n         for repo in getattr(\n-            config.definitions, name.lower(), CodeListConfig()\n+            config.definitions, name, CodeListConfig()\n         ).repositories:\n",
+      "words": "nomenclature/codelist.py:201: changing `        for repo in getattr(\n            config.definitions,...` to `        for repo in getattr(\n            config.definitions,...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-895605effb0a",
+      "origin": "model",
+      "file": "nomenclature/codelist.py",
+      "line": 206,
+      "original": "                cls._parse_codelist_dir(repo_path, file_glob_pattern) + code_list",
+      "replacement": "                code_list + cls._parse_codelist_dir(repo_path, file_glob_pattern)",
+      "description": "Reverses order of external and local codes.",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -205,3 +205,3 @@\n             code_list = (\n-                cls._parse_codelist_dir(repo_path, file_glob_pattern) + code_list\n+                code_list + cls._parse_codelist_dir(repo_path, file_glob_pattern)\n             )\n",
+      "words": "nomenclature/codelist.py:206: changing `                cls._parse_codelist_dir(repo_path, file_glob...` to `                code_list + cls._parse_codelist_dir(repo_pat...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-d0cedca4cd9f",
+      "origin": "model",
+      "file": "nomenclature/codelist.py",
+      "line": 204,
+      "original": "            repo_path = config.repositories[repo].local_path / \"definitions\" / name",
+      "replacement": "            repo_path = config.repositories[repo].local_path / name",
+      "description": "Omits the 'definitions' folder from the external repository path.",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -203,3 +203,3 @@\n         ).repositories:\n-            repo_path = config.repositories[repo].local_path / \"definitions\" / name\n+            repo_path = config.repositories[repo].local_path / name\n             code_list = (\n",
+      "words": "nomenclature/codelist.py:204: changing `            repo_path = config.repositories[repo].local_path...` to `            repo_path = config.repositories[repo].local_path...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-38b1bda068ca",
+      "origin": "rule",
+      "file": "nomenclature/codelist.py",
+      "line": 200,
+      "original": "        config = config or NomenclatureConfig()",
+      "replacement": "        config = config and NomenclatureConfig()",
+      "description": "rule: `or` -> `and`",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -199,3 +199,3 @@\n         code_list = cls._parse_codelist_dir(path, file_glob_pattern)\n-        config = config or NomenclatureConfig()\n+        config = config and NomenclatureConfig()\n         for repo in getattr(\n",
+      "words": "nomenclature/codelist.py:200: changing `        config = config or NomenclatureConfig()` to `        config = config and NomenclatureConfig()` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    },
+    {
+      "id": "m-7d647c90d6c4",
+      "origin": "rule",
+      "file": "nomenclature/codelist.py",
+      "line": 204,
+      "original": "            repo_path = config.repositories[repo].local_path / \"definitions\" / name",
+      "replacement": "            repo_path = config.repositories[repo].local_path * \"definitions\" / name",
+      "description": "rule: `/` -> `*`",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -203,3 +203,3 @@\n         ).repositories:\n-            repo_path = config.repositories[repo].local_path / \"definitions\" / name\n+            repo_path = config.repositories[repo].local_path * \"definitions\" / name\n             code_list = (\n",
+      "words": "nomenclature/codelist.py:204: changing `            repo_path = config.repositories[repo].local_path...` to `            repo_path = config.repositories[repo].local_path...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "arithmetic"
+    },
+    {
+      "id": "m-dec1bafd5462",
+      "origin": "rule",
+      "file": "nomenclature/codelist.py",
+      "line": 611,
+      "original": "                    code_list.append(RegionCode(name=c.name, hierarchy=\"Country\"))",
+      "replacement": "                    pass",
+      "description": "rule: `code_list.append(RegionCode(name=c.name, hierarchy=\"Country\"))` -> `pass`",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -610,3 +610,3 @@\n                 except AttributeError:\n-                    code_list.append(RegionCode(name=c.name, hierarchy=\"Country\"))\n+                    pass\n \n",
+      "words": "nomenclature/codelist.py:611: changing `                    code_list.append(RegionCode(name=c.name,...` to `                    pass` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "drop_call"
+    },
+    {
+      "id": "m-d7010aa9ef45",
+      "origin": "rule",
+      "file": "nomenclature/codelist.py",
+      "line": 204,
+      "original": "            repo_path = config.repositories[repo].local_path / \"definitions\" / name",
+      "replacement": "            repo_path = config.repositories[repo].local_path / \"definitions\" * name",
+      "description": "rule: `/` -> `*`",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -203,3 +203,3 @@\n         ).repositories:\n-            repo_path = config.repositories[repo].local_path / \"definitions\" / name\n+            repo_path = config.repositories[repo].local_path / \"definitions\" * name\n             code_list = (\n",
+      "words": "nomenclature/codelist.py:204: changing `            repo_path = config.repositories[repo].local_path...` to `            repo_path = config.repositories[repo].local_path...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "arithmetic"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "nomenclature/codelist.py": [
+        1,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        600,
+        601,
+        602,
+        603,
+        604,
+        605,
+        606,
+        610,
+        611,
+        614,
+        615,
+        617,
+        618,
+        619,
+        620,
+        621,
+        623,
+        624
+      ],
+      "nomenclature/config.py": [
+        30,
+        31,
+        32,
+        97,
+        98,
+        110,
+        116,
+        122,
+        123,
+        124,
+        130,
+        131,
+        132
+      ],
+      "nomenclature/definition.py": [
+        47,
+        49,
+        50
+      ],
+      "nomenclature/processor/region.py": [
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 13,
+        "total": 49
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack DataStructureDefinition.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare DataStructureDefinition.__init__: a special method (such as __init__ or __eq__): not called yet"
+  ],
+  "llm": {
+    "calls": 9,
+    "input_tokens": 88377,
+    "output_tokens": 9099,
+    "cost_estimate": {
+      "usd": 0.466,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 10 functions were shown",
+    "guard: 7 of the 10 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 23 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.10.16: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "blind: only the first 8 of 10 functions were shown"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "nomenclature.codelist.CodeList.from_directory",
+      "path": "nomenclature/codelist.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 1,
+      "finished": true,
+      "reason": "ValidationError: 3 validation errors for NomenclatureConfig\nrepositories\n  Input should be a valid dictionary [type=dict_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v/dict_type\ndefinitions\n  Input should be a valid dictionary or instance of DataStructureConfig [type=model_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v"
+    },
+    {
+      "function": "nomenclature.codelist.RegionCodeList.from_directory",
+      "path": "nomenclature/codelist.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "ValidationError: 3 validation errors for NomenclatureConfig\nrepositories\n  Input should be a valid dictionary [type=dict_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v/dict_type\ndefinitions\n  Input should be a valid dictionary or instance of DataStructureConfig [type=model_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v"
+    },
+    {
+      "function": "nomenclature.config.DataStructureConfig.repos",
+      "path": "nomenclature/config.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 4,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "nomenclature.config.NomenclatureConfig.check_definitions_repository",
+      "path": "nomenclature/config.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "ValidationError: 3 validation errors for NomenclatureConfig\nrepositories\n  Input should be a valid dictionary [type=dict_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v/dict_type\ndefinitions\n  Input should be a valid dictionary or instance of DataStructureConfig [type=model_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v"
+    },
+    {
+      "function": "nomenclature.processor.region.RegionProcessor.from_directory",
+      "path": "nomenclature/processor/region.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    }
+  ]
+}

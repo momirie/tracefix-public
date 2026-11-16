@@ -1,0 +1,147 @@
+{
+ "instance_id": "tobymao__sqlglot-910",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 12.238,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 63941,
+   "label": "no_effect",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "sqlglot/dialects/hive.py",
+     "function": null
+    },
+    {
+     "path": "sqlglot/dialects/hive.py",
+     "function": "_unix_timestamp"
+    }
+   ],
+   "differs": [
+    {
+     "path": "sqlglot/dialects/hive.py",
+     "function": null
+    },
+    {
+     "path": "sqlglot/dialects/hive.py",
+     "function": "_unix_timestamp"
+    },
+    {
+     "path": "sqlglot/expressions.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "kind": "agent_ok",
+   "source_row": 40289,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_edge_cases"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_original_issue"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_spark_behavior"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_unix_timestamp_issue"
+    },
+    {
+     "path": "sqlglot/dialects/spark.py",
+     "function": null
+    },
+    {
+     "path": "sqlglot/dialects/spark.py",
+     "function": "Spark.Parser._parse_unix_timestamp"
+    },
+    {
+     "path": "sqlglot/dialects/spark.py",
+     "function": "_str_to_unix"
+    }
+   ],
+   "differs": [
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_edge_cases"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_original_issue"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_spark_behavior"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_unix_timestamp_issue"
+    },
+    {
+     "path": "sqlglot/dialects/spark.py",
+     "function": null
+    },
+    {
+     "path": "sqlglot/dialects/spark.py",
+     "function": "Spark.Parser._parse_unix_timestamp"
+    },
+    {
+     "path": "sqlglot/dialects/spark.py",
+     "function": "_str_to_unix"
+    },
+    {
+     "path": "sqlglot/expressions.py",
+     "function": null
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "55a21cdb4fdc235433a0cedf93a907f5a70e6d23",
+  "gold": "7304d3060819f26c22cac12024ddb82738b6df03",
+  "agent_wrong": "96f8e5ccaef68a14561d619dedfaa81e7d0a2d16",
+  "agent_ok": "1167bc02b6d715180716b2e214022e8567ea86bc"
+ },
+ "seconds": 39.297
+}

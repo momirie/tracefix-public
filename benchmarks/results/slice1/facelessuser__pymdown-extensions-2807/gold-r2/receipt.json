@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-20T11:42:00+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 4 of 6 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "6ed9a366fbb5744900b3c860e3b051d1ec529df0"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "b03abe9ec4cce8dfd6040bbf4798b350581a31f4"
+  },
+  "issue": {
+    "title": "inline `$$x$$` math matches 2 times and returns nested mathjax",
+    "sha256": "589b894b7b539bbbde0f69a5235aa4c038ded2d1b06548cc9954e788d70badac"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "A test reproducing the nested-arithmatex output for inline `$$x$$` failed before the fix and passed after it, with no regressions found and the fixed lines covered, but the guard stage reported the fix as not guarded and mutation testing did not reach the threshold needed for L2. Next, look at why the tests do not guard the fix (they did not kill enough mutants) and consider adding assertions tha…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 7.1,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 6.51,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 58.4,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 4 of 6 mutants; 80% is needed",
+      "duration_s": 213.62,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.667,
+        "repro_kill_rate": 0.167,
+        "pr_kill_rate": null,
+        "mutants": 6,
+        "killed": 4,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-2339620fcbfd",
+          "m-a1cb37d17c19",
+          "m-301740d881d8",
+          "m-a8d75791dc47"
+        ],
+        "rule_mutants": 5,
+        "rule_kill_rate": 0.0,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 4 of 6 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 702 untouched tests that passed before the fix fails after it",
+      "duration_s": 7.5,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 702,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 4.59,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 4
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call",
+      "duration_s": 0.15,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-2c2faa7479d7",
+      "origin": "model",
+      "file": "pymdownx/arithmatex.py",
+      "line": 55,
+      "original": "(?<!\\\\)(\\$)((?:\\\\.|[^\\\\$\\x02\\x03])+?)(?:\\$))'",
+      "replacement": "(?<!\\\\)(\\$)((?:\\\\.|[^\\\\$\\x02\\x03])*?)(?:\\$))'",
+      "description": "Dollar inline content may be empty, so $$ matches as inline math.",
+      "diff": "--- a/pymdownx/arithmatex.py\n+++ b/pymdownx/arithmatex.py\n@@ -54,3 +54,3 @@\n RE_SMART_DOLLAR_INLINE = r'(?:(?<!\\\\)((?:\\\\{2})+)(?=\\$)|(?<!\\\\)(\\$)(?!\\s)((?:\\\\.|[^\\\\$\\x02\\x03])+?)(?<!\\s)(?:\\$))'\n-RE_DOLLAR_INLINE = r'(?:(?<!\\\\)((?:\\\\{2})+)(?=\\$)|(?<!\\\\)(\\$)((?:\\\\.|[^\\\\$\\x02\\x03])+?)(?:\\$))'\n+RE_DOLLAR_INLINE = r'(?:(?<!\\\\)((?:\\\\{2})+)(?=\\$)|(?<!\\\\)(\\$)((?:\\\\.|[^\\\\$\\x02\\x03])*?)(?:\\$))'\n RE_BRACKET_INLINE = r'(?:(?<!\\\\)((?:\\\\{2})+?)(?=\\\\\\()|(?<!\\\\)(\\\\\\()((?:\\\\[^)]|[^\\\\\\x02\\x03])+?)(?:\\\\\\)))'\n",
+      "words": "pymdownx/arithmatex.py:55: changing `(?<!\\\\)(\\$)((?:\\\\.|[^\\\\$\\x02\\x03])+?)(?:\\$))'` to `(?<!\\\\)(\\$)((?:\\\\.|[^\\\\$\\x02\\x03])*?)(?:\\$))'` made no test fail",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-873e9a3b18e8",
+      "origin": "model",
+      "file": "pymdownx/arithmatex.py",
+      "line": 56,
+      "original": "((?:\\\\[^)]|[^\\\\\\x02\\x03])+?)(?:\\\\\\)))'",
+      "replacement": "((?:\\\\[^(]|[^\\\\\\x02\\x03])+?)(?:\\\\\\)))'",
+      "description": "Bracket inline escape handling excludes the wrong character, '(' instead of ')'.",
+      "diff": "--- a/pymdownx/arithmatex.py\n+++ b/pymdownx/arithmatex.py\n@@ -55,3 +55,3 @@\n RE_DOLLAR_INLINE = r'(?:(?<!\\\\)((?:\\\\{2})+)(?=\\$)|(?<!\\\\)(\\$)((?:\\\\.|[^\\\\$\\x02\\x03])+?)(?:\\$))'\n-RE_BRACKET_INLINE = r'(?:(?<!\\\\)((?:\\\\{2})+?)(?=\\\\\\()|(?<!\\\\)(\\\\\\()((?:\\\\[^)]|[^\\\\\\x02\\x03])+?)(?:\\\\\\)))'\n+RE_BRACKET_INLINE = r'(?:(?<!\\\\)((?:\\\\{2})+?)(?=\\\\\\()|(?<!\\\\)(\\\\\\()((?:\\\\[^(]|[^\\\\\\x02\\x03])+?)(?:\\\\\\)))'\n \n",
+      "words": "pymdownx/arithmatex.py:56: changing `((?:\\\\[^)]|[^\\\\\\x02\\x03])+?)(?:\\\\\\)))'` to `((?:\\\\[^(]|[^\\\\\\x02\\x03])+?)(?:\\\\\\)))'` made no test fail",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-81b2f0957ea2",
+      "origin": "rule",
+      "file": "pymdownx/__meta__.py",
+      "line": 196,
+      "original": "__version_info__ = Version(10, 19, 1, \"final\")",
+      "replacement": "__version_info__ = Version(11, 19, 1, \"final\")",
+      "description": "rule: `10` -> `11`",
+      "diff": "--- a/pymdownx/__meta__.py\n+++ b/pymdownx/__meta__.py\n@@ -195,3 +195,3 @@\n \n-__version_info__ = Version(10, 19, 1, \"final\")\n+__version_info__ = Version(11, 19, 1, \"final\")\n __version__ = __version_info__._get_canonical()\n",
+      "words": "pymdownx/__meta__.py:196: changing `__version_info__ = Version(10, 19, 1, \"final\")` to `__version_info__ = Version(11, 19, 1, \"final\")` made no test fail",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-139b139367ff",
+      "origin": "rule",
+      "file": "pymdownx/__meta__.py",
+      "line": 196,
+      "original": "__version_info__ = Version(10, 19, 1, \"final\")",
+      "replacement": "__version_info__ = Version(9, 19, 1, \"final\")",
+      "description": "rule: `10` -> `9`",
+      "diff": "--- a/pymdownx/__meta__.py\n+++ b/pymdownx/__meta__.py\n@@ -195,3 +195,3 @@\n \n-__version_info__ = Version(10, 19, 1, \"final\")\n+__version_info__ = Version(9, 19, 1, \"final\")\n __version__ = __version_info__._get_canonical()\n",
+      "words": "pymdownx/__meta__.py:196: changing `__version_info__ = Version(10, 19, 1, \"final\")` to `__version_info__ = Version(9, 19, 1, \"final\")` made no test fail",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-e5b7bb7d816e",
+      "origin": "rule",
+      "file": "pymdownx/__meta__.py",
+      "line": 196,
+      "original": "__version_info__ = Version(10, 19, 1, \"final\")",
+      "replacement": "__version_info__ = Version(10, 18, 1, \"final\")",
+      "description": "rule: `19` -> `18`",
+      "diff": "--- a/pymdownx/__meta__.py\n+++ b/pymdownx/__meta__.py\n@@ -195,3 +195,3 @@\n \n-__version_info__ = Version(10, 19, 1, \"final\")\n+__version_info__ = Version(10, 18, 1, \"final\")\n __version__ = __version_info__._get_canonical()\n",
+      "words": "pymdownx/__meta__.py:196: changing `__version_info__ = Version(10, 19, 1, \"final\")` to `__version_info__ = Version(10, 18, 1, \"final\")` made no test fail",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-30093cbc9718",
+      "origin": "rule",
+      "file": "pymdownx/__meta__.py",
+      "line": 196,
+      "original": "__version_info__ = Version(10, 19, 1, \"final\")",
+      "replacement": "__version_info__ = Version(10, 20, 1, \"final\")",
+      "description": "rule: `19` -> `20`",
+      "diff": "--- a/pymdownx/__meta__.py\n+++ b/pymdownx/__meta__.py\n@@ -195,3 +195,3 @@\n \n-__version_info__ = Version(10, 19, 1, \"final\")\n+__version_info__ = Version(10, 20, 1, \"final\")\n __version__ = __version_info__._get_canonical()\n",
+      "words": "pymdownx/__meta__.py:196: changing `__version_info__ = Version(10, 19, 1, \"final\")` to `__version_info__ = Version(10, 20, 1, \"final\")` made no test fail",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-14debaa7db47",
+      "origin": "rule",
+      "file": "pymdownx/__meta__.py",
+      "line": 196,
+      "original": "__version_info__ = Version(10, 19, 1, \"final\")",
+      "replacement": "__version_info__ = Version(10, 19, 2, \"final\")",
+      "description": "rule: `1` -> `2`",
+      "diff": "--- a/pymdownx/__meta__.py\n+++ b/pymdownx/__meta__.py\n@@ -195,3 +195,3 @@\n \n-__version_info__ = Version(10, 19, 1, \"final\")\n+__version_info__ = Version(10, 19, 2, \"final\")\n __version__ = __version_info__._get_canonical()\n",
+      "words": "pymdownx/__meta__.py:196: changing `__version_info__ = Version(10, 19, 1, \"final\")` to `__version_info__ = Version(10, 19, 2, \"final\")` made no test fail",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "pymdownx/__meta__.py": [
+        196
+      ],
+      "pymdownx/arithmatex.py": [
+        54,
+        55,
+        56
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 4,
+        "total": 4
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call)",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call)"
+  ],
+  "llm": {
+    "calls": 4,
+    "input_tokens": 12685,
+    "output_tokens": 1899,
+    "cost_estimate": {
+      "usd": 0.049,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: pyproject truncated to 3000 characters for the prompt"
+  ],
+  "previous": null
+}

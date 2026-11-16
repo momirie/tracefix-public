@@ -1,0 +1,450 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T14:12:01+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks gateway.listener.Listener.port",
+    "Break My Fix finding 2: an input that breaks gateway.listener.Listener.port"
+  ],
+  "repo": {
+    "name": "method_partial"
+  },
+  "base": {
+    "ref": "base",
+    "sha": "0ac383ab93c563a41b03bee2691067b64878a4af"
+  },
+  "head": {
+    "ref": "head",
+    "sha": "4ae629c1e8991eb5e13a623327bbffa7f520e45c"
+  },
+  "issue": {
+    "title": "Listener crashes when no port is configured",
+    "sha256": "038ca62fa7e2d741d79f78044f9222907943928542cb88661cc4601ed00e74f7"
+  },
+  "isolation": {
+    "level": "basic",
+    "why": "bubblewrap (bwrap) is not installed",
+    "warning": "Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.",
+    "python": null
+  },
+  "summary": {
+    "text": "The original crash was reproduced and the fix stops port(None) from raising, but Break My Fix found two inputs that still break it: port('') raises ValueError, and Listener(default_port=9000).port(None) returns 8080 instead of the configured default. The most important thing to look at next is the second finding, since it suggests the fix returns a hardcoded 8080 rather than the listener's own de…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 1.03,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 1.9,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 11.87,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "basic"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 3 of 4 mutants; 80% is needed",
+      "duration_s": 35.91,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_listener.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.75,
+        "repro_kill_rate": 0.75,
+        "pr_kill_rate": 0.75,
+        "mutants": 4,
+        "killed": 3,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-829712bef447",
+          "m-47c7e56ccb41",
+          "m-517450400716"
+        ],
+        "rule_mutants": 5,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [
+          "tests/test_listener.py"
+        ],
+        "findings": [
+          "low_kill_rate: the tests killed 3 of 4 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 4 untouched tests that passed before the fix fails after it",
+      "duration_s": 0.99,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 4,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.9,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_listener.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 2
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "165 input(s) compared on 1 function(s): 44 changed with the fix",
+      "duration_s": 7.33,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 165,
+        "changes": 44,
+        "groups": 1,
+        "l3_checks": true,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "2 finding(s), each proven by a failing repro file",
+      "duration_s": 29.16,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_2.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_listener.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 875,
+        "properties_counted": 8,
+        "findings": 2,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 10
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "gateway.listener.Listener.port",
+      "call": "port(self='Listener()', raw='')",
+      "input": {
+        "self": "'Listener()'",
+        "raw": "''"
+      },
+      "outcome": "raises ValueError: invalid literal for int() with base 10: ''",
+      "base_outcome": "raises ValueError: invalid literal for int() with base 10: ''",
+      "expected": null,
+      "property": {
+        "id": "t1.p2",
+        "name": "blank_gives_default_port",
+        "kind": "returns",
+        "claim": "Blank (empty or whitespace-only) string returns self.default_port",
+        "source": "docstring",
+        "quote": "An unset (None) or blank value gives `self.default_port`.",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 3,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 19: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "src/gateway/listener.py",
+      "line": 19,
+      "expect": {
+        "types": [
+          "ValueError"
+        ],
+        "in_file": false
+      }
+    },
+    {
+      "number": 2,
+      "function": "gateway.listener.Listener.port",
+      "call": "port(self='Listener(default_port=9000)', raw=None)",
+      "input": {
+        "self": "'Listener(default_port=9000)'",
+        "raw": "None"
+      },
+      "outcome": "returns 8080",
+      "base_outcome": "raises AttributeError: 'NoneType' object has no attribute 'strip'",
+      "expected": "9000",
+      "property": {
+        "id": "t1.p1",
+        "name": "none_gives_default_port",
+        "kind": "returns",
+        "claim": "None returns self.default_port for any default",
+        "source": "docstring",
+        "quote": "An unset (None) or blank value gives `self.default_port`.",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 0,
+      "relation": "new with the fix: before it, this input raises AttributeError: 'NoneType' object has no attribute 'strip'",
+      "file": "findings/finding_2.py",
+      "path": "src/gateway/listener.py",
+      "line": 19,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "gateway.listener.Listener.port",
+      "kind": "no_raise",
+      "count": 44,
+      "before": "raises AttributeError",
+      "after": "returns 8080",
+      "explained": [
+        "the issue names this call"
+      ],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The issue names this call and expects the default port, and the docstring says None gives self.default_port, which is 8080 here."
+        },
+        {
+          "change": "c2",
+          "label": "suspicious",
+          "reason": "The docstring says None gives self.default_port (9000), but the fix returns a hardcoded 8080. Not crashing is right; the value contradicts the contract."
+        },
+        {
+          "change": "c3",
+          "label": "suspicious",
+          "reason": "The docstring says None gives self.default_port (9), but the fix returns a hardcoded 8080 instead."
+        },
+        {
+          "change": "c4",
+          "label": "suspicious",
+          "reason": "The docstring says None gives self.default_port (0), but the fix returns a hardcoded 8080 instead."
+        },
+        {
+          "change": "c5",
+          "label": "suspicious",
+          "reason": "The docstring says None gives self.default_port (2), but the fix returns a hardcoded 8080 instead."
+        }
+      ],
+      "examples": [
+        {
+          "call": "port(self='Listener()', raw=None)",
+          "before": "raises AttributeError",
+          "after": "returns 8080"
+        },
+        {
+          "call": "port(self='Listener(default_port=9000)', raw=None)",
+          "before": "raises AttributeError",
+          "after": "returns 8080"
+        },
+        {
+          "call": "port(self='Listener(default_port=9)', raw=None)",
+          "before": "raises AttributeError",
+          "after": "returns 8080"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-99835d0679e5",
+      "origin": "model",
+      "file": "src/gateway/listener.py",
+      "line": 19,
+      "original": "        if raw is None:",
+      "replacement": "        if raw is None or raw == \"\":",
+      "description": "Blank is handled only when exactly empty; whitespace-only values still fail, but returns 8080 instead of self.default_port.",
+      "diff": "--- a/src/gateway/listener.py\n+++ b/src/gateway/listener.py\n@@ -18,3 +18,3 @@\n         \"\"\"\n-        if raw is None:\n+        if raw is None or raw == \"\":\n             return 8080\n",
+      "words": "src/gateway/listener.py:19: changing `        if raw is None:` to `        if raw is None or raw == \"\":` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "Listener().port(raw='')",
+          "fix": "raises ValueError",
+          "mutant": "returns 8080"
+        },
+        {
+          "call": "Listener(default_port=9000).port(raw='')",
+          "fix": "raises ValueError",
+          "mutant": "returns 8080"
+        },
+        {
+          "call": "Listener(default_port=37679987342962).port(raw='')",
+          "fix": "raises ValueError",
+          "mutant": "returns 8080"
+        }
+      ]
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "src/gateway/listener.py": [
+        19,
+        20
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 2,
+        "total": 2
+      },
+      {
+        "name": "pr_test",
+        "ran": 2,
+        "total": 2
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 19250,
+    "output_tokens": 4386,
+    "cost_estimate": {
+      "usd": 0.1457,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "gateway.listener.Listener.port",
+      "path": "src/gateway/listener.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 875,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

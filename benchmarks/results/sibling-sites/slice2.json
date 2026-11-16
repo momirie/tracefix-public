@@ -1,0 +1,3287 @@
+{
+ "slice": "slice2",
+ "split": "dev",
+ "summary": {
+  "excluded_tasks": 2,
+  "groups": {
+   "agent_ok": {
+    "constant_reads": {
+     "n": 4,
+     "of": 37
+    },
+    "fixes": 37,
+    "replaced_code": {
+     "n": 4,
+     "of": 37
+    },
+    "replaced_line": {
+     "n": 3,
+     "of": 37
+    },
+    "same_name": {
+     "n": 9,
+     "of": 37
+    }
+   },
+   "agent_wrong": {
+    "constant_reads": {
+     "n": 0,
+     "of": 21
+    },
+    "fixes": 21,
+    "replaced_code": {
+     "n": 1,
+     "of": 21
+    },
+    "replaced_line": {
+     "n": 0,
+     "of": 21
+    },
+    "same_name": {
+     "n": 7,
+     "of": 21
+    }
+   },
+   "gold": {
+    "constant_reads": {
+     "n": 0,
+     "of": 52
+    },
+    "fixes": 52,
+    "replaced_code": {
+     "n": 10,
+     "of": 52
+    },
+    "replaced_line": {
+     "n": 13,
+     "of": 52
+    },
+    "same_name": {
+     "n": 12,
+     "of": 52
+    }
+   },
+   "partial": {
+    "constant_reads": {
+     "n": 0,
+     "of": 29
+    },
+    "fixes": 29,
+    "in_dropped_hunk": 1,
+    "replaced_code": {
+     "n": 6,
+     "of": 29
+    },
+    "replaced_line": {
+     "n": 8,
+     "of": 29
+    },
+    "same_name": {
+     "n": 6,
+     "of": 29
+    }
+   }
+  }
+ },
+ "tasks": [
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v0": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "django__asgiref-211",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1312,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      },
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1329,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      },
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1706,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      },
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1753,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      },
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1849,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      },
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1874,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      }
+     ],
+     "same_name": []
+    },
+    "v0": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1309,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      },
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1326,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      },
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1703,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      },
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1750,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      },
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1846,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      },
+      {
+       "fixed_at": "cmd2.py:1631",
+       "line": 1871,
+       "path": "cmd2.py",
+       "text": "self.stdout.write(\"{}\\n\".format(help_str))"
+      }
+     ],
+     "same_name": []
+    }
+   },
+   "instance_id": "python-cmd2__cmd2-115",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [
+      "KEEP_FULL_TOPIC"
+     ],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "kpetremann__mqtt-exporter-37",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "snowblink14__smatch-30",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [
+      {
+       "fixed_at": "autodocsumm/__init__.py:417",
+       "line": 368,
+       "path": "autodocsumm/__init__.py",
+       "text": "self.add_autosummary(relative_ref_paths=True)"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "autodocsumm/__init__.py:417",
+       "line": 368,
+       "path": "autodocsumm/__init__.py",
+       "text": "self.add_autosummary(relative_ref_paths=True)"
+      }
+     ],
+     "same_name": [
+      {
+       "fixed_at": "autodocsumm/__init__.py:414 AutoSummClassDocumenter.add_content",
+       "line": 365,
+       "path": "autodocsumm/__init__.py",
+       "text": "def add_content(self, *args, **kwargs):"
+      }
+     ]
+    },
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [
+      {
+       "fixed_at": "autodocsumm/__init__.py:417",
+       "line": 368,
+       "path": "autodocsumm/__init__.py",
+       "text": "self.add_autosummary(relative_ref_paths=True)"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "autodocsumm/__init__.py:417",
+       "line": 368,
+       "path": "autodocsumm/__init__.py",
+       "text": "self.add_autosummary(relative_ref_paths=True)"
+      }
+     ],
+     "same_name": [
+      {
+       "fixed_at": "autodocsumm/__init__.py:414 AutoSummClassDocumenter.add_content",
+       "line": 365,
+       "path": "autodocsumm/__init__.py",
+       "text": "def add_content(self, *args, **kwargs):"
+      }
+     ]
+    }
+   },
+   "instance_id": "Chilipp__autodocsumm-101",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "matthewwithanm__python-markdownify-34",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "sqlglot/dialects/spark.py:47 _str_to_unix",
+       "line": 68,
+       "path": "sqlglot/dialects/hive.py",
+       "text": "def _str_to_unix(self, expression):"
+      }
+     ]
+    },
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [
+      {
+       "fixed_at": "sqlglot/expressions.py:3006",
+       "line": 2998,
+       "path": "sqlglot/expressions.py",
+       "text": "arg_types = {\"this\": True, \"format\": True}"
+      },
+      {
+       "fixed_at": "sqlglot/expressions.py:3006",
+       "line": 3002,
+       "path": "sqlglot/expressions.py",
+       "text": "arg_types = {\"this\": True, \"format\": True}"
+      },
+      {
+       "fixed_at": "sqlglot/expressions.py:3006",
+       "line": 3012,
+       "path": "sqlglot/expressions.py",
+       "text": "arg_types = {\"this\": True, \"format\": True}"
+      },
+      {
+       "fixed_at": "sqlglot/expressions.py:3006",
+       "line": 3045,
+       "path": "sqlglot/expressions.py",
+       "text": "arg_types = {\"this\": True, \"format\": True}"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "sqlglot/expressions.py:3006",
+       "line": 2998,
+       "path": "sqlglot/expressions.py",
+       "text": "arg_types = {\"this\": True, \"format\": True}"
+      },
+      {
+       "fixed_at": "sqlglot/expressions.py:3006",
+       "line": 3002,
+       "path": "sqlglot/expressions.py",
+       "text": "arg_types = {\"this\": True, \"format\": True}"
+      },
+      {
+       "fixed_at": "sqlglot/expressions.py:3006",
+       "line": 3012,
+       "path": "sqlglot/expressions.py",
+       "text": "arg_types = {\"this\": True, \"format\": True}"
+      },
+      {
+       "fixed_at": "sqlglot/expressions.py:3006",
+       "line": 3045,
+       "path": "sqlglot/expressions.py",
+       "text": "arg_types = {\"this\": True, \"format\": True}"
+      }
+     ],
+     "same_name": []
+    }
+   },
+   "instance_id": "tobymao__sqlglot-910",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "clld__clldutils-27",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [
+      {
+       "fixed_at": "photutils/detection/irafstarfinder.py:455",
+       "line": 461,
+       "path": "photutils/detection/daofinder.py",
+       "text": "def cutout_convdata(self):"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "photutils/detection/core.py:86",
+       "line": 76,
+       "path": "photutils/detection/core.py",
+       "text": "if isinstance(kernel, np.ndarray):"
+      }
+     ],
+     "same_name": [
+      {
+       "fixed_at": "photutils/detection/irafstarfinder.py:454 _IRAFStarFinderCatalog.cutout_convdata",
+       "line": 461,
+       "path": "photutils/detection/daofinder.py",
+       "text": "def cutout_convdata(self):"
+      },
+      {
+       "fixed_at": "photutils/detection/starfinder.py:95 StarFinder._get_raw_catalog",
+       "line": 204,
+       "path": "photutils/detection/daofinder.py",
+       "text": "def _get_raw_catalog(self, data, *, mask=None):"
+      },
+      {
+       "fixed_at": "photutils/detection/starfinder.py:95 StarFinder._get_raw_catalog",
+       "line": 183,
+       "path": "photutils/detection/irafstarfinder.py",
+       "text": "def _get_raw_catalog(self, data, *, mask=None):"
+      }
+     ]
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [
+      {
+       "fixed_at": "photutils/detection/irafstarfinder.py:455",
+       "line": 461,
+       "path": "photutils/detection/daofinder.py",
+       "text": "def cutout_convdata(self):"
+      }
+     ],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "photutils/detection/irafstarfinder.py:454 _IRAFStarFinderCatalog.cutout_convdata",
+       "line": 461,
+       "path": "photutils/detection/daofinder.py",
+       "text": "def cutout_convdata(self):"
+      },
+      {
+       "fixed_at": "photutils/detection/starfinder.py:95 StarFinder._get_raw_catalog",
+       "line": 204,
+       "path": "photutils/detection/daofinder.py",
+       "text": "def _get_raw_catalog(self, data, *, mask=None):"
+      },
+      {
+       "fixed_at": "photutils/detection/starfinder.py:95 StarFinder._get_raw_catalog",
+       "line": 183,
+       "path": "photutils/detection/irafstarfinder.py",
+       "text": "def _get_raw_catalog(self, data, *, mask=None):"
+      }
+     ]
+    }
+   },
+   "instance_id": "astropy__photutils-1943",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [
+      "dummy_files"
+     ],
+     "constants": [
+      "dummy_files"
+     ],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "nipy__nipype-3658",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "hgrecco__pint-1111",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v2": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "modm-io__lbuild-11",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v3": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "fox-it__dissect.cstruct-88",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [
+      "URL"
+     ],
+     "constants": [
+      "URL"
+     ],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "encode__httpx-653",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v0": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "nipreps__nibabies-395",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v0": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "smdabdoub__kraken-biom-9",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [
+      "da",
+      "time",
+      "time_centers",
+      "v"
+     ],
+     "constants": [
+      "da",
+      "da_centers",
+      "da_no_var",
+      "time",
+      "time_centers",
+      "v"
+     ],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:164",
+       "line": 168,
+       "path": "src/plopp/backends/matplotlib/line.py",
+       "text": "if self._data.variances is not None:"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:164",
+       "line": 181,
+       "path": "src/plopp/backends/plotly/line.py",
+       "text": "if self._data.variances is not None:"
+      },
+      {
+       "fixed_at": "src/plopp/backends/plotly/line.py:178",
+       "line": 168,
+       "path": "src/plopp/backends/matplotlib/line.py",
+       "text": "if self._data.variances is not None:"
+      },
+      {
+       "fixed_at": "src/plopp/backends/plotly/line.py:178",
+       "line": 181,
+       "path": "src/plopp/backends/plotly/line.py",
+       "text": "if self._data.variances is not None:"
+      }
+     ],
+     "same_name": [
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 156,
+       "path": "src/plopp/backends/matplotlib/image.py",
+       "text": "def update(self, new_values: sc.DataArray):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 97,
+       "path": "src/plopp/backends/matplotlib/interactive.py",
+       "text": "def update(self, *args, **kwargs):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 114,
+       "path": "src/plopp/backends/matplotlib/static.py",
+       "text": "def update(self, *args, **kwargs):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 74,
+       "path": "src/plopp/backends/plotly/figure.py",
+       "text": "def update(self, *args, **kwargs):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 52,
+       "path": "src/plopp/backends/pythreejs/figure.py",
+       "text": "def update(self, *args, **kwargs):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 95,
+       "path": "src/plopp/backends/pythreejs/point_cloud.py",
+       "text": "def update(self, new_values):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 42,
+       "path": "src/plopp/graphics/basefig.py",
+       "text": "def update(self, new_values: sc.DataArray, key: str, draw: bool):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 197,
+       "path": "src/plopp/graphics/colormapper.py",
+       "text": "def update(self, data: sc.DataArray, key: str):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 111,
+       "path": "src/plopp/graphics/figimage.py",
+       "text": "def update(self, new_values: sc.DataArray, key: str):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 102,
+       "path": "src/plopp/graphics/figline.py",
+       "text": "def update(self, new_values: sc.DataArray, key: str):"
+      }
+     ]
+    },
+    "v2": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:164",
+       "line": 168,
+       "path": "src/plopp/backends/matplotlib/line.py",
+       "text": "if self._data.variances is not None:"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:164",
+       "line": 181,
+       "path": "src/plopp/backends/plotly/line.py",
+       "text": "if self._data.variances is not None:"
+      },
+      {
+       "fixed_at": "src/plopp/backends/plotly/line.py:118",
+       "line": 151,
+       "path": "src/plopp/backends/matplotlib/line.py",
+       "text": "if errorbars and (\"e\" in data[\"variances\"]):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/plotly/line.py:178",
+       "line": 168,
+       "path": "src/plopp/backends/matplotlib/line.py",
+       "text": "if self._data.variances is not None:"
+      },
+      {
+       "fixed_at": "src/plopp/backends/plotly/line.py:178",
+       "line": 181,
+       "path": "src/plopp/backends/plotly/line.py",
+       "text": "if self._data.variances is not None:"
+      }
+     ],
+     "same_name": [
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 156,
+       "path": "src/plopp/backends/matplotlib/image.py",
+       "text": "def update(self, new_values: sc.DataArray):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 97,
+       "path": "src/plopp/backends/matplotlib/interactive.py",
+       "text": "def update(self, *args, **kwargs):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 114,
+       "path": "src/plopp/backends/matplotlib/static.py",
+       "text": "def update(self, *args, **kwargs):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 74,
+       "path": "src/plopp/backends/plotly/figure.py",
+       "text": "def update(self, *args, **kwargs):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 52,
+       "path": "src/plopp/backends/pythreejs/figure.py",
+       "text": "def update(self, *args, **kwargs):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 95,
+       "path": "src/plopp/backends/pythreejs/point_cloud.py",
+       "text": "def update(self, new_values):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 42,
+       "path": "src/plopp/graphics/basefig.py",
+       "text": "def update(self, new_values: sc.DataArray, key: str, draw: bool):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 197,
+       "path": "src/plopp/graphics/colormapper.py",
+       "text": "def update(self, data: sc.DataArray, key: str):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 111,
+       "path": "src/plopp/graphics/figimage.py",
+       "text": "def update(self, new_values: sc.DataArray, key: str):"
+      },
+      {
+       "fixed_at": "src/plopp/backends/matplotlib/line.py:195 Line.update",
+       "line": 102,
+       "path": "src/plopp/graphics/figline.py",
+       "text": "def update(self, new_values: sc.DataArray, key: str):"
+      }
+     ]
+    }
+   },
+   "instance_id": "scipp__plopp-151",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [
+      {
+       "fixed_at": "proxy.py:504",
+       "line": 651,
+       "path": "proxy.py",
+       "text": "def parse(self, raw: bytes) -> None:"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "proxy.py:504",
+       "line": 651,
+       "path": "proxy.py",
+       "text": "def parse(self, raw: bytes) -> None:"
+      }
+     ],
+     "same_name": [
+      {
+       "fixed_at": "benchmark.py:79 Benchmark.recv",
+       "line": 427,
+       "path": "proxy.py",
+       "text": "def recv(self, buffer_size: int = DEFAULT_BUFFER_SIZE) -> Optional[bytes]:"
+      },
+      {
+       "fixed_at": "benchmark.py:52 Benchmark.send",
+       "line": 423,
+       "path": "proxy.py",
+       "text": "def send(self, data: bytes) -> int:"
+      },
+      {
+       "fixed_at": "benchmark.py:52 Benchmark.send",
+       "line": 2061,
+       "path": "tests.py",
+       "text": "def send(raw: bytes) -> int:"
+      },
+      {
+       "fixed_at": "proxy.py:512 ChunkParser.parse",
+       "line": 1893,
+       "path": "proxy.py",
+       "text": "def parse(self, raw: bytes) -> bytes:"
+      },
+      {
+       "fixed_at": "proxy.py:651 HttpParser.parse",
+       "line": 1893,
+       "path": "proxy.py",
+       "text": "def parse(self, raw: bytes) -> bytes:"
+      },
+      {
+       "fixed_at": "proxy.py:690 HttpParser.process",
+       "line": 518,
+       "path": "proxy.py",
+       "text": "def process(self, raw: bytes) -> Tuple[bool, bytes]:"
+      }
+     ]
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [
+      {
+       "fixed_at": "proxy.py:504",
+       "line": 643,
+       "path": "proxy.py",
+       "text": "def parse(self, raw: bytes) -> None:"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "proxy.py:504",
+       "line": 643,
+       "path": "proxy.py",
+       "text": "def parse(self, raw: bytes) -> None:"
+      }
+     ],
+     "same_name": [
+      {
+       "fixed_at": "benchmark.py:79 Benchmark.recv",
+       "line": 419,
+       "path": "proxy.py",
+       "text": "def recv(self, buffer_size: int = DEFAULT_BUFFER_SIZE) -> Optional[bytes]:"
+      },
+      {
+       "fixed_at": "benchmark.py:52 Benchmark.send",
+       "line": 415,
+       "path": "proxy.py",
+       "text": "def send(self, data: bytes) -> int:"
+      },
+      {
+       "fixed_at": "benchmark.py:52 Benchmark.send",
+       "line": 2061,
+       "path": "tests.py",
+       "text": "def send(raw: bytes) -> int:"
+      },
+      {
+       "fixed_at": "proxy.py:504 ChunkParser.parse",
+       "line": 1885,
+       "path": "proxy.py",
+       "text": "def parse(self, raw: bytes) -> bytes:"
+      },
+      {
+       "fixed_at": "proxy.py:643 HttpParser.parse",
+       "line": 1885,
+       "path": "proxy.py",
+       "text": "def parse(self, raw: bytes) -> bytes:"
+      },
+      {
+       "fixed_at": "proxy.py:682 HttpParser.process",
+       "line": 510,
+       "path": "proxy.py",
+       "text": "def process(self, raw: bytes) -> Tuple[bool, bytes]:"
+      }
+     ]
+    }
+   },
+   "instance_id": "abhinavsingh__proxy.py-137",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [
+      "version"
+     ],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [
+      "version"
+     ],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "dag-hammarskjold-library__dlx-375",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "src/scippnexus/nexus_classes.py:29 NXtransformations._getitem",
+       "line": 16,
+       "path": "src/scippnexus/leaf.py",
+       "text": "def _getitem(self,"
+      },
+      {
+       "fixed_at": "src/scippnexus/nexus_classes.py:29 NXtransformations._getitem",
+       "line": 211,
+       "path": "src/scippnexus/nxdata.py",
+       "text": "def _getitem(self, select: ScippIndex) -> sc.DataArray:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nexus_classes.py:29 NXtransformations._getitem",
+       "line": 235,
+       "path": "src/scippnexus/nxdetector.py",
+       "text": "def _getitem(self, select: ScippIndex) -> sc.DataArray:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nexus_classes.py:29 NXtransformations._getitem",
+       "line": 38,
+       "path": "src/scippnexus/nxevent_data.py",
+       "text": "def _getitem(self, select: ScippIndex) -> sc.DataArray:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nexus_classes.py:29 NXtransformations._getitem",
+       "line": 65,
+       "path": "src/scippnexus/nxlog.py",
+       "text": "def _getitem(self, select: ScippIndex) -> sc.DataArray:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nexus_classes.py:29 NXtransformations._getitem",
+       "line": 484,
+       "path": "src/scippnexus/nxobject.py",
+       "text": "def _getitem(self, index: ScippIndex) -> Union[sc.DataArray, sc.DataGroup]:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nexus_classes.py:29 NXtransformations._getitem",
+       "line": 19,
+       "path": "src/scippnexus/nxsample.py",
+       "text": "def _getitem(self,"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:7",
+       "line": 6,
+       "path": "src/scippnexus/nxdata.py",
+       "text": "from typing import List, Optional, Union"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:7",
+       "line": 6,
+       "path": "src/scippnexus/nxdata.py",
+       "text": "from typing import List, Optional, Union"
+      }
+     ],
+     "same_name": [
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:166 NXdetector._event_grouping",
+       "line": 13,
+       "path": "src/scippnexus/nxmonitor.py",
+       "text": "def _event_grouping(self) -> Dict[str, Union[str, Field]]:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 113,
+       "path": "src/scippnexus/nxdata.py",
+       "text": "def unit(self) -> Union[sc.Unit, None]:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 163,
+       "path": "src/scippnexus/nxdetector.py",
+       "text": "def unit(self) -> Union[sc.Unit, None]:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 27,
+       "path": "src/scippnexus/nxevent_data.py",
+       "text": "def unit(self) -> None:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 56,
+       "path": "src/scippnexus/nxlog.py",
+       "text": "def unit(self):"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 47,
+       "path": "src/scippnexus/nxobject.py",
+       "text": "def unit(self):"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 307,
+       "path": "src/scippnexus/nxobject.py",
+       "text": "def unit(self) -> Union[sc.Unit, None]:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxtransformations.py:30 NXtransformations._getitem",
+       "line": 16,
+       "path": "src/scippnexus/leaf.py",
+       "text": "def _getitem(self,"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxtransformations.py:30 NXtransformations._getitem",
+       "line": 211,
+       "path": "src/scippnexus/nxdata.py",
+       "text": "def _getitem(self, select: ScippIndex) -> sc.DataArray:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxtransformations.py:30 NXtransformations._getitem",
+       "line": 235,
+       "path": "src/scippnexus/nxdetector.py",
+       "text": "def _getitem(self, select: ScippIndex) -> sc.DataArray:"
+      }
+     ]
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:7",
+       "line": 6,
+       "path": "src/scippnexus/nxdata.py",
+       "text": "from typing import List, Optional, Union"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:7",
+       "line": 6,
+       "path": "src/scippnexus/nxdata.py",
+       "text": "from typing import List, Optional, Union"
+      }
+     ],
+     "same_name": [
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:166 NXdetector._event_grouping",
+       "line": 13,
+       "path": "src/scippnexus/nxmonitor.py",
+       "text": "def _event_grouping(self) -> Dict[str, Union[str, Field]]:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 113,
+       "path": "src/scippnexus/nxdata.py",
+       "text": "def unit(self) -> Union[sc.Unit, None]:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 163,
+       "path": "src/scippnexus/nxdetector.py",
+       "text": "def unit(self) -> Union[sc.Unit, None]:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 27,
+       "path": "src/scippnexus/nxevent_data.py",
+       "text": "def unit(self) -> None:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 56,
+       "path": "src/scippnexus/nxlog.py",
+       "text": "def unit(self):"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 47,
+       "path": "src/scippnexus/nxobject.py",
+       "text": "def unit(self):"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxdetector.py:93 _EventField.unit",
+       "line": 307,
+       "path": "src/scippnexus/nxobject.py",
+       "text": "def unit(self) -> Union[sc.Unit, None]:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxtransformations.py:30 NXtransformations._getitem",
+       "line": 16,
+       "path": "src/scippnexus/leaf.py",
+       "text": "def _getitem(self,"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxtransformations.py:30 NXtransformations._getitem",
+       "line": 211,
+       "path": "src/scippnexus/nxdata.py",
+       "text": "def _getitem(self, select: ScippIndex) -> sc.DataArray:"
+      },
+      {
+       "fixed_at": "src/scippnexus/nxtransformations.py:30 NXtransformations._getitem",
+       "line": 235,
+       "path": "src/scippnexus/nxdetector.py",
+       "text": "def _getitem(self, select: ScippIndex) -> sc.DataArray:"
+      }
+     ]
+    }
+   },
+   "instance_id": "scipp__scippnexus-106",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "ocbpy/_boundary.py:1193 DualBoundary.rec_ind",
+       "line": 1189,
+       "path": "ocbpy/_boundary.py",
+       "text": "def rec_ind(self):"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v0": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "aburrell__ocbpy-144",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [
+      {
+       "fixed_at": "babelfish/language.py:105",
+       "line": 33,
+       "path": "babelfish/exceptions.py",
+       "text": "self.country = country"
+      },
+      {
+       "fixed_at": "babelfish/language.py:112",
+       "line": 34,
+       "path": "babelfish/exceptions.py",
+       "text": "self.script = script"
+      }
+     ],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [
+      {
+       "fixed_at": "babelfish/country.py:97",
+       "line": 70,
+       "path": "babelfish/converters/__init__.py",
+       "text": "def __eq__(self, other: Any) -> bool:"
+      },
+      {
+       "fixed_at": "babelfish/language.py:171",
+       "line": 70,
+       "path": "babelfish/converters/__init__.py",
+       "text": "def __eq__(self, other: Any) -> bool:"
+      },
+      {
+       "fixed_at": "babelfish/script.py:55",
+       "line": 70,
+       "path": "babelfish/converters/__init__.py",
+       "text": "def __eq__(self, other: Any) -> bool:"
+      }
+     ],
+     "same_name": []
+    },
+    "v3": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [
+      {
+       "fixed_at": "babelfish/language.py:171",
+       "line": 70,
+       "path": "babelfish/converters/__init__.py",
+       "text": "def __eq__(self, other: Any) -> bool:"
+      },
+      {
+       "fixed_at": "babelfish/language.py:171",
+       "line": 102,
+       "path": "babelfish/country.py",
+       "text": "def __eq__(self, other: Any) -> bool:"
+      },
+      {
+       "fixed_at": "babelfish/language.py:171",
+       "line": 109,
+       "path": "babelfish/country.py",
+       "text": "def __ne__(self, other: Any) -> bool:"
+      },
+      {
+       "fixed_at": "babelfish/script.py:55",
+       "line": 90,
+       "path": "babelfish/country.py",
+       "text": "def __setstate__(self, state: str) -> None:"
+      },
+      {
+       "fixed_at": "babelfish/script.py:55",
+       "line": 70,
+       "path": "babelfish/converters/__init__.py",
+       "text": "def __eq__(self, other: Any) -> bool:"
+      },
+      {
+       "fixed_at": "babelfish/script.py:55",
+       "line": 102,
+       "path": "babelfish/country.py",
+       "text": "def __eq__(self, other: Any) -> bool:"
+      },
+      {
+       "fixed_at": "babelfish/script.py:55",
+       "line": 109,
+       "path": "babelfish/country.py",
+       "text": "def __ne__(self, other: Any) -> bool:"
+      }
+     ],
+     "same_name": []
+    }
+   },
+   "instance_id": "Diaoul__babelfish-50",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [
+      {
+       "fixed_at": "dphon/match.py:11",
+       "line": 11,
+       "path": "dphon/index.py",
+       "text": "from spacy.tokens import Doc, Span"
+      },
+      {
+       "fixed_at": "dphon/match.py:11",
+       "line": 9,
+       "path": "dphon/ngrams.py",
+       "text": "from spacy.tokens import Doc, Span"
+      },
+      {
+       "fixed_at": "dphon/match.py:11",
+       "line": 12,
+       "path": "dphon/reuse.py",
+       "text": "from spacy.tokens import Doc, Span"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "dphon/match.py:11",
+       "line": 11,
+       "path": "dphon/index.py",
+       "text": "from spacy.tokens import Doc, Span"
+      },
+      {
+       "fixed_at": "dphon/match.py:11",
+       "line": 9,
+       "path": "dphon/ngrams.py",
+       "text": "from spacy.tokens import Doc, Span"
+      },
+      {
+       "fixed_at": "dphon/match.py:11",
+       "line": 12,
+       "path": "dphon/reuse.py",
+       "text": "from spacy.tokens import Doc, Span"
+      }
+     ],
+     "same_name": []
+    }
+   },
+   "instance_id": "direct-phonology__dphon-366",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [
+      {
+       "fixed_at": "ogn_lib/parser.py:776",
+       "line": 751,
+       "path": "ogn_lib/parser.py",
+       "text": "__destto__ = ['OGLT24', 'OGLT24-1']"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "ogn_lib/parser.py:776",
+       "line": 751,
+       "path": "ogn_lib/parser.py",
+       "text": "__destto__ = ['OGLT24', 'OGLT24-1']"
+      }
+     ],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [
+      {
+       "fixed_at": "ogn_lib/parser.py:776",
+       "line": 751,
+       "path": "ogn_lib/parser.py",
+       "text": "__destto__ = ['OGLT24', 'OGLT24-1']"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "ogn_lib/parser.py:776",
+       "line": 751,
+       "path": "ogn_lib/parser.py",
+       "text": "__destto__ = ['OGLT24', 'OGLT24-1']"
+      }
+     ],
+     "same_name": []
+    }
+   },
+   "instance_id": "akolar__ogn-lib-18",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [
+      "logger"
+     ],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "debug_nos_deep.py:55 deep_analyze_nos_data.search_dict",
+       "line": 4,
+       "path": "src/streamlink/utils/data.py",
+       "text": "def search_dict(data: Union[Dict, List], key: Any):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:98 NOS._get_streams",
+       "line": 461,
+       "path": "src/streamlink/plugin/plugin.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:98 NOS._get_streams",
+       "line": 222,
+       "path": "src/streamlink/plugins/abematv.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:98 NOS._get_streams",
+       "line": 148,
+       "path": "src/streamlink/plugins/adultswim.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:98 NOS._get_streams",
+       "line": 172,
+       "path": "src/streamlink/plugins/afreeca.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:98 NOS._get_streams",
+       "line": 184,
+       "path": "src/streamlink/plugins/albavision.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:98 NOS._get_streams",
+       "line": 108,
+       "path": "src/streamlink/plugins/aloula.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:98 NOS._get_streams",
+       "line": 23,
+       "path": "src/streamlink/plugins/app17.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:98 NOS._get_streams",
+       "line": 35,
+       "path": "src/streamlink/plugins/ard_live.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:98 NOS._get_streams",
+       "line": 44,
+       "path": "src/streamlink/plugins/ard_mediathek.py",
+       "text": "def _get_streams(self):"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 13,
+       "path": "src/streamlink/plugins/adultswim.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 13,
+       "path": "src/streamlink/plugins/ard_live.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/bfmtv.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 11,
+       "path": "src/streamlink/plugins/bloomberg.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/brightcove.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 14,
+       "path": "src/streamlink/plugins/delfi.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 15,
+       "path": "src/streamlink/plugins/dogan.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 10,
+       "path": "src/streamlink/plugins/euronews.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/n13tv.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 14,
+       "path": "src/streamlink/plugins/pluzz.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 13,
+       "path": "src/streamlink/plugins/adultswim.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 13,
+       "path": "src/streamlink/plugins/ard_live.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/bfmtv.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 11,
+       "path": "src/streamlink/plugins/bloomberg.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/brightcove.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 14,
+       "path": "src/streamlink/plugins/delfi.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 15,
+       "path": "src/streamlink/plugins/dogan.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 10,
+       "path": "src/streamlink/plugins/euronews.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/n13tv.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 14,
+       "path": "src/streamlink/plugins/pluzz.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      }
+     ],
+     "same_name": [
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:25 NOS._get_streams",
+       "line": 461,
+       "path": "src/streamlink/plugin/plugin.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:25 NOS._get_streams",
+       "line": 222,
+       "path": "src/streamlink/plugins/abematv.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:25 NOS._get_streams",
+       "line": 148,
+       "path": "src/streamlink/plugins/adultswim.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:25 NOS._get_streams",
+       "line": 172,
+       "path": "src/streamlink/plugins/afreeca.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:25 NOS._get_streams",
+       "line": 184,
+       "path": "src/streamlink/plugins/albavision.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:25 NOS._get_streams",
+       "line": 108,
+       "path": "src/streamlink/plugins/aloula.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:25 NOS._get_streams",
+       "line": 23,
+       "path": "src/streamlink/plugins/app17.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:25 NOS._get_streams",
+       "line": 35,
+       "path": "src/streamlink/plugins/ard_live.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:25 NOS._get_streams",
+       "line": 44,
+       "path": "src/streamlink/plugins/ard_mediathek.py",
+       "text": "def _get_streams(self):"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:25 NOS._get_streams",
+       "line": 33,
+       "path": "src/streamlink/plugins/artetv.py",
+       "text": "def _get_streams(self):"
+      }
+     ]
+    },
+    "v2": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 13,
+       "path": "src/streamlink/plugins/adultswim.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 13,
+       "path": "src/streamlink/plugins/ard_live.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/bfmtv.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 11,
+       "path": "src/streamlink/plugins/bloomberg.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/brightcove.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 14,
+       "path": "src/streamlink/plugins/delfi.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 15,
+       "path": "src/streamlink/plugins/dogan.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 10,
+       "path": "src/streamlink/plugins/euronews.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/n13tv.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 14,
+       "path": "src/streamlink/plugins/pluzz.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 13,
+       "path": "src/streamlink/plugins/adultswim.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 13,
+       "path": "src/streamlink/plugins/ard_live.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/bfmtv.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 11,
+       "path": "src/streamlink/plugins/bloomberg.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/brightcove.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 14,
+       "path": "src/streamlink/plugins/delfi.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 15,
+       "path": "src/streamlink/plugins/dogan.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 10,
+       "path": "src/streamlink/plugins/euronews.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 12,
+       "path": "src/streamlink/plugins/n13tv.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      },
+      {
+       "fixed_at": "src/streamlink/plugins/nos.py:12",
+       "line": 14,
+       "path": "src/streamlink/plugins/pluzz.py",
+       "text": "from streamlink.plugin import Plugin, PluginError, pluginmatcher"
+      }
+     ],
+     "same_name": []
+    }
+   },
+   "instance_id": "streamlink__streamlink-5565",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "canonical__charmcraft-1365",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "phabricator/__init__.py:275 Resource._request",
+       "line": 381,
+       "path": "phabricator/__init__.py",
+       "text": "def _request(self, **kwargs):"
+      }
+     ]
+    },
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [
+      "original_getattr"
+     ],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "phabricator/__init__.py:264 Resource._request",
+       "line": 370,
+       "path": "phabricator/__init__.py",
+       "text": "def _request(self, **kwargs):"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "phabricator/__init__.py:255 Resource._request",
+       "line": 361,
+       "path": "phabricator/__init__.py",
+       "text": "def _request(self, **kwargs):"
+      }
+     ]
+    },
+    "v2": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "disqus__python-phabricator-64",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "reproduce_issue.py:42 main",
+       "line": 86,
+       "path": "fastentrypoints.py",
+       "text": "def main(...)"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "hylang__hy-2423",
+   "notes": []
+  },
+  {
+   "excluded": "git fetch failed: fatal: could not read Username for 'https://github.com': terminal prompts disabled",
+   "fixes": {},
+   "instance_id": "NREL__hescore-hpxml-149",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "reata__sqllineage-90",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "omni-us__jsonargparse-263",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [
+      "fn"
+     ],
+     "constants": [
+      "fn",
+      "r"
+     ],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 839,
+       "path": "asdf/block.py",
+       "text": "def close(self):"
+      },
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 1305,
+       "path": "asdf/block.py",
+       "text": "def close(self):"
+      },
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 1344,
+       "path": "asdf/block.py",
+       "text": "def close(self):"
+      },
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 103,
+       "path": "asdf/extern/atomicfile.py",
+       "text": "def close(self):"
+      },
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 399,
+       "path": "asdf/generic_io.py",
+       "text": "def close(self):"
+      },
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 854,
+       "path": "asdf/generic_io.py",
+       "text": "def close(self):"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 839,
+       "path": "asdf/block.py",
+       "text": "def close(self):"
+      },
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 1305,
+       "path": "asdf/block.py",
+       "text": "def close(self):"
+      },
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 1344,
+       "path": "asdf/block.py",
+       "text": "def close(self):"
+      },
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 103,
+       "path": "asdf/extern/atomicfile.py",
+       "text": "def close(self):"
+      },
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 399,
+       "path": "asdf/generic_io.py",
+       "text": "def close(self):"
+      },
+      {
+       "fixed_at": "asdf/asdf.py:447 AsdfFile.close",
+       "line": 854,
+       "path": "asdf/generic_io.py",
+       "text": "def close(self):"
+      }
+     ]
+    }
+   },
+   "instance_id": "asdf-format__asdf-1575",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "MatthewFlamm__pynws-208",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v0": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "joke2k__faker-1453",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [
+      "VERSION"
+     ],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [
+      "VERSION"
+     ],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "abhinavsingh__proxy.py-277",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "Lucas-C__pre-commit-hooks-98",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [
+      {
+       "fixed_at": "asgiref/sync.py:325",
+       "line": 516,
+       "path": "asgiref/sync.py",
+       "text": "if exc_info[1]:"
+      },
+      {
+       "fixed_at": "asgiref/sync.py:327",
+       "line": 518,
+       "path": "asgiref/sync.py",
+       "text": "raise exc_info[1]"
+      }
+     ],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [
+      {
+       "fixed_at": "asgiref/sync.py:305",
+       "line": 27,
+       "path": "asgiref/current_thread_executor.py",
+       "text": "*args: _P.args,"
+      },
+      {
+       "fixed_at": "asgiref/sync.py:305",
+       "line": 89,
+       "path": "asgiref/current_thread_executor.py",
+       "text": "*args: _P.args,"
+      }
+     ],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "django__asgiref-471",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "robotpy__robotpy-cppheaderparser-44",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py:158 TypeResolveHandler._get_type",
+       "line": 203,
+       "path": "src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py",
+       "text": "def _get_type(self, o, type_object, type_name):"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [
+      "_config"
+     ],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "src/debugpy/server/api.py:148 listen",
+       "line": 94,
+       "path": "src/debugpy/public_api.py",
+       "text": "def listen(__endpoint: Endpoint | int) -> Endpoint:"
+      }
+     ]
+    },
+    "v0": {
+     "constant_reads": [],
+     "constants": [
+      "_config"
+     ],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "src/debugpy/server/api.py:148 listen",
+       "line": 94,
+       "path": "src/debugpy/public_api.py",
+       "text": "def listen(__endpoint: Endpoint | int) -> Endpoint:"
+      }
+     ]
+    }
+   },
+   "instance_id": "microsoft__debugpy-1052",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "nomenclature/codelist.py:576 RegionCodeList.from_directory",
+       "line": 175,
+       "path": "nomenclature/codelist.py",
+       "text": "def from_directory("
+      },
+      {
+       "fixed_at": "nomenclature/codelist.py:576 RegionCodeList.from_directory",
+       "line": 456,
+       "path": "nomenclature/processor/region.py",
+       "text": "def from_directory(cls, path: DirectoryPath, dsd: DataStructureDefinition):"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [
+      {
+       "fixed_at": "nomenclature/codelist.py:15",
+       "line": 15,
+       "path": "nomenclature/definition.py",
+       "text": "from nomenclature.config import NomenclatureConfig"
+      },
+      {
+       "fixed_at": "nomenclature/codelist.py:15",
+       "line": 27,
+       "path": "nomenclature/processor/region.py",
+       "text": "from nomenclature.error import custom_pydantic_errors, ErrorCollector"
+      }
+     ],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "IAMconsortium__nomenclature-320",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "yt-project__unyt-437",
+   "notes": []
+  },
+  {
+   "excluded": "git fetch failed: fatal: could not read Username for 'https://github.com': terminal prompts disabled",
+   "fixes": {},
+   "instance_id": "NREL__hescore-hpxml-197",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [
+      {
+       "fixed_at": "healsparse/io_coverage.py:33",
+       "line": 36,
+       "path": "healsparse/io_coverage_fits.py",
+       "text": "if isinstance(filename_or_fits, str):"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "healsparse/io_coverage.py:33",
+       "line": 36,
+       "path": "healsparse/io_coverage_fits.py",
+       "text": "if isinstance(filename_or_fits, str):"
+      },
+      {
+       "fixed_at": "healsparse/io_coverage_fits.py:21",
+       "line": 36,
+       "path": "healsparse/io_coverage_fits.py",
+       "text": "if isinstance(filename_or_fits, str):"
+      }
+     ],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "LSSTDESC__healsparse-157",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "httpx/_client.py:487 Client.init_dispatch",
+       "line": 1010,
+       "path": "httpx/_client.py",
+       "text": "def init_dispatch("
+      },
+      {
+       "fixed_at": "httpx/_dispatch/sync_asgi.py:29 SyncASGIDispatch.send",
+       "line": 595,
+       "path": "httpx/_client.py",
+       "text": "def send(...)"
+      },
+      {
+       "fixed_at": "httpx/_dispatch/sync_asgi.py:29 SyncASGIDispatch.send",
+       "line": 1111,
+       "path": "httpx/_client.py",
+       "text": "async def send("
+      },
+      {
+       "fixed_at": "httpx/_dispatch/sync_asgi.py:29 SyncASGIDispatch.send",
+       "line": 54,
+       "path": "httpx/_dispatch/asgi.py",
+       "text": "async def send(self, request: Request, timeout: TimeoutTypes = None) -> Response:"
+      },
+      {
+       "fixed_at": "httpx/_dispatch/sync_asgi.py:29 SyncASGIDispatch.send",
+       "line": 83,
+       "path": "httpx/_dispatch/asgi.py",
+       "text": "async def send(message: dict) -> None:"
+      },
+      {
+       "fixed_at": "httpx/_dispatch/sync_asgi.py:29 SyncASGIDispatch.send",
+       "line": 20,
+       "path": "httpx/_dispatch/base.py",
+       "text": "def send(self, request: Request, timeout: Timeout = None) -> Response:"
+      },
+      {
+       "fixed_at": "httpx/_dispatch/sync_asgi.py:29 SyncASGIDispatch.send",
+       "line": 49,
+       "path": "httpx/_dispatch/base.py",
+       "text": "async def send(self, request: Request, timeout: Timeout = None) -> Response:"
+      },
+      {
+       "fixed_at": "httpx/_dispatch/sync_asgi.py:29 SyncASGIDispatch.send",
+       "line": 38,
+       "path": "httpx/_dispatch/connection.py",
+       "text": "async def send(self, request: Request, timeout: Timeout = None) -> Response:"
+      },
+      {
+       "fixed_at": "httpx/_dispatch/sync_asgi.py:29 SyncASGIDispatch.send",
+       "line": 147,
+       "path": "httpx/_dispatch/connection_pool.py",
+       "text": "async def send(self, request: Request, timeout: Timeout = None) -> Response:"
+      },
+      {
+       "fixed_at": "httpx/_dispatch/sync_asgi.py:29 SyncASGIDispatch.send",
+       "line": 47,
+       "path": "httpx/_dispatch/http11.py",
+       "text": "async def send(self, request: Request, timeout: Timeout = None) -> Response:"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [
+      {
+       "fixed_at": "httpx/_client.py:429",
+       "line": 927,
+       "path": "httpx/_client.py",
+       "text": "* **app** - *(optional)* An ASGI application to send requests to,"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "httpx/_client.py:429",
+       "line": 927,
+       "path": "httpx/_client.py",
+       "text": "* **app** - *(optional)* An ASGI application to send requests to,"
+      }
+     ],
+     "same_name": [
+      {
+       "fixed_at": "httpx/_content_streams.py:73 ByteStream.get_headers",
+       "line": 37,
+       "path": "httpx/_content_streams.py",
+       "text": "def get_headers(self) -> typing.Dict[str, str]:"
+      },
+      {
+       "fixed_at": "httpx/_content_streams.py:73 ByteStream.get_headers",
+       "line": 99,
+       "path": "httpx/_content_streams.py",
+       "text": "def get_headers(self) -> typing.Dict[str, str]:"
+      },
+      {
+       "fixed_at": "httpx/_content_streams.py:73 ByteStream.get_headers",
+       "line": 132,
+       "path": "httpx/_content_streams.py",
+       "text": "def get_headers(self) -> typing.Dict[str, str]:"
+      },
+      {
+       "fixed_at": "httpx/_content_streams.py:73 ByteStream.get_headers",
+       "line": 158,
+       "path": "httpx/_content_streams.py",
+       "text": "def get_headers(self) -> typing.Dict[str, str]:"
+      },
+      {
+       "fixed_at": "httpx/_content_streams.py:73 ByteStream.get_headers",
+       "line": 178,
+       "path": "httpx/_content_streams.py",
+       "text": "def get_headers(self) -> typing.Dict[str, str]:"
+      },
+      {
+       "fixed_at": "httpx/_content_streams.py:73 ByteStream.get_headers",
+       "line": 302,
+       "path": "httpx/_content_streams.py",
+       "text": "def get_headers(self) -> typing.Dict[str, str]:"
+      }
+     ]
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [
+      {
+       "fixed_at": "httpx/_client.py:429",
+       "line": 927,
+       "path": "httpx/_client.py",
+       "text": "* **app** - *(optional)* An ASGI application to send requests to,"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "httpx/_client.py:429",
+       "line": 927,
+       "path": "httpx/_client.py",
+       "text": "* **app** - *(optional)* An ASGI application to send requests to,"
+      }
+     ],
+     "same_name": []
+    }
+   },
+   "instance_id": "encode__httpx-883",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "open-contracting__ocdskit-51",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "movingpandas/trajectory.py:1081 Trajectory.add_angular_difference",
+       "line": 660,
+       "path": "movingpandas/trajectory_collection.py",
+       "text": "def add_angular_difference("
+      },
+      {
+       "fixed_at": "movingpandas/trajectory.py:1052 Trajectory.add_direction",
+       "line": 627,
+       "path": "movingpandas/trajectory_collection.py",
+       "text": "def add_direction(self, overwrite=False, name=DIRECTION_COL_NAME, n_threads=1):"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": true,
+     "replaced_code": [
+      {
+       "fixed_at": "movingpandas/trajectory.py:1399",
+       "line": 1387,
+       "path": "movingpandas/trajectory.py",
+       "text": "temp_df.at[self.get_start_time(), name] = temp_df.iloc[1][name]"
+      }
+     ],
+     "replaced_line": [
+      {
+       "fixed_at": "movingpandas/trajectory.py:1399",
+       "line": 1387,
+       "path": "movingpandas/trajectory.py",
+       "text": "temp_df.at[self.get_start_time(), name] = temp_df.iloc[1][name]"
+      }
+     ],
+     "same_name": []
+    }
+   },
+   "instance_id": "movingpandas__movingpandas-428",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v0": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "troycomi__reportseff-29",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "xCDAT__xcdat-569",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "mathause__mplotutils-136",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "src/briefcase/commands/create.py:382 CreateCommand.install_app_dependencies",
+       "line": 134,
+       "path": "src/briefcase/platforms/linux/appimage.py",
+       "text": "def install_app_dependencies(self, app: BaseConfig):"
+      }
+     ]
+    },
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "src/briefcase/commands/update.py:28 UpdateCommand.install_app_dependencies",
+       "line": 382,
+       "path": "src/briefcase/commands/create.py",
+       "text": "def install_app_dependencies(self, app: BaseConfig):"
+      },
+      {
+       "fixed_at": "src/briefcase/commands/update.py:28 UpdateCommand.install_app_dependencies",
+       "line": 134,
+       "path": "src/briefcase/platforms/linux/appimage.py",
+       "text": "def install_app_dependencies(self, app: BaseConfig):"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "src/briefcase/commands/create.py:382 CreateCommand.install_app_dependencies",
+       "line": 134,
+       "path": "src/briefcase/platforms/linux/appimage.py",
+       "text": "def install_app_dependencies(self, app: BaseConfig):"
+      },
+      {
+       "fixed_at": "src/briefcase/commands/create.py:316 CreateCommand.install_app_support_package",
+       "line": 40,
+       "path": "src/briefcase/platforms/macOS/app.py",
+       "text": "def install_app_support_package(self, app: BaseConfig):"
+      },
+      {
+       "fixed_at": "src/briefcase/commands/create.py:316 CreateCommand.install_app_support_package",
+       "line": 98,
+       "path": "src/briefcase/platforms/windows/msi.py",
+       "text": "def install_app_support_package(self, app: BaseConfig):"
+      }
+     ]
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "src/briefcase/commands/create.py:382 CreateCommand.install_app_dependencies",
+       "line": 134,
+       "path": "src/briefcase/platforms/linux/appimage.py",
+       "text": "def install_app_dependencies(self, app: BaseConfig):"
+      },
+      {
+       "fixed_at": "src/briefcase/commands/create.py:316 CreateCommand.install_app_support_package",
+       "line": 40,
+       "path": "src/briefcase/platforms/macOS/app.py",
+       "text": "def install_app_support_package(self, app: BaseConfig):"
+      },
+      {
+       "fixed_at": "src/briefcase/commands/create.py:316 CreateCommand.install_app_support_package",
+       "line": 98,
+       "path": "src/briefcase/platforms/windows/msi.py",
+       "text": "def install_app_support_package(self, app: BaseConfig):"
+      }
+     ]
+    }
+   },
+   "instance_id": "beeware__briefcase-645",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "responses.py:472 RequestsMock.reset",
+       "line": 207,
+       "path": "responses.py",
+       "text": "def reset(self):"
+      }
+     ]
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v0": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "getsentry__responses-298",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "package-url__packageurl-python-29",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_wrong": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_wrong",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "mashumaro/core/meta/code/builder.py:332 CodeBuilder.evaluate_forward_ref",
+       "line": 765,
+       "path": "mashumaro/core/meta/helpers.py",
+       "text": "def evaluate_forward_ref("
+      }
+     ]
+    }
+   },
+   "instance_id": "Fatal1ty__mashumaro-191",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "agent_ok": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "agent_ok",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "scikit-rf__scikit-rf-1195",
+   "notes": []
+  }
+ ]
+}

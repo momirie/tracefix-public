@@ -1,0 +1,86 @@
+{
+ "instance_id": "dag-hammarskjold-library__dlx-375",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [
+  "dlx.egg-info/PKG-INFO",
+  "dlx.egg-info/SOURCES.txt",
+  "dlx.egg-info/dependency_links.txt",
+  "dlx.egg-info/entry_points.txt",
+  "dlx.egg-info/requires.txt",
+  "dlx.egg-info/top_level.txt"
+ ],
+ "plugins": [],
+ "suite_seconds": 7.078,
+ "suite_timeout": 120,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "dlx/marc/query.py",
+   "old_start": 15,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "dlx/marc/query.py",
+     "function": "WildcardRegex.__init__"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "dlx/marc/query.py",
+   "old_start": 96,
+   "old_len": 7,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "dlx/marc/query.py",
+     "function": "Query.from_string.process_string"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "setup.py",
+   "old_start": 1,
+   "old_len": 4,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "setup.py",
+     "function": null
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 58421,
+   "label": "does_not_apply",
+   "failing": 46,
+   "kept": false,
+   "functions": null,
+   "differs": null
+  }
+ ],
+ "commits": {
+  "base": "b367c10e29e24660bb7d085f6e266b90bff4a501",
+  "gold": "ea5a279cb28fbffe506026a12e2927edb88fbca4",
+  "v1": "7e8713892c0c6ff9a1300d4fde2043768e04af8b"
+ },
+ "seconds": 62.609
+}

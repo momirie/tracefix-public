@@ -1,0 +1,11 @@
+{
+ "key": "01060d6eaeaf70d86741498963303fe159cb1424223024d10cdfcec674f677d5",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 3484,
+  "output_tokens": 773,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"The issue names truncate('hello world', 5) returning 6 chars. The result now has exactly 5 characters, as the issue asks.\"},{\"change\":\"c2\",\"label\":\"intended\",\"reason\":\"Same issue rule with a custom ellipsis: the old result had 11 chars for max_len=8, and 'hello...' now fits exactly.\"},{\"change\":\"c3\",\"label\":\"intended\",\"reason\":\"The issue says the result must not exceed max_len. With max_len=0, '' is the only result that fits, so returning the ellipsis overflowed.\"},{\"change\":\"c4\",\"label\":\"intended\",\"reason\":\"Same as the issue's example on a longer input: 6 chars before, 5 after, matching max_len.\"},{\"change\":\"c5\",\"label\":\"intended\",\"reason\":\"With max_len=0 the issue's length rule forces an empty result. The old '\u2026' was 1 char too long.\"},{\"change\":\"c6\",\"label\":\"intended\",\"reason\":\"A 2-char ellipsis with max_len=0 exceeded the limit. The issue's rule forces ''.\"},{\"change\":\"c7\",\"label\":\"intended\",\"reason\":\"Same as c6: the old result was 2 chars against max_len=0, which violates the issue's length rule.\"},{\"change\":\"c8\",\"label\":\"intended\",\"reason\":\"With max_len=1 the old result had 2 chars. The new 1-char ellipsis-only result satisfies the issue's limit.\"},{\"change\":\"c9\",\"label\":\"intended\",\"reason\":\"A custom 1-char ellipsis with max_len=1 used to give 2 chars. The new result fits within max_len, as the issue requires.\"}]}"
+ },
+ "role": "judge"
+}

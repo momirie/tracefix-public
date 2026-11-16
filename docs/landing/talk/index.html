@@ -1,0 +1,202 @@
+<!doctype html>
+<!-- Built by scripts/build_site.py from docs/landing/_src/. Edit the source, then run the script. -->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talk: tell me how you review AI-written fixes</title>
+<meta name="description" content="Tracefix is for people who review bug fixes a coding agent wrote. A conversation of about twenty minutes, before anything ships: how you review fixes today.">
+<!-- Search engines: SEARCHABLE in scripts/build_site.py, off while the site is a private preview
+     (until the release gates hold, DECISIONS 2026-11-06). -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0b" id="theme-color">
+<link rel="canonical" href="https://tracefix.dev/talk/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tracefix.dev/talk/">
+<meta property="og:title" content="Talk to me: how do you review a fix a coding agent wrote?">
+<meta property="og:description" content="Before Tracefix is released: a short conversation about how you review AI-written fixes, what you trust and what has slipped past.">
+<meta property="og:image" content="https://tracefix.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preload" href="../assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  // Before first paint: mark JS, and apply the theme: Dark unless the visitor saved Light or System.
+  (function () {
+    var d = document.documentElement, t = 'dark'; d.className = 'js';
+    try { var saved = localStorage.getItem('tracefix-theme'); if (saved === 'light' || saved === 'system') t = saved; } catch (e) {}
+    d.setAttribute('data-theme', t);
+    // Fail-safe: site.css hides the reveal blocks until site.js shows them. If site.js fails to load
+    // (its onerror) or has not started the reveals in 2.5 s, show every block as it is.
+    function showAll() {
+      if (d.classList.contains('reveals-on')) return;
+      var all = document.querySelectorAll('[data-reveal],[data-words],[data-reveal-group],.hero');
+      for (var i = 0; i < all.length; i++) all[i].classList.add('is-in');
+    }
+    window.tracefixShowAll = showAll;
+    setTimeout(showAll, 2500);
+  })();
+</script>
+<link rel="stylesheet" href="../assets/site.css">
+<!-- Fetch a page of this site when a link to it is hovered or pressed, so the next page is ready. -->
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="preview-note" aria-label="Private preview"><p>Private preview: Tracefix is not released yet, so its GitHub links open only for collaborators. <a href="../talk/">Talk to me</a></p></aside>
+
+<header class="site-head" id="head">
+  <div class="frame">
+    <a class="logo" href="../#top" aria-label="Tracefix home"><img class="lt" src="../assets/logo.svg" alt="" width="100" height="36"><img class="dk" src="../assets/logo-reversed.svg" alt="" width="100" height="36"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="../benchmark/">Benchmark<i class="nm" aria-hidden="true"></i></a>
+      <a href="../receipts/">Receipts<i class="nm" aria-hidden="true"></i></a>
+      <a href="../method/">Method<i class="nm" aria-hidden="true"></i></a>
+      <a href="../#install">Install</a>
+      <button type="button" class="pal-open" data-palette-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><span class="pal-open-label">Search</span><kbd data-palette-key>Ctrl K</kbd></button>
+      <div class="theme" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+        <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+        <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+      </div>
+      <a class="btn btn-sm" href="../talk/" aria-current="page">Talk to me</a>
+    </nav>
+    <details class="menu">
+      <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span class="menu-label">Menu</span></summary>
+      <nav aria-label="Menu">
+        <a href="../benchmark/">Benchmark</a>
+        <a href="../receipts/">Receipts</a>
+        <a href="../method/">Method</a>
+        <a href="../talk/" aria-current="page">Talk to me</a>
+        <a href="../#install">Install</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main" tabindex="-1" class="page">
+<!-- TALK: a conversation only, no runs on a visitor's code (the developer, 2026-11-07). The address,
+     the mailto links and the gate's numbers fill holes from scripts/site_talk.py;
+     tests/test_site_talk.py fails if this file's text holds a digit. Notes from the conversations
+     stay outside the site (docs/plans/website-pages.md S6). -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow">Talk</p>
+    <h1 data-words>Tell me how you review a fix. <span class="soft">A conversation, before anything ships.</span></h1>
+    <p class="lede" data-reveal style="--d:3">Tracefix is for people who review bug fixes that a coding agent wrote. Before it is released, I want to learn how you review them today: what you check, what you trust, and what has slipped past. It takes about twenty minutes, on a call or by email, whichever suits you.</p>
+    <div class="talk-ctas" data-reveal style="--d:4">
+      <a class="btn" href="mailto:founder@tracefix.dev?subject=Talk%3A%20reviewing%20AI-written%20fixes&amp;body=How%20I%20review%20fixes%20today%3A%0A%0AGood%20times%20for%20a%20call%3A%0A">Email founder@tracefix.dev</a>
+      <a class="btn-ghost" href="#ask">What I would ask</a>
+    </div>
+    <p class="mute small" data-reveal style="--d:5">Private preview: Tracefix is not released yet, so there is nothing to install and its GitHub links open only for collaborators.</p>
+  </div>
+</section>
+
+<section id="ask" class="band" aria-labelledby="ask-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="ask-h" class="h2" data-words>What I would ask. <span class="soft">No pitch, and a demo only if you want one.</span></h2>
+    </div>
+    <div class="mt-split">
+      <div class="mt-side" data-reveal>
+        <h3 class="h3">About your reviews</h3>
+        <ul class="mt-list">
+          <li>How you decide that a fix from an agent is right before you merge it.</li>
+          <li>The last fix that looked right and was not: what caught it, or what would have.</li>
+          <li>What you run beyond the pull request’s own tests, if anything.</li>
+        </ul>
+      </div>
+      <div class="mt-side" data-reveal style="--d:1">
+        <h3 class="h3">About a receipt</h3>
+        <ul class="mt-list">
+          <li>What a receipt would have to show before you trusted it, and what would make you ignore it.</li>
+          <li>Whether a false alarm costs you more than a missed bug.</li>
+          <li>Where it would run: in CI on every pull request, by hand, or nowhere.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="expect" class="band wash" aria-labelledby="expect-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="expect-h" class="h2" data-words>What to expect. <span class="soft">Your time, not your code.</span></h2>
+    </div>
+    <ul class="mt-list talk-terms" data-reveal>
+      <li>A conversation only. I will not ask for your code or run anything on it.</li>
+      <li>What you tell me stays in my notes. Nothing you say goes on this site, or anywhere public, unless you agree first.</li>
+      <li>If you want, you hear when Tracefix is released. Nothing else lands in your inbox.</li>
+    </ul>
+    <div class="standing talk-gate" data-reveal style="--d:1">
+      <p class="eyebrow">Why it matters</p>
+      <p>Release gate 7, “Someone wants it”, counts these conversations: 0 so far, against a target of ≥ 5, notes kept. Tracefix is released only when all 7 gates hold; today 0 do.</p>
+      <a class="more" href="../benchmark/#gates">The release gates</a>
+    </div>
+  </div>
+</section>
+
+<section id="feedback" class="band" aria-labelledby="feedback-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="feedback-h" class="h2" data-words>Something else? <span class="soft">The same address.</span></h2>
+      <p class="mute" data-reveal style="--d:2">Each link opens your mail app with a short template. Without one, write to <span class="talk-addr">founder@tracefix.dev</span>.</p>
+    </div>
+    <div class="mt-split talk-links">
+      <a class="mt-side" href="mailto:founder@tracefix.dev?subject=Wrong%20receipt%3A%20&amp;body=Receipt%20%28page%20or%20file%29%3A%0AWhat%20it%20says%3A%0AWhat%20is%20true%3A%0A" data-reveal>
+        <span class="h3">A receipt is wrong</span>
+        <span class="mute">Say which receipt, what it says and what is true instead. A wrong receipt is a bug in Tracefix.</span>
+      </a>
+      <a class="mt-side" href="mailto:founder@tracefix.dev?subject=Fixture%3A%20&amp;body=The%20bug%3A%0AA%20fix%20that%20looks%20right%20but%20is%20not%3A%0A" data-reveal style="--d:1">
+        <span class="h3">A fixture idea</span>
+        <span class="mute">A bug, and a fix that looks right but is not: it could become one of the known-answer cases.</span>
+      </a>
+      <a class="mt-side" href="mailto:founder@tracefix.dev?subject=Feedback%3A%20" data-reveal style="--d:2">
+        <span class="h3">Feedback</span>
+        <span class="mute">On the site, the method or the numbers.</span>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="band ink foot">
+  <div class="frame">
+    <img src="../assets/logo-reversed.svg" alt="Tracefix" width="100" height="36">
+    <nav aria-label="Footer">
+      <a href="../#levels">Evidence levels</a>
+      <a href="../benchmark/">Benchmark</a>
+      <a href="../receipts/">Receipts</a>
+      <a href="../method/">Method</a>
+      <a href="../talk/">Talk to me</a>
+      <a href="../talk/#feedback">Report a wrong receipt</a>
+      <a href="https://github.com/momirie/tracefix">GitHub (after release)</a>
+      <span>MIT licence</span>
+    </nav>
+    <div class="theme" role="group" aria-label="Colour theme">
+      <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+      <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+      <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<!-- The command palette (Ctrl or Cmd + K, or "/"): site.js fills it from the entries below
+     (scripts/site_palette.py) and shows the buttons that open it. -->
+<dialog id="palette" class="palette" aria-label="Search this site" data-root="../">
+  <div class="pal-top">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+    <input id="pal-in" type="text" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-autocomplete="list" aria-label="Search pages, receipts and sections" placeholder="Search pages, receipts and sections" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <button type="button" class="pal-close" data-palette-close>Esc</button>
+  </div>
+  <ul id="pal-list" class="pal-list" role="listbox" aria-label="Results"></ul>
+  <p id="pal-none" class="pal-none" role="status" hidden>Nothing matches. Try a fixture name, a level or a page.</p>
+  <p class="pal-foot" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></p>
+</dialog>
+<script type="application/json" id="palette-data">[{"g":"Pages","t":"Home","h":"Watch Tracefix break a fix","u":""},{"g":"Pages","t":"Benchmark","h":"How often it is right on real fixes, and every miss","u":"benchmark/"},{"g":"Pages","t":"Receipts","h":"What Tracefix hands back, for every fixture","u":"receipts/"},{"g":"Pages","t":"Method","h":"How it decides, and where it stops","u":"method/"},{"g":"Pages","t":"Talk to me","h":"A conversation before anything ships","u":"talk/"},{"g":"Receipts","t":"good_fix","h":"Orders list is missing the last order","u":"receipts/good_fix/","lv":"L4"},{"g":"Receipts","t":"partial_fix","h":"Service crashes at startup when PORT is not set","u":"receipts/partial_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"wrong_but_green","h":"Histogram buckets are wrong for large values","u":"receipts/wrong_but_green/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"test_weakened","h":"Trailing dash in slugs for titles ending in punctuation","u":"receipts/test_weakened/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"special_cased","h":"Lease schedule contains a payment on 29 Feb 2100","u":"receipts/special_cased/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"unguarded_test","h":"truncate() returns strings longer than max_len","u":"receipts/unguarded_test/","lv":"L1"},{"g":"Receipts","t":"no_fix","h":"Contact import creates duplicates for differently-capitalised emails","u":"receipts/no_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"env_broken","h":"weekly_report() week number off by one on Mondays","u":"receipts/env_broken/","lv":"L0"},{"g":"Receipts","t":"method_partial","h":"Listener crashes when no port is configured","u":"receipts/method_partial/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"method_good","h":"Minor bump keeps the old patch number","u":"receipts/method_good/","lv":"L4"},{"g":"Receipts","t":"py39_partial","h":"Final table says \"11st place\"","u":"receipts/py39_partial/","lv":"COUNTEREXAMPLE"},{"g":"Sections","t":"Replay the attack","h":"Home","u":"#attack"},{"g":"Sections","t":"Try your own input","h":"Home","u":"#try"},{"g":"Sections","t":"Where it stands","h":"Home","u":"#stands"},{"g":"Sections","t":"The Butterfly","h":"Home","u":"#butterfly"},{"g":"Sections","t":"The Hard-Code","h":"Home","u":"#hard-code"},{"g":"Sections","t":"The Lawyer","h":"Home","u":"#lawyer"},{"g":"Sections","t":"Evidence levels","h":"Home","u":"#levels"},{"g":"Sections","t":"Install","h":"Home","u":"#install"},{"g":"Sections","t":"Questions","h":"Home","u":"#faq"},{"g":"Sections","t":"Release gates","h":"Benchmark","u":"benchmark/#gates"},{"g":"Sections","t":"Results per slice","h":"Benchmark","u":"benchmark/#results"},{"g":"Sections","t":"Every counted miss","h":"Benchmark","u":"benchmark/#misses"},{"g":"Sections","t":"How it was measured","h":"Benchmark","u":"benchmark/#method"},{"g":"Sections","t":"The rule","h":"Method","u":"method/#rule"},{"g":"Sections","t":"The run, stage by stage","h":"Method","u":"method/#run"},{"g":"Sections","t":"The ladder and the strict L4 gate","h":"Method","u":"method/#ladder"},{"g":"Sections","t":"Isolation and the tamper watch","h":"Method","u":"method/#isolation"},{"g":"Sections","t":"In the pull request","h":"Method","u":"method/#loop"},{"g":"Sections","t":"Fork pull requests","h":"Method","u":"method/#forks"},{"g":"Sections","t":"What is sent to Anthropic","h":"Method","u":"method/#sent"},{"g":"Sections","t":"What I would ask","h":"Talk to me","u":"talk/#ask"},{"g":"Sections","t":"Report a wrong receipt","h":"Talk to me","u":"talk/#feedback"}]</script>
+<script src="../assets/site.js" onerror="tracefixShowAll()"></script>
+</body>
+</html>

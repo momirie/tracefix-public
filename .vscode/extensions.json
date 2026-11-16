@@ -1,0 +1,16 @@
+{
+  // VS Code suggests these when the project is opened. Same tools as CI (ruff, mypy, pytest).
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "charliermarsh.ruff",
+    "ms-python.mypy-type-checker",
+    "github.vscode-github-actions",
+    "github.vscode-pull-request-github",
+    "bierner.markdown-mermaid",
+    "tamasfe.even-better-toml",
+    "usernamehw.errorlens",
+    "ryanluker.vscode-coverage-gutters",
+    "anthropic.claude-code"
+  ]
+}

@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-16T16:45:01+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: tests/pytest/core/admin/test_transit.py::TestTransitAgencyAdmin.test_get_exclude[staff-expected0] passed before the fix and fails after it",
+    "regression: tests/pytest/core/admin/test_transit.py::TestTransitAgencyAdmin.test_get_readonly_fields[staff-expected0] passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "f9203e4c17f1aa1ba475776752681f9a70d27088"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "211ae35d352798e121c9e98288677f73ad3402f4"
+  },
+  "issue": {
+    "title": "AttributeError: Unable to lookup 'transit_processor' on TransitAgency or TransitAgencyAdmin or TransitAgencyForm",
+    "sha256": "cd4596ad24d51fee4c31ad60210b0b3216f0c5f818c90768e9bdbb4b3d9168c6"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "The verifier reproduced the transit_processor admin lookup error, but two existing tests (TestTransitAgencyAdmin.test_get_exclude[staff-expected0] and test_get_readonly_fields[staff-expected0]) passed before the fix and fail after it, and no test was found that guards the fix. Look next at what those two tests expect for staff users and whether the fix's change to the excluded and read-only field…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 70.41,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 18.73,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 58.38,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 4 mutants; 80% is needed",
+      "duration_s": 649.05,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.5,
+        "repro_kill_rate": 0.5,
+        "pr_kill_rate": null,
+        "mutants": 4,
+        "killed": 2,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-c16e313682c3",
+          "m-22373e090d80"
+        ],
+        "rule_mutants": 2,
+        "rule_kill_rate": 0.5,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 4 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "2 confirmed: tests/pytest/core/admin/test_transit.py::TestTransitAgencyAdmin.test_get_exclude[staff-expected0], tests/pytest/core/admin/test_transit.py::TestTransitAgencyAdmin.test_get_readonly_fields[staff-expected0]",
+      "duration_s": 280.45,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/pytest/core/admin/test_transit.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 510,
+        "not_run": 3,
+        "regressions": 2,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 11.15,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 1
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: TransitAgencyAdmin.get_exclude: the comparison did not finish",
+      "duration_s": 24.11,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 27.4,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 0,
+        "properties_counted": 2,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/pytest/core/admin/test_transit.py",
+      "test": "TestTransitAgencyAdmin.test_get_exclude[staff-expected0]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert {'eligibility... 'sso_domain'} == {'eligibility...tchio_config'}",
+      "line": 34
+    },
+    {
+      "file": "tests/pytest/core/admin/test_transit.py",
+      "test": "TestTransitAgencyAdmin.test_get_readonly_fields[staff-expected0]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert {'eligibility_api_id'} == {'eligibility...it_processor'}",
+      "line": 54
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-7f1672147b1d",
+      "origin": "model",
+      "file": "benefits/core/admin/transit.py",
+      "line": 19,
+      "original": "                    \"sso_domain\",\n                ]",
+      "replacement": "                ]",
+      "description": "Drops sso_domain from the excluded fields for non-superusers.",
+      "diff": "--- a/benefits/core/admin/transit.py\n+++ b/benefits/core/admin/transit.py\n@@ -18,3 +18,2 @@\n                     \"eligibility_api_public_key\",\n-                    \"sso_domain\",\n                 ]\n",
+      "words": "benefits/core/admin/transit.py:19: changing `                    \"sso_domain\",\n                ]` to `                ]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-ed5e02e4d4a8",
+      "origin": "model",
+      "file": "benefits/core/admin/transit.py",
+      "line": 31,
+      "original": "                    \"eligibility_api_id\",\n                ]",
+      "replacement": "                ]",
+      "description": "Drops eligibility_api_id from the readonly fields for non-superusers.",
+      "diff": "--- a/benefits/core/admin/transit.py\n+++ b/benefits/core/admin/transit.py\n@@ -30,3 +30,2 @@\n                 [\n-                    \"eligibility_api_id\",\n                 ]\n",
+      "words": "benefits/core/admin/transit.py:31: changing `                    \"eligibility_api_id\",\n                ]` to `                ]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-78e071bb6c80",
+      "origin": "rule",
+      "file": "benefits/core/admin/transit.py",
+      "line": 12,
+      "original": "        fields = []\n\n        if not request.user.is_superuser:\n            fields.extend(\n                [\n                    \"eligibility_api_private_key\",\n                    \"eligibility_api_publ...",
+      "replacement": "        return None",
+      "description": "rule: body of `get_exclude` -> `return None`",
+      "diff": "--- a/benefits/core/admin/transit.py\n+++ b/benefits/core/admin/transit.py\n@@ -11,14 +11,3 @@\n     def get_exclude(self, request, obj=None):\n-        fields = []\n-\n-        if not request.user.is_superuser:\n-            fields.extend(\n-                [\n-                    \"eligibility_api_private_key\",\n-                    \"eligibility_api_public_key\",\n-                    \"sso_domain\",\n-                ]\n-            )\n-\n-        return fields or super().get_exclude(request, obj)\n+        return None\n \n",
+      "words": "benefits/core/admin/transit.py:12: changing `        fields = []\n\n        if not request.user.is_superuse...` to `        return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "benefits/core/admin/transit.py": [
+        31
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 1,
+        "total": 1
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 17999,
+    "output_tokens": 2355,
+    "cost_estimate": {
+      "usd": 0.1001,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "regressions: 3 untouched test(s) that passed before the fix did not run after it (skipped or not collected), so they were not compared"
+  ],
+  "previous": null
+}

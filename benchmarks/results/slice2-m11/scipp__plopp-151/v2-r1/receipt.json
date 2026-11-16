@@ -1,0 +1,1140 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T19:55:14+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: tests/backends/matplotlib/mpl_figline_test.py::test_with_string_coord passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_figline_test.py::test_with_strings_as_bin_edges passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_figline_test.py::test_figsize passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_figline_test.py::test_grid passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_figline_test.py::test_ax passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_interactive_test.py::test_logx_1d_toolbar_button passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_interactive_test.py::test_logy_1d_toolbar_button passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_line_test.py::test_line_creation passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_line_test.py::test_line_creation_bin_edges passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_line_test.py::test_line_with_errorbars passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_line_test.py::test_line_hide_errorbars passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_line_test.py::test_line_with_mask passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_line_test.py::test_line_update passed before the fix and fails after it",
+    "regression: tests/backends/matplotlib/mpl_line_test.py::test_line_update_with_errorbars passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_plot_ndarray passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_plot_variable passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_plot_data_array passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_plot_data_array_missing_coords passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_plot_dataset passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_plot_dict_of_ndarrays passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_plot_dict_of_variables passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_plot_dict_of_data_arrays passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_plot_coord_with_no_unit passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_plot_ignore_size_disables_size_check passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_linecolor passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_linestyle passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_linewidth passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_marker passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_norm passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_scale passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_crop_1d_min_max passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_crop_1d_min_only passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_crop_1d_min_conversion passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_crop_1d_with_no_unit passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_for_two_lines passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_kwarg_as_dict passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_use_non_dimension_coords_dataset passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_save_to_disk_1d[jpg] passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_save_to_disk_1d[pdf] passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_save_to_disk_1d[png] passed before the fix and fails after it",
+    "regression: tests/functions/plot_test.py::test_save_to_disk_1d[svg] passed before the fix and fails after it",
+    "regression: tests/functions/slicer_test.py::test_creation_keep_one_dim passed before the fix and fails after it",
+    "regression: tests/functions/slicer_test.py::test_update_keep_one_dim passed before the fix and fails after it",
+    "regression: tests/functions/slicer_test.py::test_with_dataset passed before the fix and fails after it",
+    "regression: tests/functions/slicer_test.py::test_with_dict_of_data_arrays passed before the fix and fails after it",
+    "regression: tests/functions/superplot_test.py::test_creation passed before the fix and fails after it",
+    "regression: tests/functions/superplot_test.py::test_save_line passed before the fix and fails after it",
+    "regression: tests/functions/superplot_test.py::test_remove_line passed before the fix and fails after it",
+    "regression: tests/functions/superplot_test.py::test_change_line_color passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_update passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_create_with_node passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_with_errorbars passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_with_binedges passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_crop passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_crop_no_variable passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_update_grows_limits passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_update_does_not_shrink_limits passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_vmin passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_vmin_unit_mismatch_raises passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_vmax passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_vmin_vmax passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_vmin_vmax_no_variable passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_raises_for_new_data_with_incompatible_dimension passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_raises_for_new_data_with_incompatible_unit passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_raises_for_new_data_with_incompatible_coord_unit passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_converts_new_data_units passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_converts_new_data_coordinate_units passed before the fix and fails after it",
+    "regression: tests/graphics/figline_test.py::test_converts_new_data_units_integers passed before the fix and fails after it",
+    "regression: tests/high_level_test.py::test_single_1d_line passed before the fix and fails after it",
+    "regression: tests/high_level_test.py::test_two_1d_lines passed before the fix and fails after it",
+    "regression: tests/high_level_test.py::test_difference_of_two_1d_lines passed before the fix and fails after it",
+    "regression: tests/high_level_test.py::test_two_1d_lines_with_masks passed before the fix and fails after it",
+    "regression: tests/high_level_test.py::test_node_sum_data_along_y passed before the fix and fails after it",
+    "regression: tests/high_level_test.py::test_3d_image_slicer_with_connected_side_histograms passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "df3a5f224ede8bd257882417f8e4a8c90d0a8be2"
+  },
+  "head": {
+    "ref": "tf-v2",
+    "sha": "ff238f69889b4d8fa02287a91ea95a3457a7e1ab"
+  },
+  "issue": {
+    "title": "Cannot make 1d plot for data with datetime coord and variances",
+    "sha256": "30ebb317fbea9c21e2d8795faba583da1f6a9baba1dfd044727e8e15e540c900"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the original datetime bin-edge error but found that the fix breaks about 75 previously passing tests, spanning the matplotlib line backend, plot, slicer, superplot, figline and high-level tests, and no test guards the reported bug. Start with tests/backends/matplotlib/mpl_line_test.py::test_line_creation and test_line_with_errorbars, since the change appears to break basic…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 22.91,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 5.57,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 3: fails before the fix and passes after it",
+      "duration_s": 49.46,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/backends/matplotlib/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 3,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 3 mutants; 80% is needed",
+      "duration_s": 530.72,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/backends/matplotlib/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 7,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.0,
+        "rule_kinds": [
+          "body: 0 of 2 killed",
+          "compare: 0 of 2 killed",
+          "logic: 0 of 2 killed",
+          "negate_if: 0 of 1 killed",
+          "constant: 0 of 1 killed",
+          "membership: 0 of 1 killed",
+          "drop_call: 0 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "arithmetic",
+          "loop",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "74 confirmed: tests/backends/matplotlib/mpl_figline_test.py::test_with_string_coord, tests/backends/matplotlib/mpl_figline_test.py::test_with_strings_as_bin_edges, tests/backends/matplotlib/mpl_figline_test.py::test_figsize, tests/backends/matplotlib/mpl_figline_test.py::test_grid, tests/backends/matplotlib/mpl_figline_test.py::test_ax and 69 more",
+      "duration_s": 114.95,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/backends/matplotlib/mpl_figline_test.py tests/backends/matplotlib/mpl_interactive_test.py tests/backends/matplotlib/mpl_line_test.py tests/functions/plot_test.py tests/functions/slicer_test.py tests/functions/superplot_test.py tests/graphics/figline_test.py tests/high_level_test.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 245,
+        "not_run": 0,
+        "regressions": 74,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.35,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/backends/matplotlib/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 77
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: Line.update: the comparison did not finish",
+      "duration_s": 4.77,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 21.83,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "inputs_tried": 0,
+        "properties_counted": 11,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "fails_differently",
+      "reason": "attempt 1: fails after the fix too, but differently",
+      "duration_s": 17.27,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/backends/matplotlib/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/backends/matplotlib/mpl_figline_test.py",
+      "test": "test_with_string_coord",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 13
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_figline_test.py",
+      "test": "test_with_strings_as_bin_edges",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 21
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_figline_test.py",
+      "test": "test_figsize",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 29
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_figline_test.py",
+      "test": "test_grid",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 36
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_figline_test.py",
+      "test": "test_ax",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 42
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_interactive_test.py",
+      "test": "test_logx_1d_toolbar_button",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 11
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_interactive_test.py",
+      "test": "test_logy_1d_toolbar_button",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 17
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_line_test.py",
+      "test": "test_line_creation",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 12
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_line_test.py",
+      "test": "test_line_creation_bin_edges",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 24
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_line_test.py",
+      "test": "test_line_with_errorbars",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 30
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_line_test.py",
+      "test": "test_line_hide_errorbars",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 43
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_line_test.py",
+      "test": "test_line_with_mask",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 49
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_line_test.py",
+      "test": "test_line_update",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 55
+    },
+    {
+      "file": "tests/backends/matplotlib/mpl_line_test.py",
+      "test": "test_line_update_with_errorbars",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 65
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_plot_ndarray",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 15
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_plot_variable",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 19
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_plot_data_array",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 23
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_plot_data_array_missing_coords",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 30
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_plot_dataset",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 36
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_plot_dict_of_ndarrays",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 41
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_plot_dict_of_variables",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 45
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_plot_dict_of_data_arrays",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 49
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_plot_coord_with_no_unit",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 60
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_plot_ignore_size_disables_size_check",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 74
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_linecolor",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 104
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_linestyle",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 112
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_linewidth",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 120
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_marker",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 128
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_norm",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 134
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_scale",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 140
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_crop_1d_min_max",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 160
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_crop_1d_min_only",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 171
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_crop_1d_min_conversion",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 177
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_crop_1d_with_no_unit",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 183
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_for_two_lines",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 207
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_kwarg_as_dict",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 214
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_use_non_dimension_coords_dataset",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 242
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_save_to_disk_1d[jpg]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 251
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_save_to_disk_1d[pdf]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 251
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_save_to_disk_1d[png]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 251
+    },
+    {
+      "file": "tests/functions/plot_test.py",
+      "test": "test_save_to_disk_1d[svg]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 251
+    },
+    {
+      "file": "tests/functions/slicer_test.py",
+      "test": "test_creation_keep_one_dim",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 19
+    },
+    {
+      "file": "tests/functions/slicer_test.py",
+      "test": "test_update_keep_one_dim",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 38
+    },
+    {
+      "file": "tests/functions/slicer_test.py",
+      "test": "test_with_dataset",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 51
+    },
+    {
+      "file": "tests/functions/slicer_test.py",
+      "test": "test_with_dict_of_data_arrays",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 60
+    },
+    {
+      "file": "tests/functions/superplot_test.py",
+      "test": "test_creation",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 10
+    },
+    {
+      "file": "tests/functions/superplot_test.py",
+      "test": "test_save_line",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 16
+    },
+    {
+      "file": "tests/functions/superplot_test.py",
+      "test": "test_remove_line",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 35
+    },
+    {
+      "file": "tests/functions/superplot_test.py",
+      "test": "test_change_line_color",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 61
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_update",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 18
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_create_with_node",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 35
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_with_errorbars",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 44
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_with_binedges",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 55
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_crop",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 73
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_crop_no_variable",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 86
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_update_grows_limits",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 94
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_update_does_not_shrink_limits",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 105
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_vmin",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 116
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_vmin_unit_mismatch_raises",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 122
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_vmax",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 128
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_vmin_vmax",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 134
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_vmin_vmax_no_variable",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 142
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_raises_for_new_data_with_incompatible_dimension",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 148
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_raises_for_new_data_with_incompatible_unit",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 155
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_raises_for_new_data_with_incompatible_coord_unit",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 162
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_converts_new_data_units",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 170
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_converts_new_data_coordinate_units",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 180
+    },
+    {
+      "file": "tests/graphics/figline_test.py",
+      "test": "test_converts_new_data_units_integers",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 193
+    },
+    {
+      "file": "tests/high_level_test.py",
+      "test": "test_single_1d_line",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 21
+    },
+    {
+      "file": "tests/high_level_test.py",
+      "test": "test_two_1d_lines",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 27
+    },
+    {
+      "file": "tests/high_level_test.py",
+      "test": "test_difference_of_two_1d_lines",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 34
+    },
+    {
+      "file": "tests/high_level_test.py",
+      "test": "test_two_1d_lines_with_masks",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 87
+    },
+    {
+      "file": "tests/high_level_test.py",
+      "test": "test_node_sum_data_along_y",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 106
+    },
+    {
+      "file": "tests/high_level_test.py",
+      "test": "test_3d_image_slicer_with_connected_side_histograms",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'mask_data_key' is not defined",
+      "line": 130
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-6bdfb18289cb",
+      "origin": "model",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 183,
+      "original": "            'x': sc.midpoints(x).values if hist else x.values,",
+      "replacement": "            'x': sc.midpoints(x).values if not hist else x.values,",
+      "description": "Inverts hist condition for error bar x coordinates.",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -182,3 +182,3 @@\n             error = {\n-                'x': sc.midpoints(x).values if hist else x.values,\n+                'x': sc.midpoints(x).values if not hist else x.values,\n                 'y': y.values,\n",
+      "words": "src/plopp/backends/plotly/line.py:183: changing `            'x': sc.midpoints(x).values if hist else x.value...` to `            'x': sc.midpoints(x).values if not hist else x.v...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-28611a0a20ef",
+      "origin": "model",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 195,
+      "original": "            y = sc.concat([y[0:1], y], dim=self._dim)",
+      "replacement": "            y = sc.concat([y[-1:], y], dim=self._dim)",
+      "description": "Pads step data with the last value instead of the first.",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -194,3 +194,3 @@\n         if hist:\n-            y = sc.concat([y[0:1], y], dim=self._dim)\n+            y = sc.concat([y[-1:], y], dim=self._dim)\n             if mask is not None:\n",
+      "words": "src/plopp/backends/plotly/line.py:195: changing `            y = sc.concat([y[0:1], y], dim=self._dim)` to `            y = sc.concat([y[-1:], y], dim=self._dim)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-8cc19429bae1",
+      "origin": "model",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 197,
+      "original": "                mask['y'] = np.concatenate([mask['y'][0:1], mask['y']])",
+      "replacement": "                mask['y'] = np.concatenate([mask['y'], mask['y'][0:1]])",
+      "description": "Mask padding is appended at the end instead of prepended.",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -196,3 +196,3 @@\n             if mask is not None:\n-                mask['y'] = np.concatenate([mask['y'][0:1], mask['y']])\n+                mask['y'] = np.concatenate([mask['y'], mask['y'][0:1]])\n         return {\n",
+      "words": "src/plopp/backends/plotly/line.py:197: changing `                mask['y'] = np.concatenate([mask['y'][0:1], ...` to `                mask['y'] = np.concatenate([mask['y'], mask[...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-2a6dc4e2a7f2",
+      "origin": "rule",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 101,
+      "original": "        default_step_style = {\n            'linestyle': 'solid',\n            'linewidth': 1.5,\n            'color': f'C{number}'\n        }\n        markers = list(Line2D.markers.keys())\n        default...",
+      "replacement": "        return None",
+      "description": "rule: body of `_make_line` -> `return None`",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -100,62 +100,3 @@\n \n-        default_step_style = {\n-            'linestyle': 'solid',\n-            'linewidth': 1.5,\n-            'color': f'C{number}'\n-        }\n-        markers = list(Line2D.markers.keys())\n-        default_plot_style = {\n-            'linestyle': 'none',\n-            'linewidth': 1.5,\n-            'marker': markers[(number + 2) % len(markers)],\n-            'color': f'C{number}'\n-        }\n-\n-        if data[\"hist\"]:\n-            self._line = self._ax.step(data['values']['x'],\n-                                       data['values']['y'],\n-                                       label=self.label,\n-                                       zorder=10,\n-                                       **{\n-                                           **default_step_style,\n-                                           **kwargs\n-                                       })[0]\n-\n-            self._mask = self._ax.step(data[\"values\"][\"x\"], data[mask_data_key][\"y\"])[0]\n-            self._mask.update_from(self._line)\n-            self._mask.set_color(mask_color)\n... 36 more lines",
+      "words": "src/plopp/backends/matplotlib/line.py:101: changing `        default_step_style = {\n            'linestyle': 'sol...` to `        return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    },
+    {
+      "id": "m-4cd87fd16b97",
+      "origin": "rule",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 165,
+      "original": "        hist = len(x) != len(y)",
+      "replacement": "        hist = len(x) == len(y)",
+      "description": "rule: `!=` -> `==`",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -164,3 +164,3 @@\n         y = self._data.data\n-        hist = len(x) != len(y)\n+        hist = len(x) == len(y)\n         error = None\n",
+      "words": "src/plopp/backends/matplotlib/line.py:165: changing `        hist = len(x) != len(y)` to `        hist = len(x) == len(y)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-c1a39c15bbf0",
+      "origin": "rule",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 214,
+      "original": "        if (self._error is not None) and (new_values['stddevs'] is not None):",
+      "replacement": "        if (self._error is not None) or (new_values['stddevs'] is not None):",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -213,3 +213,3 @@\n \n-        if (self._error is not None) and (new_values['stddevs'] is not None):\n+        if (self._error is not None) or (new_values['stddevs'] is not None):\n             coll = self._error.get_children()[0]\n",
+      "words": "src/plopp/backends/matplotlib/line.py:214: changing `        if (self._error is not None) and (new_values['stddev...` to `        if (self._error is not None) or (new_values['stddevs...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    },
+    {
+      "id": "m-889af66ced69",
+      "origin": "rule",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 181,
+      "original": "        if hist:",
+      "replacement": "        if not (hist):",
+      "description": "rule: `hist` -> `not (hist)`",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -180,3 +180,3 @@\n             }\n-        if hist:\n+        if not (hist):\n             y = sc.concat([y[0:1], y], dim=self._dim)\n",
+      "words": "src/plopp/backends/matplotlib/line.py:181: changing `        if hist:` to `        if not (hist):` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "negate_if"
+    },
+    {
+      "id": "m-d773cec8aa84",
+      "origin": "rule",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 167,
+      "original": "        mask = {'x': x.values, 'y': y.values, 'visible': False}",
+      "replacement": "        mask = {'x': x.values, 'y': y.values, 'visible': True}",
+      "description": "rule: `False` -> `True`",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -166,3 +166,3 @@\n         error = None\n-        mask = {'x': x.values, 'y': y.values, 'visible': False}\n+        mask = {'x': x.values, 'y': y.values, 'visible': True}\n         if self._data.variances is not None:\n",
+      "words": "src/plopp/backends/matplotlib/line.py:167: changing `        mask = {'x': x.values, 'y': y.values, 'visible': Fal...` to `        mask = {'x': x.values, 'y': y.values, 'visible': Tru...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-6b161de377fb",
+      "origin": "rule",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 183,
+      "original": "            if mask is not None:",
+      "replacement": "            if mask is None:",
+      "description": "rule: `is not` -> `is`",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -182,3 +182,3 @@\n             y = sc.concat([y[0:1], y], dim=self._dim)\n-            if mask is not None:\n+            if mask is None:\n                 mask['y'] = np.concatenate([mask['y'][0:1], mask['y']])\n",
+      "words": "src/plopp/backends/matplotlib/line.py:183: changing `            if mask is not None:` to `            if mask is None:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "membership"
+    },
+    {
+      "id": "m-6614e922672a",
+      "origin": "rule",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 207,
+      "original": "        self._line.set_data(new_values['values']['x'], new_values['values']['y'])",
+      "replacement": "        pass",
+      "description": "rule: `self._line.set_data(new_values['values']['x'], new_values['values']['y'])` -> `pass`",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -206,3 +206,3 @@\n \n-        self._line.set_data(new_values['values']['x'], new_values['values']['y'])\n+        pass\n         if new_values['mask']['visible']:\n",
+      "words": "src/plopp/backends/matplotlib/line.py:207: changing `        self._line.set_data(new_values['values']['x'], new_v...` to `        pass` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "drop_call"
+    },
+    {
+      "id": "m-6eec61577e0c",
+      "origin": "rule",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 163,
+      "original": "        x = self._data.meta[self._dim]\n        y = self._data.data\n        hist = len(x) != len(y)\n        error = None\n        mask = {'x': x.values, 'y': y.values, 'visible': False}\n        if self....",
+      "replacement": "        return {}",
+      "description": "rule: body of `_make_data` -> `return {}`",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -162,33 +162,3 @@\n     def _make_data(self) -> dict:\n-        x = self._data.meta[self._dim]\n-        y = self._data.data\n-        hist = len(x) != len(y)\n-        error = None\n-        mask = {'x': x.values, 'y': y.values, 'visible': False}\n-        if self._data.variances is not None:\n-            error = {\n-                'x': sc.midpoints(x).values if hist else x.values,\n-                'y': y.values,\n-                'e': sc.stddevs(y).values\n-            }\n-        if len(self._data.masks):\n-            one_mask = merge_masks(self._data.masks).values\n-            mask = {\n-                'x': x.values,\n-                'y': np.where(one_mask, y.values, np.nan),\n-                'visible': True\n-            }\n-        if hist:\n-            y = sc.concat([y[0:1], y], dim=self._dim)\n-            if mask is not None:\n-                mask['y'] = np.concatenate([mask['y'][0:1], mask['y']])\n-        return {\n-            'values': {\n-                'x': x.values,\n-                'y': y.values\n... 7 more lines",
+      "words": "src/plopp/backends/matplotlib/line.py:163: changing `        x = self._data.meta[self._dim]\n        y = self._dat...` to `        return {}` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    },
+    {
+      "id": "m-26207bde799b",
+      "origin": "rule",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 178,
+      "original": "        hist = len(x) != len(y)",
+      "replacement": "        hist = len(x) == len(y)",
+      "description": "rule: `!=` -> `==`",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -177,3 +177,3 @@\n         y = self._data.data\n-        hist = len(x) != len(y)\n+        hist = len(x) == len(y)\n         error = None\n",
+      "words": "src/plopp/backends/plotly/line.py:178: changing `        hist = len(x) != len(y)` to `        hist = len(x) == len(y)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-023bc2e19dcc",
+      "origin": "rule",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 115,
+      "original": "        if errorbars and (data['stddevs'] is not None):",
+      "replacement": "        if errorbars or (data['stddevs'] is not None):",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -114,3 +114,3 @@\n \n-        if errorbars and (data['stddevs'] is not None):\n+        if errorbars or (data['stddevs'] is not None):\n             self._error = go.Scatter(x=np.asarray(data['stddevs']['x']),\n",
+      "words": "src/plopp/backends/plotly/line.py:115: changing `        if errorbars and (data['stddevs'] is not None):` to `        if errorbars or (data['stddevs'] is not None):` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "src/plopp/backends/matplotlib/line.py": [
+        115,
+        116,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        169,
+        170,
+        171,
+        172,
+        176,
+        177,
+        178,
+        179,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        190,
+        191,
+        192,
+        207,
+        208,
+        209,
+        214,
+        217,
+        218,
+        219
+      ],
+      "src/plopp/backends/plotly/line.py": [
+        94,
+        107,
+        108,
+        115,
+        116,
+        117,
+        124,
+        140,
+        141,
+        147,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        182,
+        183,
+        184,
+        185,
+        189,
+        190,
+        191,
+        192,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        203,
+        204,
+        205,
+        222,
+        223,
+        226,
+        228,
+        229,
+        231,
+        235,
+        236
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 21,
+        "total": 77
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 9,
+    "input_tokens": 118272,
+    "output_tokens": 9020,
+    "cost_estimate": {
+      "usd": 0.4925,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 22 functions were shown",
+    "guard: 7 of the 10 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 47 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "blind: only the first 8 of 24 functions were shown"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "plopp.backends.matplotlib.line.Line.update",
+      "path": "src/plopp/backends/matplotlib/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no object of Line was built: none was given, and no type hints make one"
+    },
+    {
+      "function": "plopp.backends.plotly.line.Line.update",
+      "path": "src/plopp/backends/plotly/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no object of Line was built: none was given, and no type hints make one"
+    },
+    {
+      "function": "plopp.backends.matplotlib.line.Line._make_line",
+      "path": "src/plopp/backends/matplotlib/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no object of Line was built: none was given, and no type hints make one"
+    },
+    {
+      "function": "plopp.backends.matplotlib.line.Line._make_data",
+      "path": "src/plopp/backends/matplotlib/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no object of Line was built: none was given, and no type hints make one"
+    },
+    {
+      "function": "plopp.backends.plotly.line.Line._make_line",
+      "path": "src/plopp/backends/plotly/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no object of Line was built: none was given, and no type hints make one"
+    },
+    {
+      "function": "plopp.backends.plotly.line.Line._make_data",
+      "path": "src/plopp/backends/plotly/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no object of Line was built: none was given, and no type hints make one"
+    }
+  ]
+}

@@ -1,0 +1,316 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T22:03:23+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L2",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "the tests guard the fix: they fail when it is reverted or broken",
+    "not L3: Trajectory._get_df_with_distance: the comparison did not finish",
+    "not L3: Trajectory._get_df_with_acceleration: the comparison did not finish",
+    "not L3: Trajectory.add_distance: the comparison did not finish",
+    "not L3: Trajectory.add_acceleration: the comparison did not finish"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "843ef836d789074849c5e7f5a297fb747aa38801"
+  },
+  "head": {
+    "ref": "tf-v1",
+    "sha": "8fcba9a275daeafb24e29260b4d32aaa33e08174"
+  },
+  "issue": {
+    "title": "set_speed inaccurate with floating point (nanosecond) datetime values results in unmitigatable error",
+    "sha256": "9e0ab80810abf536dc2b2a539222020404402dd054716d07e3e9db25e0a72383"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.10.17"
+  },
+  "summary": {
+    "text": "The verifier reproduced the bug with a test that fails before the fix and passes after it, and showed the tests fail again when the fix is reverted or broken, with no regressions found. The behaviour comparison did not finish for Trajectory._get_df_with_distance, _get_df_with_acceleration, add_distance and add_acceleration, so check those paths with nanosecond-precision timestamps next.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 21.72,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 11.65,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 3: fails before the fix and passes after it",
+      "duration_s": 119.52,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no movingpandas/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 3,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 3 of 3 mutants",
+      "duration_s": 320.52,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no movingpandas/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 1.0,
+        "repro_kill_rate": 0.333,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 3,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 2,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-9f4ea9e3c1d4",
+          "m-9ca54c6c3449",
+          "m-444f20e98e5b"
+        ],
+        "rule_mutants": 6,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 312 untouched tests that passed before the fix fails after it",
+      "duration_s": 21.74,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 312,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 8.78,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no movingpandas/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 4
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: Trajectory._get_df_with_distance: the comparison did not finish",
+      "duration_s": 6.86,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 4,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "no target could be attacked: its objects' code can't run here: DataFrame is not the module's own name or plain data",
+      "duration_s": 119.55,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 4,
+        "inputs_tried": 0,
+        "properties_counted": 14,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "movingpandas/trajectory.py": [
+        1372,
+        1373,
+        1400,
+        1401
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 2,
+        "total": 4
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 90537,
+    "output_tokens": 11474,
+    "cost_estimate": {
+      "usd": 0.52,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.10.17: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "movingpandas.trajectory.Trajectory._get_df_with_distance",
+      "path": "movingpandas/trajectory.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "movingpandas.trajectory.Trajectory._get_df_with_acceleration",
+      "path": "movingpandas/trajectory.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "movingpandas.trajectory.Trajectory.add_distance",
+      "path": "movingpandas/trajectory.py",
+      "via": "a public caller of the changed Trajectory._get_df_with_distance",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "its objects' code can't run here: DataFrame is not the module's own name or plain data"
+    },
+    {
+      "function": "movingpandas.trajectory.Trajectory.add_acceleration",
+      "path": "movingpandas/trajectory.py",
+      "via": "a public caller of the changed Trajectory._get_df_with_acceleration",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "its objects' code can't run here: DataFrame is not the module's own name or plain data"
+    }
+  ]
+}

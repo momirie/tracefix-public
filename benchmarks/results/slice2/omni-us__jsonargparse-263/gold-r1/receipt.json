@@ -1,0 +1,394 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T19:17:52+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks jsonargparse.loaders_dumpers.yaml_load"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "3f407662d1228d71e8d46ae76fde0449f2287334"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "01bd33c826f2aee2452920fb5391786764f88fa2"
+  },
+  "issue": {
+    "title": "str argument is mistaken as a dict if it looks like 'Foo:'",
+    "sha256": "cc92012dbba3dca7cb0ffec949988bbdd31ec48df8a372d012353a8b7bcd324e"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the bug and found no regressions, but Break My Fix found an input that breaks the fixed yaml_load: yaml_load(stream='null:') raises TypeError (unsupported operand type(s) for +: 'NoneType' and 'str'). Look next at how the fix rebuilds a string from a single-key dict whose key parses to None (and likely other non-string keys such as numbers or booleans), and note that the r…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 5.07,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.16,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 28.13,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no jsonargparse_tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 1 of 4 mutants; 80% is needed",
+      "duration_s": 97.28,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no jsonargparse_tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.25,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 4,
+        "killed": 1,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 2,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-5614bfe45cad"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 1 of 4 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 315 untouched tests that passed before the fix fails after it",
+      "duration_s": 16.45,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 315,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.11,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no jsonargparse_tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 5
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "1 input(s) compared on 1 function(s): 1 changed with the fix",
+      "duration_s": 14.49,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 1,
+        "changes": 1,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 48.8,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 213,
+        "properties_counted": 7,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 1
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "jsonargparse.loaders_dumpers.yaml_load",
+      "call": "yaml_load(stream='null:')",
+      "input": {
+        "stream": "'null:'"
+      },
+      "outcome": "raises TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'",
+      "base_outcome": "returns {None: None}",
+      "expected": null,
+      "property": {
+        "id": "t1.p1",
+        "name": "colon_suffixed_word_stays_string",
+        "kind": "returns",
+        "claim": "A string that looks like 'Foo:' (a single word followed by a colon, optionally surrounded by whitespace) must not be turned into a dict; it is returned unchanged as the string",
+        "source": "issue",
+        "quote": "str argument is mistaken as a dict if it looks like 'Foo:'",
+        "origin": "model"
+      },
+      "also_violates": [
+        "any_word_colon_kept_as_string",
+        "colon_suffixed_word_never_raises",
+        "alnum_colon_never_crashes",
+        "word_colon_with_surrounding_spaces_kept",
+        "word_colon_kept_as_string"
+      ],
+      "other_inputs": 3,
+      "relation": "new with the fix: before it, this input returns {None: None}",
+      "file": "findings/finding_1.py",
+      "path": "jsonargparse/loaders_dumpers.py",
+      "line": 59,
+      "expect": {
+        "types": [
+          "TypeError"
+        ],
+        "in_file": false
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "jsonargparse.loaders_dumpers.yaml_load",
+      "kind": "type",
+      "count": 1,
+      "before": "returns {'Foo': None}",
+      "after": "returns 'Foo:'",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The issue reports that the str value 'Foo:' is parsed as {'Foo': None}, and this change makes yaml_load return the string 'Foo:' unchanged, which is exactly that bug fixed."
+        }
+      ],
+      "examples": [
+        {
+          "call": "yaml_load(stream='Foo:')",
+          "before": "returns {'Foo': None}",
+          "after": "returns 'Foo:'"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-9cc137fe0e56",
+      "origin": "model",
+      "file": "jsonargparse/loaders_dumpers.py",
+      "line": 59,
+      "original": "    if isinstance(value, dict) and value and all(v is None for v in value.values()):",
+      "replacement": "    if isinstance(value, dict) and all(v is None for v in value.values()):",
+      "description": "Drops the non-empty check, so empty dicts enter the branch.",
+      "diff": "--- a/jsonargparse/loaders_dumpers.py\n+++ b/jsonargparse/loaders_dumpers.py\n@@ -58,3 +58,3 @@\n         value = yaml.load(stream, Loader=DefaultLoader)\n-    if isinstance(value, dict) and value and all(v is None for v in value.values()):\n+    if isinstance(value, dict) and all(v is None for v in value.values()):\n         if len(value) == 1 and stream.strip() == next(iter(value.keys())) + ':':\n",
+      "words": "jsonargparse/loaders_dumpers.py:59: changing `    if isinstance(value, dict) and value and all(v is None f...` to `    if isinstance(value, dict) and all(v is None for v in va...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-d2c0e7523d19",
+      "origin": "model",
+      "file": "jsonargparse/loaders_dumpers.py",
+      "line": 63,
+      "original": "            keys = {k for k in regex_curly_comma.split(stream) if k}",
+      "replacement": "            keys = {k for k in regex_curly_comma.split(stream)}",
+      "description": "Does not filter out empty strings from split results, so the key set may not match.",
+      "diff": "--- a/jsonargparse/loaders_dumpers.py\n+++ b/jsonargparse/loaders_dumpers.py\n@@ -62,3 +62,3 @@\n         else:\n-            keys = {k for k in regex_curly_comma.split(stream) if k}\n+            keys = {k for k in regex_curly_comma.split(stream)}\n             if len(keys) > 0 and keys == set(value.keys()):\n",
+      "words": "jsonargparse/loaders_dumpers.py:63: changing `            keys = {k for k in regex_curly_comma.split(strea...` to `            keys = {k for k in regex_curly_comma.split(strea...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-b2b587368885",
+      "origin": "model",
+      "file": "jsonargparse/loaders_dumpers.py",
+      "line": 64,
+      "original": "            if len(keys) > 0 and keys == set(value.keys()):",
+      "replacement": "            if len(keys) > 0 and keys <= set(value.keys()):",
+      "description": "Loosens set equality to subset, so partial key matches revert the value to the stream.",
+      "diff": "--- a/jsonargparse/loaders_dumpers.py\n+++ b/jsonargparse/loaders_dumpers.py\n@@ -63,3 +63,3 @@\n             keys = {k for k in regex_curly_comma.split(stream) if k}\n-            if len(keys) > 0 and keys == set(value.keys()):\n+            if len(keys) > 0 and keys <= set(value.keys()):\n                 value = stream\n",
+      "words": "jsonargparse/loaders_dumpers.py:64: changing `            if len(keys) > 0 and keys == set(value.keys()):` to `            if len(keys) > 0 and keys <= set(value.keys()):` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "jsonargparse/loaders_dumpers.py": [
+        59,
+        60,
+        63,
+        64,
+        65
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 2,
+        "total": 5
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 37657,
+    "output_tokens": 4927,
+    "cost_estimate": {
+      "usd": 0.2125,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: style example jsonargparse_tests/test_actions.py truncated to 6000 characters for the prompt",
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "guard: only the first 10 of 18 rule mutants were run",
+    "guard: 2 of the rule mutant kills were crashes on the mutated line",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "jsonargparse.loaders_dumpers.yaml_load",
+      "path": "jsonargparse/loaders_dumpers.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 213,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

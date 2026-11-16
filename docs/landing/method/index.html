@@ -1,0 +1,592 @@
+<!doctype html>
+<!-- Built by scripts/build_site.py from docs/landing/_src/. Edit the source, then run the script. -->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Method: how Tracefix decides, and where it stops</title>
+<meta name="description" content="How Tracefix decides: every stage, the evidence ladder, isolation, what a pull request gets, fork pull requests and what is sent to Anthropic.">
+<!-- Search engines: SEARCHABLE in scripts/build_site.py, off while the site is a private preview
+     (until the release gates hold, DECISIONS 2026-11-06). -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0b" id="theme-color">
+<link rel="canonical" href="https://tracefix.dev/method/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tracefix.dev/method/">
+<meta property="og:title" content="The Tracefix method: a model proposes, our code decides">
+<meta property="og:description" content="Every stage, the full evidence ladder and the strict L4 gate, isolation and the tamper watch, fork pull requests, and exactly what each model is sent.">
+<meta property="og:image" content="https://tracefix.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preload" href="../assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  // Before first paint: mark JS, and apply the theme: Dark unless the visitor saved Light or System.
+  (function () {
+    var d = document.documentElement, t = 'dark'; d.className = 'js';
+    try { var saved = localStorage.getItem('tracefix-theme'); if (saved === 'light' || saved === 'system') t = saved; } catch (e) {}
+    d.setAttribute('data-theme', t);
+    // Fail-safe: site.css hides the reveal blocks until site.js shows them. If site.js fails to load
+    // (its onerror) or has not started the reveals in 2.5 s, show every block as it is.
+    function showAll() {
+      if (d.classList.contains('reveals-on')) return;
+      var all = document.querySelectorAll('[data-reveal],[data-words],[data-reveal-group],.hero');
+      for (var i = 0; i < all.length; i++) all[i].classList.add('is-in');
+    }
+    window.tracefixShowAll = showAll;
+    setTimeout(showAll, 2500);
+  })();
+</script>
+<link rel="stylesheet" href="../assets/site.css">
+<!-- Fetch a page of this site when a link to it is hovered or pressed, so the next page is ready. -->
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="preview-note" aria-label="Private preview"><p>Private preview: Tracefix is not released yet, so its GitHub links open only for collaborators. <a href="../talk/">Talk to me</a></p></aside>
+
+<header class="site-head" id="head">
+  <div class="frame">
+    <a class="logo" href="../#top" aria-label="Tracefix home"><img class="lt" src="../assets/logo.svg" alt="" width="100" height="36"><img class="dk" src="../assets/logo-reversed.svg" alt="" width="100" height="36"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="../benchmark/">Benchmark<i class="nm" aria-hidden="true"></i></a>
+      <a href="../receipts/">Receipts<i class="nm" aria-hidden="true"></i></a>
+      <a href="../method/" aria-current="page">Method<i class="nm" aria-hidden="true"></i></a>
+      <a href="../#install">Install</a>
+      <button type="button" class="pal-open" data-palette-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><span class="pal-open-label">Search</span><kbd data-palette-key>Ctrl K</kbd></button>
+      <div class="theme" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+        <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+        <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+      </div>
+      <a class="btn btn-sm" href="../talk/">Talk to me</a>
+    </nav>
+    <details class="menu">
+      <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span class="menu-label">Menu</span></summary>
+      <nav aria-label="Menu">
+        <a href="../benchmark/">Benchmark</a>
+        <a href="../receipts/">Receipts</a>
+        <a href="../method/" aria-current="page">Method</a>
+        <a href="../talk/">Talk to me</a>
+        <a href="../#install">Install</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main" tabindex="-1" class="page">
+<!-- METHOD. No number is typed here: every limit fills a hole from scripts/site_method.py, which
+     reads Tracefix's own constants. The copy follows docs/SPEC.md, docs/GITHUB_ACTION.md and the
+     README; tests/test_site_method.py fails if this file's text holds a digit outside a level name. -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow">Method</p>
+    <h1 data-words>How Tracefix decides. <span class="soft">A model proposes. Our code decides.</span></h1>
+    <p class="lede" data-reveal style="--d:3">Tracefix uses models to write tests, plant bugs and propose what a function should promise. None of them sets a verdict. Every level in a receipt comes from an exit code, a diff or a counter that Tracefix’s own code produced. This page is how, and where it stops.</p>
+    <ul class="jump" aria-label="On this page" data-reveal style="--d:4">
+      <li><a href="#rule">The rule</a></li>
+      <li><a href="#run">The run</a></li>
+      <li><a href="#ladder">The ladder</a></li>
+      <li><a href="#isolation">Isolation</a></li>
+      <li><a href="#loop">The pull request</a></li>
+      <li><a href="#forks">Fork pull requests</a></li>
+      <li><a href="#sent">What is sent to Anthropic</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- RULE: CLAUDE.md "The one rule"; the roles from SPEC §3 and src/tracefix/llm.py -->
+<section id="rule" class="band" aria-labelledby="rule-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="rule-h" class="h2" data-words>The rule. <span class="soft">AI proposes, deterministic code decides.</span></h2>
+      <p class="mute" data-reveal style="--d:2">A model’s answer is a proposal: a file to run, an edit to try, a property to test. It becomes evidence only when Tracefix runs it and reads the result. The few places a model’s words reach the receipt are marked below, and none of them can raise a level.</p>
+    </div>
+    <div class="mt-split">
+      <div class="mt-side" data-reveal>
+        <h3 class="h3">A model may write</h3>
+        <ul class="mt-list">
+          <li>The reproduction test: one pytest file meant to fail before the fix and pass after it.</li>
+          <li>Mutants: small edits to the fixed lines, to see whether the tests notice.</li>
+          <li>Properties, input strategies and examples for Break My Fix.</li>
+          <li>Labels on behaviour changes: intended or suspicious. A label can only keep L3 out of reach.</li>
+          <li>The receipt’s short summary and a note beside each integrity flag. Display only.</li>
+        </ul>
+      </div>
+      <div class="mt-side mt-code" data-reveal style="--d:1">
+        <h3 class="h3">Only our code decides</h3>
+        <ul class="mt-list">
+          <li>Whether a test failed: the exit code and pytest’s JUnit report, which must agree.</li>
+          <li>Which mutants count (fixed hygiene rules) and which ones the tests killed.</li>
+          <li>Whether a property is allowed: it must quote what it rests on and agree with the project’s own tests.</li>
+          <li>Whether a finding counts: a standalone pytest file that fails on the fixed code, three times in a row.</li>
+          <li>The level, from the stages’ statuses (<code>ladder.py</code>, no I/O), and the GitHub check’s conclusion.</li>
+          <li>Tampering, from file snapshots before and after every run.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec-head sub" data-reveal>
+      <h3 class="h3">The four model roles</h3>
+      <p class="mute">Each role’s model, effort and budget can be changed in <code>tracefix.yml</code> or with flags; the receipt records what was used. Defaults: effort <code>medium</code>.</p>
+    </div>
+    <div class="table-wrap" data-reveal tabindex="0" role="region" aria-label="The model roles">
+      <table class="mt-roles">
+        <thead><tr><th scope="col">Role</th><th scope="col">Default model</th><th scope="col">Writes</th><th scope="col">What decides instead</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Reproducer</th><td class="mt-model" data-label="Default model"><code>claude-sonnet-5-5</code></td><td data-label="Writes">A pytest file that should fail on the code before the fix.</td><td data-label="What decides instead">It must fail on base with a real test failure, not an import or setup error, and pass on head three times in a row. Up to three attempts, each told why the last one failed.</td></tr>
+          <tr><th scope="row">Mutator</th><td class="mt-model" data-label="Default model"><code>claude-sonnet-5-5</code></td><td data-label="Writes">Small edits to the fixed lines.</td><td data-label="What decides instead">Hygiene rules: fixed lines only, at most five lines, the file still compiles, no name the file doesn’t already use. Then the tests are run against each one.</td></tr>
+          <tr><th scope="row">Adversary</th><td class="mt-model" data-label="Default model"><code>claude-opus-5-5</code></td><td data-label="Writes">Properties, strategies and examples: what the fixed function should promise.</td><td data-label="What decides instead">A property counts only if it quotes its source word for word and agrees with every call the project’s unchanged tests make. A violation counts only when a pytest file reproduces it.</td></tr>
+          <tr><th scope="row">Judge</th><td class="mt-model" data-label="Default model"><code>claude-opus-5-5</code></td><td data-label="Writes">A label for each behaviour change, a summary, notes on flags.</td><td data-label="What decides instead">Asked in two independent conversations: one “suspicious” or a missing label keeps L3 out of reach; it can never lift a level or dismiss a flag.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- RUN: the stage order from SPEC §1 and the README's pipeline table -->
+<section id="run" class="band" aria-labelledby="run-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="run-h" class="h2" data-words>The run. <span class="soft">Every stage, in order, every time.</span></h2>
+      <p class="mute" data-reveal style="--d:2">A run takes a repository, the commit before the fix (base), the commit with it (head) and the issue text. Every stage runs whatever the earlier ones found: there is no early exit on a counterexample, so the receipt lists every problem at once. A stage that crashes is marked <code>error</code> and gives no evidence; the run goes on.</p>
+    </div>
+    <ol class="mt-steps">
+      <li data-reveal><p class="mt-stage">Environment</p><p>The base test suite must run, and every changed module must import from the copy under test, not from an installed package. If not, the run stops at L0 and the receipt says why.</p></li>
+      <li data-reveal style="--d:1"><p class="mt-stage">Reproduce</p><p>The reproducer’s test must fail on base with a real test failure and pass on head three times in a row. With several tests, each is confirmed alone and the file runs again in reverse order. If no attempt reproduces and the last one fails the same way before and after the fix, the fix does not fix the bug: a counterexample.</p></li>
+      <li data-reveal style="--d:2"><p class="mt-stage">Guard</p><p>The fix’s source files get their base content back, the tests stay: the reproduction test must fail, and the PR’s own tests must not all pass. Then up to ten mutants of the fixed lines (fewer than three valid ones is inconclusive): at least 80% must be killed. A failure has to repeat to count.</p></li>
+      <li data-reveal><p class="mt-stage">No regressions</p><p>Tests the PR left untouched that passed on base must still pass on head. A confirmed regression is a counterexample.</p></li>
+      <li data-reveal style="--d:1"><p class="mt-stage">Fix-line coverage</p><p>Which of the fix’s lines the reproduction test and the PR’s tests run. Shown in the receipt, never in the level.</p></li>
+      <li data-reveal style="--d:2"><p class="mt-stage">Behaviour diff</p><p>The same generated inputs on base and head, at least 50 per changed function with at most 20% lost. Every kind of change must be explained by the issue, a docstring example or the reproduction test; then the Judge may veto.</p></li>
+      <li data-reveal><p class="mt-stage">Break My Fix</p><p>Boundary values, then the adversary’s properties, then a Hypothesis search with shrinking, against the changed functions on head. A finding counts only with the exact input, the outcome and a pytest file that fails on head three times in a row.</p></li>
+      <li data-reveal style="--d:1"><p class="mt-stage">Integrity audit</p><p>No model at all. Deleted tests, removed or weakened asserts, new skips, broadened <code>pytest.raises</code>, and special cases for inputs named in the issue or the tests. A candidate becomes a flag only when runs confirm it.</p></li>
+      <li data-reveal style="--d:2"><p class="mt-stage">Ladder and receipt</p><p>Pure code reads the stage statuses and climbs the ladder. The receipt is built from the stage results only, and every machine path in it is masked.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- LADDER: SPEC §2.8 and src/tracefix/ladder.py -->
+<section id="ladder" class="band" aria-labelledby="ladder-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="ladder-h" class="h2" data-words>The ladder. <span class="soft">Computed, never chosen.</span></h2>
+      <p class="mute" data-reveal style="--d:2">Lowest first. Our code climbs from the stages’ statuses: each level needs the one below it, and the first gate that stays shut sets the level. Any counterexample ends the climb, unless the run itself could not finish. A counterexample counts only from a stage whose own status says so, so the findings of a stage with tampering never count. The receipt gives the reasons: what each passed gate showed, then why the next one stayed shut.</p>
+    </div>
+    <!-- CLIMB: a fixture's real receipt walked up the ladder below, rung by rung, with the reasons the
+         ladder code wrote into it (scripts/site_receipts.py climb_fields; played by site.js). Hidden
+         without JavaScript. -->
+    <div class="climb" data-climb data-first="partial_fix" data-reveal hidden>
+      <div class="climb-head">
+        <p class="eyebrow">Put a real receipt through the ladder</p>
+        <p class="climb-hint">Pick a fixture. Its receipt climbs rung by rung and stops where the evidence stops, with the reasons written in the receipt. The fixtures are small buggy repos with known answers; a receipt that gets one wrong fails the test suite.</p>
+      </div>
+      <div class="climb-picks" role="group" aria-label="Fixtures"><button type="button" class="climb-pick" data-case="good_fix" data-level="L4" aria-pressed="false">good_fix</button><button type="button" class="climb-pick red" data-case="partial_fix" data-level="COUNTEREXAMPLE" aria-pressed="false">partial_fix</button><button type="button" class="climb-pick red" data-case="wrong_but_green" data-level="COUNTEREXAMPLE" aria-pressed="false">wrong_but_green</button><button type="button" class="climb-pick red" data-case="test_weakened" data-level="COUNTEREXAMPLE" aria-pressed="false">test_weakened</button><button type="button" class="climb-pick red" data-case="special_cased" data-level="COUNTEREXAMPLE" aria-pressed="false">special_cased</button><button type="button" class="climb-pick" data-case="unguarded_test" data-level="L1" aria-pressed="false">unguarded_test</button><button type="button" class="climb-pick red" data-case="no_fix" data-level="COUNTEREXAMPLE" aria-pressed="false">no_fix</button><button type="button" class="climb-pick" data-case="env_broken" data-level="L0" aria-pressed="false">env_broken</button><button type="button" class="climb-pick red" data-case="method_partial" data-level="COUNTEREXAMPLE" aria-pressed="false">method_partial</button><button type="button" class="climb-pick" data-case="method_good" data-level="L4" aria-pressed="false">method_good</button><button type="button" class="climb-pick red" data-case="py39_partial" data-level="COUNTEREXAMPLE" aria-pressed="false">py39_partial</button></div>
+      <p class="climb-status" aria-live="polite"><span data-climb-status></span> <a class="climb-open" href="../receipts/" hidden>Open this receipt</a></p>
+    </div>
+    <script type="application/json" id="climb-data">[{"case": "good_fix", "level": "L4", "title": "Orders list is missing the last order", "reasons": ["the bug was reproduced: a test fails before the fix and passes after it", "the tests guard the fix: they fail when it is reverted or broken", "the behaviour diff found no unexplained change in what it observes", "Break My Fix attacked every changed function to the end and found nothing"]}, {"case": "partial_fix", "level": "COUNTEREXAMPLE", "title": "Service crashes at startup when PORT is not set", "reasons": ["Break My Fix finding 1: an input that breaks svc.config.parse_port"]}, {"case": "wrong_but_green", "level": "COUNTEREXAMPLE", "title": "Histogram buckets are wrong for large values", "reasons": ["Break My Fix finding 1: an input that breaks stats.buckets.bucket_of", "Break My Fix finding 2: an input that breaks stats.buckets.bucket_of"]}, {"case": "test_weakened", "level": "COUNTEREXAMPLE", "title": "Trailing dash in slugs for titles ending in punctuation", "reasons": ["Break My Fix finding 1: an input that breaks blog.slug.slugify", "Break My Fix finding 2: an input that breaks blog.slug.slugify", "integrity flag: removed_assert at tests/test_slug.py:6"]}, {"case": "special_cased", "level": "COUNTEREXAMPLE", "title": "Lease schedule contains a payment on 29 Feb 2100", "reasons": ["Break My Fix finding 1: an input that breaks billing.calendar.days_in_month"]}, {"case": "unguarded_test", "level": "L1", "title": "truncate() returns strings longer than max_len", "reasons": ["the bug was reproduced: a test fails before the fix and passes after it", "not L2: the PR's test file tests/test_trunc.py does not fail with the fix reverted (passed)"]}, {"case": "no_fix", "level": "COUNTEREXAMPLE", "title": "Contact import creates duplicates for differently-capitalised emails", "reasons": ["the fix does not fix the bug: the reproduction test fails the same way before and after it", "Break My Fix finding 1: an input that breaks crm.contacts.dedupe_emails"]}, {"case": "env_broken", "level": "L0", "title": "weekly_report() week number off by one on Mondays", "reasons": ["the run stopped: the base test suite cannot import 'acme_metrics' (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks 'acme_metrics' (install the project's dependencies and run Tracefix from that environment)"]}, {"case": "method_partial", "level": "COUNTEREXAMPLE", "title": "Listener crashes when no port is configured", "reasons": ["Break My Fix finding 1: an input that breaks gateway.listener.Listener.port", "Break My Fix finding 2: an input that breaks gateway.listener.Listener.port"]}, {"case": "method_good", "level": "L4", "title": "Minor bump keeps the old patch number", "reasons": ["the bug was reproduced: a test fails before the fix and passes after it", "the tests guard the fix: they fail when it is reverted or broken", "the behaviour diff found no unexplained change in what it observes", "Break My Fix attacked every changed function to the end and found nothing"]}, {"case": "py39_partial", "level": "COUNTEREXAMPLE", "title": "Final table says \"11st place\"", "reasons": ["Break My Fix finding 1: an input that breaks standings.ordinal.ordinal"]}]</script>
+    <ol class="mt-ladder" data-climb-ladder>
+      <li class="mt-cx" data-rung="COUNTEREXAMPLE" data-reveal><p class="mt-lv"><span class="lvl red">COUNTEREXAMPLE</span></p><div><p class="mt-when">Proof against the fix.</p><p>A Break My Fix finding, a confirmed integrity flag, a fix that does not fix the bug, or a confirmed regression. A finding that failed the same way before the fix, on code the fix never ran, is listed apart and doesn’t count.</p></div></li>
+      <li data-rung="L0" data-reveal style="--d:1"><p class="mt-lv"><span class="lvl">L0</span></p><div><p class="mt-when">Nothing to stand on.</p><p>The tests could not run, a changed module imported from outside the copy, the fix’s diff could not be read, tampering was detected in a stage, or the bug was not reproduced.</p></div></li>
+      <li data-rung="L1" data-reveal style="--d:2"><p class="mt-lv"><span class="lvl">L1</span></p><div><p class="mt-when">Reproduced.</p><p>A test fails before the fix and passes after it, both by running.</p></div></li>
+      <li data-rung="L2" data-reveal><p class="mt-lv"><span class="lvl">L2</span></p><div><p class="mt-when">Guarded.</p><p>L1, and the tests fail when the fix is reverted or mutated.</p></div></li>
+      <li data-rung="L3" data-reveal style="--d:1"><p class="mt-lv"><span class="lvl">L3</span></p><div><p class="mt-when">No unexplained change in what the behaviour diff observes.</p><p>L2, and our checks allow it: everything changed was compared to the end, enough inputs, every kind of change explained, no docstring example broken, no blind spot. Then the Judge can only veto: every change it is shown needs “intended” from every answer. A fix with no behaviour change needs no Judge.</p></div></li>
+      <li data-rung="L4" data-reveal style="--d:2"><p class="mt-lv"><span class="lvl">L4</span></p><div><p class="mt-when">Tried hard to break it; nothing broke.</p><p>L3, and the strict gate below holds.</p></div></li>
+    </ol>
+    <div class="mt-gate" data-reveal>
+      <h3 class="h3">The strict L4 gate</h3>
+      <ul class="mt-list">
+        <li>Break My Fix found nothing, and skipped no changed function.</li>
+        <li>Every target was attacked to the end with at least 100 inputs of its own.</li>
+        <li>Every target has a model property that constrains its result and passed the checks above. Docstring examples don’t count: each checks one input.</li>
+        <li>Every executable line of the fix inside a function was reached by some attack.</li>
+        <li>The integrity audit and the no-regression check finished clean, or had nothing to check.</li>
+        <li>When the last receipt is replayed, every one of its findings is now fixed.</li>
+      </ul>
+      <p class="mute">A weak property, or attacks that never reach the fixed lines, can’t lift the level, so some correct fixes stop at L3.</p>
+    </div>
+    <dl class="facts-list mt-facts">
+      <div data-reveal><dt>Tampering</dt><dd>Caps the level at L0 and is listed at the top of the receipt. It never gives a pass, and never lowers a counterexample proven by clean runs.</dd></div>
+      <div data-reveal><dt>What L3 claims</dt><dd>No unexplained change in what the behaviour diff observes, not that nothing else changed. The channels it does not observe (databases, network, concurrency, performance and more) are listed in every receipt under <code>unchecked</code>.</dd></div>
+      <div data-reveal><dt>What L4 claims</dt><dd>That we tried hard to break the fix and nothing broke. It never means “this is correct”.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ISOLATION: SPEC §4 and the README's Isolation section -->
+<section id="isolation" class="band" aria-labelledby="iso-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="iso-h" class="h2" data-words>Isolation and the tamper watch. <span class="soft">Your code and the model’s code run in throwaway copies.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The project’s tests and every model-written test run in a subprocess inside a plain temporary copy of the commit, never in your working copy.</p>
+    </div>
+    <div class="mt-split">
+      <div class="mt-side" data-reveal>
+        <h3 class="h3"><span class="lvl">strict</span> Linux with bubblewrap</h3>
+        <p class="mute">A read-only system. Only the copy under test and the run’s own scratch folder are writable; the other copies, temp files and your home folder are hidden. No network.</p>
+      </div>
+      <div class="mt-side" data-reveal style="--d:1">
+        <h3 class="h3"><span class="lvl">basic</span> everywhere else</h3>
+        <p class="mute">The same minus the sandbox, plus a best-effort network block. Fine for code you would run <code>pytest</code> on anyway. The receipt carries a prominent warning; <code>--require-strict</code> refuses to run without bubblewrap.</p>
+      </div>
+    </div>
+    <dl class="facts-list mt-facts">
+      <div data-reveal><dt>Every run</dt><dd>A timeout, no standard input, an allowlisted environment (no API keys), its own home and temp folders, and the whole process tree killed at the end.</dd></div>
+      <div data-reveal><dt>The tamper watch</dt><dd>Before and after every run: the base and head copies, Tracefix’s own environment, the project’s interpreter and your repository are snapshotted. A change where nothing may change makes the stage <code>invalid</code>: never a pass, never a fail.</dd></div>
+      <div data-reveal><dt>Cross-checks</dt><dd>A run whose exit code and JUnit report disagree, or that wrote no report, is an error, not a result.</dd></div>
+      <div data-reveal><dt>Untrusted text</dt><dd>Issue text, repository code and test output reach the models wrapped as data, and are never followed as instructions.</dd></div>
+      <div data-reveal><dt>Limits</dt><dd>A test runs inside the pytest process and can lie about its own result: isolation stops damage, not lying. Guard’s re-runs, the cross-checks and the receipt naming the model-written test as the oracle limit this. In basic mode, writes outside the watched folders are not seen, and only strict mode guarantees that one run cannot influence the next.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- LOOP: the home replay's receipt as a pull request gets it (moved from the home page,
+     DECISIONS 2026-11-14 "Home page cut"). The check run's fields and the annotation
+     are what tracefix.action_report computes from that receipt; the comment is its receipt.md; the
+     JSON is an excerpt of its receipt.json (scripts/site_method.py loop_fields). Without JavaScript
+     the three panels show one under the other. -->
+<section id="loop" class="band wash" aria-labelledby="loop-h">
+  <div class="frame pad loop">
+    <div class="loop-say" data-reveal>
+      <h2 id="loop-h" class="h2">The receipt goes where the fix is reviewed.</h2>
+      <p class="mute">The GitHub Action runs Tracefix on a pull request and reports there: a check for CI and a comment for the reviewer. The same receipt is kept as JSON in the run’s artifact, for whoever wrote the fix, person or agent.</p>
+      <ol class="loop-steps">
+        <li>A fix is pushed to the pull request.</li>
+        <li>Tracefix attacks it. A counterexample fails the check, and a Break My Fix finding is noted on the line of the fix its failing call ran.</li>
+        <li>The author reads the receipt. In this one: the call, what it did, the promise it broke and a pytest file that fails.</li>
+        <li>After the next push, the last receipt’s findings run again on the new commit, and the new receipt says which ones it fixed.</li>
+      </ol>
+      <a class="more" href="#forks">How it stays safe on pull requests from forks</a>
+    </div>
+    <div class="loop-show" data-reveal style="--d:1">
+      <div id="ltabs" class="itabs" role="tablist" aria-label="The same receipt, for each reader">
+        <button class="itab" type="button" role="tab" id="ltab-check" aria-controls="lp-check" aria-selected="true">Check run</button>
+        <button class="itab" type="button" role="tab" id="ltab-comment" aria-controls="lp-comment" aria-selected="false" tabindex="-1">PR comment</button>
+        <button class="itab" type="button" role="tab" id="ltab-json" aria-controls="lp-json" aria-selected="false" tabindex="-1">receipt.json</button>
+      </div>
+      <div id="lp-check" class="lp" role="tabpanel" aria-labelledby="ltab-check">
+        <figure class="panel">
+          <figcaption>The check run, as the Action sends it to GitHub</figcaption>
+          <dl class="ck">
+            <div><dt>name</dt><dd>Tracefix</dd></div>
+            <div><dt>conclusion</dt><dd><span class="ck-failure">failure</span></dd></div>
+            <div><dt>title</dt><dd>COUNTEREXAMPLE: concrete evidence against this fix</dd></div>
+            <div><dt>annotation</dt><dd><span class="ck-where">src/svc/config.py, line 34 <span class="ck-failure">failure</span></span><b>Break My Fix: finding 1</b><span class="ck-msg">parse_port(raw=&#x27;&#x27;): raises ValueError: invalid literal for int() with base 10: &#x27;&#x27; (before the fix: raises ValueError: invalid literal for int() with base 10: &#x27;&#x27;); breaks blank_returns_default: if unset or blank, DEFAULT_PORT (8080) is used; reproduce with findings/finding_1.py from the receipt artifact</span></dd></div>
+          </dl>
+          <div class="ck-levels">
+            <p class="eyebrow">The conclusion for each level</p>
+            <ul><li><span class="lvl">L4</span><span class="ck-success">success</span></li><li><span class="lvl">L3</span><span class="ck-success">success</span></li><li><span class="lvl">L2</span><span class="ck-success">success</span></li><li><span class="lvl">L1</span><span class="ck-success">success</span></li><li><span class="lvl">L0</span><span class="ck-neutral">neutral</span></li><li><span class="lvl red">COUNTEREXAMPLE</span><span class="ck-failure">failure</span></li></ul>
+            <p class="mute small">With the Action’s default settings, for a receipt with no tampering: tampering fails the check at any level. A minimum level can be set; a receipt below it fails the check.</p>
+          </div>
+        </figure>
+      </div>
+      <div id="lp-comment" class="lp" role="tabpanel" aria-labelledby="ltab-comment">
+        <figure class="panel md">
+          <figcaption>receipt.md: the receipt in the pull request comment, under a header line and above the earlier verdicts</figcaption>
+          <div class="md-body lp-body" tabindex="0" role="region" aria-label="The receipt as the pull request comment shows it"><h3>Fix Receipt: COUNTEREXAMPLE (concrete evidence against this fix)</h3>
+<p><strong>Summary</strong> (advisory, written by the model claude-opus-5-5; it never sets the level): The original crash was reproduced and the fix guards against it (PORT unset no longer raises, with no regressions found), but Break My Fix found that parse_port(raw='') still raises ValueError: invalid literal for int() with base 10: ''. Next, check whether an empty PORT value should also fall back to 8080 as the README describes, and handle that case.</p>
+<p><strong>Why this level:</strong> Break My Fix finding 1: an input that breaks svc.config.parse_port</p>
+<p><strong>Issue:</strong> Service crashes at startup when PORT is not set · <strong>Repo:</strong> partial_fix · <strong>Base</strong> <code>base</code> (<code>878c55e</code>) → <strong>head</strong> <code>head</code> (<code>8c47ba4</code>)<br />
+<strong>Isolation:</strong> basic (bubblewrap (bwrap) is not installed)</p>
+<div class="alert alert-warning">
+<p class="alert-title">Warning</p>
+<ul>
+<li>Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.</li>
+</ul>
+</div>
+<h4>Counterexamples</h4>
+<ol>
+<li><code>parse_port(raw='')</code> → <code>raises ValueError: invalid literal for int() with base 10: ''</code> (before the fix: <code>raises ValueError: invalid literal for int() with base 10: ''</code>); breaks <strong>blank_returns_default</strong>: “if unset or blank, DEFAULT_PORT (8080) is used” (docstring); 3 more inputs break it the same way; test: <code>findings/finding_1.py</code></li>
+</ol>
+<h4>Stages</h4>
+<div class="md-scroll" tabindex="0" role="region" aria-label="Stages">
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Status</th>
+<th>Key numbers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>environment</code></td>
+<td><code>ok</code></td>
+<td>base suite passed</td>
+</tr>
+<tr>
+<td><code>import_check</code></td>
+<td><code>ok</code></td>
+<td>modules 1</td>
+</tr>
+<tr>
+<td><code>reproduce</code></td>
+<td><code>reproduced</code></td>
+<td>attempts 1</td>
+</tr>
+<tr>
+<td><code>guard</code></td>
+<td><code>guarded</code></td>
+<td>kill rate 1.0, mutants 4, killed 4, survived 0</td>
+</tr>
+<tr>
+<td><code>regressions</code></td>
+<td><code>none_found</code></td>
+<td>compared 5, regressions 0, unconfirmed 0</td>
+</tr>
+<tr>
+<td><code>fix_line_coverage</code></td>
+<td><code>ok</code></td>
+<td>fix lines 2</td>
+</tr>
+<tr>
+<td><code>behaviour_diff</code></td>
+<td><code>compared</code></td>
+<td>inputs compared 200, changes 1, groups 1</td>
+</tr>
+<tr>
+<td><code>break_my_fix</code></td>
+<td><code>found</code></td>
+<td>targets 1, inputs tried 420, properties counted 6, findings 1</td>
+</tr>
+<tr>
+<td><code>integrity</code></td>
+<td><code>clean</code></td>
+<td>flags 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4>Behaviour changes</h4>
+<ul>
+<li>
+<p><code>svc.config.parse_port</code> (<code>no_raise</code>, 1 input): <code>raises AttributeError</code> → <code>returns 8080</code>; explained by: the reproduction test calls this input; the Judge (advisory) calls it intended: The issue reports the AttributeError when PORT is unset, and the README and docstring say unset PORT falls back to 8080.</p>
+</li>
+<li>
+<p><strong>Not checked:</strong> concurrency; database state; network and external services; authentication and authorisation; performance; configuration; 9 things the behaviour diff can't observe (run log)</p>
+</li>
+<li>
+<p><strong>Model use:</strong> 8 calls, 21,638 input and 4,057 output tokens, cost $0.1523 (estimate at list prices)</p>
+</li>
+</ul>
+<details>
+<summary>Run log</summary>
+<h5>Stages</h5>
+<ul>
+<li><code>environment</code>: <code>ok</code>, 0.92 s: base suite passed
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no</code></li>
+</ul>
+</li>
+<li><code>import_check</code>: <code>ok</code>, 1.92 s: 1 changed module(s) imported from the copies (2 imports in all)
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py</code></li>
+</ul>
+</li>
+<li><code>reproduce</code>: <code>reproduced</code>, 14.7 s: attempt 1: fails before the fix and passes after it
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+</ul>
+</li>
+<li><code>guard</code>: <code>guarded</code>, 28.21 s: the reproduction test fails with the fix reverted, and the tests killed 4 of 4 mutants
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_config.py</code></li>
+</ul>
+</li>
+<li><code>regressions</code>: <code>none_found</code>, 0.9 s: none of the 5 untouched tests that passed before the fix fails after it
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors</code></li>
+</ul>
+</li>
+<li><code>fix_line_coverage</code>: <code>ok</code>, 2.88 s: report only: which fix lines the tests run
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_config.py</code></li>
+</ul>
+</li>
+<li><code>behaviour_diff</code>: <code>compared</code>, 5.78 s: 200 input(s) compared on 1 function(s): 1 changed with the fix
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py</code></li>
+</ul>
+</li>
+<li><code>break_my_fix</code>: <code>found</code>, 18.35 s: 1 finding(s), each proven by a failing repro file
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_config.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py</code></li>
+<li>1 more command(s) in receipt.json</li>
+</ul>
+</li>
+<li><code>integrity</code>: <code>clean</code>, 0.01 s: nothing suspicious in the fix's test or source changes</li>
+</ul>
+<h5>Break My Fix targets</h5>
+<ul>
+<li><code>svc.config.parse_port</code> (<code>src/svc/config.py</code>): 420 inputs</li>
+</ul>
+<h5>Fix lines run (report only)</h5>
+<ul>
+<li>repro: 2 of 2 fix lines run</li>
+<li>pr_test: 2 of 2 fix lines run</li>
+</ul>
+<h5>Not checked</h5>
+<ul>
+<li>concurrency</li>
+<li>database state</li>
+<li>network and external services</li>
+<li>authentication and authorisation</li>
+<li>performance</li>
+<li>configuration</li>
+<li>not observed by the behaviour diff: files written outside the copy, and anything sent off the machine</li>
+<li>not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders</li>
+<li>not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)</li>
+<li>not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)</li>
+<li>not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name</li>
+<li>not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)</li>
+<li>not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns</li>
+<li>not observed by the behaviour diff: objects shared between the result, the arguments and module data</li>
+<li>not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call</li>
+</ul>
+<h5>This receipt</h5>
+<ul>
+<li>models: reproducer claude-sonnet-5-5, mutator claude-sonnet-5-5, adversary claude-opus-5-5, judge claude-opus-5-5; effort medium; at most 40 calls and 500,000 tokens</li>
+<li>Tracefix 0.0.1, receipt schema 1, created 2026-11-06T14:14:06+00:00, issue sha256 <code>6fd36ac7130d5fd14972921f51e524a021bc06704416a0b01561182e376f2c43</code></li>
+</ul>
+</details>
+</div>
+        </figure>
+      </div>
+      <div id="lp-json" class="lp" role="tabpanel" aria-labelledby="ltab-json">
+        <figure class="panel">
+          <figcaption>receipt.json, an excerpt: what an agent reads before its next attempt</figcaption>
+          <pre class="code lp-body" tabindex="0" aria-label="receipt.json, an excerpt">{
+  &quot;level&quot;: &quot;COUNTEREXAMPLE&quot;,
+  &quot;level_reasons&quot;: [
+    &quot;Break My Fix finding 1: an input that breaks svc.config.parse_port&quot;
+  ],
+  &quot;findings&quot;: [
+    {
+      &quot;call&quot;: &quot;parse_port(raw=&#x27;&#x27;)&quot;,
+      &quot;outcome&quot;: &quot;raises ValueError: invalid literal for int() with base 10: &#x27;&#x27;&quot;,
+      &quot;property&quot;: {
+        &quot;source&quot;: &quot;docstring&quot;,
+        &quot;quote&quot;: &quot;if unset or blank, DEFAULT_PORT (8080) is used&quot;
+      },
+      &quot;file&quot;: &quot;findings/finding_1.py&quot;,
+      &quot;path&quot;: &quot;src/svc/config.py&quot;,
+      &quot;line&quot;: 34
+    }
+  ]
+}</pre>
+        </figure>
+      </div>
+      <a class="more" href="../receipts/partial_fix/">This receipt in full</a>
+    </div>
+  </div>
+</section>
+
+<!-- FORKS: docs/GITHUB_ACTION.md "Fork pull requests" -->
+<section id="forks" class="band" aria-labelledby="forks-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="forks-h" class="h2" data-words>Fork pull requests. <span class="soft">Code from strangers never meets your key.</span></h2>
+      <p class="mute" data-reveal style="--d:2">A pull request from a fork may come from someone you don’t trust, and the run holds your model key. Trust is decided by our code from the GitHub event, never by an input that could loosen it. Untrusted code runs only inside bubblewrap, and the job that posts results never holds the key.</p>
+    </div>
+    <ol class="mt-steps mt-flow">
+      <li data-reveal><p class="mt-stage">Skipped by default</p><p>On <code>pull_request</code>, GitHub gives a fork’s PR no secrets. The Action skips it with a notice instead of failing.</p></li>
+      <li data-reveal style="--d:1"><p class="mt-stage">A maintainer’s label</p><p>After reading the PR, a maintainer adds the <code>tracefix</code> label. That starts a <code>pull_request_target</code> workflow for the exact commit they saw; if it was force-pushed away, the run is refused.</p></li>
+      <li data-reveal style="--d:2"><p class="mt-stage">Base branch only</p><p>The job checks out and installs the base branch, never the PR’s dependencies, and fetches the PR’s commits as git data. It refuses to run if the checkout already holds them.</p></li>
+      <li data-reveal><p class="mt-stage">Strict or nothing</p><p>The run requires strict isolation. Without a working bubblewrap it is refused with the reason, never run at basic.</p></li>
+      <li data-reveal style="--d:1"><p class="mt-stage">A report job without the key</p><p>A second job posts the check and the comment. It holds no model key and runs no project code; it validates <code>receipt.json</code> strictly and renders the check and the comment again from it.</p></li>
+      <li data-reveal style="--d:2"><p class="mt-stage">One approval per commit</p><p>The label is removed after the run, so each new commit needs a maintainer’s new approval.</p></li>
+    </ol>
+    <div class="mt-gate" data-reveal>
+      <h3 class="h3">What strict isolation does not protect against</h3>
+      <ul class="mt-list">
+        <li>An escape from bubblewrap, such as a kernel bug: code that escaped could read the key and forge the verdict.</li>
+        <li>A test lying about its own result (above).</li>
+        <li>The base branch’s own dependencies: they are installed and trusted as your code.</li>
+      </ul>
+      <p class="mute">The full workflow, line by line: <a href="https://github.com/momirie/tracefix/blob/main/docs/GITHUB_ACTION.md#fork-pull-requests">docs/GITHUB_ACTION.md</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SENT: SPEC §3 and the inputs each prompt builder reads (repro.build_context, attack, judge) -->
+<section id="sent" class="band" aria-labelledby="sent-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="sent-h" class="h2" data-words>What is sent to Anthropic. <span class="soft">Excerpts, not your repository.</span></h2>
+      <p class="mute" data-reveal style="--d:2">Model calls go to Anthropic’s API with your own key. Each role is sent only what it needs, cut to a fixed size.</p>
+    </div>
+    <div class="table-wrap" data-reveal tabindex="0" role="region" aria-label="What each model role is sent">
+      <table class="mt-roles">
+        <thead><tr><th scope="col">Role</th><th scope="col">Is sent</th><th scope="col">Is never sent</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Reproducer</th><td data-label="Is sent">The issue text, the fix’s source diff, the changed functions and their direct callers, one nearby test file for style, the project’s <code>pyproject.toml</code>, and on a retry why its last test failed, with machine paths masked.</td><td data-label="Is never sent">The rest of your repository.</td></tr>
+          <tr><th scope="row">Mutator</th><td data-label="Is sent">The fixed lines after the fix, numbered.</td><td data-label="Is never sent">The issue, any test, the code before the fix: it can’t aim at what the tests check.</td></tr>
+          <tr><th scope="row">Adversary</th><td data-label="Is sent">The issue, the fix, the changed functions, the start of the README and the untouched tests that call them. Asked in two separate conversations.</td><td data-label="Is never sent">Any attack result.</td></tr>
+          <tr><th scope="row">Judge</th><td data-label="Is sent">For labels: the issue, the source diff, the functions after the fix, the start of the README and a sample of the changes, each a call with its outcome before and after. For the summary: the issue and facts from the receipt.</td><td data-label="Is never sent">Counts, durations or paths, for the summary.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <dl class="facts-list mt-facts">
+      <div data-reveal><dt>Never</dt><dd>Your API key or GitHub token in any test run: the run’s environment is allowlisted.</dd></div>
+      <div data-reveal><dt>Budget</dt><dd>By default at most 40 model calls and 500,000 tokens per run. The receipt records the models used, the calls, the tokens and an estimated cost.</dd></div>
+      <div data-reveal><dt>Tests</dt><dd>Tracefix’s default test suite replays recorded answers: it makes no network call and needs no key.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- NEXT: from the method to the numbers it produces -->
+<section class="band" aria-label="Next page">
+  <div class="frame pad next">
+    <a class="next-card" href="../benchmark/" data-reveal>
+      <span class="eyebrow">Next</span>
+      <span class="next-title">A method is a promise. <span class="soft">How often it holds on real bug fixes, and every miss.</span></span>
+      <span class="next-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer class="band ink foot">
+  <div class="frame">
+    <img src="../assets/logo-reversed.svg" alt="Tracefix" width="100" height="36">
+    <nav aria-label="Footer">
+      <a href="../#levels">Evidence levels</a>
+      <a href="../benchmark/">Benchmark</a>
+      <a href="../receipts/">Receipts</a>
+      <a href="../method/">Method</a>
+      <a href="../talk/">Talk to me</a>
+      <a href="../talk/#feedback">Report a wrong receipt</a>
+      <a href="https://github.com/momirie/tracefix">GitHub (after release)</a>
+      <span>MIT licence</span>
+    </nav>
+    <div class="theme" role="group" aria-label="Colour theme">
+      <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+      <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+      <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<!-- The command palette (Ctrl or Cmd + K, or "/"): site.js fills it from the entries below
+     (scripts/site_palette.py) and shows the buttons that open it. -->
+<dialog id="palette" class="palette" aria-label="Search this site" data-root="../">
+  <div class="pal-top">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+    <input id="pal-in" type="text" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-autocomplete="list" aria-label="Search pages, receipts and sections" placeholder="Search pages, receipts and sections" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <button type="button" class="pal-close" data-palette-close>Esc</button>
+  </div>
+  <ul id="pal-list" class="pal-list" role="listbox" aria-label="Results"></ul>
+  <p id="pal-none" class="pal-none" role="status" hidden>Nothing matches. Try a fixture name, a level or a page.</p>
+  <p class="pal-foot" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></p>
+</dialog>
+<script type="application/json" id="palette-data">[{"g":"Pages","t":"Home","h":"Watch Tracefix break a fix","u":""},{"g":"Pages","t":"Benchmark","h":"How often it is right on real fixes, and every miss","u":"benchmark/"},{"g":"Pages","t":"Receipts","h":"What Tracefix hands back, for every fixture","u":"receipts/"},{"g":"Pages","t":"Method","h":"How it decides, and where it stops","u":"method/"},{"g":"Pages","t":"Talk to me","h":"A conversation before anything ships","u":"talk/"},{"g":"Receipts","t":"good_fix","h":"Orders list is missing the last order","u":"receipts/good_fix/","lv":"L4"},{"g":"Receipts","t":"partial_fix","h":"Service crashes at startup when PORT is not set","u":"receipts/partial_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"wrong_but_green","h":"Histogram buckets are wrong for large values","u":"receipts/wrong_but_green/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"test_weakened","h":"Trailing dash in slugs for titles ending in punctuation","u":"receipts/test_weakened/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"special_cased","h":"Lease schedule contains a payment on 29 Feb 2100","u":"receipts/special_cased/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"unguarded_test","h":"truncate() returns strings longer than max_len","u":"receipts/unguarded_test/","lv":"L1"},{"g":"Receipts","t":"no_fix","h":"Contact import creates duplicates for differently-capitalised emails","u":"receipts/no_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"env_broken","h":"weekly_report() week number off by one on Mondays","u":"receipts/env_broken/","lv":"L0"},{"g":"Receipts","t":"method_partial","h":"Listener crashes when no port is configured","u":"receipts/method_partial/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"method_good","h":"Minor bump keeps the old patch number","u":"receipts/method_good/","lv":"L4"},{"g":"Receipts","t":"py39_partial","h":"Final table says \"11st place\"","u":"receipts/py39_partial/","lv":"COUNTEREXAMPLE"},{"g":"Sections","t":"Replay the attack","h":"Home","u":"#attack"},{"g":"Sections","t":"Try your own input","h":"Home","u":"#try"},{"g":"Sections","t":"Where it stands","h":"Home","u":"#stands"},{"g":"Sections","t":"The Butterfly","h":"Home","u":"#butterfly"},{"g":"Sections","t":"The Hard-Code","h":"Home","u":"#hard-code"},{"g":"Sections","t":"The Lawyer","h":"Home","u":"#lawyer"},{"g":"Sections","t":"Evidence levels","h":"Home","u":"#levels"},{"g":"Sections","t":"Install","h":"Home","u":"#install"},{"g":"Sections","t":"Questions","h":"Home","u":"#faq"},{"g":"Sections","t":"Release gates","h":"Benchmark","u":"benchmark/#gates"},{"g":"Sections","t":"Results per slice","h":"Benchmark","u":"benchmark/#results"},{"g":"Sections","t":"Every counted miss","h":"Benchmark","u":"benchmark/#misses"},{"g":"Sections","t":"How it was measured","h":"Benchmark","u":"benchmark/#method"},{"g":"Sections","t":"The rule","h":"Method","u":"method/#rule"},{"g":"Sections","t":"The run, stage by stage","h":"Method","u":"method/#run"},{"g":"Sections","t":"The ladder and the strict L4 gate","h":"Method","u":"method/#ladder"},{"g":"Sections","t":"Isolation and the tamper watch","h":"Method","u":"method/#isolation"},{"g":"Sections","t":"In the pull request","h":"Method","u":"method/#loop"},{"g":"Sections","t":"Fork pull requests","h":"Method","u":"method/#forks"},{"g":"Sections","t":"What is sent to Anthropic","h":"Method","u":"method/#sent"},{"g":"Sections","t":"What I would ask","h":"Talk to me","u":"talk/#ask"},{"g":"Sections","t":"Report a wrong receipt","h":"Talk to me","u":"talk/#feedback"}]</script>
+<script src="../assets/site.js" onerror="tracefixShowAll()"></script>
+</body>
+</html>

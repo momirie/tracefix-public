@@ -1,0 +1,441 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-16T18:13:03+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks environ.environ.Env.db_url",
+    "Break My Fix finding 2: an input that breaks environ.environ.Env.db_url",
+    "Break My Fix finding 3: an input that breaks environ.environ.Env.db_url",
+    "Break My Fix finding 4: an input that breaks environ.environ.Env.db_url_config"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "e2e50deaa5ffcb06ad39c352a99c226a19968e43"
+  },
+  "head": {
+    "ref": "tf-v1",
+    "sha": "566b712be25f74a9967c9e1ef1892f9ee9d665dd"
+  },
+  "issue": {
+    "title": "Add support for Django 5.1 PostgreSQL connection pools to env.db_url",
+    "sha256": "2cbb4f257490d858bb2ff6821a4c4810dd9f62f62b58304f1b7aaf5343af936e"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "Break My Fix found inputs where the fixed db_url and db_url_config accept extra_options but drop them: for example, db_url with a postgres default and extra_options={'pool': True} returns a config with no OPTIONS key, and db_url_config('sqlite://:memory:', extra_options={'timeout': 20}) also omits the options. Look next at how extra_options is merged into the returned config, especially when the…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 5.61,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 8.7,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 3: fails before the fix and passes after it",
+      "duration_s": 91.67,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 3,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 3 mutants; 80% is needed",
+      "duration_s": 64.58,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.667,
+        "repro_kill_rate": 0.667,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 2,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 2,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-8acd6a54a50a",
+          "m-7df76309b056"
+        ],
+        "rule_mutants": 3,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 276 untouched tests that passed before the fix fails after it",
+      "duration_s": 5.54,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 276,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 5.35,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 7
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "2 input(s) compared on 2 function(s): 0 changed with the fix",
+      "duration_s": 22.87,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "finished": 2,
+        "inputs_compared": 2,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "4 finding(s), each proven by a failing repro file",
+      "duration_s": 130.79,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_2.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_3.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_4.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_db.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 403,
+        "properties_counted": 9,
+        "findings": 4,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.04,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "environ.environ.Env.db_url",
+      "call": "db_url(self='Env()', var='ENVIRON_TEST_UNSET_VAR_XYZ', default='postgres://user:pass@localhost:5432/db', extra_options={'pool': True})",
+      "input": {
+        "self": "'Env()'",
+        "var": "'ENVIRON_TEST_UNSET_VAR_XYZ'",
+        "default": "'postgres://user:pass@localhost:5432/db'",
+        "extra_options": "{'pool': True}"
+      },
+      "outcome": "returns {'NAME': 'db', 'USER': 'user', 'PASSWORD': 'pass', 'HOST': 'localhost', 'PORT': 5432, 'ENGINE': 'django.db.backends.postgresql'}",
+      "base_outcome": "returns {'NAME': 'db', 'USER': 'user', 'PASSWORD': 'pass', 'HOST': 'localhost', 'PORT': 5432, 'ENGINE': 'django.db.backends.postgresql'}",
+      "expected": null,
+      "property": {
+        "id": "t1.p1",
+        "name": "db_url_passes_extra_options",
+        "kind": "returns",
+        "claim": "env.db_url(extra_options=...) puts the extra options into the returned config's OPTIONS",
+        "source": "issue",
+        "quote": "Perhaps they can be passed in a new `extra_options` argument?",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 2,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 721: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "environ/environ.py",
+      "line": 721,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    },
+    {
+      "number": 2,
+      "function": "environ.environ.Env.db_url",
+      "call": "db_url(self='Env()', var='DJANGO_ENVIRON_UNSET_TEST_VAR_XYZ', default='postgres://user:pass@localhost:5432/db', extra_options={'pool': {'min_size': 2, 'max_size': 4, 'timeout': 10}})",
+      "input": {
+        "self": "'Env()'",
+        "var": "'DJANGO_ENVIRON_UNSET_TEST_VAR_XYZ'",
+        "default": "'postgres://user:pass@localhost:5432/db'",
+        "extra_options": "{'pool': {'min_size': 2, 'max_size': 4, 'timeout': 10}}"
+      },
+      "outcome": "returns {'NAME': 'db', 'USER': 'user', 'PASSWORD': 'pass', 'HOST': 'localhost', 'PORT': 5432, 'ENGINE': 'django.db.backends.postgresql'}",
+      "base_outcome": "returns {'NAME': 'db', 'USER': 'user', 'PASSWORD': 'pass', 'HOST': 'localhost', 'PORT': 5432, 'ENGINE': 'django.db.backends.postgresql'}",
+      "expected": null,
+      "property": {
+        "id": "t1.p2",
+        "name": "db_url_passes_extra_options",
+        "kind": "returns",
+        "claim": "env.db_url with extra_options merges them into OPTIONS of the returned config",
+        "source": "issue",
+        "quote": "Perhaps they can be passed in a new `extra_options` argument?",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 0,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 721: the fix touched this path and left it broken",
+      "file": "findings/finding_2.py",
+      "path": "environ/environ.py",
+      "line": 721,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    },
+    {
+      "number": 3,
+      "function": "environ.environ.Env.db_url",
+      "call": "db_url(self='Env()', var='DJANGO_ENVIRON_UNSET_TEST_VAR_XYZ', default='postgres://user:pass@localhost:5432/db', engine=None, options_cast=None, extra_options={'pool': {'min_size': 2, 'max_size': 4, 'timeout': 10}})",
+      "input": {
+        "self": "'Env()'",
+        "var": "'DJANGO_ENVIRON_UNSET_TEST_VAR_XYZ'",
+        "default": "'postgres://user:pass@localhost:5432/db'",
+        "engine": "None",
+        "options_cast": "None",
+        "extra_options": "{'pool': {'min_size': 2, 'max_size': 4, 'timeout': 10}}"
+      },
+      "outcome": "returns {'NAME': 'db', 'USER': 'user', 'PASSWORD': 'pass', 'HOST': 'localhost', 'PORT': 5432, 'ENGINE': 'django.db.backends.postgresql'}",
+      "base_outcome": "returns {'NAME': 'db', 'USER': 'user', 'PASSWORD': 'pass', 'HOST': 'localhost', 'PORT': 5432, 'ENGINE': 'django.db.backends.postgresql'}",
+      "expected": null,
+      "property": {
+        "id": "t1.p3",
+        "name": "db_url_matches_db_url_config",
+        "kind": "returns",
+        "claim": "db_url returns the same config as db_url_config applied to the value with the same engine/extra_options",
+        "source": "issue",
+        "quote": "Perhaps they can be passed in a new `extra_options` argument?",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 0,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 721: the fix touched this path and left it broken",
+      "file": "findings/finding_3.py",
+      "path": "environ/environ.py",
+      "line": 721,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    },
+    {
+      "number": 4,
+      "function": "environ.environ.Env.db_url_config",
+      "call": "db_url_config(url='sqlite://:memory:', extra_options={'timeout': 20})",
+      "input": {
+        "url": "'sqlite://:memory:'",
+        "extra_options": "{'timeout': 20}"
+      },
+      "outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+      "base_outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+      "expected": null,
+      "property": {
+        "id": "t2.p1",
+        "name": "extra_options_present_in_OPTIONS",
+        "kind": "returns",
+        "claim": "Every key/value in a non-empty extra_options dict appears in result['OPTIONS'], overriding query-string values",
+        "source": "docstring",
+        "quote": "Values in ``extra_options`` override query-string ``OPTIONS``.",
+        "origin": "model"
+      },
+      "also_violates": [
+        "extra_options_merged_into_OPTIONS"
+      ],
+      "other_inputs": 2,
+      "relation": "the same before the fix, but the fix changed module-level code that runs when the module is imported (environ/environ.py 341, 342, 584, 585), so it can't be shown untouched",
+      "file": "findings/finding_4.py",
+      "path": "environ/environ.py",
+      "line": 582,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-eb5b03542d78",
+      "origin": "model",
+      "file": "environ/environ.py",
+      "line": 723,
+      "original": "            config['OPTIONS'].update(extra_options)",
+      "replacement": "            config['OPTIONS'] = {**extra_options, **config['OPTIONS']}",
+      "description": "Query-string options override extra_options, reversing precedence.",
+      "diff": "--- a/environ/environ.py\n+++ b/environ/environ.py\n@@ -722,3 +722,3 @@\n             config.setdefault('OPTIONS', {})\n-            config['OPTIONS'].update(extra_options)\n+            config['OPTIONS'] = {**extra_options, **config['OPTIONS']}\n \n",
+      "words": "environ/environ.py:723: changing `            config['OPTIONS'].update(extra_options)` to `            config['OPTIONS'] = {**extra_options, **config['...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "environ/environ.py": [
+        341,
+        342,
+        584,
+        585,
+        721,
+        722,
+        723
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 7,
+        "total": 7
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 74079,
+    "output_tokens": 11659,
+    "cost_estimate": {
+      "usd": 0.4559,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null
+}

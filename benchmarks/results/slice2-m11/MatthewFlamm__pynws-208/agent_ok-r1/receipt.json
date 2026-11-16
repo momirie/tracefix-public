@@ -1,0 +1,378 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T21:39:07+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L2",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "the tests guard the fix: they fail when it is reverted or broken",
+    "not L3: 1 input(s) changed from 'raises IndexError' to 'returns tuple' and nothing explains it (not the reproduction test, the issue or a docstring example)",
+    "not L3: 1 input(s) changed from 'returns tuple' to 'returns tuple' and nothing explains it (not the reproduction test, the issue or a docstring example)"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "c02ab7a2d09bb28abf42f635b19a64851874c59c"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "c424482013f5e74e9c78e39cb22d749bfc4b20ff"
+  },
+  "issue": {
+    "title": "Icon format in forecast change",
+    "sha256": "b8ec1731c49ac16b4f1de9430984519d817d0386fd9a2d7e5ce3bda60f5d504d"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "At L2, a test reproduced the relative-icon-URL bug (failing before the fix, passing after), the tests fail when the fix is reverted or broken, and no regressions or breaking inputs were found. Next, look at the unexplained behaviour changes in pynws.simple_nws.parse_icon (inputs that used to raise IndexError now return a tuple, and some returned tuples changed value), which the Judge labelled int…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 2.01,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.04,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 21.79,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 9 of 9 mutants",
+      "duration_s": 80.0,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 1.0,
+        "repro_kill_rate": 0.667,
+        "pr_kill_rate": null,
+        "mutants": 9,
+        "killed": 9,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-f77b250cf348",
+          "m-9e9f0dc8778c",
+          "m-82a2f5bfdd74",
+          "m-88cad8e712ff",
+          "m-a009470aedf7",
+          "m-55865c866bc6",
+          "m-d36dde5867f6",
+          "m-6e8c80ebc44a",
+          "m-3834ae738b3b"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 1.0,
+        "rule_kinds": [
+          "body: 1 of 1 killed",
+          "negate_if: 1 of 1 killed",
+          "constant: 8 of 8 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "arithmetic",
+          "membership",
+          "loop",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 56 untouched tests that passed before the fix fails after it",
+      "duration_s": 2.08,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 56,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 1.94,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 7
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "199 input(s) compared on 1 function(s): 2 changed with the fix",
+      "duration_s": 5.31,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 199,
+        "changes": 2,
+        "groups": 2,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 775 inputs against 8 properties",
+      "duration_s": 22.14,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 775,
+        "properties_counted": 8,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 10
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 22.51,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "pynws.simple_nws.parse_icon",
+      "kind": "no_raise",
+      "count": 1,
+      "before": "raises IndexError",
+      "after": "returns ('night', [('sct', None)])",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "Issue reports the API now returns relative icon paths like '/icons/land/night/sct?size=small'; parsing it correctly instead of raising is the reported bug."
+        }
+      ],
+      "examples": [
+        {
+          "call": "parse_icon(icon='/icons/land/night/sct?size=small')",
+          "before": "raises IndexError",
+          "after": "returns ('night', [('sct', None)])"
+        }
+      ]
+    },
+    {
+      "function": "pynws.simple_nws.parse_icon",
+      "kind": "value",
+      "count": 1,
+      "before": "returns ('tsra,40?size=medium', [])",
+      "after": "returns ('day', [('skc', None), ('tsra', 40)])",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "Same rule from the issue (relative icon paths) applied to another input; result matches the docstring's example return ('day', skc/None, tsra/40)."
+        }
+      ],
+      "examples": [
+        {
+          "call": "parse_icon(icon='/icons/land/day/skc/tsra,40?size=medium')",
+          "before": "returns ('tsra,40?size=medium', [])",
+          "after": "returns ('day', [('skc', None), ('tsra', 40)])"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "src/pynws/simple_nws.py": [
+        184,
+        186,
+        187,
+        190,
+        191,
+        193,
+        194
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 5,
+        "total": 7
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 28161,
+    "output_tokens": 6001,
+    "cost_estimate": {
+      "usd": 0.1995,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "guard: only the first 10 of 12 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "blind: pyproject truncated to 3000 characters for the prompt"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "pynws.simple_nws.parse_icon",
+      "path": "src/pynws/simple_nws.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 775,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

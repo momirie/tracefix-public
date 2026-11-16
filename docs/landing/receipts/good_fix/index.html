@@ -1,0 +1,407 @@
+<!doctype html>
+<!-- Built by scripts/build_site.py from docs/landing/_src/. Edit the source, then run the script. -->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>good_fix: Orders list is missing the last order</title>
+<meta name="description" content="The receipt Tracefix wrote for the good_fix fixture. Rounds the page count up so a partial last page exists; guarded by a new test.">
+<!-- Search engines: SEARCHABLE in scripts/build_site.py, off while the site is a private preview
+     (until the release gates hold, DECISIONS 2026-11-06). -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0b" id="theme-color">
+<link rel="canonical" href="https://tracefix.dev/receipts/good_fix/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tracefix.dev/receipts/good_fix/">
+<meta property="og:title" content="good_fix: Orders list is missing the last order">
+<meta property="og:description" content="The receipt Tracefix wrote for the good_fix fixture. Rounds the page count up so a partial last page exists; guarded by a new test.">
+<meta property="og:image" content="https://tracefix.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="preload" href="../../assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  // Before first paint: mark JS, and apply the theme: Dark unless the visitor saved Light or System.
+  (function () {
+    var d = document.documentElement, t = 'dark'; d.className = 'js';
+    try { var saved = localStorage.getItem('tracefix-theme'); if (saved === 'light' || saved === 'system') t = saved; } catch (e) {}
+    d.setAttribute('data-theme', t);
+    // Fail-safe: site.css hides the reveal blocks until site.js shows them. If site.js fails to load
+    // (its onerror) or has not started the reveals in 2.5 s, show every block as it is.
+    function showAll() {
+      if (d.classList.contains('reveals-on')) return;
+      var all = document.querySelectorAll('[data-reveal],[data-words],[data-reveal-group],.hero');
+      for (var i = 0; i < all.length; i++) all[i].classList.add('is-in');
+    }
+    window.tracefixShowAll = showAll;
+    setTimeout(showAll, 2500);
+  })();
+</script>
+<link rel="stylesheet" href="../../assets/site.css">
+<!-- Fetch a page of this site when a link to it is hovered or pressed, so the next page is ready. -->
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="preview-note" aria-label="Private preview"><p>Private preview: Tracefix is not released yet, so its GitHub links open only for collaborators. <a href="../../talk/">Talk to me</a></p></aside>
+
+<header class="site-head" id="head">
+  <div class="frame">
+    <a class="logo" href="../../#top" aria-label="Tracefix home"><img class="lt" src="../../assets/logo.svg" alt="" width="100" height="36"><img class="dk" src="../../assets/logo-reversed.svg" alt="" width="100" height="36"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="../../benchmark/">Benchmark<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../receipts/" aria-current="true">Receipts<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../method/">Method<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../#install">Install</a>
+      <button type="button" class="pal-open" data-palette-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><span class="pal-open-label">Search</span><kbd data-palette-key>Ctrl K</kbd></button>
+      <div class="theme" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+        <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+        <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+      </div>
+      <a class="btn btn-sm" href="../../talk/">Talk to me</a>
+    </nav>
+    <details class="menu">
+      <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span class="menu-label">Menu</span></summary>
+      <nav aria-label="Menu">
+        <a href="../../benchmark/">Benchmark</a>
+        <a href="../../receipts/" aria-current="true">Receipts</a>
+        <a href="../../method/">Method</a>
+        <a href="../../talk/">Talk to me</a>
+        <a href="../../#install">Install</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main" tabindex="-1" class="page rc-page">
+<!-- ONE RECEIPT. Every fact fills a hole from scripts/site_receipts.py: the receipt folder in
+     docs/landing/_data/receipts/good_fix/ and the fixture in tests/fixtures/good_fix/. -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow crumbs"><a href="../">Receipts</a> / good_fix</p>
+    <h1 style="view-transition-name:title-good_fix;view-transition-class:rc-title">Orders list is missing the last order</h1>
+    <p class="lede" data-reveal style="--d:1">Rounds the page count up so a partial last page exists; guarded by a new test.</p>
+    <p class="rc-facts" data-reveal style="--d:2"><span class="lvl" style="view-transition-name:lvl-good_fix;view-transition-class:rc-lvl">L4</span><span>Known answer: at least L2 · meets it</span><span>run 1:32</span></p>
+    <ul class="jump" aria-label="On this page" data-reveal style="--d:3">
+      <li><a href="#fix">The issue and the fix</a></li>
+      
+      <li><a href="#receipt">The receipt</a></li>
+      <li><a href="#tests">The tests it wrote</a></li>
+      <li><a href="#run">The run</a></li>
+    </ul>
+  </div>
+</section>
+
+<section id="fix" class="band" aria-labelledby="fix-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="fix-h" class="h2" data-words>The issue and the fix. <span class="soft">What Tracefix was given.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The issue text, the commit before the fix and the commit with it. The known answer stays outside the repo Tracefix sees.</p>
+    </div>
+    <div class="rc-given">
+      <figure class="panel md md-issue" data-reveal><figcaption>ISSUE.md</figcaption><div class="md-body">
+<h3>Orders list is missing the last order</h3>
+<p>We have 10 orders and show 3 per page. The pager shows pages 1–3, and order #10 never
+appears anywhere. Asking for page 4 directly gives <code>PageOutOfRange</code>:</p>
+<pre><code>pager.pagination.PageOutOfRange: page 4 is outside 1..3
+</code></pre>
+<p>With 9 orders everything looks fine.</p>
+
+      </div></figure>
+      <div class="rc-diffs" data-reveal style="--d:1">
+        <p class="label">2 files changed, +6 −1</p>
+<figure class="panel diff"><figcaption>src/pager/pagination.py <span class="soft">+1 −1</span></figcaption><div class="lines" tabindex="0" role="region" aria-label="Diff of src/pager/pagination.py"><div class="lines-in"><div class="d d-hunk">@@ -24,7 +24,7 @@</div><div class="d"> def total_pages(n_items: int, per_page: int) -&gt; int:</div><div class="d">     &quot;&quot;&quot;Return how many pages are needed to show n_items, per_page at a time.&quot;&quot;&quot;</div><div class="d">     _check_sizes(n_items, per_page)</div><div class="d d-del">-    return n_items // per_page</div><div class="d d-add">+    return (n_items + per_page - 1) // per_page</div><div class="d"> </div><div class="d"> </div><div class="d"> def page_slice(items: Sequence[T], page: int, per_page: int) -&gt; list[T]:</div></div></div></figure>
+<figure class="panel diff"><figcaption>tests/test_pagination.py <span class="soft">+5 −0</span></figcaption><div class="lines" tabindex="0" role="region" aria-label="Diff of tests/test_pagination.py"><div class="lines-in"><div class="d d-hunk">@@ -6,6 +6,11 @@</div><div class="d"> def test_total_pages_exact_multiple() -&gt; None:</div><div class="d">     assert total_pages(9, 3) == 3</div><div class="d">     assert total_pages(20, 10) == 2</div><div class="d d-add">+</div><div class="d d-add">+</div><div class="d d-add">+def test_total_pages_partial_last_page() -&gt; None:</div><div class="d d-add">+    assert total_pages(10, 3) == 4</div><div class="d d-add">+    assert page_slice(list(range(1, 11)), 4, 3) == [10]</div><div class="d"> </div><div class="d"> </div><div class="d"> def test_total_pages_empty() -&gt; None:</div></div></div></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="receipt" class="band" aria-labelledby="receipt-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="receipt-h" class="h2" data-words>The receipt. <span class="soft">As it reads in a PR comment.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The receipt.md Tracefix wrote, rendered the way GitHub renders it. The same run also wrote <a href="https://github.com/momirie/tracefix/blob/main/docs/landing/_data/receipts/good_fix/receipt.json">receipt.json</a>, the record the level is computed from (<a href="https://github.com/momirie/tracefix/blob/main/docs/landing/_data/receipts/good_fix/receipt.md">receipt.md as text</a>).</p>
+    </div>
+    <article class="panel md md-receipt" aria-label="Fix Receipt"><div class="panel-head">receipt.md</div><div class="md-body">
+<h3>Fix Receipt: L4 (L3, and Break My Fix found no counterexample)</h3>
+<p><strong>Summary</strong> (advisory, written by the model claude-opus-5-5; it never sets the level): At L4, a test reproduced the missing-last-page bug (failing before the fix, passing after), the tests fail when the fix is reverted or broken, the only behaviour change is the intended value change in pager.pagination.total_pages, and Break My Fix found no breaking inputs in any changed function. Next, check whether other callers of total_pages rely on the old value, for example a counts that div…</p>
+<p><strong>Why this level:</strong> the bug was reproduced: a test fails before the fix and passes after it; the tests guard the fix: they fail when it is reverted or broken; the behaviour diff found no unexplained change in what it observes; Break My Fix attacked every changed function to the end and found nothing</p>
+<p><strong>Issue:</strong> Orders list is missing the last order · <strong>Repo:</strong> good_fix · <strong>Base</strong> <code>base</code> (<code>c8e4f11</code>) → <strong>head</strong> <code>head</code> (<code>d6954de</code>)<br />
+<strong>Isolation:</strong> basic (bubblewrap (bwrap) is not installed)</p>
+<div class="alert alert-warning">
+<p class="alert-title">Warning</p>
+<ul>
+<li>Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.</li>
+</ul>
+</div>
+<h4>Counterexamples</h4>
+<p>None found.</p>
+<h4>Stages</h4>
+<div class="md-scroll" tabindex="0" role="region" aria-label="Stages">
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Status</th>
+<th>Key numbers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>environment</code></td>
+<td><code>ok</code></td>
+<td>base suite passed</td>
+</tr>
+<tr>
+<td><code>import_check</code></td>
+<td><code>ok</code></td>
+<td>modules 1</td>
+</tr>
+<tr>
+<td><code>reproduce</code></td>
+<td><code>reproduced</code></td>
+<td>attempts 1</td>
+</tr>
+<tr>
+<td><code>guard</code></td>
+<td><code>guarded</code></td>
+<td>kill rate 1.0, mutants 4, killed 4, survived 0</td>
+</tr>
+<tr>
+<td><code>regressions</code></td>
+<td><code>none_found</code></td>
+<td>compared 6, regressions 0, unconfirmed 0</td>
+</tr>
+<tr>
+<td><code>fix_line_coverage</code></td>
+<td><code>ok</code></td>
+<td>fix lines 1</td>
+</tr>
+<tr>
+<td><code>behaviour_diff</code></td>
+<td><code>compared</code></td>
+<td>inputs compared 258, changes 86, groups 1</td>
+</tr>
+<tr>
+<td><code>break_my_fix</code></td>
+<td><code>none_found</code></td>
+<td>targets 1, inputs tried 1007, properties counted 8, findings 0</td>
+</tr>
+<tr>
+<td><code>integrity</code></td>
+<td><code>clean</code></td>
+<td>flags 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4>Behaviour changes</h4>
+<ul>
+<li>
+<p><code>pager.pagination.total_pages</code> (<code>value</code>, 86 inputs): <code>returns 3</code> → <code>returns 4</code>; explained by: the reproduction test calls this input; the Judge (advisory) calls it intended: Issue: 10 orders at 3 per page must give 4 pages so order #​10 appears; this is the reported bug.; the Judge (advisory) calls it intended: Same rule from the issue: a partial last page counts as a page (docstring: pages needed to show n_items), so 1 item needs 1 page.; the Judge (advisory) calls it intended: Same ceiling-division rule the issue asks for: a remainder of items needs one extra page, per the docstring 'how many pages are needed'.; the Judge (advisory) calls it intended: 9 items with a huge per_page still need one page to be shown, per the docstring; same partial-page rule the issue reports.; the Judge (advisory) calls it intended: Fewer items than per_page still need one page per the docstring; same partial-last-page rule as the issue.</p>
+</li>
+<li>
+<p><strong>Not checked:</strong> concurrency; database state; network and external services; authentication and authorisation; performance; configuration; 9 things the behaviour diff can't observe (run log)</p>
+</li>
+<li>
+<p><strong>Model use:</strong> 8 calls, 20,175 input and 4,392 output tokens, cost $0.1549 (estimate at list prices)</p>
+</li>
+</ul>
+<details>
+<summary>Run log</summary>
+<h5>Stages</h5>
+<ul>
+<li><code>environment</code>: <code>ok</code>, 0.97 s: base suite passed
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no</code></li>
+</ul>
+</li>
+<li><code>import_check</code>: <code>ok</code>, 1.88 s: 1 changed module(s) imported from the copies (2 imports in all)
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py</code></li>
+</ul>
+</li>
+<li><code>reproduce</code>: <code>reproduced</code>, 14.56 s: attempt 1: fails before the fix and passes after it
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+</ul>
+</li>
+<li><code>guard</code>: <code>guarded</code>, 39.92 s: the reproduction test fails with the fix reverted, and the tests killed 4 of 4 mutants
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_pagination.py</code></li>
+</ul>
+</li>
+<li><code>regressions</code>: <code>none_found</code>, 0.96 s: none of the 6 untouched tests that passed before the fix fails after it
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors</code></li>
+</ul>
+</li>
+<li><code>fix_line_coverage</code>: <code>ok</code>, 2.94 s: report only: which fix lines the tests run
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_pagination.py</code></li>
+</ul>
+</li>
+<li><code>behaviour_diff</code>: <code>compared</code>, 4.81 s: 258 input(s) compared on 1 function(s): 86 changed with the fix
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py</code></li>
+</ul>
+</li>
+<li><code>break_my_fix</code>: <code>none_found</code>, 25.86 s: no counterexample found in 1007 inputs against 8 properties
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_pagination.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py</code></li>
+</ul>
+</li>
+<li><code>integrity</code>: <code>clean</code>, 0.01 s: nothing suspicious in the fix's test or source changes</li>
+</ul>
+<h5>Break My Fix targets</h5>
+<ul>
+<li><code>pager.pagination.total_pages</code> (<code>src/pager/pagination.py</code>): 1,007 inputs</li>
+</ul>
+<h5>Fix lines run (report only)</h5>
+<ul>
+<li>repro: 1 of 1 fix lines run</li>
+<li>pr_test: 1 of 1 fix lines run</li>
+</ul>
+<h5>Not checked</h5>
+<ul>
+<li>concurrency</li>
+<li>database state</li>
+<li>network and external services</li>
+<li>authentication and authorisation</li>
+<li>performance</li>
+<li>configuration</li>
+<li>not observed by the behaviour diff: files written outside the copy, and anything sent off the machine</li>
+<li>not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders</li>
+<li>not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)</li>
+<li>not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)</li>
+<li>not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name</li>
+<li>not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)</li>
+<li>not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns</li>
+<li>not observed by the behaviour diff: objects shared between the result, the arguments and module data</li>
+<li>not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call</li>
+</ul>
+<h5>This receipt</h5>
+<ul>
+<li>models: reproducer claude-sonnet-5-5, mutator claude-sonnet-5-5, adversary claude-opus-5-5, judge claude-opus-5-5; effort medium; at most 40 calls and 500,000 tokens</li>
+<li>Tracefix 0.0.1, receipt schema 1, created 2026-11-06T14:07:18+00:00, issue sha256 <code>0de3fe25210c14fb41d61c7d244d438eacf00246744b2ec0fbecdaa45e826644</code></li>
+</ul>
+</details>
+
+    </div></article>
+  </div>
+</section>
+
+<section id="tests" class="band" aria-labelledby="tests-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="tests-h" class="h2" data-words>The tests it wrote. <span class="soft">Run them with pytest.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The reproduction test fails before the fix and passes after it. A finding’s file fails for as long as the fixed code still breaks the property it names.</p>
+    </div>
+    <div class="rc-written" data-reveal>
+<figure class="panel"><figcaption>repro/test_tracefix_repro.py</figcaption><pre class="code" tabindex="0">from pager.pagination import page_slice, total_pages
+
+
+def test_last_partial_page_is_reachable() -&gt; None:
+    items = list(range(1, 11))
+    assert total_pages(10, 3) == 4
+    assert page_slice(items, 4, 3) == [10]
+
+
+def test_all_orders_appear_across_pages() -&gt; None:
+    items = list(range(1, 11))
+    seen = []
+    for page in range(1, total_pages(len(items), 3) + 1):
+        seen.extend(page_slice(items, page, 3))
+    assert seen == items</pre></figure>
+    </div>
+  </div>
+</section>
+
+<section id="run" class="band" aria-labelledby="run-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="run-h" class="h2" data-words>The run. <span class="soft">Seconds since the start on the left.</span></h2>
+      <p class="mute" data-reveal style="--d:2">What <code>tracefix verify</code> printed, with the test suite’s recorded model answers. <a href="https://github.com/momirie/tracefix/tree/main/tests/fixtures/good_fix">This fixture on GitHub</a>.</p>
+    </div>
+    <div class="replay" data-reveal>
+      <div class="replay-bar">
+        <p class="label" data-replay-clock>Run time 1:32</p>
+        <button type="button" class="btn btn-sm" data-replay hidden>Replay the run</button>
+      </div>
+      <div class="timeline" data-end="92" aria-hidden="true"><span class="tl-seg" data-from="0" data-to="1" style="flex-grow:1.00" title="environment: ok, 1.0 s. base suite passed"><span class="tl-name">environment</span></span><span class="tl-seg" data-from="1" data-to="2.9" style="flex-grow:1.90" title="import_check: ok, 1.9 s. 1 changed module(s) imported from the copies (2 imports in all)"><span class="tl-name">import_check</span></span><span class="tl-seg" data-from="2.9" data-to="17.5" style="flex-grow:14.60" title="reproduce: reproduced, 14.6 s. attempt 1: fails before the fix and passes after it"><span class="tl-name">reproduce</span></span><span class="tl-seg" data-from="17.5" data-to="57.4" style="flex-grow:39.90" title="guard: guarded, 39.9 s. the reproduction test fails with the fix reverted, and the tests killed 4 of 4 mutants"><span class="tl-name">guard</span></span><span class="tl-seg" data-from="57.4" data-to="58.4" style="flex-grow:1.00" title="regressions: none_found, 1.0 s. none of the 6 untouched tests that passed before the fix fails after it"><span class="tl-name">regressions</span></span><span class="tl-seg" data-from="58.4" data-to="61.3" style="flex-grow:2.90" title="fix_line_coverage: ok, 2.9 s. report only: which fix lines the tests run"><span class="tl-name">fix_line_coverage</span></span><span class="tl-seg" data-from="61.3" data-to="66.1" style="flex-grow:4.80" title="behaviour_diff: compared, 4.8 s. 258 input(s) compared on 1 function(s): 86 changed with the fix"><span class="tl-name">behaviour_diff</span></span><span class="tl-seg" data-from="66.1" data-to="92" style="flex-grow:25.90" title="break_my_fix: none_found, 25.9 s. no counterexample found in 1007 inputs against 8 properties"><span class="tl-name">break_my_fix</span></span><span class="tl-seg" data-from="92" data-to="92" style="flex-grow:0.05" title="integrity: clean, 0.0 s. nothing suspicious in the fix&#x27;s test or source changes"><span class="tl-name">integrity</span></span><i class="tl-head"></i></div>
+      <figure class="panel term-log"><figcaption>tracefix verify</figcaption><pre class="code" tabindex="0" data-replay-out><span class="o" data-t="0">[    0.0] tracefix: verifying c8e4f11..d6954de (isolation: basic)
+</span><span class="o" data-t="1">[    1.0] [1/9] environment: ok (1.0s)
+</span><span class="o" data-t="2.9">[    2.9] [2/9] import_check: ok (1.9s)
+</span><span class="o" data-t="17.5">[   17.5] [3/9] reproduce: reproduced (14.6s)
+</span><span class="o" data-t="57.4">[   57.4] [4/9] guard: guarded (39.9s)
+</span><span class="o" data-t="58.4">[   58.4] [5/9] regressions: none_found (1.0s)
+</span><span class="o" data-t="61.3">[   61.3] [6/9] fix_line_coverage: ok (2.9s)
+</span><span class="o" data-t="66.1">[   66.1] [7/9] behaviour_diff: compared (4.8s)
+</span><span class="o" data-t="92">[   92.0] [8/9] break_my_fix: none_found (25.9s)
+</span><span class="o" data-t="92">[   92.0] [9/9] integrity: clean (0.0s)
+</span><span class="o" data-t="92">[   92.0] summary: by judge
+</span><span class="o" data-t="92">[   92.0] level: L4
+</span><span class="o" data-t="92">[   92.0] Fix Receipt: L4 (run status: ok)
+</span><span class="o" data-t="92">[   92.0] Summary by the Judge (advisory): At L4, a test reproduced the missing-last-page bug (failing before the fix, passing after), the tests fail when the fix is reverted or broken, the only behaviour change is the intended value change in pager.pagination.total_pages, and Break My Fix found no breaking inputs in any changed function. Next, check whether other callers of total_pages rely on the old value, for example a counts that div\u2026
+</span><span class="o" data-t="92">[   92.0] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json
+</span></pre></figure>
+    </div>
+  </div>
+</section>
+
+<!-- PAGER: the neighbouring receipts in the gallery's order -->
+<nav class="band" aria-label="More receipts">
+  <div class="frame pad pager" data-reveal>
+<a class="pg pg-prev" rel="prev" href="../py39_partial/"><span class="eyebrow">Previous receipt</span><span class="pg-name">py39_partial<span class="lvl red">COUNTEREXAMPLE</span></span><span class="pg-title">Final table says &quot;11st place&quot;</span></a><a class="pg pg-next" rel="next" href="../partial_fix/"><span class="eyebrow">Next receipt</span><span class="pg-name">partial_fix<span class="lvl red">COUNTEREXAMPLE</span></span><span class="pg-title">Service crashes at startup when PORT is not set</span></a><p class="pg-keys" hidden>Or press <kbd>←</kbd> and <kbd>→</kbd></p>
+  </div>
+</nav>
+</main>
+
+<footer class="band ink foot">
+  <div class="frame">
+    <img src="../../assets/logo-reversed.svg" alt="Tracefix" width="100" height="36">
+    <nav aria-label="Footer">
+      <a href="../../#levels">Evidence levels</a>
+      <a href="../../benchmark/">Benchmark</a>
+      <a href="../../receipts/">Receipts</a>
+      <a href="../../method/">Method</a>
+      <a href="../../talk/">Talk to me</a>
+      <a href="../../talk/#feedback">Report a wrong receipt</a>
+      <a href="https://github.com/momirie/tracefix">GitHub (after release)</a>
+      <span>MIT licence</span>
+    </nav>
+    <div class="theme" role="group" aria-label="Colour theme">
+      <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+      <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+      <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<!-- The command palette (Ctrl or Cmd + K, or "/"): site.js fills it from the entries below
+     (scripts/site_palette.py) and shows the buttons that open it. -->
+<dialog id="palette" class="palette" aria-label="Search this site" data-root="../../">
+  <div class="pal-top">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+    <input id="pal-in" type="text" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-autocomplete="list" aria-label="Search pages, receipts and sections" placeholder="Search pages, receipts and sections" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <button type="button" class="pal-close" data-palette-close>Esc</button>
+  </div>
+  <ul id="pal-list" class="pal-list" role="listbox" aria-label="Results"></ul>
+  <p id="pal-none" class="pal-none" role="status" hidden>Nothing matches. Try a fixture name, a level or a page.</p>
+  <p class="pal-foot" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></p>
+</dialog>
+<script type="application/json" id="palette-data">[{"g":"Pages","t":"Home","h":"Watch Tracefix break a fix","u":""},{"g":"Pages","t":"Benchmark","h":"How often it is right on real fixes, and every miss","u":"benchmark/"},{"g":"Pages","t":"Receipts","h":"What Tracefix hands back, for every fixture","u":"receipts/"},{"g":"Pages","t":"Method","h":"How it decides, and where it stops","u":"method/"},{"g":"Pages","t":"Talk to me","h":"A conversation before anything ships","u":"talk/"},{"g":"Receipts","t":"good_fix","h":"Orders list is missing the last order","u":"receipts/good_fix/","lv":"L4"},{"g":"Receipts","t":"partial_fix","h":"Service crashes at startup when PORT is not set","u":"receipts/partial_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"wrong_but_green","h":"Histogram buckets are wrong for large values","u":"receipts/wrong_but_green/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"test_weakened","h":"Trailing dash in slugs for titles ending in punctuation","u":"receipts/test_weakened/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"special_cased","h":"Lease schedule contains a payment on 29 Feb 2100","u":"receipts/special_cased/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"unguarded_test","h":"truncate() returns strings longer than max_len","u":"receipts/unguarded_test/","lv":"L1"},{"g":"Receipts","t":"no_fix","h":"Contact import creates duplicates for differently-capitalised emails","u":"receipts/no_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"env_broken","h":"weekly_report() week number off by one on Mondays","u":"receipts/env_broken/","lv":"L0"},{"g":"Receipts","t":"method_partial","h":"Listener crashes when no port is configured","u":"receipts/method_partial/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"method_good","h":"Minor bump keeps the old patch number","u":"receipts/method_good/","lv":"L4"},{"g":"Receipts","t":"py39_partial","h":"Final table says \"11st place\"","u":"receipts/py39_partial/","lv":"COUNTEREXAMPLE"},{"g":"Sections","t":"Replay the attack","h":"Home","u":"#attack"},{"g":"Sections","t":"Try your own input","h":"Home","u":"#try"},{"g":"Sections","t":"Where it stands","h":"Home","u":"#stands"},{"g":"Sections","t":"The Butterfly","h":"Home","u":"#butterfly"},{"g":"Sections","t":"The Hard-Code","h":"Home","u":"#hard-code"},{"g":"Sections","t":"The Lawyer","h":"Home","u":"#lawyer"},{"g":"Sections","t":"Evidence levels","h":"Home","u":"#levels"},{"g":"Sections","t":"Install","h":"Home","u":"#install"},{"g":"Sections","t":"Questions","h":"Home","u":"#faq"},{"g":"Sections","t":"Release gates","h":"Benchmark","u":"benchmark/#gates"},{"g":"Sections","t":"Results per slice","h":"Benchmark","u":"benchmark/#results"},{"g":"Sections","t":"Every counted miss","h":"Benchmark","u":"benchmark/#misses"},{"g":"Sections","t":"How it was measured","h":"Benchmark","u":"benchmark/#method"},{"g":"Sections","t":"The rule","h":"Method","u":"method/#rule"},{"g":"Sections","t":"The run, stage by stage","h":"Method","u":"method/#run"},{"g":"Sections","t":"The ladder and the strict L4 gate","h":"Method","u":"method/#ladder"},{"g":"Sections","t":"Isolation and the tamper watch","h":"Method","u":"method/#isolation"},{"g":"Sections","t":"In the pull request","h":"Method","u":"method/#loop"},{"g":"Sections","t":"Fork pull requests","h":"Method","u":"method/#forks"},{"g":"Sections","t":"What is sent to Anthropic","h":"Method","u":"method/#sent"},{"g":"Sections","t":"What I would ask","h":"Talk to me","u":"talk/#ask"},{"g":"Sections","t":"Report a wrong receipt","h":"Talk to me","u":"talk/#feedback"}]</script>
+<script src="../../assets/site.js" onerror="tracefixShowAll()"></script>
+</body>
+</html>

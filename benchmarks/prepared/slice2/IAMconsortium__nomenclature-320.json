@@ -1,0 +1,138 @@
+{
+ "instance_id": "IAMconsortium__nomenclature-320",
+ "excluded": null,
+ "detail": "",
+ "python": "3.10.16",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.168.5",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "anyio.pytest_plugin",
+  "pytest_mock",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist",
+  "typeguard._pytest_plugin"
+ ],
+ "suite_seconds": 8.782,
+ "suite_timeout": 120,
+ "source_hunks": 9,
+ "variants": [
+  {
+   "index": 0,
+   "path": "nomenclature/codelist.py",
+   "old_start": 1,
+   "old_len": 4,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "nomenclature/codelist.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "nomenclature/codelist.py",
+   "old_start": 6,
+   "old_len": 15,
+   "label": "partial",
+   "failing": 3,
+   "functions": [
+    {
+     "path": "nomenclature/codelist.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "nomenclature/codelist.py",
+   "old_start": 198,
+   "old_len": 21,
+   "label": "partial",
+   "failing": 3,
+   "functions": [
+    {
+     "path": "nomenclature/codelist.py",
+     "function": "CodeList.from_directory"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "nomenclature/codelist.py",
+   "old_start": 604,
+   "old_len": 35,
+   "label": "no_effect",
+   "failing": 4,
+   "functions": [
+    {
+     "path": "nomenclature/codelist.py",
+     "function": "RegionCodeList.from_directory"
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 25675,
+   "label": "no_effect",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "nomenclature/codelist.py",
+     "function": "RegionCodeList.from_directory"
+    }
+   ],
+   "differs": [
+    {
+     "path": "nomenclature/codelist.py",
+     "function": null
+    },
+    {
+     "path": "nomenclature/codelist.py",
+     "function": "CodeList.from_directory"
+    },
+    {
+     "path": "nomenclature/codelist.py",
+     "function": "RegionCodeList.from_directory"
+    },
+    {
+     "path": "nomenclature/config.py",
+     "function": null
+    },
+    {
+     "path": "nomenclature/config.py",
+     "function": "DataStructureConfig.repos"
+    },
+    {
+     "path": "nomenclature/config.py",
+     "function": "NomenclatureConfig.check_definitions_repository"
+    },
+    {
+     "path": "nomenclature/definition.py",
+     "function": "DataStructureDefinition.__init__"
+    },
+    {
+     "path": "nomenclature/processor/region.py",
+     "function": "RegionProcessor.from_directory"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "86d38f9b4457f897445bee387554d35e45ae873e",
+  "gold": "792f7499c09817ea6d0c608d2fe7d7a2738f9a7e",
+  "v1": "a9facb17cc508329cd0a78c7956dbdd2f8083d8a",
+  "agent_wrong": "9294a801f2950396f974b158b876abd60701f333"
+ },
+ "seconds": 170.266
+}

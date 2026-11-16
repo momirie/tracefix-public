@@ -1,0 +1,363 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T17:26:00+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 4 of 6 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "7e5995e35b48023622603058fc254166115c34ab"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "30cd95ea5d6f06dccf3e7f17410886463efec43d"
+  },
+  "issue": {
+    "title": "Exclude comments",
+    "sha256": "0ffe5b7abce5a286f928ac683528c7caf03743b79d0a864ffa6861bdd2f019a0"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.20"
+  },
+  "summary": {
+    "text": "The bug was reproduced, with a test that failed before the fix (comments like \"<!-- This is a comment -->\" were emitted as text) and passes after it, and no regressions were found, but the behaviour diff and Break My Fix stages were inconclusive and the evidence stayed at L1 because the mutation-testing threshold was not met. Next, look at why the tests did not kill enough mutants and consider ad…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 2.46,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 4.53,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 35.05,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 4 of 6 mutants; 80% is needed",
+      "duration_s": 58.05,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.667,
+        "repro_kill_rate": 0.667,
+        "pr_kill_rate": null,
+        "mutants": 6,
+        "killed": 4,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 2,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-20bb019a63fa",
+          "m-d9fd85c166eb",
+          "m-919f5135a27e",
+          "m-00283c39499d"
+        ],
+        "rule_mutants": 4,
+        "rule_kill_rate": 0.75,
+        "rule_kinds": [
+          "body: 1 of 1 killed",
+          "negate_if: 2 of 2 killed",
+          "loop: 0 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "constant",
+          "arithmetic",
+          "membership",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 4 of 6 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 47 untouched tests that passed before the fix fails after it",
+      "duration_s": 2.42,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 47,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.62,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 4
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: MarkdownConverter.process_tag: the comparison did not finish",
+      "duration_s": 2.42,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 7.15,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 0,
+        "properties_counted": 2,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 38.37,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-1ab6cfce5b7e",
+      "origin": "model",
+      "file": "markdownify/__init__.py",
+      "line": 79,
+      "original": "                continue",
+      "replacement": "                break",
+      "description": "Stops processing remaining children after a comment.",
+      "diff": "--- a/markdownify/__init__.py\n+++ b/markdownify/__init__.py\n@@ -78,3 +78,3 @@\n             if isinstance(el, Comment):\n-                continue\n+                break\n             elif isinstance(el, NavigableString):\n",
+      "words": "markdownify/__init__.py:79: changing `                continue` to `                break` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-07772eeb6f02",
+      "origin": "model",
+      "file": "markdownify/__init__.py",
+      "line": 78,
+      "original": "            if isinstance(el, Comment):",
+      "replacement": "            if isinstance(el, Comment) and not convert_as_inline:",
+      "description": "Comments leak into output when converting inline.",
+      "diff": "--- a/markdownify/__init__.py\n+++ b/markdownify/__init__.py\n@@ -77,3 +77,3 @@\n         for el in node.children:\n-            if isinstance(el, Comment):\n+            if isinstance(el, Comment) and not convert_as_inline:\n                 continue\n",
+      "words": "markdownify/__init__.py:78: changing `            if isinstance(el, Comment):` to `            if isinstance(el, Comment) and not convert_as_in...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-1ab6cfce5b7e",
+      "origin": "rule",
+      "file": "markdownify/__init__.py",
+      "line": 79,
+      "original": "                continue",
+      "replacement": "                break",
+      "description": "rule: `continue` -> `break`",
+      "diff": "--- a/markdownify/__init__.py\n+++ b/markdownify/__init__.py\n@@ -78,3 +78,3 @@\n             if isinstance(el, Comment):\n-                continue\n+                break\n             elif isinstance(el, NavigableString):\n",
+      "words": "markdownify/__init__.py:79: changing `                continue` to `                break` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "loop"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "markdownify/__init__.py": [
+        1,
+        78,
+        79,
+        80
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 4,
+        "total": 4
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 25097,
+    "output_tokens": 6529,
+    "cost_estimate": {
+      "usd": 0.2109,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.20: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "markdownify.MarkdownConverter.process_tag",
+      "path": "markdownify/__init__.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no strategy for node, convert_as_inline"
+    }
+  ]
+}

@@ -1,0 +1,311 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T20:23:00+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 3 of 4 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "f75e21c4b159f2ef7ecb421768fbf3a15bf2bee3"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "e493339dbb2d92bfd5c8826bfe87c76ad148be5a"
+  },
+  "issue": {
+    "title": "Broken tests on Python 3.7+ (urllib.parse behavior has changed)",
+    "sha256": "1a9973633c6b722591405c3e874223aa2c0300c03ed7877ea166a2dfe4ae851c"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the bug, with a test that fails before the fix and passes after it, and found no regressions, no breaking inputs from Break My Fix, and no integrity issues. The guard stage ended as not_guarded and the mutation threshold for L2 was not met, so the most important next step is to strengthen the tests so they catch mutants of the fixed CONNECT host/port parsing.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 7.53,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.1,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 27.32,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no proxy/testing/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 3 of 4 mutants; 80% is needed",
+      "duration_s": 43.62,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no proxy/testing/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.75,
+        "repro_kill_rate": 0.75,
+        "pr_kill_rate": null,
+        "mutants": 4,
+        "killed": 3,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 2,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-1f5ec017dddb",
+          "m-03a7c44e4a15",
+          "m-857b875e4d4b"
+        ],
+        "rule_mutants": 4,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 3 of 4 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 114 untouched tests that passed before the fix fails after it",
+      "duration_s": 7.39,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 114,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 1.95,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no proxy/testing/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 4
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "406 input(s) compared on 2 function(s): 0 changed with the fix",
+      "duration_s": 12.68,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "finished": 2,
+        "inputs_compared": 406,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": true,
+        "l3_gate": true,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 412 inputs against 6 properties",
+      "duration_s": 66.87,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 412,
+        "properties_counted": 6,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 4
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-2f17df053d7c",
+      "origin": "model",
+      "file": "proxy/http/parser.py",
+      "line": 121,
+      "original": "self.host, self.port = self.url.hostname, self.url.port",
+      "replacement": "self.host, self.port = self.url.hostname, self.url.port or DEFAULT_HTTP_PORT",
+      "description": "Falls back to the default HTTP port for CONNECT when no port is given.",
+      "diff": "--- a/proxy/http/parser.py\n+++ b/proxy/http/parser.py\n@@ -120,3 +120,3 @@\n                 # For CONNECT, url is already parsed correctly due to our fix in set_url\n-                self.host, self.port = self.url.hostname, self.url.port\n+                self.host, self.port = self.url.hostname, self.url.port or DEFAULT_HTTP_PORT\n             elif self.url:\n",
+      "words": "proxy/http/parser.py:121: changing `self.host, self.port = self.url.hostname, self.url.port` to `self.host, self.port = self.url.hostname, self.url.port or D...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "proxy/http/parser.py": [
+        110,
+        112,
+        114,
+        121
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 3,
+        "total": 4
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 77178,
+    "output_tokens": 6511,
+    "cost_estimate": {
+      "usd": 0.3923,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 1 of the rule mutant kills were crashes on the mutated line",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "proxy.http.parser.HttpParser.set_url",
+      "path": "proxy/http/parser.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 409,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "proxy.http.parser.HttpParser.set_line_attributes",
+      "path": "proxy/http/parser.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 3,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

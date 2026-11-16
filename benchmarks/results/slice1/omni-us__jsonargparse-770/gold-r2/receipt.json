@@ -1,0 +1,397 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-20T11:48:35+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 0 of 5 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "cb4e6338efbadd60f39b670cb311dbdd17ee2877"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "17d119b43932cf68a2e0bd969deb6a4993a468e2"
+  },
+  "issue": {
+    "title": "Any ways to support torch functions",
+    "sha256": "2d800fb9fcf781856206ad2b7300c8e52f86c02831518f86fbb7951c42eceb14"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "The bug was reproduced: a test fails before the fix and passes after it, with no regressions found and no inputs found that break the fixed code. The tests did not kill enough mutants to reach L2 and the behaviour diff was only partial, so the next thing to look at is strengthening the tests around Callable types configured with class_path functions like torch.argmax.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 11.35,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 5.74,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 39.24,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no jsonargparse_tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 5 mutants; 80% is needed",
+      "duration_s": 197.39,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no jsonargparse_tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 5,
+        "killed": 0,
+        "survived": 5,
+        "discarded": 1,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 9,
+        "rule_kill_rate": 0.625,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 5 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 1106 untouched tests that passed before the fix fails after it",
+      "duration_s": 11.99,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 1106,
+        "not_run": 1,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.82,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no jsonargparse_tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 13
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "1 input(s) compared on 2 function(s): 0 changed with the fix; not complete: jsonargparse/_common.py: module-level code that computes a value changed (line 99); what uses it is not compared",
+      "duration_s": 41.11,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no jsonargparse_tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "finished": 2,
+        "inputs_compared": 1,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 188 inputs against 5 properties",
+      "duration_s": 66.03,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 188,
+        "properties_counted": 5,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 3
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-961869980ad0",
+      "origin": "model",
+      "file": "jsonargparse/_common.py",
+      "line": 99,
+      "original": "    \"stubs_resolver_allow_py_files\": False,",
+      "replacement": "    \"stubs_resolver_allow_py_files\": True,",
+      "description": "Default for allowing .py files in the stubs resolver becomes True instead of False.",
+      "diff": "--- a/jsonargparse/_common.py\n+++ b/jsonargparse/_common.py\n@@ -98,3 +98,3 @@\n     \"parse_optionals_as_positionals\": False,\n-    \"stubs_resolver_allow_py_files\": False,\n+    \"stubs_resolver_allow_py_files\": True,\n }\n",
+      "words": "jsonargparse/_common.py:99: changing `    \"stubs_resolver_allow_py_files\": False,` to `    \"stubs_resolver_allow_py_files\": True,` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-3308af1e5846",
+      "origin": "model",
+      "file": "jsonargparse/_common.py",
+      "line": 159,
+      "original": "        parsing_settings[\"stubs_resolver_allow_py_files\"] = stubs_resolver_allow_py_files",
+      "replacement": "        parsing_settings[\"stubs_resolver_allow_py_files\"] = not stubs_resolver_allow_py_files",
+      "description": "The stored setting value is inverted.",
+      "diff": "--- a/jsonargparse/_common.py\n+++ b/jsonargparse/_common.py\n@@ -158,3 +158,3 @@\n     if isinstance(stubs_resolver_allow_py_files, bool):\n-        parsing_settings[\"stubs_resolver_allow_py_files\"] = stubs_resolver_allow_py_files\n+        parsing_settings[\"stubs_resolver_allow_py_files\"] = not stubs_resolver_allow_py_files\n     elif stubs_resolver_allow_py_files is not None:\n",
+      "words": "jsonargparse/_common.py:159: changing `        parsing_settings[\"stubs_resolver_allow_py_files\"] = ...` to `        parsing_settings[\"stubs_resolver_allow_py_files\"] = ...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-ab7434fb0ebc",
+      "origin": "model",
+      "file": "jsonargparse/_stubs_resolver.py",
+      "line": 108,
+      "original": "        search_context = tc.get_search_context(allow_py_files=allow_py_files)",
+      "replacement": "        search_context = tc.get_search_context(allow_py_files=not allow_py_files)",
+      "description": "The allow_py_files flag is inverted when the search context is created.",
+      "diff": "--- a/jsonargparse/_stubs_resolver.py\n+++ b/jsonargparse/_stubs_resolver.py\n@@ -107,3 +107,3 @@\n         allow_py_files = get_parsing_setting(\"stubs_resolver_allow_py_files\")\n-        search_context = tc.get_search_context(allow_py_files=allow_py_files)\n+        search_context = tc.get_search_context(allow_py_files=not allow_py_files)\n         stubs_resolver = StubsResolver(search_context=search_context)\n",
+      "words": "jsonargparse/_stubs_resolver.py:108: changing `        search_context = tc.get_search_context(allow_py_file...` to `        search_context = tc.get_search_context(allow_py_file...` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-273197423272",
+      "origin": "model",
+      "file": "jsonargparse/_stubs_resolver.py",
+      "line": 107,
+      "original": "        allow_py_files = get_parsing_setting(\"stubs_resolver_allow_py_files\")",
+      "replacement": "        allow_py_files = False",
+      "description": "The configured setting is ignored and .py files are never allowed.",
+      "diff": "--- a/jsonargparse/_stubs_resolver.py\n+++ b/jsonargparse/_stubs_resolver.py\n@@ -106,3 +106,3 @@\n     if not stubs_resolver:\n-        allow_py_files = get_parsing_setting(\"stubs_resolver_allow_py_files\")\n+        allow_py_files = False\n         search_context = tc.get_search_context(allow_py_files=allow_py_files)\n",
+      "words": "jsonargparse/_stubs_resolver.py:107: changing `        allow_py_files = get_parsing_setting(\"stubs_resolver...` to `        allow_py_files = False` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-b11e4dce16df",
+      "origin": "model",
+      "file": "jsonargparse/_common.py",
+      "line": 158,
+      "original": "    if isinstance(stubs_resolver_allow_py_files, bool):",
+      "replacement": "    if stubs_resolver_allow_py_files:",
+      "description": "Setting the value to False is never applied, and a non-bool truthy value is stored without validation.",
+      "diff": "--- a/jsonargparse/_common.py\n+++ b/jsonargparse/_common.py\n@@ -157,3 +157,3 @@\n     # stubs resolver\n-    if isinstance(stubs_resolver_allow_py_files, bool):\n+    if stubs_resolver_allow_py_files:\n         parsing_settings[\"stubs_resolver_allow_py_files\"] = stubs_resolver_allow_py_files\n",
+      "words": "jsonargparse/_common.py:158: changing `    if isinstance(stubs_resolver_allow_py_files, bool):` to `    if stubs_resolver_allow_py_files:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-b9930e486fb5",
+      "origin": "rule",
+      "file": "jsonargparse/_stubs_resolver.py",
+      "line": 105,
+      "original": "    global stubs_resolver\n    if not stubs_resolver:\n        allow_py_files = get_parsing_setting(\"stubs_resolver_allow_py_files\")\n        search_context = tc.get_search_context(allow_py_files=allow_p...",
+      "replacement": "    return None",
+      "description": "rule: body of `get_stubs_resolver` -> `return None`",
+      "diff": "--- a/jsonargparse/_stubs_resolver.py\n+++ b/jsonargparse/_stubs_resolver.py\n@@ -104,8 +104,3 @@\n def get_stubs_resolver():\n-    global stubs_resolver\n-    if not stubs_resolver:\n-        allow_py_files = get_parsing_setting(\"stubs_resolver_allow_py_files\")\n-        search_context = tc.get_search_context(allow_py_files=allow_py_files)\n-        stubs_resolver = StubsResolver(search_context=search_context)\n-    return stubs_resolver\n+    return None\n \n",
+      "words": "jsonargparse/_stubs_resolver.py:105: changing `    global stubs_resolver\n    if not stubs_resolver:\n       ...` to `    return None` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-961869980ad0",
+      "origin": "rule",
+      "file": "jsonargparse/_common.py",
+      "line": 99,
+      "original": "    \"stubs_resolver_allow_py_files\": False,",
+      "replacement": "    \"stubs_resolver_allow_py_files\": True,",
+      "description": "rule: `False` -> `True`",
+      "diff": "--- a/jsonargparse/_common.py\n+++ b/jsonargparse/_common.py\n@@ -98,3 +98,3 @@\n     \"parse_optionals_as_positionals\": False,\n-    \"stubs_resolver_allow_py_files\": False,\n+    \"stubs_resolver_allow_py_files\": True,\n }\n",
+      "words": "jsonargparse/_common.py:99: changing `    \"stubs_resolver_allow_py_files\": False,` to `    \"stubs_resolver_allow_py_files\": True,` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-3884bca7a280",
+      "origin": "rule",
+      "file": "jsonargparse/_common.py",
+      "line": 158,
+      "original": "    if isinstance(stubs_resolver_allow_py_files, bool):",
+      "replacement": "    if not (isinstance(stubs_resolver_allow_py_files, bool)):",
+      "description": "rule: `isinstance(stubs_resolver_allow_py_files, bool)` -> `not (isinstance(stubs_resolver_allow_py_files, bool))`",
+      "diff": "--- a/jsonargparse/_common.py\n+++ b/jsonargparse/_common.py\n@@ -157,3 +157,3 @@\n     # stubs resolver\n-    if isinstance(stubs_resolver_allow_py_files, bool):\n+    if not (isinstance(stubs_resolver_allow_py_files, bool)):\n         parsing_settings[\"stubs_resolver_allow_py_files\"] = stubs_resolver_allow_py_files\n",
+      "words": "jsonargparse/_common.py:158: changing `    if isinstance(stubs_resolver_allow_py_files, bool):` to `    if not (isinstance(stubs_resolver_allow_py_files, bool))...` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "set_parsing_settings(stubs_resolver_allow_py_files=None)",
+          "fix": "returns None",
+          "mutant": "returns None"
+        }
+      ]
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "jsonargparse/_common.py": [
+        99,
+        111,
+        158,
+        159,
+        160,
+        161
+      ],
+      "jsonargparse/_stubs_resolver.py": [
+        9,
+        107,
+        108,
+        109,
+        201,
+        204,
+        214
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 2,
+        "total": 13
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack get_stubs_resolver: it takes no parameters to vary"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 62096,
+    "output_tokens": 6683,
+    "cost_estimate": {
+      "usd": 0.3096,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: style example jsonargparse_tests/test_actions.py truncated to 6000 characters for the prompt",
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "regressions: 1 untouched test(s) that passed before the fix did not run after it (skipped or not collected), so they were not compared"
+  ],
+  "previous": null
+}

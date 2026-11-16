@@ -1,0 +1,15 @@
+[    0.0] tracefix: verifying 47cc8c4..9f620ef (isolation: basic)
+[    1.0] [1/9] environment: ok (1.0s)
+[    2.9] [2/9] import_check: ok (1.8s)
+[   17.9] [3/9] reproduce: reproduced (15.0s)
+[   58.3] [4/9] guard: not_guarded (40.5s)
+[   59.3] [5/9] regressions: none_found (1.0s)
+[   62.2] [6/9] fix_line_coverage: ok (2.9s)
+[   77.5] [7/9] behaviour_diff: compared (15.3s)
+[   94.6] [8/9] break_my_fix: none_found (17.1s)
+[   94.6] [9/9] integrity: clean (0.0s)
+[   94.7] summary: by judge
+[   94.7] level: L1
+[   94.7] Fix Receipt: L1 (run status: ok)
+[   94.7] Summary by the Judge (advisory): The verifier reproduced the bug with a test that fails before the fix and passes after it, and it found no regressions, no breaking inputs, and only behaviour changes judged intended. However, the PR's own test file tests/test_trunc.py still passes with the fix reverted, so next look at adding a test there that actually fails on the old code (for example, asserting len(truncate('hello world', 5))\u2026
+[   94.7] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json

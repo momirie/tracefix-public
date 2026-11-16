@@ -1,0 +1,22 @@
+{
+ "instance_id": "scrapy__scrapy-3768",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; no error named",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 4,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 16.172
+}

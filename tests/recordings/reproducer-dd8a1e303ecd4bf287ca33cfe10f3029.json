@@ -1,0 +1,11 @@
+{
+ "key": "dd8a1e303ecd4bf287ca33cfe10f3029fc964d369896791a9fa8f0c9eafd8e96",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1759,
+  "output_tokens": 175,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from gateway.listener import Listener\\n\\n\\ndef test_port_none_uses_default_port() -> None:\\n    assert Listener(default_port=9000).port(None) == 9000\\n\",\"rationale\":\"The issue says an unset port (None) should give the listener's default port. The test uses a non-8080 default (9000) and checks that port(None) returns it. On base it raises AttributeError. The fix hardcodes 8080, so it still fails on head, which is the correct result since the fix does not honor the configured default.\"}"
+ },
+ "role": "reproducer"
+}

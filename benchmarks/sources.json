@@ -1,0 +1,33 @@
+{
+  "swe-rebench-leaderboard": {
+    "dataset": "nebius/SWE-rebench-leaderboard",
+    "config": "default",
+    "split": "test",
+    "revision": "34d5a58864acf91613740a09ec5d205228dcfa39",
+    "rows": 860,
+    "rows_sha256": "86855a01bc1d7092471825f9b003a121b9b64d4be018f750f966fce6902f98cb",
+    "license": "CC BY 4.0",
+    "url": "https://huggingface.co/datasets/nebius/SWE-rebench-leaderboard"
+  },
+  "swe-rebench": {
+    "dataset": "nebius/SWE-rebench",
+    "config": "default",
+    "split": "test",
+    "revision": "89cdfbab4ab1bd8f5a658bb212d1b63624f4f881",
+    "rows": 21336,
+    "rows_sha256": "6341aa6702963f34fd51d8bf163bd42950dda8548373f406451f2f82cd39d8df",
+    "license": "CC BY 4.0",
+    "url": "https://huggingface.co/datasets/nebius/SWE-rebench"
+  },
+  "swe-rebench-openhands": {
+    "dataset": "nebius/SWE-rebench-openhands-trajectories",
+    "revision": "35455389ab51bf5e2306bfd436ef72d0f98bf882",
+    "file": "trajectories.parquet",
+    "file_sha256": "14048dd1fcd22ce094b6e85f8a38f223a9ef1327031aaaad052804870212efa1",
+    "rows": 67074,
+    "unreadable_rows": 0,
+    "runs_sha256": "9045b843b1b8991de8090243cd41535742aba5e8bc897d9c3a750240a8a89854",
+    "license": "CC BY 4.0",
+    "url": "https://huggingface.co/datasets/nebius/SWE-rebench-openhands-trajectories"
+  }
+}

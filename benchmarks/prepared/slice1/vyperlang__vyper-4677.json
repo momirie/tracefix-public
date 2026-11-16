@@ -1,0 +1,45 @@
+{
+ "instance_id": "vyperlang__vyper-4677",
+ "excluded": "base_suite_too_slow",
+ "detail": "over 180s",
+ "python": "3.11.14",
+ "isolation": "strict",
+ "pip_changes": [
+  "anthropic - -> 1.15.0",
+  "anyio - -> 4.15.1",
+  "defusedxml - -> 0.7.1",
+  "docstring-parser - -> 0.18.0",
+  "h11 - -> 0.16.0",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis 6.151.9 -> 6.170.0",
+  "idna 3.11 -> 3.20",
+  "jiter - -> 0.17.0",
+  "opentelemetry-api - -> 1.45.1",
+  "pydantic 2.12.5 -> 2.14.1",
+  "pydantic-core 2.41.5 -> 2.50.1",
+  "sniffio - -> 1.3.1",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.15.0 -> 4.16.0",
+  "typing-inspection 0.4.2 -> 0.4.4"
+ ],
+ "setup_files": [
+  "vyper/version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "pytest_instafail",
+  "pytest_split.plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 11,
+ "variants": [],
+ "kept": null,
+ "commits": {},
+ "seconds": 192.5
+}

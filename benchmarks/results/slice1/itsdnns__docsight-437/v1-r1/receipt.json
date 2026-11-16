@@ -1,0 +1,492 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-16T15:43:13+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks comparison.routes._aggregate_period"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "f478c6eeded6e97b3b1dafc55108522b6c693c3b"
+  },
+  "head": {
+    "ref": "tf-v1",
+    "sha": "4ff3b00eb30b003078622e64afe19e2f6790cf1b"
+  },
+  "issue": {
+    "title": "Hide unsupported DOCSIS errors in Before/After Comparison",
+    "sha256": "e9818f01f4ad39c2d0c0e8a0279c1e87dc59d73384b1be35810167e71da3a132"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "The verifier reproduced the bug and found no regressions, but Break My Fix found that the fixed comparison.routes._aggregate_period raises UnboundLocalError (on a variable starting 'corr_errors_su...') when a snapshot has both correctable and uncorrectable DOCSIS error counters set to None. That is exactly the unsupported-counter case this fix targets, so check that variable's initialization on t…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 104.72,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 5.63,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 64.72,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 7 mutants; 80% is needed",
+      "duration_s": 2778.47,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.286,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 7,
+        "killed": 2,
+        "survived": 5,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-da87c096172d",
+          "m-c5b832152cfd"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.7,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 2246 untouched tests that passed before the fix fails after it",
+      "duration_s": 514.28,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 2246,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 4.74,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 30
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "1 input(s) compared on 1 function(s): 1 changed with the fix; not complete: AnalysisMixin.get_correlation_timeline: the comparison did not finish",
+      "duration_s": 70.09,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 4,
+        "finished": 1,
+        "inputs_compared": 1,
+        "changes": 1,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 125.9,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_comparison_module.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 4,
+        "inputs_tried": 9,
+        "properties_counted": 12,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "comparison.routes._aggregate_period",
+      "call": "_aggregate_period(snapshots=[{'timestamp': '2024-01-01T00:00:00Z', 'summary': {'ds_power_avg': 1.0, 'ds_snr_avg': 40.0, 'us_power_avg': 45.0, 'ds_correctable_errors': None, 'ds_uncorrectable_errors': None, 'health': 'good'}}])",
+      "input": {
+        "snapshots": "[{'timestamp': '2024-01-01T00:00:00Z', 'summary': {'ds_power_avg': 1.0, 'ds_snr_avg': 40.0, 'us_power_avg': 45.0, 'ds_correctable_errors': None, 'ds_uncorrectable_errors': None, 'health': 'good'}}]"
+      },
+      "outcome": "raises UnboundLocalError: cannot access local variable 'corr_errors_supported' where it is not associated with a value",
+      "base_outcome": "returns {'snapshots': 1, 'avg': {'ds_power': 1.0, 'ds_snr': 40.0, 'us_power': 45.0}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'health_distribution': {'good': 1}, 'timeseries': [{'timestamp': '2024-01-",
+      "expected": null,
+      "property": {
+        "id": "t2.p1",
+        "name": "never_crashes_on_snapshot_lists",
+        "kind": "raises_only",
+        "claim": "Aggregating any list of snapshots, including ones whose error counters are unsupported (None or missing), returns a summary and never raises.",
+        "source": "issue",
+        "quote": "using comparison API data with unsupported/null DOCSIS error counters",
+        "origin": "model"
+      },
+      "also_violates": [
+        "unsupported_uncorr_total_not_zero",
+        "unsupported_corr_total_not_zero",
+        "snapshot_count",
+        "timeseries_unsupported_not_zero",
+        "unsupported_corr_not_summarized_as_zero",
+        "unsupported_uncorr_not_summarized_as_zero"
+      ],
+      "other_inputs": 3,
+      "relation": "new with the fix: before it, this input returns {'snapshots': 1, 'avg': {'ds_power': 1.0, 'ds_snr': 40.0, 'us_power': 45.0}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'health_distribution': {'good': 1}, 'timeseries': [{'timestamp': '2024-01-",
+      "file": "findings/finding_1.py",
+      "path": "app/modules/comparison/routes.py",
+      "line": 43,
+      "expect": {
+        "types": [
+          "UnboundLocalError"
+        ],
+        "in_file": false
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "comparison.routes._aggregate_period",
+      "kind": "value",
+      "count": 1,
+      "before": "returns {'snapshots': 0, 'avg': {'ds_power': None, 'ds_snr': None, 'us_power': None}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'health_distribution': {}, 'timeseries': []}",
+      "after": "returns {'snapshots': 0, 'avg': {'ds_power': None, 'ds_snr': None, 'us_power': None}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'errors_supported': False, 'corr_errors_supported': False, 'uncorr_errors_supported': False, 'health_distribution': {}, 'timeseries': []}",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The issue asks to hide `cmp-chart-errors` when the selected periods have unsupported error counters. Adding `errors_supported`/`*_supported: False` flags to the empty-period summary is purely additive and leaves the existing keys and values unchanged, so it serves that goal."
+        }
+      ],
+      "examples": [
+        {
+          "call": "_aggregate_period(snapshots=[])",
+          "before": "returns {'snapshots': 0, 'avg': {'ds_power': None, 'ds_snr': None, 'us_power': None}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'health_distribution': {}, 'timeseries': []}",
+          "after": "returns {'snapshots': 0, 'avg': {'ds_power': None, 'ds_snr': None, 'us_power': None}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'errors_supported': False, 'corr_errors_supported': False, 'uncorr_errors_supported': False, 'health_distribution': {}, 'timeseries': []}"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-36540dfa695e",
+      "origin": "model",
+      "file": "app/modules/comparison/routes.py",
+      "line": 76,
+      "original": "        \"errors_supported\": corr_errors_supported or uncorr_errors_supported,",
+      "replacement": "        \"errors_supported\": corr_errors_supported and uncorr_errors_supported,",
+      "description": "errors_supported requires both counters instead of either one.",
+      "diff": "--- a/app/modules/comparison/routes.py\n+++ b/app/modules/comparison/routes.py\n@@ -75,3 +75,3 @@\n         },\n-        \"errors_supported\": corr_errors_supported or uncorr_errors_supported,\n+        \"errors_supported\": corr_errors_supported and uncorr_errors_supported,\n         \"corr_errors_supported\": corr_errors_supported,\n",
+      "words": "app/modules/comparison/routes.py:76: changing `        \"errors_supported\": corr_errors_supported or uncorr_...` to `        \"errors_supported\": corr_errors_supported and uncorr...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-84f42d992ce2",
+      "origin": "model",
+      "file": "app/modules/comparison/routes.py",
+      "line": 74,
+      "original": "            \"uncorr_errors\": uncorr_total if uncorr_errors_supported else None,",
+      "replacement": "            \"uncorr_errors\": uncorr_total if corr_errors_supported else None,",
+      "description": "The uncorrectable total is gated on the correctable-errors support flag.",
+      "diff": "--- a/app/modules/comparison/routes.py\n+++ b/app/modules/comparison/routes.py\n@@ -73,3 +73,3 @@\n             \"corr_errors\": corr_total if corr_errors_supported else None,\n-            \"uncorr_errors\": uncorr_total if uncorr_errors_supported else None,\n+            \"uncorr_errors\": uncorr_total if corr_errors_supported else None,\n         },\n",
+      "words": "app/modules/comparison/routes.py:74: changing `            \"uncorr_errors\": uncorr_total if uncorr_errors_s...` to `            \"uncorr_errors\": uncorr_total if corr_errors_sup...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-1b475133786e",
+      "origin": "model",
+      "file": "app/modules/comparison/routes.py",
+      "line": 99,
+      "original": "    if period_a[\"total\"].get(\"uncorr_errors\") is not None and period_b[\"total\"].get(\"uncorr_errors\") is not None:",
+      "replacement": "    if period_a[\"total\"].get(\"uncorr_errors\") is not None or period_b[\"total\"].get(\"uncorr_errors\") is not None:",
+      "description": "Uses 'or' so a delta is computed when only one period has data, which raises a TypeError.",
+      "diff": "--- a/app/modules/comparison/routes.py\n+++ b/app/modules/comparison/routes.py\n@@ -98,3 +98,3 @@\n     us_power_d = diff(\"us_power\")\n-    if period_a[\"total\"].get(\"uncorr_errors\") is not None and period_b[\"total\"].get(\"uncorr_errors\") is not None:\n+    if period_a[\"total\"].get(\"uncorr_errors\") is not None or period_b[\"total\"].get(\"uncorr_errors\") is not None:\n         uncorr_d = period_b[\"total\"][\"uncorr_errors\"] - period_a[\"total\"][\"uncorr_errors\"]\n",
+      "words": "app/modules/comparison/routes.py:99: changing `    if period_a[\"total\"].get(\"uncorr_errors\") is not None an...` to `    if period_a[\"total\"].get(\"uncorr_errors\") is not None or...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-b782bf13b0e2",
+      "origin": "model",
+      "file": "app/modules/comparison/routes.py",
+      "line": 101,
+      "original": "    elif period_a.get(\"snapshots\", 0) == 0 and period_b.get(\"snapshots\", 0) == 0:",
+      "replacement": "    elif period_a.get(\"snapshots\", 0) == 0 or period_b.get(\"snapshots\", 0) == 0:",
+      "description": "The delta is 0 when either period is empty rather than both.",
+      "diff": "--- a/app/modules/comparison/routes.py\n+++ b/app/modules/comparison/routes.py\n@@ -100,3 +100,3 @@\n         uncorr_d = period_b[\"total\"][\"uncorr_errors\"] - period_a[\"total\"][\"uncorr_errors\"]\n-    elif period_a.get(\"snapshots\", 0) == 0 and period_b.get(\"snapshots\", 0) == 0:\n+    elif period_a.get(\"snapshots\", 0) == 0 or period_b.get(\"snapshots\", 0) == 0:\n         uncorr_d = 0\n",
+      "words": "app/modules/comparison/routes.py:101: changing `    elif period_a.get(\"snapshots\", 0) == 0 and period_b.get(...` to `    elif period_a.get(\"snapshots\", 0) == 0 or period_b.get(\"...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-f52575040015",
+      "origin": "model",
+      "file": "app/modules/comparison/routes.py",
+      "line": 115,
+      "original": "        if uncorr_d > 10:",
+      "replacement": "        if uncorr_d >= 10:",
+      "description": "Loosens the degraded threshold by one error.",
+      "diff": "--- a/app/modules/comparison/routes.py\n+++ b/app/modules/comparison/routes.py\n@@ -114,3 +114,3 @@\n     if uncorr_d is not None:\n-        if uncorr_d > 10:\n+        if uncorr_d >= 10:\n             score -= 1\n",
+      "words": "app/modules/comparison/routes.py:115: changing `        if uncorr_d > 10:` to `        if uncorr_d >= 10:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-2f3fb61a1d72",
+      "origin": "rule",
+      "file": "app/modules/comparison/routes.py",
+      "line": 20,
+      "original": "            \"errors_supported\": False,",
+      "replacement": "            \"errors_supported\": True,",
+      "description": "rule: `False` -> `True`",
+      "diff": "--- a/app/modules/comparison/routes.py\n+++ b/app/modules/comparison/routes.py\n@@ -19,3 +19,3 @@\n             \"total\": {\"corr_errors\": 0, \"uncorr_errors\": 0},\n-            \"errors_supported\": False,\n+            \"errors_supported\": True,\n             \"corr_errors_supported\": False,\n",
+      "words": "app/modules/comparison/routes.py:20: changing `            \"errors_supported\": False,` to `            \"errors_supported\": True,` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "_aggregate_period(snapshots=[])",
+          "fix": "returns {'snapshots': 0, 'avg': {'ds_power': None, 'ds_snr': None, 'us_power': None}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'errors_supported': False, 'corr_errors_supported': False, 'uncorr_errors_supported': False, 'health_distribution': {}, 'timeseries': []}",
+          "mutant": "returns {'snapshots': 0, 'avg': {'ds_power': None, 'ds_snr': None, 'us_power': None}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'errors_supported': True, 'corr_errors_supported': False, 'uncorr_errors_supported': False, 'health_distribution': {}, 'timeseries': []}"
+        }
+      ]
+    },
+    {
+      "id": "m-6bd03dcd61d6",
+      "origin": "rule",
+      "file": "app/modules/comparison/routes.py",
+      "line": 21,
+      "original": "            \"corr_errors_supported\": False,",
+      "replacement": "            \"corr_errors_supported\": True,",
+      "description": "rule: `False` -> `True`",
+      "diff": "--- a/app/modules/comparison/routes.py\n+++ b/app/modules/comparison/routes.py\n@@ -20,3 +20,3 @@\n             \"errors_supported\": False,\n-            \"corr_errors_supported\": False,\n+            \"corr_errors_supported\": True,\n             \"uncorr_errors_supported\": False,\n",
+      "words": "app/modules/comparison/routes.py:21: changing `            \"corr_errors_supported\": False,` to `            \"corr_errors_supported\": True,` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "_aggregate_period(snapshots=[])",
+          "fix": "returns {'snapshots': 0, 'avg': {'ds_power': None, 'ds_snr': None, 'us_power': None}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'errors_supported': False, 'corr_errors_supported': False, 'uncorr_errors_supported': False, 'health_distribution': {}, 'timeseries': []}",
+          "mutant": "returns {'snapshots': 0, 'avg': {'ds_power': None, 'ds_snr': None, 'us_power': None}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'errors_supported': False, 'corr_errors_supported': True, 'uncorr_errors_supported': False, 'health_distribution': {}, 'timeseries': []}"
+        }
+      ]
+    },
+    {
+      "id": "m-51d6b259ef9b",
+      "origin": "rule",
+      "file": "app/modules/comparison/routes.py",
+      "line": 22,
+      "original": "            \"uncorr_errors_supported\": False,",
+      "replacement": "            \"uncorr_errors_supported\": True,",
+      "description": "rule: `False` -> `True`",
+      "diff": "--- a/app/modules/comparison/routes.py\n+++ b/app/modules/comparison/routes.py\n@@ -21,3 +21,3 @@\n             \"corr_errors_supported\": False,\n-            \"uncorr_errors_supported\": False,\n+            \"uncorr_errors_supported\": True,\n             \"health_distribution\": {},\n",
+      "words": "app/modules/comparison/routes.py:22: changing `            \"uncorr_errors_supported\": False,` to `            \"uncorr_errors_supported\": True,` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "_aggregate_period(snapshots=[])",
+          "fix": "returns {'snapshots': 0, 'avg': {'ds_power': None, 'ds_snr': None, 'us_power': None}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'errors_supported': False, 'corr_errors_supported': False, 'uncorr_errors_supported': False, 'health_distribution': {}, 'timeseries': []}",
+          "mutant": "returns {'snapshots': 0, 'avg': {'ds_power': None, 'ds_snr': None, 'us_power': None}, 'total': {'corr_errors': 0, 'uncorr_errors': 0}, 'errors_supported': False, 'corr_errors_supported': False, 'uncorr_errors_supported': True, 'health_distribution': {}, 'timeseries': []}"
+        }
+      ]
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "app/modules/comparison/routes.py": [
+        20,
+        21,
+        22,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        58,
+        72,
+        73,
+        74,
+        76,
+        77,
+        78,
+        99,
+        100,
+        101,
+        102,
+        104,
+        114,
+        115,
+        116,
+        117,
+        118
+      ],
+      "app/storage/analysis.py": [
+        38,
+        39
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 15,
+        "total": 30
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 9,
+    "input_tokens": 86748,
+    "output_tokens": 14525,
+    "cost_estimate": {
+      "usd": 0.5575,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: only the first 10 of 47 rule mutants were run"
+  ],
+  "previous": null
+}

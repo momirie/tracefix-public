@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-22T19:11:04+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: tests/models/test_url.py::test_url_params passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "5ee512d803d1d6b49dc171e1114f0075618de78e"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "fe21c61a029d477bc71fb29ef29b22cc63519c1c"
+  },
+  "issue": {
+    "title": "`params` overrides query string in url",
+    "sha256": "f3c62b22034b4766405dbb0063d0cce7b38976a932b8ae4a37c9cde13bef26e6"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the issue, but it found a regression: tests/models/test_url.py::test_url_params passed before the fix and fails after it, and the fix was not shown to guard against the reported bug. Look first at why test_url_params now fails, checking whether the fix changes URL params handling in ways that test still expects (for example, merging versus replacing the query string), and…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 9.32,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 4.92,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 39.68,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/client/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 3 mutants; 80% is needed",
+      "duration_s": 63.7,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/client/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.667,
+        "repro_kill_rate": 0.667,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 2,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 3,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-819801457a11",
+          "m-df337a7d1789"
+        ],
+        "rule_mutants": 2,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "1 confirmed: tests/models/test_url.py::test_url_params",
+      "duration_s": 41.25,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/models/test_url.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 461,
+        "not_run": 0,
+        "regressions": 1,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.69,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/client/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 5
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call (URL.__init__: a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 0.19,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call (URL.__init__: a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.06,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/models/test_url.py",
+      "test": "test_url_params",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert 'https://exam...e?b=456&a=123' == 'https://exam...mewhere?a=123'",
+      "line": 87
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-ca400aa6c939",
+      "origin": "model",
+      "file": "httpx/models.py",
+      "line": 100,
+      "original": "                query_string = str(QueryParams(params))",
+      "replacement": "                query_string = str(params)",
+      "description": "Skips QueryParams encoding of the params and stringifies the raw object.",
+      "diff": "--- a/httpx/models.py\n+++ b/httpx/models.py\n@@ -99,3 +99,3 @@\n             else:\n-                query_string = str(QueryParams(params))\n+                query_string = str(params)\n             self._uri_reference = self._uri_reference.copy_with(query=query_string)\n",
+      "words": "httpx/models.py:100: changing `                query_string = str(QueryParams(params))` to `                query_string = str(params)` made no test fail",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "httpx/models.py": [
+        95,
+        96,
+        97,
+        98,
+        100
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 4,
+        "total": 5
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call (URL.__init__: a special method (such as __init__ or __eq__): not called yet))",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call (URL.__init__: a special method (such as __init__ or __eq__): not called yet))",
+    "Break My Fix could not attack URL.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare URL.__init__: a special method (such as __init__ or __eq__): not called yet"
+  ],
+  "llm": {
+    "calls": 3,
+    "input_tokens": 5740,
+    "output_tokens": 959,
+    "cost_estimate": {
+      "usd": 0.025,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": []
+}

@@ -1,0 +1,279 @@
+<!doctype html>
+<!-- Built by scripts/build_site.py from docs/landing/_src/. Edit the source, then run the script. -->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benchmark: how often Tracefix is right, and every miss</title>
+<meta name="description" content="Tracefix measured on real bug fixes from open-source Python projects: the release gates, the results per slice, and every miss with its receipt.">
+<!-- Search engines: SEARCHABLE in scripts/build_site.py, off while the site is a private preview
+     (until the release gates hold, DECISIONS 2026-11-06). -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0b" id="theme-color">
+<link rel="canonical" href="https://tracefix.dev/benchmark/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tracefix.dev/benchmark/">
+<meta property="og:title" content="The Tracefix benchmark: the gates, the results and every miss">
+<meta property="og:description" content="Real bug fixes and real agent mistakes from open-source Python projects. Every number from the committed runs, every miss linked to its receipt.">
+<meta property="og:image" content="https://tracefix.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preload" href="../assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  // Before first paint: mark JS, and apply the theme: Dark unless the visitor saved Light or System.
+  (function () {
+    var d = document.documentElement, t = 'dark'; d.className = 'js';
+    try { var saved = localStorage.getItem('tracefix-theme'); if (saved === 'light' || saved === 'system') t = saved; } catch (e) {}
+    d.setAttribute('data-theme', t);
+    // Fail-safe: site.css hides the reveal blocks until site.js shows them. If site.js fails to load
+    // (its onerror) or has not started the reveals in 2.5 s, show every block as it is.
+    function showAll() {
+      if (d.classList.contains('reveals-on')) return;
+      var all = document.querySelectorAll('[data-reveal],[data-words],[data-reveal-group],.hero');
+      for (var i = 0; i < all.length; i++) all[i].classList.add('is-in');
+    }
+    window.tracefixShowAll = showAll;
+    setTimeout(showAll, 2500);
+  })();
+</script>
+<link rel="stylesheet" href="../assets/site.css">
+<!-- Fetch a page of this site when a link to it is hovered or pressed, so the next page is ready. -->
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="preview-note" aria-label="Private preview"><p>Private preview: Tracefix is not released yet, so its GitHub links open only for collaborators. <a href="../talk/">Talk to me</a></p></aside>
+
+<header class="site-head" id="head">
+  <div class="frame">
+    <a class="logo" href="../#top" aria-label="Tracefix home"><img class="lt" src="../assets/logo.svg" alt="" width="100" height="36"><img class="dk" src="../assets/logo-reversed.svg" alt="" width="100" height="36"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="../benchmark/" aria-current="page">Benchmark<i class="nm" aria-hidden="true"></i></a>
+      <a href="../receipts/">Receipts<i class="nm" aria-hidden="true"></i></a>
+      <a href="../method/">Method<i class="nm" aria-hidden="true"></i></a>
+      <a href="../#install">Install</a>
+      <button type="button" class="pal-open" data-palette-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><span class="pal-open-label">Search</span><kbd data-palette-key>Ctrl K</kbd></button>
+      <div class="theme" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+        <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+        <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+      </div>
+      <a class="btn btn-sm" href="../talk/">Talk to me</a>
+    </nav>
+    <details class="menu">
+      <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span class="menu-label">Menu</span></summary>
+      <nav aria-label="Menu">
+        <a href="../benchmark/" aria-current="page">Benchmark</a>
+        <a href="../receipts/">Receipts</a>
+        <a href="../method/">Method</a>
+        <a href="../talk/">Talk to me</a>
+        <a href="../#install">Install</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main" tabindex="-1" class="page">
+<!-- BENCHMARK. No number is typed here: every count, rate and limit fills a hole from
+     scripts/site_benchmark.py, which reads docs/landing/_data/ (scripts/site_data.py, from the repo).
+     tests/test_build_site.py fails if this file's text holds a digit outside a level name. -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow">Benchmark</p>
+    <h1 data-words>How often is it right? <span class="soft">Real fixes, real agent mistakes, every counted miss shown.</span></h1>
+    <p class="lede" data-reveal style="--d:3">Tracefix is measured on real bug fixes from open-source Python projects: correct fixes, which should get no counterexample, and wrong ones, which should not look verified. Every number on this page comes from the committed runs, receipts and labels.</p>
+    <p class="standing-line" data-reveal style="--d:4">Of 20 wrong fixes written by a coding agent, Tracefix gave 6 a counterexample, but only 1 of those 6 rests on the agent’s own mistake; 4 still reached L2. Of 85 correct fixes, 8 got a false alarm. Not yet good enough to gate merges on its own.</p>
+    <ul class="jump" aria-label="On this page" data-reveal style="--d:5">
+      <li><a href="#gates">Release gates: 0 of 7 hold</a></li>
+      <li><a href="#results">Results per slice</a></li>
+      <li><a href="#misses">Every counted miss (15)</a></li>
+      <li><a href="#method">Method and caveats</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- GATES: the release gate table from docs/ROADMAP.md, one card per gate -->
+<section id="gates" class="band" aria-labelledby="gates-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="gates-h" class="h2" data-words>Release gates. <span class="soft">0 of 7 hold.</span></h2>
+      <p class="mute" data-reveal style="--d:2">Tracefix is not released until every gate holds. Whether one holds is the developer’s call, recorded in the roadmap and read on the held-out tasks, which stay unrun until the current round of changes is done. The newest slice is the development split, the tasks those changes are tuned on.</p>
+    </div>
+    <ol class="gates">
+<li class="gate g-open" data-reveal style="--d:0"><p class="g-num">Gate 1</p><h3 class="g-title">Certifies correct fixes</h3><p class="g-measures">gold fixes at ≥ L2 / ≥ L3</p><p class="g-now"><span class="label">Slice 2, dev, M11&#x27;s code (13 Nov 2026)</span><span class="g-val">11/47 (23%) / 0</span></p><p class="g-before"><span>Slice 2, dev (4 Nov 2026)</span> 12/47 (26%) / 0</p><p class="g-before"><span>Slice 1 (20 Oct 2026)</span> 5/19 (26%) / 0</p><p class="g-target"><span class="label">Target</span> ≥ 50% / ≥ 20%</p><p class="g-status"><i aria-hidden="true"></i>Open</p></li>
+<li class="gate g-open" data-reveal style="--d:1"><p class="g-num">Gate 2</p><h3 class="g-title">Few false alarms</h3><p class="g-measures">correct fixes (gold and correct agent fixes) given a COUNTEREXAMPLE that the developer labels false</p><p class="g-now"><span class="label">Slice 2, dev, M11&#x27;s code (13 Nov 2026)</span><span class="g-val">7/85 (8%)</span></p><p class="g-before"><span>Slice 2, dev (4 Nov 2026)</span> 8/85 (9%)</p><p class="g-before"><span>Slice 1 (20 Oct 2026)</span> 3/19 (16%)</p><p class="g-target"><span class="label">Target</span> ≤ 5%</p><p class="g-status"><i aria-hidden="true"></i>Open</p></li>
+<li class="gate g-open" data-reveal style="--d:2"><p class="g-num">Gate 3</p><h3 class="g-title">Catches real agent mistakes</h3><p class="g-measures">wrong agent fixes not green-lit / caught (COUNTEREXAMPLE)</p><p class="g-now"><span class="label">Slice 2, dev, M11&#x27;s code (13 Nov 2026)</span><span class="g-val">16/20 (80%) / 6/20 (30%) (partial fixes: 26/28, 19/28)</span></p><p class="g-before"><span>Slice 2, dev (4 Nov 2026)</span> 16/20 (80%) / 6/20 (30%) (partial fixes: 26/28, 19/28)</p><p class="g-before"><span>Slice 1 (20 Oct 2026)</span> not measured (synthetic partial fixes only: 11/12, 7/12)</p><p class="g-target"><span class="label">Target</span> ≥ 90% / ≥ 50%</p><p class="g-status"><i aria-hidden="true"></i>Open</p></li>
+<li class="gate g-open" data-reveal style="--d:0"><p class="g-num">Gate 4</p><h3 class="g-title">Enough data</h3><p class="g-measures">correct and wrong fixes in the measurement</p><p class="g-now"><span class="label">Slice 2, dev, M11&#x27;s code (13 Nov 2026)</span><span class="g-val">the same fixes</span></p><p class="g-before"><span>Slice 2, dev (4 Nov 2026)</span> 85 correct (47 gold, 38 agent), 20 wrong agent (plus 28 partial)</p><p class="g-before"><span>Slice 1 (20 Oct 2026)</span> 19 gold, 12 partial</p><p class="g-target"><span class="label">Target</span> ≥ 40 and ≥ 30</p><p class="g-status"><i aria-hidden="true"></i>Open (30 wrong agent fixes on held_out still needed)</p></li>
+<li class="gate g-open" data-reveal style="--d:1"><p class="g-num">Gate 5</p><h3 class="g-title">Stable</h3><p class="g-measures">COUNTEREXAMPLE verdict changes between two runs of the same fix / Break My Fix runs no input</p><p class="g-now"><span class="label">Slice 2, dev, M11&#x27;s code (13 Nov 2026)</span><span class="g-val">not measured (no repeats) / 31/144 (22%)</span></p><p class="g-before"><span>Slice 2, dev (4 Nov 2026)</span> not measured (no repeats) / 33/145 (23%)</p><p class="g-before"><span>Slice 1 (20 Oct 2026)</span> 2/18 (11%) / 6/54 (11%)</p><p class="g-target"><span class="label">Target</span> ≤ 5% / ≤ 3%, over ≥ 20 repeated fixes</p><p class="g-status"><i aria-hidden="true"></i>Open</p></li>
+<li class="gate g-open" data-reveal style="--d:2"><p class="g-num">Gate 6</p><h3 class="g-title">Fast enough for CI</h3><p class="g-measures">median / 90th percentile time per run, two-hour timeouts</p><p class="g-now"><span class="label">Slice 2, dev, M11&#x27;s code (13 Nov 2026)</span><span class="g-val">3.2 min / 14.7 min, 1 timeout in 145 runs (counted in both times)</span></p><p class="g-before"><span>Slice 2, dev (4 Nov 2026)</span> 3.7 min / 16.5 min, no timeouts in 145 runs</p><p class="g-before"><span>Slice 1 (20 Oct 2026)</span> 6.5 min / 38 min, 2 timeouts in 36 runs</p><p class="g-target"><span class="label">Target</span> ≤ 5 min / ≤ 15 min, none</p><p class="g-status"><i aria-hidden="true"></i>Open</p></li>
+<li class="gate g-open" data-reveal style="--d:0"><p class="g-num">Gate 7</p><h3 class="g-title">Someone wants it</h3><p class="g-measures">conversations with people who review AI-written PRs</p><p class="g-now"><span class="label">Slice 2, dev, M11&#x27;s code (13 Nov 2026)</span><span class="g-val">0</span></p><p class="g-before"><span>Slice 2, dev (4 Nov 2026)</span> 0</p><p class="g-before"><span>Slice 1 (20 Oct 2026)</span> 0</p><p class="g-target"><span class="label">Target</span> ≥ 5, notes kept</p><p class="g-status"><i aria-hidden="true"></i>Open</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- RESULTS: each slice's headline numbers side by side, then the levels per fix kind -->
+<section id="results" class="band" aria-labelledby="results-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="results-h" class="h2" data-words>Results per slice. <span class="soft">A slice is one batch of tasks, run once per fix.</span></h2>
+      <div class="funnels mute" data-reveal style="--d:3">
+<p><b>Slice 2, dev (4 Nov 2026).</b> 150 tasks chosen, 111 prepared, 56 passed every check. The numbers cover 54 tasks, all dev. 145 runs with a receipt (repeats included): 133 counted, 12 set aside. Spent by the receipts: $33.56.</p>
+<p><b>Slice 1 (20 Oct 2026).</b> 80 tasks chosen, 80 prepared, 22 passed every check. The numbers cover 20 tasks (13 dev and 7 held out). 52 runs with a receipt (repeats included): 31 counted, 3 set aside. Spent by the receipts: $12.56.</p>
+      </div>
+    </div>
+    <div class="table-wrap" data-reveal tabindex="0" role="region" aria-label="Results per slice">
+      <table class="results">
+<thead><tr><th scope="col"><span class="sr-only">Measure</span></th><th scope="col">Slice 2, dev (4 Nov 2026)</th><th scope="col">Slice 1 (20 Oct 2026)</th></tr></thead><tbody><tr><th scope="row">Wrong agent fixes not green-lit (COUNTEREXAMPLE or L1 and below)</th><td>16/20 (80%)</td><td>not measured</td></tr><tr><th scope="row">Wrong agent fixes caught (COUNTEREXAMPLE)</th><td>6/20 (30%)</td><td>not measured</td></tr><tr><th scope="row">Wrong agent fixes at L2 (a false pass)</th><td>4/20 (20%)</td><td>not measured</td></tr><tr><th scope="row">Partial fixes not green-lit</th><td>26/28 (93%)</td><td>11/12 (92%)</td></tr><tr><th scope="row">Partial fixes caught</th><td>19/28 (68%)</td><td>7/12 (58%)</td></tr><tr><th scope="row">Correct fixes with a false alarm (developer label)</th><td>8/85 (9%)</td><td>3/19 (16%), gold only</td></tr><tr><th scope="row">Real bugs found in correct fixes</th><td>6/85 (7%)</td><td>1/19 (5%), gold only</td></tr><tr><th scope="row">Correct fixes at L2 or above</th><td>22/85 (26%)</td><td>5/19 (26%), gold only</td></tr><tr><th scope="row">Correct fixes at L3 or above</th><td>0/85 (0%)</td><td>0/19 (0%), gold only</td></tr><tr><th scope="row">Cost per run (mean / median / max)</th><td>$0.23 / $0.21 / $0.72</td><td>$0.24 / $0.20 / $0.68</td></tr><tr><th scope="row">Time per run (median / 90th percentile)</th><td>3.7 min / 16.5 min</td><td>6.5 min / 38.2 min</td></tr></tbody>
+      </table>
+    </div>
+    <div class="sec-head sub" data-reveal>
+      <h3 class="h3">Where each fix landed on the ladder</h3>
+      <p class="mute">Correct fixes should get no counterexample; wrong fixes should stop at L1 or below. No correct fix has reached L3 yet: the tests rarely guard a fix strongly enough, and the behaviour diff rarely finishes. <a href="../#levels">What each level means</a>.</p>
+      <ul class="legend" aria-label="Legend: press a level to pick it out in the bars" data-legend>
+        <li><button type="button" class="lg" data-lv="COUNTEREXAMPLE" aria-pressed="false"><i class="lv lv-counterexample" aria-hidden="true"></i>COUNTEREXAMPLE</button></li>
+        <li><button type="button" class="lg" data-lv="L0" aria-pressed="false"><i class="lv lv-l0" aria-hidden="true"></i>L0</button></li>
+        <li><button type="button" class="lg" data-lv="L1" aria-pressed="false"><i class="lv lv-l1" aria-hidden="true"></i>L1</button></li>
+        <li><button type="button" class="lg" data-lv="L2" aria-pressed="false"><i class="lv lv-l2" aria-hidden="true"></i>L2</button></li>
+        <li><button type="button" class="lg" data-lv="L3" aria-pressed="false"><i class="lv lv-l3" aria-hidden="true"></i>L3</button></li>
+        <li><button type="button" class="lg" data-lv="L4" aria-pressed="false"><i class="lv lv-l4" aria-hidden="true"></i>L4</button></li>
+      </ul>
+    </div>
+    <div class="filters" role="group" aria-label="Show a slice" data-slice-switch hidden><button type="button" class="chip" data-show-slice="slice2" aria-pressed="true">Slice 2, dev (4 Nov 2026)</button><button type="button" class="chip" data-show-slice="slice1" aria-pressed="false">Slice 1 (20 Oct 2026)</button></div>
+    <div class="slices">
+<div class="levels-wrap" data-reveal data-slice="slice2" tabindex="0" role="region" aria-label="Levels per fix, Slice 2, dev (4 Nov 2026)"><table class="levels"><caption class="label">Levels per fix, Slice 2, dev (4 Nov 2026)</caption><thead><tr><th scope="col">Fix</th><th scope="col"><span class="sr-only">Bar</span></th><th scope="col" data-lv="COUNTEREXAMPLE">COUNTEREXAMPLE</th><th scope="col" data-lv="L0">L0</th><th scope="col" data-lv="L1">L1</th><th scope="col" data-lv="L2">L2</th><th scope="col" data-lv="L3">L3</th><th scope="col" data-lv="L4">L4</th><th scope="col">Runs</th></tr></thead><tbody><tr class="k-correct" style="--r:0"><th scope="row" style="view-transition-name:row-gold"><span class="k-name">Upstream fix (gold)</span><span class="k-want">should get no counterexample</span></th><td><span class="bar" aria-hidden="true"><i class="lv lv-counterexample" data-lv="COUNTEREXAMPLE" data-n="10" data-of="47" style="flex-grow:10;view-transition-name:seg-gold-counterexample" title="COUNTEREXAMPLE: 10 of 47"></i><i class="lv lv-l0" data-lv="L0" data-n="3" data-of="47" style="flex-grow:3;view-transition-name:seg-gold-l0" title="L0: 3 of 47"></i><i class="lv lv-l1" data-lv="L1" data-n="22" data-of="47" style="flex-grow:22;view-transition-name:seg-gold-l1" title="L1: 22 of 47"></i><i class="lv lv-l2" data-lv="L2" data-n="12" data-of="47" style="flex-grow:12;view-transition-name:seg-gold-l2" title="L2: 12 of 47"></i></span></td><td class="" data-lv="COUNTEREXAMPLE">10</td><td class="" data-lv="L0">3</td><td class="" data-lv="L1">22</td><td class="" data-lv="L2">12</td><td class="zero" data-lv="L3">0</td><td class="zero" data-lv="L4">0</td><td>47</td></tr><tr class="k-correct" style="--r:1"><th scope="row" style="view-transition-name:row-agent_ok"><span class="k-name">Correct agent fix</span><span class="k-want">should get no counterexample</span></th><td><span class="bar" aria-hidden="true"><i class="lv lv-counterexample" data-lv="COUNTEREXAMPLE" data-n="5" data-of="38" style="flex-grow:5;view-transition-name:seg-agent_ok-counterexample" title="COUNTEREXAMPLE: 5 of 38"></i><i class="lv lv-l0" data-lv="L0" data-n="1" data-of="38" style="flex-grow:1;view-transition-name:seg-agent_ok-l0" title="L0: 1 of 38"></i><i class="lv lv-l1" data-lv="L1" data-n="22" data-of="38" style="flex-grow:22;view-transition-name:seg-agent_ok-l1" title="L1: 22 of 38"></i><i class="lv lv-l2" data-lv="L2" data-n="10" data-of="38" style="flex-grow:10;view-transition-name:seg-agent_ok-l2" title="L2: 10 of 38"></i></span></td><td class="" data-lv="COUNTEREXAMPLE">5</td><td class="" data-lv="L0">1</td><td class="" data-lv="L1">22</td><td class="" data-lv="L2">10</td><td class="zero" data-lv="L3">0</td><td class="zero" data-lv="L4">0</td><td>38</td></tr><tr class="k-wrong" style="--r:2"><th scope="row" style="view-transition-name:row-partial"><span class="k-name">Upstream fix minus a hunk (partial)</span><span class="k-want">should not reach L2</span></th><td><span class="bar" aria-hidden="true"><i class="lv lv-counterexample" data-lv="COUNTEREXAMPLE" data-n="19" data-of="28" style="flex-grow:19;view-transition-name:seg-partial-counterexample" title="COUNTEREXAMPLE: 19 of 28"></i><i class="lv lv-l0" data-lv="L0" data-n="4" data-of="28" style="flex-grow:4;view-transition-name:seg-partial-l0" title="L0: 4 of 28"></i><i class="lv lv-l1" data-lv="L1" data-n="3" data-of="28" style="flex-grow:3;view-transition-name:seg-partial-l1" title="L1: 3 of 28"></i><i class="lv lv-l2" data-lv="L2" data-n="2" data-of="28" style="flex-grow:2;view-transition-name:seg-partial-l2" title="L2: 2 of 28"></i></span></td><td class="" data-lv="COUNTEREXAMPLE">19</td><td class="" data-lv="L0">4</td><td class="" data-lv="L1">3</td><td class="" data-lv="L2">2</td><td class="zero" data-lv="L3">0</td><td class="zero" data-lv="L4">0</td><td>28</td></tr><tr class="k-wrong" style="--r:3"><th scope="row" style="view-transition-name:row-agent_wrong"><span class="k-name">Wrong agent fix</span><span class="k-want">should not reach L2</span></th><td><span class="bar" aria-hidden="true"><i class="lv lv-counterexample" data-lv="COUNTEREXAMPLE" data-n="6" data-of="20" style="flex-grow:6;view-transition-name:seg-agent_wrong-counterexample" title="COUNTEREXAMPLE: 6 of 20"></i><i class="lv lv-l1" data-lv="L1" data-n="10" data-of="20" style="flex-grow:10;view-transition-name:seg-agent_wrong-l1" title="L1: 10 of 20"></i><i class="lv lv-l2" data-lv="L2" data-n="4" data-of="20" style="flex-grow:4;view-transition-name:seg-agent_wrong-l2" title="L2: 4 of 20"></i></span></td><td class="" data-lv="COUNTEREXAMPLE">6</td><td class="zero" data-lv="L0">0</td><td class="" data-lv="L1">10</td><td class="" data-lv="L2">4</td><td class="zero" data-lv="L3">0</td><td class="zero" data-lv="L4">0</td><td>20</td></tr></tbody></table></div>
+<div class="levels-wrap" data-reveal data-slice="slice1" tabindex="0" role="region" aria-label="Levels per fix, Slice 1 (20 Oct 2026)"><table class="levels"><caption class="label">Levels per fix, Slice 1 (20 Oct 2026)</caption><thead><tr><th scope="col">Fix</th><th scope="col"><span class="sr-only">Bar</span></th><th scope="col" data-lv="COUNTEREXAMPLE">COUNTEREXAMPLE</th><th scope="col" data-lv="L0">L0</th><th scope="col" data-lv="L1">L1</th><th scope="col" data-lv="L2">L2</th><th scope="col" data-lv="L3">L3</th><th scope="col" data-lv="L4">L4</th><th scope="col">Runs</th></tr></thead><tbody><tr class="k-correct" style="--r:0"><th scope="row" style="view-transition-name:row-gold"><span class="k-name">Upstream fix (gold)</span><span class="k-want">should get no counterexample</span></th><td><span class="bar" aria-hidden="true"><i class="lv lv-counterexample" data-lv="COUNTEREXAMPLE" data-n="4" data-of="19" style="flex-grow:4;view-transition-name:seg-gold-counterexample" title="COUNTEREXAMPLE: 4 of 19"></i><i class="lv lv-l0" data-lv="L0" data-n="1" data-of="19" style="flex-grow:1;view-transition-name:seg-gold-l0" title="L0: 1 of 19"></i><i class="lv lv-l1" data-lv="L1" data-n="9" data-of="19" style="flex-grow:9;view-transition-name:seg-gold-l1" title="L1: 9 of 19"></i><i class="lv lv-l2" data-lv="L2" data-n="5" data-of="19" style="flex-grow:5;view-transition-name:seg-gold-l2" title="L2: 5 of 19"></i></span></td><td class="" data-lv="COUNTEREXAMPLE">4</td><td class="" data-lv="L0">1</td><td class="" data-lv="L1">9</td><td class="" data-lv="L2">5</td><td class="zero" data-lv="L3">0</td><td class="zero" data-lv="L4">0</td><td>19</td></tr><tr class="k-wrong" style="--r:1"><th scope="row" style="view-transition-name:row-partial"><span class="k-name">Upstream fix minus a hunk (partial)</span><span class="k-want">should not reach L2</span></th><td><span class="bar" aria-hidden="true"><i class="lv lv-counterexample" data-lv="COUNTEREXAMPLE" data-n="7" data-of="12" style="flex-grow:7;view-transition-name:seg-partial-counterexample" title="COUNTEREXAMPLE: 7 of 12"></i><i class="lv lv-l0" data-lv="L0" data-n="2" data-of="12" style="flex-grow:2;view-transition-name:seg-partial-l0" title="L0: 2 of 12"></i><i class="lv lv-l1" data-lv="L1" data-n="2" data-of="12" style="flex-grow:2;view-transition-name:seg-partial-l1" title="L1: 2 of 12"></i><i class="lv lv-l2" data-lv="L2" data-n="1" data-of="12" style="flex-grow:1;view-transition-name:seg-partial-l2" title="L2: 1 of 12"></i></span></td><td class="" data-lv="COUNTEREXAMPLE">7</td><td class="" data-lv="L0">2</td><td class="" data-lv="L1">2</td><td class="" data-lv="L2">1</td><td class="zero" data-lv="L3">0</td><td class="zero" data-lv="L4">0</td><td>12</td></tr></tbody></table></div>
+    </div>
+    <p class="mute small">Full tables, stability and where tasks were lost: <a href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/report.md">Slice 2, dev (4 Nov 2026) report</a> · <a href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice1/report.md">Slice 1 (20 Oct 2026) report</a>.</p>
+  </div>
+</section>
+
+<!-- MISSES: every counted run that went against Tracefix, with its receipt -->
+<section id="misses" class="band" aria-labelledby="misses-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="misses-h" class="h2" data-words>Every counted miss. <span class="soft">With the receipt it came from.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The runs the benchmark counts against Tracefix: wrong agent fixes that still reached L2, and correct fixes given a counterexample the developer labelled a false alarm. None of those is left off. Runs set aside because they rest on tests the pull request itself updated, and repeat runs, are counted apart in the slice reports.</p>
+    </div>
+    <div class="miss-tools" data-miss-tools hidden>
+      <label class="search"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><span class="sr-only">Find a project</span><input type="search" placeholder="Find a project" autocomplete="off" spellcheck="false" data-miss-find></label>
+      <div class="filters" role="group" aria-label="Show misses from a slice"><button type="button" class="chip" data-miss-slice="all" aria-pressed="true">All slices</button><button type="button" class="chip" data-miss-slice="slice2" aria-pressed="false">Slice 2, dev (4 Nov 2026)</button><button type="button" class="chip" data-miss-slice="slice1" aria-pressed="false">Slice 1 (20 Oct 2026)</button></div>
+      <span class="label" aria-live="polite" data-miss-count></span>
+    </div>
+    <div class="miss-group" data-reveal>
+      <h3 class="h3">Wrong agent fixes that reached L2 <span class="soft">(<span data-group-count>4</span>)</span></h3>
+      <p class="mute">In each, the test Tracefix wrote failed before the agent’s patch and passed after it, and the tests guarded the patch. Likely, not yet checked: the test read the issue the way the agent did, so the bug it reproduced is the one the agent fixed.</p>
+      <ul class="misses">
+<li class="miss" data-reveal style="--d:0" data-slice="slice2" data-find="beeware__briefcase-645"><p class="m-id">beeware__briefcase-645</p><p class="m-facts"><span>Wrong agent fix</span><span>Slice 2</span><span class="m-lv">L2</span></p><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/beeware__briefcase-645/agent_wrong-r1/receipt.md">Read the receipt<span class="sr-only"> for beeware__briefcase-645, agent_wrong-r1</span></a></li>
+<li class="miss" data-reveal style="--d:1" data-slice="slice2" data-find="chilipp__autodocsumm-101"><p class="m-id">Chilipp__autodocsumm-101</p><p class="m-facts"><span>Wrong agent fix</span><span>Slice 2</span><span class="m-lv">L2</span></p><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/Chilipp__autodocsumm-101/agent_wrong-r1/receipt.md">Read the receipt<span class="sr-only"> for Chilipp__autodocsumm-101, agent_wrong-r1</span></a></li>
+<li class="miss" data-reveal style="--d:2" data-slice="slice2" data-find="direct-phonology__dphon-366"><p class="m-id">direct-phonology__dphon-366</p><p class="m-facts"><span>Wrong agent fix</span><span>Slice 2</span><span class="m-lv">L2</span></p><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/direct-phonology__dphon-366/agent_wrong-r1/receipt.md">Read the receipt<span class="sr-only"> for direct-phonology__dphon-366, agent_wrong-r1</span></a></li>
+<li class="miss" data-reveal style="--d:0" data-slice="slice2" data-find="nipy__nipype-3658"><p class="m-id">nipy__nipype-3658</p><p class="m-facts"><span>Wrong agent fix</span><span>Slice 2</span><span class="m-lv">L2</span></p><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/nipy__nipype-3658/agent_wrong-r1/receipt.md">Read the receipt<span class="sr-only"> for nipy__nipype-3658, agent_wrong-r1</span></a></li>
+      </ul>
+      <p class="mute none-match" hidden>No miss of this kind matches.</p>
+    </div>
+    <div class="miss-group" data-reveal>
+      <h3 class="h3">Correct fixes given a false alarm <span class="soft">(<span data-group-count>11</span>)</span></h3>
+      <p class="mute">Each comes with the developer’s reason. They have named causes, written up for the next round of changes: attacking an abstract method, inputs outside a function’s domain, a regression the issue asked for, a project’s warning filter turning a warning into an error.</p>
+      <ul class="misses">
+<li class="miss" data-reveal style="--d:0" data-slice="slice2" data-find="astropy__photutils-1943"><p class="m-id">astropy__photutils-1943</p><p class="m-facts"><span>Upstream fix (gold)</span><span>Slice 2</span><span class="m-lv m-cx">COUNTEREXAMPLE</span></p><details><summary>The developer’s label</summary><p>No peak survives border_width=2 (the 5.0 is not a local maximum next to the 6.0), so find_peaks warns NoDetectionsWarning and returns None, its documented behaviour, which the property allows. It shows as &#x27;raises&#x27; only because photutils&#x27; pyproject sets pytest filterwarnings = [&#x27;error&#x27;, ...] (checked at the base commit). Same on base.</p></details><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/astropy__photutils-1943/gold-r1/receipt.md">Read the receipt<span class="sr-only"> for astropy__photutils-1943, gold-r1</span></a></li>
+<li class="miss" data-reveal style="--d:1" data-slice="slice2" data-find="clld__clldutils-27"><p class="m-id">clld__clldutils-27</p><p class="m-facts"><span>Upstream fix (gold)</span><span>Slice 2</span><span class="m-lv m-cx">COUNTEREXAMPLE</span></p><details><summary>The developer’s label</summary><p>The property is about the markdown output (&#x27;markdown=True&#x27;), but the input sets markdown=False, so both calls return the bare URL and &#x27;](&#x27; can never appear; same on base. The adversary&#x27;s input ignored the property&#x27;s own precondition (no &#x27;applies to this input&#x27; line was written for it).</p></details><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/clld__clldutils-27/gold-r1/receipt.md">Read the receipt<span class="sr-only"> for clld__clldutils-27, gold-r1</span></a></li>
+<li class="miss" data-reveal style="--d:2" data-slice="slice2" data-find="diaoul__babelfish-50"><p class="m-id">Diaoul__babelfish-50</p><p class="m-facts"><span>Upstream fix (gold)</span><span>Slice 2</span><span class="m-lv m-cx">COUNTEREXAMPLE</span></p><details><summary>The developer’s label</summary><p>Both regressions (test_hash_eq, test_hash) assert hash(Country(&#x27;US&#x27;)) == hash(&#x27;US&#x27;); the issue asks for frozen dataclasses and says &#x27;This will surely be a breaking change&#x27;, and the PR&#x27;s test patch inverts both into *_incorrect. Intended change, not a bug: the PR&#x27;s own test patch rewrites this test (set aside by the report already).</p><p>&#x27;__&#x27; is not a language code; fromietf raises the library&#x27;s own LanguageReverseError, the same on base. A relation property (same code gives equal languages) counted a raise on an invalid input as a break. Input outside the domain (NOTES 40).</p><p>&#x27;script&#x27; is not a language code; ValueError &quot;&#x27;script&#x27; is not a valid language&quot; is the constructor&#x27;s deliberate validation, same on base. Same pattern as #1 (NOTES 40).</p></details><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/Diaoul__babelfish-50/gold-r1/receipt.md">Read the receipt<span class="sr-only"> for Diaoul__babelfish-50, gold-r1</span></a></li>
+<li class="miss" data-reveal style="--d:0" data-slice="slice2" data-find="fox-it__dissect.cstruct-88"><p class="m-id">fox-it__dissect.cstruct-88</p><p class="m-facts"><span>Correct agent fix</span><span>Slice 2</span><span class="m-lv m-cx">COUNTEREXAMPLE</span></p><details><summary>The developer’s label</summary><p>The input feeds a whole &#x27;#define A&lt;tab&gt;(B + C)&lt;tab&gt;// comment&#x27; source text to ExpressionTokenizer, which only ever receives a constant&#x27;s value expression (the parser strips the directive and the comment first), so &#x27;#&#x27; being rejected is expected; same on base. The issue&#x27;s example is parser input, not tokenizer input.</p></details><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/fox-it__dissect.cstruct-88/agent_ok-r1/receipt.md">Read the receipt<span class="sr-only"> for fox-it__dissect.cstruct-88, agent_ok-r1</span></a></li>
+<li class="miss" data-reveal style="--d:1" data-slice="slice2" data-find="lucas-c__pre-commit-hooks-98"><p class="m-id">Lucas-C__pre-commit-hooks-98</p><p class="m-facts"><span>Upstream fix (gold)</span><span>Slice 2</span><span class="m-lv m-cx">COUNTEREXAMPLE</span></p><details><summary>The developer’s label</summary><p>license_header_index=10 in a 4-line file: an index the caller (license_found) never passes; IndexError the same on base. Input outside the domain (NOTES 40).</p><p>license_length=-1 is not a length; the function loops over nothing (as on base) while the property&#x27;s slice [0:-1] reads it as &#x27;all but the last line&#x27;. Input outside the domain (NOTES 40).</p></details><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/Lucas-C__pre-commit-hooks-98/gold-r1/receipt.md">Read the receipt<span class="sr-only"> for Lucas-C__pre-commit-hooks-98, gold-r1</span></a></li>
+<li class="miss" data-reveal style="--d:2" data-slice="slice2" data-find="open-contracting__ocdskit-51"><p class="m-id">open-contracting__ocdskit-51</p><p class="m-facts"><span>Upstream fix (gold)</span><span>Slice 2</span><span class="m-lv m-cx">COUNTEREXAMPLE</span></p><details><summary>The developer’s label</summary><p>test_command compares against tests/fixtures/mapping-sheet.csv, which the PR&#x27;s test patch updates with the new &#x27;reference&#x27; rows the issue asks for (it is the FAIL_TO_PASS test). Intended change, not a bug: the PR&#x27;s own test patch rewrites this test (set aside by the report already).</p></details><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/open-contracting__ocdskit-51/gold-r1/receipt.md">Read the receipt<span class="sr-only"> for open-contracting__ocdskit-51, gold-r1</span></a></li>
+<li class="miss" data-reveal style="--d:0" data-slice="slice2" data-find="robotpy__robotpy-cppheaderparser-44"><p class="m-id">robotpy__robotpy-cppheaderparser-44</p><p class="m-facts"><span>Correct agent fix</span><span>Slice 2</span><span class="m-lv m-cx">COUNTEREXAMPLE</span></p><details><summary>The developer’s label</summary><p>Same as gold #1 (identical code change): Verified in the source at the base commit: CppHeader.__init__ calls self.finalize() (line 3004), then deletes _precomp_macro_buf and 20 other parse-time attributes (lines 3007-3031). The attack calls finalize() a second time on that finished object, so the AttributeError is certain and no user path reaches it. The issue&#x27;s own example builds fine with the fix (base could not build it). A lifecycle method called again on a finished object.</p></details><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/robotpy__robotpy-cppheaderparser-44/agent_ok-r1/receipt.md">Read the receipt<span class="sr-only"> for robotpy__robotpy-cppheaderparser-44, agent_ok-r1</span></a></li>
+<li class="miss" data-reveal style="--d:1" data-slice="slice2" data-find="robotpy__robotpy-cppheaderparser-44"><p class="m-id">robotpy__robotpy-cppheaderparser-44</p><p class="m-facts"><span>Upstream fix (gold)</span><span>Slice 2</span><span class="m-lv m-cx">COUNTEREXAMPLE</span></p><details><summary>The developer’s label</summary><p>Verified in the source at the base commit: CppHeader.__init__ calls self.finalize() (line 3004), then deletes _precomp_macro_buf and 20 other parse-time attributes (lines 3007-3031). The attack calls finalize() a second time on that finished object, so the AttributeError is certain and no user path reaches it. The issue&#x27;s own example builds fine with the fix (base could not build it). A lifecycle method called again on a finished object.</p></details><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice2/robotpy__robotpy-cppheaderparser-44/gold-r1/receipt.md">Read the receipt<span class="sr-only"> for robotpy__robotpy-cppheaderparser-44, gold-r1</span></a></li>
+<li class="miss" data-reveal style="--d:2" data-slice="slice1" data-find="elementsinteractive__twyn-317"><p class="m-id">elementsinteractive__twyn-317</p><p class="m-facts"><span>Upstream fix (gold)</span><span>Slice 1</span><span class="m-lv m-cx">COUNTEREXAMPLE</span></p><details><summary>The developer’s label</summary><p>Its causes besides finding 1 are 13 regressions in tests/main/test_main.py and tests/trusted_packages/test_references.py, files the PR&#x27;s own test patch changed with the fix: the same 13 as gold-r2 (developer: false_alarm). Listed since NOTES #34 S5.</p><p>Calls AbstractPackageReference.normalize_packages, an @abstractmethod whose body is only a docstring, so None is expected; real references override it. Tracefix should not attack abstract methods (NOTES).</p></details><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice1/elementsinteractive__twyn-317/gold-r1/receipt.md">Read the receipt<span class="sr-only"> for elementsinteractive__twyn-317, gold-r1</span></a></li>
+<li class="miss" data-reveal style="--d:0" data-slice="slice1" data-find="maif__arta-50"><p class="m-id">MAIF__arta-50</p><p class="m-facts"><span>Upstream fix (gold)</span><span>Slice 1</span><span class="m-lv m-cx">COUNTEREXAMPLE</span></p><details><summary>The developer’s label</summary><p>fix_does_not_fix rests on a test that never reaches the fix: all four rules dicts it tries are rejected by arta&#x27;s own RulesDict model at the base commit (group -&gt; rule -&gt; {condition: callable, action: callable}, extra keys forbidden): two nest a third level, one has a &#x27;rule&#x27; key, and the flat one passes {&#x27;OR&#x27;: [...]} as a condition, which isn&#x27;t callable. RulesEngine() raises the same ValidationError before and after the fix; the hidden tests pass on gold (NOTES #29).</p></details><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice1/MAIF__arta-50/gold-r1/receipt.md">Read the receipt<span class="sr-only"> for MAIF__arta-50, gold-r1</span></a></li>
+<li class="miss" data-reveal style="--d:1" data-slice="slice1" data-find="zarr-developers__virtualizarr-979"><p class="m-id">zarr-developers__virtualizarr-979</p><p class="m-facts"><span>Upstream fix (gold)</span><span>Slice 1</span><span class="m-lv m-cx">COUNTEREXAMPLE</span></p><details><summary>The developer’s label</summary><p>Input {} has no inline values, so the property (inline values never raise NotImplementedError) doesn&#x27;t apply; ValueError &#x27;need a chunk grid shape if no chunks given&#x27; is ChunkManifest&#x27;s deliberate validation, same on base. The raises_only check counted an unrelated exception (NOTES).</p></details><a class="more" href="https://github.com/momirie/tracefix/blob/main/benchmarks/results/slice1/zarr-developers__virtualizarr-979/gold-r1/receipt.md">Read the receipt<span class="sr-only"> for zarr-developers__virtualizarr-979, gold-r1</span></a></li>
+      </ul>
+      <p class="mute none-match" hidden>No miss of this kind matches.</p>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD: docs/BENCHMARK.md, shortened; the limits come from scripts/bench/'s constants -->
+<section id="method" class="band" aria-labelledby="method-h">
+  <div class="frame pad method">
+    <div class="sec-head">
+      <h2 id="method-h" class="h2" data-words>Method. <span class="soft">And what the numbers don’t show.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The full method, the commands to run it again and every table: <a href="https://github.com/momirie/tracefix/blob/main/docs/BENCHMARK.md">docs/BENCHMARK.md</a>.</p>
+    </div>
+    <div class="cols">
+      <dl class="facts-list" data-reveal>
+        <div><dt>Tasks</dt><dd>Real merged bug fixes from SWE-rebench (Nebius, CC BY): each with a Docker image and hidden tests, the tests the upstream pull request added. At most 2 tasks per project, in a fixed order, never hand-picked.</dd></div>
+        <div><dt>Fixes</dt><dd>Correct: the upstream fix, and agent fixes the hidden tests pass. Wrong: the upstream fix with one hunk removed (kept only when the hidden tests then fail), and agent fixes the hidden tests fail. The agent patches come from an OpenHands agent’s runs that Nebius published.</dd></div>
+        <div><dt>What Tracefix sees</dt><dd>What a reviewer would: the repo before the fix, the fix and the issue. Never the hidden tests: they stay out of every run’s container.</dd></div>
+        <div><dt>Checks first</dt><dd>Before any model call, a task must pass in its own container: the base suite passes within 180 s, the hidden tests fail before the fix and pass on the upstream fix. A task that fails a check is left out, with its reason.</dd></div>
+        <div><dt>Runs</dt><dd><code>tracefix verify</code> once per fix, in Docker, with strict isolation and a limit of 2 hours per run.</dd></div>
+        <div><dt>Labels</dt><dd>The developer judges every finding the numbers count: real bug, false alarm or unclear. A model may propose a label; only the developer’s labels count.</dd></div>
+        <div><dt>Set aside</dt><dd>A counterexample whose only cause is a regression in a test the upstream pull request itself changed says nothing about the fix, so it is counted apart.</dd></div>
+      </dl>
+      <div class="caveats" data-reveal style="--d:2">
+        <h3 class="h3">Caveats</h3>
+        <ul>
+          <li><b>Small numbers.</b> One run moves a wrong-fix rate by several points. Treat every rate as a measurement in progress.</li>
+          <li><b>Development split.</b> The newest numbers are from the tasks the next round of changes is tuned on; the gates are read on the held-out tasks after it.</li>
+          <li><b>One run per fix.</b> A second run of the same fix can land on a different level, and now and then a different verdict.</li>
+          <li><b>One agent.</b> Every agent patch comes from one agent setup. Other agents make other mistakes.</li>
+          <li><b>Seen before?</b> The tasks are public and likely older than the models’ training data, so a model may have seen the fix or its tests.</li>
+          <li><b>A skewed sample.</b> Only projects whose suite runs quickly in the published image qualify; large projects are not represented yet.</li>
+          <li><b>One person’s labels.</b> Written down with reasons, and linked from every miss above.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT: from the numbers to the receipts they come from -->
+<section class="band" aria-label="Next page">
+  <div class="frame pad next">
+    <a class="next-card" href="../receipts/" data-reveal>
+      <span class="eyebrow">Next</span>
+      <span class="next-title">Read the receipts. <span class="soft">Every fixture’s receipt, the way a PR comment shows it.</span></span>
+      <span class="next-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer class="band ink foot">
+  <div class="frame">
+    <img src="../assets/logo-reversed.svg" alt="Tracefix" width="100" height="36">
+    <nav aria-label="Footer">
+      <a href="../#levels">Evidence levels</a>
+      <a href="../benchmark/">Benchmark</a>
+      <a href="../receipts/">Receipts</a>
+      <a href="../method/">Method</a>
+      <a href="../talk/">Talk to me</a>
+      <a href="../talk/#feedback">Report a wrong receipt</a>
+      <a href="https://github.com/momirie/tracefix">GitHub (after release)</a>
+      <span>MIT licence</span>
+    </nav>
+    <div class="theme" role="group" aria-label="Colour theme">
+      <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+      <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+      <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<!-- The command palette (Ctrl or Cmd + K, or "/"): site.js fills it from the entries below
+     (scripts/site_palette.py) and shows the buttons that open it. -->
+<dialog id="palette" class="palette" aria-label="Search this site" data-root="../">
+  <div class="pal-top">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+    <input id="pal-in" type="text" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-autocomplete="list" aria-label="Search pages, receipts and sections" placeholder="Search pages, receipts and sections" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <button type="button" class="pal-close" data-palette-close>Esc</button>
+  </div>
+  <ul id="pal-list" class="pal-list" role="listbox" aria-label="Results"></ul>
+  <p id="pal-none" class="pal-none" role="status" hidden>Nothing matches. Try a fixture name, a level or a page.</p>
+  <p class="pal-foot" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></p>
+</dialog>
+<script type="application/json" id="palette-data">[{"g":"Pages","t":"Home","h":"Watch Tracefix break a fix","u":""},{"g":"Pages","t":"Benchmark","h":"How often it is right on real fixes, and every miss","u":"benchmark/"},{"g":"Pages","t":"Receipts","h":"What Tracefix hands back, for every fixture","u":"receipts/"},{"g":"Pages","t":"Method","h":"How it decides, and where it stops","u":"method/"},{"g":"Pages","t":"Talk to me","h":"A conversation before anything ships","u":"talk/"},{"g":"Receipts","t":"good_fix","h":"Orders list is missing the last order","u":"receipts/good_fix/","lv":"L4"},{"g":"Receipts","t":"partial_fix","h":"Service crashes at startup when PORT is not set","u":"receipts/partial_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"wrong_but_green","h":"Histogram buckets are wrong for large values","u":"receipts/wrong_but_green/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"test_weakened","h":"Trailing dash in slugs for titles ending in punctuation","u":"receipts/test_weakened/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"special_cased","h":"Lease schedule contains a payment on 29 Feb 2100","u":"receipts/special_cased/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"unguarded_test","h":"truncate() returns strings longer than max_len","u":"receipts/unguarded_test/","lv":"L1"},{"g":"Receipts","t":"no_fix","h":"Contact import creates duplicates for differently-capitalised emails","u":"receipts/no_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"env_broken","h":"weekly_report() week number off by one on Mondays","u":"receipts/env_broken/","lv":"L0"},{"g":"Receipts","t":"method_partial","h":"Listener crashes when no port is configured","u":"receipts/method_partial/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"method_good","h":"Minor bump keeps the old patch number","u":"receipts/method_good/","lv":"L4"},{"g":"Receipts","t":"py39_partial","h":"Final table says \"11st place\"","u":"receipts/py39_partial/","lv":"COUNTEREXAMPLE"},{"g":"Sections","t":"Replay the attack","h":"Home","u":"#attack"},{"g":"Sections","t":"Try your own input","h":"Home","u":"#try"},{"g":"Sections","t":"Where it stands","h":"Home","u":"#stands"},{"g":"Sections","t":"The Butterfly","h":"Home","u":"#butterfly"},{"g":"Sections","t":"The Hard-Code","h":"Home","u":"#hard-code"},{"g":"Sections","t":"The Lawyer","h":"Home","u":"#lawyer"},{"g":"Sections","t":"Evidence levels","h":"Home","u":"#levels"},{"g":"Sections","t":"Install","h":"Home","u":"#install"},{"g":"Sections","t":"Questions","h":"Home","u":"#faq"},{"g":"Sections","t":"Release gates","h":"Benchmark","u":"benchmark/#gates"},{"g":"Sections","t":"Results per slice","h":"Benchmark","u":"benchmark/#results"},{"g":"Sections","t":"Every counted miss","h":"Benchmark","u":"benchmark/#misses"},{"g":"Sections","t":"How it was measured","h":"Benchmark","u":"benchmark/#method"},{"g":"Sections","t":"The rule","h":"Method","u":"method/#rule"},{"g":"Sections","t":"The run, stage by stage","h":"Method","u":"method/#run"},{"g":"Sections","t":"The ladder and the strict L4 gate","h":"Method","u":"method/#ladder"},{"g":"Sections","t":"Isolation and the tamper watch","h":"Method","u":"method/#isolation"},{"g":"Sections","t":"In the pull request","h":"Method","u":"method/#loop"},{"g":"Sections","t":"Fork pull requests","h":"Method","u":"method/#forks"},{"g":"Sections","t":"What is sent to Anthropic","h":"Method","u":"method/#sent"},{"g":"Sections","t":"What I would ask","h":"Talk to me","u":"talk/#ask"},{"g":"Sections","t":"Report a wrong receipt","h":"Talk to me","u":"talk/#feedback"}]</script>
+<script src="../assets/site.js" onerror="tracefixShowAll()"></script>
+</body>
+</html>

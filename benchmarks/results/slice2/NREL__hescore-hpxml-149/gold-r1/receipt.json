@@ -1,0 +1,353 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T18:58:47+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: tests/test_translation.py::TestOtherHouses.test_external_id_passthru passed before the fix and fails after it",
+    "regression: tests/test_translation.py::TestOtherHouses.test_external_id_extension_passthru passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "e5af84582b4524ad92bac0a9f153051f2d39f5eb"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "ef82cc422589174e37527d9d5cc16a8b9d47cf0c"
+  },
+  "issue": {
+    "title": "Move external_building_id to building_address",
+    "sha256": "924cf63e9b7d80caf2fa9b5cae607516d7009b7b08e4d7f509feb54ae622ab49"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the issue, but two existing tests (TestOtherHouses.test_external_id_passthru and test_external_id_extension_passthru in tests/test_translation.py) passed before the fix and fail after it, which is a counterexample. Check whether those tests still assert external_building_id under building.about; if so, either update them deliberately to expect building_address or adjust th…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 4.41,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 2.6,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 22.32,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 3 of 5 mutants; 80% is needed",
+      "duration_s": 69.77,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.6,
+        "repro_kill_rate": 0.4,
+        "pr_kill_rate": null,
+        "mutants": 5,
+        "killed": 3,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-e5a3a211cc4e",
+          "m-d8d6c7e71e2e",
+          "m-b9b90e73b60a"
+        ],
+        "rule_mutants": 4,
+        "rule_kill_rate": 0.75,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 3 of 5 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "2 confirmed: tests/test_translation.py::TestOtherHouses.test_external_id_passthru, tests/test_translation.py::TestOtherHouses.test_external_id_extension_passthru",
+      "duration_s": 33.66,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/test_translation.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 172,
+        "not_run": 0,
+        "regressions": 2,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 1.85,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 7
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: HPXMLtoHEScoreTranslatorBase.get_building_address: the comparison did not finish",
+      "duration_s": 2.14,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 23.66,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 0,
+        "properties_counted": 5,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.09,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/test_translation.py",
+      "test": "TestOtherHouses.test_external_id_passthru",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: '6c4dd22f273a4f0b89b079663604e81b' != None",
+      "line": 1052
+    },
+    {
+      "file": "tests/test_translation.py",
+      "test": "TestOtherHouses.test_external_id_extension_passthru",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: '031e1380e1e44898abb3982861371845' != None",
+      "line": 1061
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-6d7f1e4ce27b",
+      "origin": "model",
+      "file": "hescorehpxml/base.py",
+      "line": 833,
+      "original": "            'h:extension/h:HESExternalID/text()',",
+      "replacement": "            'h:extension/h:HESExternalIDX/text()',",
+      "description": "Wrong element name for the HESExternalID xpath, so the extension ID is never found.",
+      "diff": "--- a/hescorehpxml/base.py\n+++ b/hescorehpxml/base.py\n@@ -832,3 +832,3 @@\n         ext_id_xpath_exprs = (\n-            'h:extension/h:HESExternalID/text()',\n+            'h:extension/h:HESExternalIDX/text()',\n             'h:BuildingID/h:SendingSystemIdentifierValue/text()'\n",
+      "words": "hescorehpxml/base.py:833: changing `            'h:extension/h:HESExternalID/text()',` to `            'h:extension/h:HESExternalIDX/text()',` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-dac7f5a7deb1",
+      "origin": "model",
+      "file": "hescorehpxml/base.py",
+      "line": 840,
+      "original": "                break",
+      "replacement": "                continue",
+      "description": "Does not stop after the first match, so a later xpath overrides the preferred external ID.",
+      "diff": "--- a/hescorehpxml/base.py\n+++ b/hescorehpxml/base.py\n@@ -839,3 +839,3 @@\n                 bldgaddr['external_building_id'] = external_id_value\n-                break\n+                continue\n \n",
+      "words": "hescorehpxml/base.py:840: changing `                break` to `                continue` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-dac7f5a7deb1",
+      "origin": "rule",
+      "file": "hescorehpxml/base.py",
+      "line": 840,
+      "original": "                break",
+      "replacement": "                continue",
+      "description": "rule: `break` -> `continue`",
+      "diff": "--- a/hescorehpxml/base.py\n+++ b/hescorehpxml/base.py\n@@ -839,3 +839,3 @@\n                 bldgaddr['external_building_id'] = external_id_value\n-                break\n+                continue\n \n",
+      "words": "hescorehpxml/base.py:840: changing `                break` to `                continue` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "hescorehpxml/base.py": [
+        832,
+        836,
+        837,
+        838,
+        839,
+        840,
+        883
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 7,
+        "total": 7
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 46116,
+    "output_tokens": 4502,
+    "cost_estimate": {
+      "usd": 0.2096,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "hescorehpxml.base.HPXMLtoHEScoreTranslatorBase.get_building_address",
+      "path": "hescorehpxml/base.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "hescorehpxml.base.HPXMLtoHEScoreTranslatorBase.get_building_about",
+      "path": "hescorehpxml/base.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

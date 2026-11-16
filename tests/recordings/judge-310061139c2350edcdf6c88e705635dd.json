@@ -1,0 +1,11 @@
+{
+ "key": "310061139c2350edcdf6c88e705635dd686ba745d51e1ab3aa681ed1199146ed",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 4606,
+  "output_tokens": 965,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"The issue names truncate('hello world', 5) giving 6 chars; the result now fits in max_len=5.\"},{\"change\":\"c2\",\"label\":\"intended\",\"reason\":\"Same issue rule: the result must not exceed max_len. The old 11-char result for max_len=8 overflowed; 'hello...' fits.\"},{\"change\":\"c3\",\"label\":\"intended\",\"reason\":\"Issue rule (result never longer than max_len): with max_len=0 only '' fits, replacing the 1-char overflow.\"},{\"change\":\"c4\",\"label\":\"intended\",\"reason\":\"Same overflow as the issue example on a long input: 6 chars for max_len=5 becomes 5.\"},{\"change\":\"c5\",\"label\":\"intended\",\"reason\":\"With max_len=0 the issue's length rule forces ''; the old '\u2026' overflowed.\"},{\"change\":\"c6\",\"label\":\"intended\",\"reason\":\"With max_len=0 the issue's length rule forces ''; the old '\u2026' overflowed.\"},{\"change\":\"c7\",\"label\":\"intended\",\"reason\":\"With max_len=0 and a custom ellipsis, the issue's length rule still forces ''.\"},{\"change\":\"c8\",\"label\":\"intended\",\"reason\":\"With max_len=0 and a custom ellipsis, the issue's length rule still forces ''.\"},{\"change\":\"c9\",\"label\":\"intended\",\"reason\":\"With max_len=0, the old 3-char ellipsis overflowed; per the issue only '' fits.\"},{\"change\":\"c10\",\"label\":\"intended\",\"reason\":\"With max_len=0, the old 2-char ellipsis overflowed; per the issue only '' fits.\"},{\"change\":\"c11\",\"label\":\"intended\",\"reason\":\"Old result was 4 chars for max_len=2, the issue's overflow bug; the new 2-char result keeps the full ellipsis and fits.\"},{\"change\":\"c12\",\"label\":\"intended\",\"reason\":\"With max_len=0 the issue's length rule forces ''; the old '\u2026' overflowed.\"}]}"
+ },
+ "role": "judge"
+}

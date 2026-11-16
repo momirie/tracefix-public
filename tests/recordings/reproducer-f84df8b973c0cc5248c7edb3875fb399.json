@@ -1,0 +1,11 @@
+{
+ "key": "f84df8b973c0cc5248c7edb3875fb39948e4bd1ecea1ea87ddc7dacb9282b812",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1652,
+  "output_tokens": 215,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from svc.config import load_settings, parse_port\\n\\n\\ndef test_parse_port_none_defaults_to_8080() -> None:\\n    assert parse_port(None) == 8080\\n\\n\\ndef test_parse_port_blank_defaults_to_8080() -> None:\\n    assert parse_port(\\\"   \\\") == 8080\\n\\n\\ndef test_load_settings_without_port_uses_default() -> None:\\n    assert load_settings({}).port == 8080\\n\",\"rationale\":\"Checks that an unset (None) or blank PORT falls back to 8080 via parse_port and load_settings instead of crashing.\"}"
+ },
+ "role": "reproducer"
+}

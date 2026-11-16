@@ -1,0 +1,149 @@
+{
+ "instance_id": "encode__httpx-883",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "pytest_asyncio.plugin",
+  "pytest_mock",
+  "pytest_trio.plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 10.034,
+ "suite_timeout": 120,
+ "source_hunks": 2,
+ "variants": [
+  {
+   "index": 0,
+   "path": "httpx/_client.py",
+   "old_start": 426,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "httpx/_client.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "httpx/_content_streams.py",
+   "old_start": 71,
+   "old_len": 8,
+   "label": "no_effect",
+   "failing": 11,
+   "functions": [
+    {
+     "path": "httpx/_content_streams.py",
+     "function": "ByteStream.get_headers"
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 59693,
+   "label": "no_effect",
+   "failing": 11,
+   "kept": true,
+   "functions": [
+    {
+     "path": "httpx/__init__.py",
+     "function": null
+    },
+    {
+     "path": "httpx/_client.py",
+     "function": null
+    },
+    {
+     "path": "httpx/_client.py",
+     "function": "Client.init_dispatch"
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": null
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": "SyncASGIDispatch.__init__"
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": "SyncASGIDispatch.send"
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": "SyncASGIDispatch.send.receive"
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": "SyncASGIDispatch.send.run_app"
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": "SyncASGIDispatch.send.send"
+    }
+   ],
+   "differs": [
+    {
+     "path": "httpx/__init__.py",
+     "function": null
+    },
+    {
+     "path": "httpx/_client.py",
+     "function": null
+    },
+    {
+     "path": "httpx/_client.py",
+     "function": "Client.init_dispatch"
+    },
+    {
+     "path": "httpx/_content_streams.py",
+     "function": "ByteStream.get_headers"
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": null
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": "SyncASGIDispatch.__init__"
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": "SyncASGIDispatch.send"
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": "SyncASGIDispatch.send.receive"
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": "SyncASGIDispatch.send.run_app"
+    },
+    {
+     "path": "httpx/_dispatch/sync_asgi.py",
+     "function": "SyncASGIDispatch.send.send"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "21f533774f87292c2381376eb40f3216a48eee06",
+  "gold": "73ac62bd072ef2a5ced5282b4176a2f91aa6262e",
+  "v1": "fb4d75ee1aa34374e201ddd7fb7f311c296fb807",
+  "agent_wrong": "a12ebe69beb58728b7a4d84cfc188d5d6a333985"
+ },
+ "seconds": 51.531
+}

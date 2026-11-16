@@ -1,0 +1,422 @@
+<!doctype html>
+<!-- Built by scripts/build_site.py from docs/landing/_src/. Edit the source, then run the script. -->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>unguarded_test: truncate() returns strings longer than max_len</title>
+<meta name="description" content="The receipt Tracefix wrote for the unguarded_test fixture. Correctly reserves room for the ellipsis so results never exceed max_len, but the only added test also passes on the buggy code, so nothing guards the fix.">
+<!-- Search engines: SEARCHABLE in scripts/build_site.py, off while the site is a private preview
+     (until the release gates hold, DECISIONS 2026-11-06). -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0b" id="theme-color">
+<link rel="canonical" href="https://tracefix.dev/receipts/unguarded_test/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tracefix.dev/receipts/unguarded_test/">
+<meta property="og:title" content="unguarded_test: truncate() returns strings longer than max_len">
+<meta property="og:description" content="The receipt Tracefix wrote for the unguarded_test fixture. Correctly reserves room for the ellipsis so results never exceed max_len, but the only added test also passes on the buggy code, so nothing guards the fix.">
+<meta property="og:image" content="https://tracefix.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="preload" href="../../assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  // Before first paint: mark JS, and apply the theme: Dark unless the visitor saved Light or System.
+  (function () {
+    var d = document.documentElement, t = 'dark'; d.className = 'js';
+    try { var saved = localStorage.getItem('tracefix-theme'); if (saved === 'light' || saved === 'system') t = saved; } catch (e) {}
+    d.setAttribute('data-theme', t);
+    // Fail-safe: site.css hides the reveal blocks until site.js shows them. If site.js fails to load
+    // (its onerror) or has not started the reveals in 2.5 s, show every block as it is.
+    function showAll() {
+      if (d.classList.contains('reveals-on')) return;
+      var all = document.querySelectorAll('[data-reveal],[data-words],[data-reveal-group],.hero');
+      for (var i = 0; i < all.length; i++) all[i].classList.add('is-in');
+    }
+    window.tracefixShowAll = showAll;
+    setTimeout(showAll, 2500);
+  })();
+</script>
+<link rel="stylesheet" href="../../assets/site.css">
+<!-- Fetch a page of this site when a link to it is hovered or pressed, so the next page is ready. -->
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="preview-note" aria-label="Private preview"><p>Private preview: Tracefix is not released yet, so its GitHub links open only for collaborators. <a href="../../talk/">Talk to me</a></p></aside>
+
+<header class="site-head" id="head">
+  <div class="frame">
+    <a class="logo" href="../../#top" aria-label="Tracefix home"><img class="lt" src="../../assets/logo.svg" alt="" width="100" height="36"><img class="dk" src="../../assets/logo-reversed.svg" alt="" width="100" height="36"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="../../benchmark/">Benchmark<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../receipts/" aria-current="true">Receipts<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../method/">Method<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../#install">Install</a>
+      <button type="button" class="pal-open" data-palette-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><span class="pal-open-label">Search</span><kbd data-palette-key>Ctrl K</kbd></button>
+      <div class="theme" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+        <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+        <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+      </div>
+      <a class="btn btn-sm" href="../../talk/">Talk to me</a>
+    </nav>
+    <details class="menu">
+      <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span class="menu-label">Menu</span></summary>
+      <nav aria-label="Menu">
+        <a href="../../benchmark/">Benchmark</a>
+        <a href="../../receipts/" aria-current="true">Receipts</a>
+        <a href="../../method/">Method</a>
+        <a href="../../talk/">Talk to me</a>
+        <a href="../../#install">Install</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main" tabindex="-1" class="page rc-page">
+<!-- ONE RECEIPT. Every fact fills a hole from scripts/site_receipts.py: the receipt folder in
+     docs/landing/_data/receipts/unguarded_test/ and the fixture in tests/fixtures/unguarded_test/. -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow crumbs"><a href="../">Receipts</a> / unguarded_test</p>
+    <h1 style="view-transition-name:title-unguarded_test;view-transition-class:rc-title">truncate() returns strings longer than max_len</h1>
+    <p class="lede" data-reveal style="--d:1">Correctly reserves room for the ellipsis so results never exceed max_len, but the only added test also passes on the buggy code, so nothing guards the fix.</p>
+    <p class="rc-facts" data-reveal style="--d:2"><span class="lvl" style="view-transition-name:lvl-unguarded_test;view-transition-class:rc-lvl">L1</span><span>Known answer: exactly L1 · meets it</span><span>run 1:35</span></p>
+    <ul class="jump" aria-label="On this page" data-reveal style="--d:3">
+      <li><a href="#fix">The issue and the fix</a></li>
+      
+      <li><a href="#receipt">The receipt</a></li>
+      <li><a href="#tests">The tests it wrote</a></li>
+      <li><a href="#run">The run</a></li>
+    </ul>
+  </div>
+</section>
+
+<section id="fix" class="band" aria-labelledby="fix-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="fix-h" class="h2" data-words>The issue and the fix. <span class="soft">What Tracefix was given.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The issue text, the commit before the fix and the commit with it. The known answer stays outside the repo Tracefix sees.</p>
+    </div>
+    <div class="rc-given">
+      <figure class="panel md md-issue" data-reveal><figcaption>ISSUE.md</figcaption><div class="md-body">
+<h3>truncate() returns strings longer than max_len</h3>
+<p><code>truncate()</code> returns strings longer than <code>max_len</code>. <code>truncate('hello world', 5)</code> gives
+6 characters, and it overflows our fixed-width table column.</p>
+
+      </div></figure>
+      <div class="rc-diffs" data-reveal style="--d:1">
+        <p class="label">2 files changed, +9 −2</p>
+<figure class="panel diff"><figcaption>src/textutil/trunc.py <span class="soft">+5 −2</span></figcaption><div class="lines" tabindex="0" role="region" aria-label="Diff of src/textutil/trunc.py"><div class="lines-in"><div class="d d-hunk">@@ -6,10 +6,13 @@</div><div class="d"> def truncate(text: str, max_len: int, ellipsis: str = DEFAULT_ELLIPSIS) -&gt; str:</div><div class="d">     &quot;&quot;&quot;Shorten `text` to fit in `max_len` characters, marking the cut with `ellipsis`.</div><div class="d"> </div><div class="d d-del">-    Text that already fits is returned unchanged. Raises ValueError if max_len is negative.</div><div class="d d-add">+    Text that already fits is returned unchanged. The result is never longer than max_len:</div><div class="d d-add">+    if max_len is shorter than the ellipsis itself, the ellipsis is cut to max_len characters</div><div class="d d-add">+    (so max_len == 0 gives &quot;&quot;). Raises ValueError if max_len is negative.</div><div class="d">     &quot;&quot;&quot;</div><div class="d">     if max_len &lt; 0:</div><div class="d">         raise ValueError(f&quot;max_len must not be negative, got {max_len}&quot;)</div><div class="d">     if len(text) &lt;= max_len:</div><div class="d">         return text</div><div class="d d-del">-    return text[:max_len] + ellipsis</div><div class="d d-add">+    keep = max(max_len - len(ellipsis), 0)</div><div class="d d-add">+    return (text[:keep] + ellipsis)[:max_len]</div></div></div></figure>
+<figure class="panel diff"><figcaption>tests/test_trunc.py <span class="soft">+4 −0</span></figcaption><div class="lines" tabindex="0" role="region" aria-label="Diff of tests/test_trunc.py"><div class="lines-in"><div class="d d-hunk">@@ -15,6 +15,10 @@</div><div class="d">     assert truncate(&quot;&quot;, 0) == &quot;&quot;</div><div class="d"> </div><div class="d"> </div><div class="d d-add">+def test_truncate_adds_ellipsis() -&gt; None:</div><div class="d d-add">+    assert truncate(&quot;hello world&quot;, 5).endswith(&quot;…&quot;)</div><div class="d d-add">+</div><div class="d d-add">+</div><div class="d"> def test_negative_max_len_rejected() -&gt; None:</div><div class="d">     with pytest.raises(ValueError):</div><div class="d">         truncate(&quot;hello&quot;, -1)</div></div></div></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="receipt" class="band" aria-labelledby="receipt-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="receipt-h" class="h2" data-words>The receipt. <span class="soft">As it reads in a PR comment.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The receipt.md Tracefix wrote, rendered the way GitHub renders it. The same run also wrote <a href="https://github.com/momirie/tracefix/blob/main/docs/landing/_data/receipts/unguarded_test/receipt.json">receipt.json</a>, the record the level is computed from (<a href="https://github.com/momirie/tracefix/blob/main/docs/landing/_data/receipts/unguarded_test/receipt.md">receipt.md as text</a>).</p>
+    </div>
+    <article class="panel md md-receipt" aria-label="Fix Receipt"><div class="panel-head">receipt.md</div><div class="md-body">
+<h3>Fix Receipt: L1 (the bug is reproduced and this fix removes it)</h3>
+<p><strong>Summary</strong> (advisory, written by the model claude-opus-5-5; it never sets the level): The verifier reproduced the bug with a test that fails before the fix and passes after it, and it found no regressions, no breaking inputs, and only behaviour changes judged intended. However, the PR's own test file tests/test_trunc.py still passes with the fix reverted, so next look at adding a test there that actually fails on the old code (for example, asserting len(truncate('hello world', 5))…</p>
+<p><strong>Why this level:</strong> the bug was reproduced: a test fails before the fix and passes after it; not L2: the PR's test file tests/test_trunc.py does not fail with the fix reverted (passed)</p>
+<p><strong>Issue:</strong> truncate() returns strings longer than max_len · <strong>Repo:</strong> unguarded_test · <strong>Base</strong> <code>base</code> (<code>47cc8c4</code>) → <strong>head</strong> <code>head</code> (<code>9f620ef</code>)<br />
+<strong>Isolation:</strong> basic (bubblewrap (bwrap) is not installed)</p>
+<div class="alert alert-warning">
+<p class="alert-title">Warning</p>
+<ul>
+<li>Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.</li>
+</ul>
+</div>
+<h4>Counterexamples</h4>
+<p>None found.</p>
+<h4>Stages</h4>
+<div class="md-scroll" tabindex="0" role="region" aria-label="Stages">
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Status</th>
+<th>Key numbers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>environment</code></td>
+<td><code>ok</code></td>
+<td>base suite passed</td>
+</tr>
+<tr>
+<td><code>import_check</code></td>
+<td><code>ok</code></td>
+<td>modules 1</td>
+</tr>
+<tr>
+<td><code>reproduce</code></td>
+<td><code>reproduced</code></td>
+<td>attempts 1</td>
+</tr>
+<tr>
+<td><code>guard</code></td>
+<td><code>not_guarded</code></td>
+<td>kill rate 0.2, mutants 5, killed 1, survived 4</td>
+</tr>
+<tr>
+<td><code>regressions</code></td>
+<td><code>none_found</code></td>
+<td>compared 4, regressions 0, unconfirmed 0</td>
+</tr>
+<tr>
+<td><code>fix_line_coverage</code></td>
+<td><code>ok</code></td>
+<td>fix lines 2</td>
+</tr>
+<tr>
+<td><code>behaviour_diff</code></td>
+<td><code>compared</code></td>
+<td>inputs compared 287, changes 24, groups 1</td>
+</tr>
+<tr>
+<td><code>break_my_fix</code></td>
+<td><code>none_found</code></td>
+<td>targets 1, inputs tried 990, properties counted 7, findings 0</td>
+</tr>
+<tr>
+<td><code>integrity</code></td>
+<td><code>clean</code></td>
+<td>flags 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4>Behaviour changes</h4>
+<ul>
+<li><code>textutil.trunc.truncate</code> (<code>value</code>, 24 inputs): <code>returns 'hello…'</code> → <code>returns 'hell…'</code>; explained by: the issue names this call; the Judge (advisory) calls it intended: The issue names this exact call: the result must not exceed max_len=5, and 'hell…' is 5 characters.; the Judge (advisory) calls it intended: Same issue rule with a multi-character ellipsis: the old 11-character result exceeded max_len=8, and the new one is exactly 8.; the Judge (advisory) calls it intended: The result must never exceed max_len per the issue; with max_len=0 the only fitting result is '', which the new docstring states.; the Judge (advisory) calls it intended: Same as the issue's example on a longer text: the 6-character result is cut to 5.; the Judge (advisory) calls it intended: max_len=0 must give a result of at most 0 characters per the issue; the docstring says max_len == 0 gives ''.; the Judge (advisory) calls it intended: A custom ellipsis longer than max_len=0 is cut to fit, which is the issue's length rule; the docstring states it.; the Judge (advisory) calls it intended: Same max_len=0 rule: the old 2-character result exceeded max_len, and '' fits.; the Judge (advisory) calls it intended: The old 2-character result exceeded max_len=1; the issue's rule requires at most 1 character, and the ellipsis alone fits.; the Judge (advisory) calls it intended: The old 2-character result exceeded max_len=1 with a custom ellipsis; the same issue rule applies.</li>
+</ul>
+<h4>Changes no test noticed (3 of 6; the rest in receipt.json)</h4>
+<ul>
+<li>
+<p><code>src/textutil/trunc.py:17</code>: <code>    keep = max(max_len - len(ellipsis), 0)</code> → <code>    keep = max(max_len - len(ellipsis), 1)</code> made no test fail; behaves differently from the fix on inputs no test checks (<code>m-579fad2b936a</code>)</p>
+</li>
+<li>
+<p><code>src/textutil/trunc.py:18</code>: <code>    return (text[:keep] + ellipsis)[:max_len]</code> → <code>    return (text[:keep] + ellipsis)[:max_len + 1]</code> made no test fail; behaves differently from the fix on inputs no test checks (<code>m-f80fdb4af18f</code>)</p>
+</li>
+<li>
+<p><code>src/textutil/trunc.py:18</code>: <code>    return (text[:keep] + ellipsis)[:max_len]</code> → <code>    return (text[:keep] + ellipsis)[-max_len:]</code> made no test fail; behaves differently from the fix on inputs no test checks (<code>m-6db47f738159</code>)</p>
+</li>
+<li>
+<p><strong>Not checked:</strong> concurrency; database state; network and external services; authentication and authorisation; performance; configuration; 9 things the behaviour diff can't observe (run log)</p>
+</li>
+<li>
+<p><strong>Model use:</strong> 7 calls, 19,311 input and 5,020 output tokens, cost $0.1622 (estimate at list prices)</p>
+</li>
+</ul>
+<details>
+<summary>Run log</summary>
+<h5>Stages</h5>
+<ul>
+<li><code>environment</code>: <code>ok</code>, 0.98 s: base suite passed
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no</code></li>
+</ul>
+</li>
+<li><code>import_check</code>: <code>ok</code>, 1.83 s: 1 changed module(s) imported from the copies (2 imports in all)
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py</code></li>
+</ul>
+</li>
+<li><code>reproduce</code>: <code>reproduced</code>, 14.98 s: attempt 1: fails before the fix and passes after it
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+</ul>
+</li>
+<li><code>guard</code>: <code>not_guarded</code>, 40.45 s: the PR's test file tests/test_trunc.py does not fail with the fix reverted (passed)
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_trunc.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no</code></li>
+</ul>
+</li>
+<li><code>regressions</code>: <code>none_found</code>, 0.99 s: none of the 4 untouched tests that passed before the fix fails after it
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors</code></li>
+</ul>
+</li>
+<li><code>fix_line_coverage</code>: <code>ok</code>, 2.92 s: report only: which fix lines the tests run
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_trunc.py</code></li>
+</ul>
+</li>
+<li><code>behaviour_diff</code>: <code>compared</code>, 15.28 s: 287 input(s) compared on 1 function(s): 24 changed with the fix
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py</code></li>
+</ul>
+</li>
+<li><code>break_my_fix</code>: <code>none_found</code>, 17.11 s: no counterexample found in 990 inputs against 7 properties
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_trunc.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py</code></li>
+</ul>
+</li>
+<li><code>integrity</code>: <code>clean</code>, 0.01 s: nothing suspicious in the fix's test or source changes</li>
+</ul>
+<h5>Break My Fix targets</h5>
+<ul>
+<li><code>textutil.trunc.truncate</code> (<code>src/textutil/trunc.py</code>): 990 inputs</li>
+</ul>
+<h5>More changes no test noticed</h5>
+<ul>
+<li><code>src/textutil/trunc.py:18</code>: <code>    return (text[:keep] + ellipsis)[:max_len]</code> → <code>    return text[:keep] + ellipsis</code> made no test fail; behaves differently from the fix on inputs no test checks (<code>m-51752bbfdc07</code>)</li>
+<li><code>src/textutil/trunc.py:17</code>: <code>    keep = max(max_len - len(ellipsis), 0)</code> → <code>    keep = max(max_len - len(ellipsis), (-1))</code> made no test fail; no input tried behaved differently from the fix (<code>m-c52cf8322818</code>)</li>
+<li><code>src/textutil/trunc.py:17</code>: <code>    keep = max(max_len - len(ellipsis), 0)</code> → <code>    keep = max(max_len - len(ellipsis), 1)</code> made no test fail; behaves differently from the fix on inputs no test checks (<code>m-579fad2b936a</code>)</li>
+</ul>
+<h5>Fix lines run (report only)</h5>
+<ul>
+<li>repro: 2 of 2 fix lines run</li>
+<li>pr_test: 2 of 2 fix lines run</li>
+</ul>
+<h5>Not checked</h5>
+<ul>
+<li>concurrency</li>
+<li>database state</li>
+<li>network and external services</li>
+<li>authentication and authorisation</li>
+<li>performance</li>
+<li>configuration</li>
+<li>not observed by the behaviour diff: files written outside the copy, and anything sent off the machine</li>
+<li>not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders</li>
+<li>not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)</li>
+<li>not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)</li>
+<li>not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name</li>
+<li>not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)</li>
+<li>not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns</li>
+<li>not observed by the behaviour diff: objects shared between the result, the arguments and module data</li>
+<li>not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call</li>
+</ul>
+<h5>Notes</h5>
+<ul>
+<li>guard: 1 of the rule mutant kills were crashes on the mutated line</li>
+</ul>
+<h5>This receipt</h5>
+<ul>
+<li>models: reproducer claude-sonnet-5-5, mutator claude-sonnet-5-5, adversary claude-opus-5-5, judge claude-opus-5-5; effort medium; at most 40 calls and 500,000 tokens</li>
+<li>Tracefix 0.0.1, receipt schema 1, created 2026-11-06T14:19:06+00:00, issue sha256 <code>23985096b51eee866e3522d089e64bb9e72a0cc006a5a8094a13c8cdd2c0e264</code></li>
+</ul>
+</details>
+
+    </div></article>
+  </div>
+</section>
+
+<section id="tests" class="band" aria-labelledby="tests-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="tests-h" class="h2" data-words>The tests it wrote. <span class="soft">Run them with pytest.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The reproduction test fails before the fix and passes after it. A finding’s file fails for as long as the fixed code still breaks the property it names.</p>
+    </div>
+    <div class="rc-written" data-reveal>
+<figure class="panel"><figcaption>repro/test_tracefix_repro.py</figcaption><pre class="code" tabindex="0">from textutil.trunc import truncate
+
+
+def test_truncate_never_exceeds_max_len() -&gt; None:
+    result = truncate(&quot;hello world&quot;, 5)
+    assert len(result) &lt;= 5
+
+
+def test_truncate_with_custom_ellipsis_within_max_len() -&gt; None:
+    result = truncate(&quot;hello world&quot;, 8, &quot;...&quot;)
+    assert len(result) &lt;= 8
+    assert result.endswith(&quot;...&quot;)</pre></figure>
+    </div>
+  </div>
+</section>
+
+<section id="run" class="band" aria-labelledby="run-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="run-h" class="h2" data-words>The run. <span class="soft">Seconds since the start on the left.</span></h2>
+      <p class="mute" data-reveal style="--d:2">What <code>tracefix verify</code> printed, with the test suite’s recorded model answers. <a href="https://github.com/momirie/tracefix/tree/main/tests/fixtures/unguarded_test">This fixture on GitHub</a>.</p>
+    </div>
+    <div class="replay" data-reveal>
+      <div class="replay-bar">
+        <p class="label" data-replay-clock>Run time 1:35</p>
+        <button type="button" class="btn btn-sm" data-replay hidden>Replay the run</button>
+      </div>
+      <div class="timeline" data-end="94.7" aria-hidden="true"><span class="tl-seg" data-from="0" data-to="1" style="flex-grow:1.00" title="environment: ok, 1.0 s. base suite passed"><span class="tl-name">environment</span></span><span class="tl-seg" data-from="1" data-to="2.9" style="flex-grow:1.90" title="import_check: ok, 1.9 s. 1 changed module(s) imported from the copies (2 imports in all)"><span class="tl-name">import_check</span></span><span class="tl-seg" data-from="2.9" data-to="17.9" style="flex-grow:15.00" title="reproduce: reproduced, 15.0 s. attempt 1: fails before the fix and passes after it"><span class="tl-name">reproduce</span></span><span class="tl-seg" data-from="17.9" data-to="58.3" style="flex-grow:40.40" title="guard: not_guarded, 40.4 s. the PR&#x27;s test file tests/test_trunc.py does not fail with the fix reverted (passed)"><span class="tl-name">guard</span></span><span class="tl-seg" data-from="58.3" data-to="59.3" style="flex-grow:1.00" title="regressions: none_found, 1.0 s. none of the 4 untouched tests that passed before the fix fails after it"><span class="tl-name">regressions</span></span><span class="tl-seg" data-from="59.3" data-to="62.2" style="flex-grow:2.90" title="fix_line_coverage: ok, 2.9 s. report only: which fix lines the tests run"><span class="tl-name">fix_line_coverage</span></span><span class="tl-seg" data-from="62.2" data-to="77.5" style="flex-grow:15.30" title="behaviour_diff: compared, 15.3 s. 287 input(s) compared on 1 function(s): 24 changed with the fix"><span class="tl-name">behaviour_diff</span></span><span class="tl-seg" data-from="77.5" data-to="94.6" style="flex-grow:17.10" title="break_my_fix: none_found, 17.1 s. no counterexample found in 990 inputs against 7 properties"><span class="tl-name">break_my_fix</span></span><span class="tl-seg" data-from="94.6" data-to="94.6" style="flex-grow:0.05" title="integrity: clean, 0.0 s. nothing suspicious in the fix&#x27;s test or source changes"><span class="tl-name">integrity</span></span><i class="tl-head"></i></div>
+      <figure class="panel term-log"><figcaption>tracefix verify</figcaption><pre class="code" tabindex="0" data-replay-out><span class="o" data-t="0">[    0.0] tracefix: verifying 47cc8c4..9f620ef (isolation: basic)
+</span><span class="o" data-t="1">[    1.0] [1/9] environment: ok (1.0s)
+</span><span class="o" data-t="2.9">[    2.9] [2/9] import_check: ok (1.8s)
+</span><span class="o" data-t="17.9">[   17.9] [3/9] reproduce: reproduced (15.0s)
+</span><span class="o" data-t="58.3">[   58.3] [4/9] guard: not_guarded (40.5s)
+</span><span class="o" data-t="59.3">[   59.3] [5/9] regressions: none_found (1.0s)
+</span><span class="o" data-t="62.2">[   62.2] [6/9] fix_line_coverage: ok (2.9s)
+</span><span class="o" data-t="77.5">[   77.5] [7/9] behaviour_diff: compared (15.3s)
+</span><span class="o" data-t="94.6">[   94.6] [8/9] break_my_fix: none_found (17.1s)
+</span><span class="o" data-t="94.6">[   94.6] [9/9] integrity: clean (0.0s)
+</span><span class="o" data-t="94.7">[   94.7] summary: by judge
+</span><span class="o" data-t="94.7">[   94.7] level: L1
+</span><span class="o" data-t="94.7">[   94.7] Fix Receipt: L1 (run status: ok)
+</span><span class="o" data-t="94.7">[   94.7] Summary by the Judge (advisory): The verifier reproduced the bug with a test that fails before the fix and passes after it, and it found no regressions, no breaking inputs, and only behaviour changes judged intended. However, the PR&#x27;s own test file tests/test_trunc.py still passes with the fix reverted, so next look at adding a test there that actually fails on the old code (for example, asserting len(truncate(&#x27;hello world&#x27;, 5))\u2026
+</span><span class="o" data-t="94.7">[   94.7] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json
+</span></pre></figure>
+    </div>
+  </div>
+</section>
+
+<!-- PAGER: the neighbouring receipts in the gallery's order -->
+<nav class="band" aria-label="More receipts">
+  <div class="frame pad pager" data-reveal>
+<a class="pg pg-prev" rel="prev" href="../special_cased/"><span class="eyebrow">Previous receipt</span><span class="pg-name">special_cased<span class="lvl red">COUNTEREXAMPLE</span></span><span class="pg-title">Lease schedule contains a payment on 29 Feb 2100</span></a><a class="pg pg-next" rel="next" href="../no_fix/"><span class="eyebrow">Next receipt</span><span class="pg-name">no_fix<span class="lvl red">COUNTEREXAMPLE</span></span><span class="pg-title">Contact import creates duplicates for differently-capitalised emails</span></a><p class="pg-keys" hidden>Or press <kbd>←</kbd> and <kbd>→</kbd></p>
+  </div>
+</nav>
+</main>
+
+<footer class="band ink foot">
+  <div class="frame">
+    <img src="../../assets/logo-reversed.svg" alt="Tracefix" width="100" height="36">
+    <nav aria-label="Footer">
+      <a href="../../#levels">Evidence levels</a>
+      <a href="../../benchmark/">Benchmark</a>
+      <a href="../../receipts/">Receipts</a>
+      <a href="../../method/">Method</a>
+      <a href="../../talk/">Talk to me</a>
+      <a href="../../talk/#feedback">Report a wrong receipt</a>
+      <a href="https://github.com/momirie/tracefix">GitHub (after release)</a>
+      <span>MIT licence</span>
+    </nav>
+    <div class="theme" role="group" aria-label="Colour theme">
+      <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+      <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+      <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<!-- The command palette (Ctrl or Cmd + K, or "/"): site.js fills it from the entries below
+     (scripts/site_palette.py) and shows the buttons that open it. -->
+<dialog id="palette" class="palette" aria-label="Search this site" data-root="../../">
+  <div class="pal-top">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+    <input id="pal-in" type="text" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-autocomplete="list" aria-label="Search pages, receipts and sections" placeholder="Search pages, receipts and sections" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <button type="button" class="pal-close" data-palette-close>Esc</button>
+  </div>
+  <ul id="pal-list" class="pal-list" role="listbox" aria-label="Results"></ul>
+  <p id="pal-none" class="pal-none" role="status" hidden>Nothing matches. Try a fixture name, a level or a page.</p>
+  <p class="pal-foot" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></p>
+</dialog>
+<script type="application/json" id="palette-data">[{"g":"Pages","t":"Home","h":"Watch Tracefix break a fix","u":""},{"g":"Pages","t":"Benchmark","h":"How often it is right on real fixes, and every miss","u":"benchmark/"},{"g":"Pages","t":"Receipts","h":"What Tracefix hands back, for every fixture","u":"receipts/"},{"g":"Pages","t":"Method","h":"How it decides, and where it stops","u":"method/"},{"g":"Pages","t":"Talk to me","h":"A conversation before anything ships","u":"talk/"},{"g":"Receipts","t":"good_fix","h":"Orders list is missing the last order","u":"receipts/good_fix/","lv":"L4"},{"g":"Receipts","t":"partial_fix","h":"Service crashes at startup when PORT is not set","u":"receipts/partial_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"wrong_but_green","h":"Histogram buckets are wrong for large values","u":"receipts/wrong_but_green/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"test_weakened","h":"Trailing dash in slugs for titles ending in punctuation","u":"receipts/test_weakened/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"special_cased","h":"Lease schedule contains a payment on 29 Feb 2100","u":"receipts/special_cased/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"unguarded_test","h":"truncate() returns strings longer than max_len","u":"receipts/unguarded_test/","lv":"L1"},{"g":"Receipts","t":"no_fix","h":"Contact import creates duplicates for differently-capitalised emails","u":"receipts/no_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"env_broken","h":"weekly_report() week number off by one on Mondays","u":"receipts/env_broken/","lv":"L0"},{"g":"Receipts","t":"method_partial","h":"Listener crashes when no port is configured","u":"receipts/method_partial/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"method_good","h":"Minor bump keeps the old patch number","u":"receipts/method_good/","lv":"L4"},{"g":"Receipts","t":"py39_partial","h":"Final table says \"11st place\"","u":"receipts/py39_partial/","lv":"COUNTEREXAMPLE"},{"g":"Sections","t":"Replay the attack","h":"Home","u":"#attack"},{"g":"Sections","t":"Try your own input","h":"Home","u":"#try"},{"g":"Sections","t":"Where it stands","h":"Home","u":"#stands"},{"g":"Sections","t":"The Butterfly","h":"Home","u":"#butterfly"},{"g":"Sections","t":"The Hard-Code","h":"Home","u":"#hard-code"},{"g":"Sections","t":"The Lawyer","h":"Home","u":"#lawyer"},{"g":"Sections","t":"Evidence levels","h":"Home","u":"#levels"},{"g":"Sections","t":"Install","h":"Home","u":"#install"},{"g":"Sections","t":"Questions","h":"Home","u":"#faq"},{"g":"Sections","t":"Release gates","h":"Benchmark","u":"benchmark/#gates"},{"g":"Sections","t":"Results per slice","h":"Benchmark","u":"benchmark/#results"},{"g":"Sections","t":"Every counted miss","h":"Benchmark","u":"benchmark/#misses"},{"g":"Sections","t":"How it was measured","h":"Benchmark","u":"benchmark/#method"},{"g":"Sections","t":"The rule","h":"Method","u":"method/#rule"},{"g":"Sections","t":"The run, stage by stage","h":"Method","u":"method/#run"},{"g":"Sections","t":"The ladder and the strict L4 gate","h":"Method","u":"method/#ladder"},{"g":"Sections","t":"Isolation and the tamper watch","h":"Method","u":"method/#isolation"},{"g":"Sections","t":"In the pull request","h":"Method","u":"method/#loop"},{"g":"Sections","t":"Fork pull requests","h":"Method","u":"method/#forks"},{"g":"Sections","t":"What is sent to Anthropic","h":"Method","u":"method/#sent"},{"g":"Sections","t":"What I would ask","h":"Talk to me","u":"talk/#ask"},{"g":"Sections","t":"Report a wrong receipt","h":"Talk to me","u":"talk/#feedback"}]</script>
+<script src="../../assets/site.js" onerror="tracefixShowAll()"></script>
+</body>
+</html>

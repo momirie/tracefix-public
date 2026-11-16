@@ -1,0 +1,410 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-07T00:15:07+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 0 of 3 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "c3c6739640533426ac08b231b747607aeb596c9c"
+  },
+  "head": {
+    "ref": "tf-agent_wrong",
+    "sha": "148f3c6d7183f94d696c118cbe6686524a7113f3"
+  },
+  "issue": {
+    "title": "TypedDicts not working with `from __future__ import annotations`",
+    "sha256": "0c15e5cd0b16660a6077861462066c7212260ea746e63cab9912935a626a3da4"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "A test reproduced the TypedDict-with-postponed-annotations failure before the fix and passed after it, with no regressions found and the changed lines covered; the evidence stays at L1 because the tests did not kill enough mutants to show they guard the fix. Next, look at strengthening the tests so they fail when the fix is altered, and check the other cases named in the issue (named tuples and o…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 68.38,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.43,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 9.97,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 3 mutants; 80% is needed",
+      "duration_s": 439.88,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 6,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 5,
+        "rule_kill_rate": 0.6,
+        "rule_kinds": [
+          "body: 2 of 2 killed",
+          "negate_if: 1 of 2 killed",
+          "reraise: 0 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "constant",
+          "arithmetic",
+          "membership",
+          "loop",
+          "drop_call"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 26251 untouched tests that passed before the fix fails after it",
+      "duration_s": 69.45,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 26251,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.45,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 17
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: on_typed_dict: the comparison did not finish",
+      "duration_s": 3.49,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 9.37,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 0,
+        "properties_counted": 5,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 13.53,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-4b57c2f58d3d",
+      "origin": "model",
+      "file": "mashumaro/jsonschema/schema.py",
+      "line": 661,
+      "original": "    if module_name:",
+      "replacement": "    if not module_name:",
+      "description": "Inverts module name check so globals come from the wrong place.",
+      "diff": "--- a/mashumaro/jsonschema/schema.py\n+++ b/mashumaro/jsonschema/schema.py\n@@ -660,3 +660,3 @@\n     module_name = getattr(owner_type, '__module__', None)\n-    if module_name:\n+    if not module_name:\n         globalns = getattr(sys.modules.get(module_name, None), '__dict__', {})\n",
+      "words": "mashumaro/jsonschema/schema.py:661: changing `    if module_name:` to `    if not module_name:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-c2c64a897e6a",
+      "origin": "model",
+      "file": "mashumaro/jsonschema/schema.py",
+      "line": 662,
+      "original": "        globalns = getattr(sys.modules.get(module_name, None), '__dict__', {})",
+      "replacement": "        globalns = {}",
+      "description": "Always uses an empty globals namespace, so module-level names cannot be resolved.",
+      "diff": "--- a/mashumaro/jsonschema/schema.py\n+++ b/mashumaro/jsonschema/schema.py\n@@ -661,3 +661,3 @@\n     if module_name:\n-        globalns = getattr(sys.modules.get(module_name, None), '__dict__', {})\n+        globalns = {}\n     else:\n",
+      "words": "mashumaro/jsonschema/schema.py:662: changing `        globalns = getattr(sys.modules.get(module_name, None...` to `        globalns = {}` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-93a19ccd8d9c",
+      "origin": "model",
+      "file": "mashumaro/jsonschema/schema.py",
+      "line": 668,
+      "original": "        return evaluate_forward_ref(forward_ref, globalns, {})",
+      "replacement": "        return evaluate_forward_ref(forward_ref, {}, {})",
+      "description": "Ignores the module globals when evaluating the forward reference.",
+      "diff": "--- a/mashumaro/jsonschema/schema.py\n+++ b/mashumaro/jsonschema/schema.py\n@@ -667,3 +667,3 @@\n     try:\n-        return evaluate_forward_ref(forward_ref, globalns, {})\n+        return evaluate_forward_ref(forward_ref, {}, {})\n     except Exception:\n",
+      "words": "mashumaro/jsonschema/schema.py:668: changing `        return evaluate_forward_ref(forward_ref, globalns, {...` to `        return evaluate_forward_ref(forward_ref, {}, {})` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-8190f7246645",
+      "origin": "rule",
+      "file": "mashumaro/jsonschema/schema.py",
+      "line": 661,
+      "original": "    if module_name:",
+      "replacement": "    if not (module_name):",
+      "description": "rule: `module_name` -> `not (module_name)`",
+      "diff": "--- a/mashumaro/jsonschema/schema.py\n+++ b/mashumaro/jsonschema/schema.py\n@@ -660,3 +660,3 @@\n     module_name = getattr(owner_type, '__module__', None)\n-    if module_name:\n+    if not (module_name):\n         globalns = getattr(sys.modules.get(module_name, None), '__dict__', {})\n",
+      "words": "mashumaro/jsonschema/schema.py:661: changing `    if module_name:` to `    if not (module_name):` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "negate_if"
+    },
+    {
+      "id": "m-e0684ad62737",
+      "origin": "rule",
+      "file": "mashumaro/jsonschema/schema.py",
+      "line": 672,
+      "original": "        return forward_ref",
+      "replacement": "        raise\n        return forward_ref",
+      "description": "rule: re-raise at the start of the `except` body",
+      "diff": "--- a/mashumaro/jsonschema/schema.py\n+++ b/mashumaro/jsonschema/schema.py\n@@ -671,2 +671,3 @@\n         # This preserves backward compatibility\n+        raise\n         return forward_ref\n",
+      "words": "mashumaro/jsonschema/schema.py:672: changing `        return forward_ref` to `        raise\n        return forward_ref` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "reraise"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "mashumaro/jsonschema/schema.py": [
+        655,
+        657,
+        660,
+        661,
+        662,
+        664,
+        667,
+        668,
+        669,
+        672,
+        681,
+        682,
+        683,
+        684,
+        686,
+        687,
+        688
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 14,
+        "total": 17
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "the behaviour diff could not compare _evaluate_forward_ref: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 48280,
+    "output_tokens": 6611,
+    "cost_estimate": {
+      "usd": 0.2853,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 6 of the 9 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "mashumaro.jsonschema.schema.on_typed_dict",
+      "path": "mashumaro/jsonschema/schema.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "nothing generated"
+    },
+    {
+      "function": "mashumaro.jsonschema.schema._evaluate_forward_ref",
+      "path": "mashumaro/jsonschema/schema.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "nothing generated"
+    }
+  ]
+}

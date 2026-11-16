@@ -1,0 +1,48 @@
+{
+ "instance_id": "canonical__charmcraft-1365",
+ "excluded": null,
+ "detail": "",
+ "python": "3.10.16",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.168.5",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "craft_cli.pytest_plugin",
+  "pyfakefs.pytest_plugin",
+  "pytest_check.plugin",
+  "pytest_mock",
+  "pytest_subprocess.fixtures",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 48.011,
+ "suite_timeout": 145,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 36591,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "charmcraft/utils/package.py",
+     "function": "get_pypi_packages"
+    }
+   ],
+   "differs": []
+  }
+ ],
+ "commits": {
+  "base": "acf98be9c75e25e31050b8c40381e4c08e11245f",
+  "gold": "1a6b6a1a4a771fe9dc91509c552fc0a7915bc2bf",
+  "agent_ok": "ffed39f88662431fbf85d6bf12a1398890ce48e3"
+ },
+ "seconds": 75.593
+}

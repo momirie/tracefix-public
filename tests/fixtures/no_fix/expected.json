@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "case": "no_fix",
+  "summary": "Strips whitespace before comparing addresses but still compares case-sensitively, so the reported duplicates are still created.",
+  "receipt": {
+    "status": "ok",
+    "level": {
+      "exactly": "COUNTEREXAMPLE"
+    },
+    "stages": {
+      "reproduce": "fix_does_not_fix"
+    },
+    "must_find": [
+      {
+        "stage": "reproduce",
+        "outcome": "fix_does_not_fix"
+      }
+    ],
+    "must_not_find": []
+  },
+  "checks": [
+    {
+      "tests": "suite",
+      "ref": "base",
+      "expect": "pass"
+    },
+    {
+      "tests": "suite",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "base",
+      "expect": "fail",
+      "match": "dedupe_emails(['Bob@Example.com', 'bob@example.com'])"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "head",
+      "expect": "fail",
+      "match": "dedupe_emails(['Bob@Example.com', 'bob@example.com'])"
+    }
+  ]
+}

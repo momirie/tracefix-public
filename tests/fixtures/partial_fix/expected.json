@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "case": "partial_fix",
+  "summary": "Handles an unset PORT but not a blank one, which the docstring also promises falls back to 8080; parse_port('') still raises ValueError.",
+  "receipt": {
+    "status": "ok",
+    "level": {
+      "exactly": "COUNTEREXAMPLE"
+    },
+    "stages": {
+      "reproduce": "reproduced"
+    },
+    "must_find": [
+      {
+        "stage": "break_my_fix",
+        "function": "svc.config.parse_port",
+        "input": {
+          "raw": ""
+        },
+        "outcome": "ValueError"
+      }
+    ],
+    "must_not_find": [
+      "integrity_flag"
+    ]
+  },
+  "checks": [
+    {
+      "tests": "suite",
+      "ref": "base",
+      "expect": "pass"
+    },
+    {
+      "tests": "suite",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "base",
+      "expect": "fail",
+      "match": "AttributeError: 'NoneType' object has no attribute 'strip'"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_counterexample.py",
+      "ref": "base",
+      "expect": "fail",
+      "match": "invalid literal for int() with base 10: ''"
+    },
+    {
+      "tests": "oracle/test_counterexample.py",
+      "ref": "head",
+      "expect": "fail",
+      "match": "invalid literal for int() with base 10: ''"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+ "instance_id": "Lucas-C__pre-commit-hooks-98",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 1.968,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 36985,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "pre_commit_hooks/insert_license.py",
+     "function": "_replace_year_in_license_with_current"
+    },
+    {
+     "path": "pre_commit_hooks/insert_license.py",
+     "function": "try_update_year_range"
+    }
+   ],
+   "differs": [
+    {
+     "path": "pre_commit_hooks/insert_license.py",
+     "function": "_replace_year_in_license_with_current"
+    },
+    {
+     "path": "pre_commit_hooks/insert_license.py",
+     "function": "try_update_year_range"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "b26c56de7b79689a9e418a755133f17c8a127ad0",
+  "gold": "81f57e449c821ced7536140777366f8cdbee80c1",
+  "agent_ok": "6621b19115b861cb887aada4dc1a7f0ffb2170d8"
+ },
+ "seconds": 29.718
+}

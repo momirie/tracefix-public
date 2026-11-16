@@ -1,0 +1,11 @@
+{
+ "key": "39c12256480c130a3e32e02ea56cfbf2bc26d3363ce1d89858791916e194bd01",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 2208,
+  "output_tokens": 209,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from billing.calendar import payment_dates\\n\\n\\ndef test_no_payment_on_nonexistent_feb_29_2100() -> None:\\n    assert payment_dates(2099, 12, 29, 4) == [\\n        \\\"2099-12-29\\\",\\n        \\\"2100-01-29\\\",\\n        \\\"2100-02-28\\\",\\n        \\\"2100-03-29\\\",\\n    ]\\n\",\"rationale\":\"2100 is not a leap year, so a payment dated on the 29th must be clamped to 2100-02-28. The test calls payment_dates with the issue's arguments and checks that clamped date.\"}"
+ },
+ "role": "reproducer"
+}

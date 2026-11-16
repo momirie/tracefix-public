@@ -1,0 +1,408 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T17:08:28+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks mqtt_exporter.main._normalize_name_in_topic_msg",
+    "regression: tests/functional/test_parse_message.py::test__parse_message__shelly_style passed before the fix and fails after it",
+    "regression: tests/functional/test_parse_message.py::test__parse_message__generic_single_value_style passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "4126ec64830517ee43384dde82fa43d807701f57"
+  },
+  "head": {
+    "ref": "tf-v1",
+    "sha": "e72a7e2dd15e128c32641c7bbf63d5bdf22948bf"
+  },
+  "issue": {
+    "title": "Doesn't support Shelly 3EM format very well",
+    "sha256": "30d313b29c762ef5dfe77bb749b6a9c32038847e555576df2c995ada678eaade"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.10.16"
+  },
+  "summary": {
+    "text": "The verifier found that the fixed _normalize_name_in_topic_msg raises AttributeError on a plain Shelly-style topic ('shellies/room/sensor/temperature') because mqtt_exporter.settings has no KEEP_FULL_TOPIC attribute, and two existing tests (test__parse_message__shelly_style and test__parse_message__generic_single_value_style) passed before the fix and fail after it. Look first at the missing KEEP…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 1.89,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.79,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 11.26,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 4 of 6 mutants; 80% is needed",
+      "duration_s": 57.17,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.667,
+        "repro_kill_rate": 0.667,
+        "pr_kill_rate": null,
+        "mutants": 6,
+        "killed": 4,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 2,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-7fdef2b926f6",
+          "m-6c25def60be2",
+          "m-ebaa3cc9df7f",
+          "m-1a5df5ea06f5"
+        ],
+        "rule_mutants": 5,
+        "rule_kill_rate": 1.0,
+        "rule_kinds": [
+          "body: 1 of 1 killed",
+          "negate_if: 1 of 1 killed",
+          "constant: 2 of 2 killed",
+          "arithmetic: 1 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "membership",
+          "loop",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 4 of 6 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "2 confirmed: tests/functional/test_parse_message.py::test__parse_message__shelly_style, tests/functional/test_parse_message.py::test__parse_message__generic_single_value_style",
+      "duration_s": 13.49,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/functional/test_parse_message.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 10,
+        "not_run": 0,
+        "regressions": 2,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.21,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 3
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: _normalize_name_in_topic_msg: the comparison did not finish",
+      "duration_s": 2.17,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 14.26,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 10,
+        "properties_counted": 7,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "fails_differently",
+      "reason": "attempt 1: fails after the fix too, but differently",
+      "duration_s": 11.31,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "mqtt_exporter.main._normalize_name_in_topic_msg",
+      "call": "_normalize_name_in_topic_msg(topic='shellies/room/sensor/temperature', payload='20.00')",
+      "input": {
+        "topic": "'shellies/room/sensor/temperature'",
+        "payload": "'20.00'"
+      },
+      "outcome": "raises AttributeError: module 'mqtt_exporter.settings' has no attribute 'KEEP_FULL_TOPIC'",
+      "base_outcome": "returns ('shellies/room', {'temperature': '20.00'})",
+      "expected": null,
+      "property": {
+        "id": "t1.p1",
+        "name": "last_topic_item_is_metric_name",
+        "kind": "returns",
+        "claim": "For a topic with at least two levels, the payload dict maps the last topic item (the metric name) to the payload value",
+        "source": "docstring",
+        "quote": "only support when the last item in the topic is the actual metric name",
+        "origin": "model"
+      },
+      "also_violates": [
+        "metric_name_is_last_topic_item",
+        "never_raises_on_string_topic",
+        "default_keeps_first_two_elements",
+        "payload_value_preserved",
+        "default_keeps_first_two_elements",
+        "returns_pair_never_raises"
+      ],
+      "other_inputs": 2,
+      "relation": "new with the fix: before it, this input returns ('shellies/room', {'temperature': '20.00'})",
+      "file": "findings/finding_1.py",
+      "path": "mqtt_exporter/main.py",
+      "line": 165,
+      "expect": {
+        "types": [
+          "AttributeError"
+        ],
+        "in_file": false
+      },
+      "doubt": null
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/functional/test_parse_message.py",
+      "test": "test__parse_message__shelly_style",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: module 'mqtt_exporter.settings' has no attribute 'KEEP_FULL_TOPIC'",
+      "line": 19
+    },
+    {
+      "file": "tests/functional/test_parse_message.py",
+      "test": "test__parse_message__generic_single_value_style",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: module 'mqtt_exporter.settings' has no attribute 'KEEP_FULL_TOPIC'",
+      "line": 30
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-f804726069eb",
+      "origin": "model",
+      "file": "mqtt_exporter/main.py",
+      "line": 166,
+      "original": "            topic = \"/\".join(info[:-1]).lower()",
+      "replacement": "            topic = \"/\".join(info[:-1])",
+      "description": "Drops lowercasing of the full topic.",
+      "diff": "--- a/mqtt_exporter/main.py\n+++ b/mqtt_exporter/main.py\n@@ -165,3 +165,3 @@\n         if settings.KEEP_FULL_TOPIC:  # options instead of hardcoded length\n-            topic = \"/\".join(info[:-1]).lower()\n+            topic = \"/\".join(info[:-1])\n         else:\n",
+      "words": "mqtt_exporter/main.py:166: changing `            topic = \"/\".join(info[:-1]).lower()` to `            topic = \"/\".join(info[:-1])` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-edbefdad418c",
+      "origin": "model",
+      "file": "mqtt_exporter/main.py",
+      "line": 168,
+      "original": "            topic = f\"{info[0]}/{info[1]}\".lower()",
+      "replacement": "            topic = f\"{info[0]}/{info[1]}\"",
+      "description": "Drops lowercasing in the short topic.",
+      "diff": "--- a/mqtt_exporter/main.py\n+++ b/mqtt_exporter/main.py\n@@ -167,3 +167,3 @@\n         else:\n-            topic = f\"{info[0]}/{info[1]}\".lower()\n+            topic = f\"{info[0]}/{info[1]}\"\n \n",
+      "words": "mqtt_exporter/main.py:168: changing `            topic = f\"{info[0]}/{info[1]}\".lower()` to `            topic = f\"{info[0]}/{info[1]}\"` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "mqtt_exporter/main.py": [
+        165,
+        166,
+        168
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 2,
+        "total": 3
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 32148,
+    "output_tokens": 5428,
+    "cost_estimate": {
+      "usd": 0.2075,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 2 of the 8 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.10.16: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "mqtt_exporter.main._normalize_name_in_topic_msg",
+      "path": "mqtt_exporter/main.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 10,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

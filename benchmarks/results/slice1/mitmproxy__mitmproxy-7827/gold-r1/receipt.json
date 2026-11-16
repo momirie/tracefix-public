@@ -1,0 +1,601 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-16T14:28:52+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_index passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_filter_help passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flows passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flows_dump passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flows_dump_filter passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flows_dump_filter_error passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_clear passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_resume passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_kill passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flow_delete passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flow_update passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flow_duplicate passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flow_revert passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flow_replay passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flow_content passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flow_content_returns_raw_content_when_decoding_fails passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_update_flow_content passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_update_flow_content_multipart passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flow_contentview passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_flow_contentview_websocket passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_commands passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_command_execute passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_events passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_options passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_option_update passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_option_save passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_err passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_websocket passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_websocket_filter_application passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_websocket_filter_command_error passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_process_list passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_xsrf_hardening_app passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_xsrf_hardening_login passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_login_with_token_header passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_login_with_token_param passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_login_with_malformed_auth_header passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_login_with_invalid_auth_header passed before the fix and fails after it",
+    "regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_unauthorized_api passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "c635d4396cd33020148154fa14bd4de375310b26"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "a4c09cd0453f6d2759e4495f544393550a5bb1f2"
+  },
+  "issue": {
+    "title": "`403 Authentication Required` on mitmweb after a short while",
+    "sha256": "2d82c7c70a743870ffafbe12f6281afbeabaea81dc2ba12440ea46ee8c3c067a"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "COUNTEREXAMPLE: regression: test/mitmproxy/tools/web/test_app.py::TestApp.test_index passed before the fix and fails after it (and 37 more).",
+    "by": "tracefix"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 24.9,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 9.95,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "not_reproduced",
+      "reason": "no attempt ran; stopped early: APIConnectionError: Connection error.",
+      "duration_s": 39.27,
+      "commands": [],
+      "problems": [
+        {
+          "stage": "reproduce",
+          "role": "reproducer",
+          "model": "claude-sonnet-5-5",
+          "kind": "network",
+          "status": null,
+          "words": "the API could not be reached, or the call timed out: this stage's evidence is lower because of that, not because of the fix",
+          "detail": "LLMProviderError: APIConnectionError: Connection error."
+        }
+      ],
+      "error": null,
+      "evidence": {
+        "attempts": 0,
+        "test_file": null,
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "skipped",
+      "reason": "there is no reproduction test to judge the tests with (not_reproduced)",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": null,
+        "repro_kill_rate": null,
+        "pr_kill_rate": null,
+        "mutants": 0,
+        "killed": 0,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 0,
+        "rule_kill_rate": null,
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "38 confirmed: test/mitmproxy/tools/web/test_app.py::TestApp.test_index, test/mitmproxy/tools/web/test_app.py::TestApp.test_filter_help, test/mitmproxy/tools/web/test_app.py::TestApp.test_flows, test/mitmproxy/tools/web/test_app.py::TestApp.test_flows_dump, test/mitmproxy/tools/web/test_app.py::TestApp.test_flows_dump_filter and 33 more",
+      "duration_s": 126.25,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors test/mitmproxy/tools/web/test_app.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 1897,
+        "not_run": 0,
+        "regressions": 38,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 6
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: Application.__init__: not compared (a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 6.86,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "no property to check the fixed code against",
+      "duration_s": 33.1,
+      "commands": [],
+      "problems": [
+        {
+          "stage": "break_my_fix",
+          "role": "adversary",
+          "model": "claude-opus-5-5",
+          "kind": "network",
+          "status": null,
+          "words": "the API could not be reached, or the call timed out: this stage's evidence is lower because of that, not because of the fix",
+          "detail": "LLMProviderError: APIConnectionError: Connection error."
+        },
+        {
+          "stage": "break_my_fix",
+          "role": "adversary",
+          "model": "claude-opus-5-5",
+          "kind": "network",
+          "status": null,
+          "words": "the API could not be reached, or the call timed out: this stage's evidence is lower because of that, not because of the fix",
+          "detail": "LLMProviderError: APIConnectionError: Connection error."
+        }
+      ],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.08,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_index",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 104
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_filter_help",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 111
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flows",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 114
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flows_dump",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 120
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flows_dump_filter",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 124
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flows_dump_filter_error",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 128
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_clear",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 132
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_resume",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 146
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_kill",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 155
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flow_delete",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 167
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flow_update",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 178
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flow_duplicate",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 239
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flow_revert",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 247
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flow_replay",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 254
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flow_content",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 259
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flow_content_returns_raw_content_when_decoding_fails",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 282
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_update_flow_content",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 299
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_update_flow_content_multipart",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 309
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flow_contentview",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 333
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_flow_contentview_websocket",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 348
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_commands",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 368
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_command_execute",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 373
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_events",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 381
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_options",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 386
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_option_update",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 391
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_option_save",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 396
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_err",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 399
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_websocket",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 405
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_websocket_filter_application",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 435
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_websocket_filter_command_error",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 517
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_process_list",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 538
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_xsrf_hardening_app",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 567
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_xsrf_hardening_login",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 574
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_login_with_token_header",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 586
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_login_with_token_param",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 591
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_login_with_malformed_auth_header",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 596
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_login_with_invalid_auth_header",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 600
+    },
+    {
+      "file": "test/mitmproxy/tools/web/test_app.py",
+      "test": "TestApp.test_unauthorized_api",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: object of type 'function' has no len()",
+      "line": 604
+    }
+  ],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "mitmproxy/tools/web/app.py": [
+        257,
+        269,
+        927
+      ],
+      "mitmproxy/tools/web/webaddons.py": [
+        68,
+        69,
+        70
+      ]
+    },
+    "sets": [],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "guard: skipped (there is no reproduction test to judge the tests with (not_reproduced))",
+    "Break My Fix could not attack Application.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack AuthRequestHandler._require_auth.wrapper: a nested function: it can't be imported, not attacked yet",
+    "Break My Fix could not attack WebAuth.auth_cookie_name: it takes no parameters to vary",
+    "the behaviour diff could not compare Application.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare AuthRequestHandler._require_auth.wrapper: a nested function: it can't be imported, not attacked yet",
+    "the behaviour diff could not compare WebAuth.auth_cookie_name: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost_estimate": {
+      "usd": 0.0,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": [
+      {
+        "stage": "reproduce",
+        "role": "reproducer",
+        "model": "claude-sonnet-5-5",
+        "kind": "network",
+        "status": null,
+        "words": "the API could not be reached, or the call timed out: this stage's evidence is lower because of that, not because of the fix",
+        "detail": "LLMProviderError: APIConnectionError: Connection error."
+      },
+      {
+        "stage": "break_my_fix",
+        "role": "adversary",
+        "model": "claude-opus-5-5",
+        "kind": "network",
+        "status": null,
+        "words": "the API could not be reached, or the call timed out: this stage's evidence is lower because of that, not because of the fix",
+        "detail": "LLMProviderError: APIConnectionError: Connection error."
+      },
+      {
+        "stage": "break_my_fix",
+        "role": "adversary",
+        "model": "claude-opus-5-5",
+        "kind": "network",
+        "status": null,
+        "words": "the API could not be reached, or the call timed out: this stage's evidence is lower because of that, not because of the fix",
+        "detail": "LLMProviderError: APIConnectionError: Connection error."
+      },
+      {
+        "stage": "summary",
+        "role": "judge",
+        "model": "claude-opus-5-5",
+        "kind": "network",
+        "status": null,
+        "words": "the API could not be reached, or the call timed out: this stage's evidence is lower because of that, not because of the fix",
+        "detail": "LLMProviderError: APIConnectionError: Connection error."
+      }
+    ]
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 127 functions were shown",
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "break_my_fix: the adversary stopped early: APIConnectionError: Connection error.",
+    "break_my_fix: the adversary's second sample is missing: APIConnectionError: Connection error.",
+    "summary: the Judge wrote no summary: APIConnectionError: Connection error."
+  ],
+  "previous": null
+}

@@ -1,0 +1,479 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-16T13:24:35+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks virtualizarr.parsers.kerchunk.translator.manifest_from_kerchunk_chunk_dict"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "3194b095ede4abaa9d9d0daaa91a6f0424cc4a93"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "718532e745e918a3e60e60c01e67fa12ee0cc47a"
+  },
+  "issue": {
+    "title": "Error reading inlined reference data when trying to roundtrip virtual dataset",
+    "sha256": "850a4bd16b4d94eceb05987913d87311358409fdd8fbb60824bfee4701ab0f2e"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "The verifier reproduced the inlined-reference read failure and found no regressions, but Break My Fix showed that manifest_from_kerchunk_chunk_dict still breaks on an empty chunk dict ({}), raising ValueError: need a chunk grid shape if no chunks given. The fix also was not guarded by a test that fails without it.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 19.7,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 8.37,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 30.56,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no virtualizarr/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 1 of 5 mutants; 80% is needed",
+      "duration_s": 362.42,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no virtualizarr/tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.2,
+        "repro_kill_rate": 0.2,
+        "pr_kill_rate": null,
+        "mutants": 5,
+        "killed": 1,
+        "survived": 4,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-87a5ec2341e9"
+        ],
+        "rule_mutants": 5,
+        "rule_kill_rate": 0.4,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 1 of 5 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 271 untouched tests that passed before the fix fails after it",
+      "duration_s": 55.01,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 271,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 5.01,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no virtualizarr/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 11
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "73 input(s) compared on 1 function(s): 7 changed with the fix; not complete: manifest_from_kerchunk_chunk_dict: the comparison did not finish",
+      "duration_s": 1597.44,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no virtualizarr/tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 73,
+        "changes": 7,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 104.52,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 30,
+        "properties_counted": 2,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 8
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "virtualizarr.parsers.kerchunk.translator.manifest_from_kerchunk_chunk_dict",
+      "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={})",
+      "input": {
+        "kerchunk_chunk_dict": "{}"
+      },
+      "outcome": "raises ValueError: need a chunk grid shape if no chunks given",
+      "base_outcome": "raises ValueError: need a chunk grid shape if no chunks given",
+      "expected": null,
+      "property": {
+        "id": "t1.p2",
+        "name": "inline_never_notimplemented",
+        "kind": "raises_only",
+        "claim": "Inline string values never cause the 'not supported' NotImplementedError.",
+        "source": "issue",
+        "quote": "NotImplementedError: Reading inlined reference data is currently not supported. [ToDo]",
+        "origin": "model"
+      },
+      "also_violates": [
+        "inline_string_chunks_do_not_raise"
+      ],
+      "other_inputs": 0,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 233: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 233,
+      "expect": {
+        "types": [
+          "ValueError"
+        ],
+        "in_file": false
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "virtualizarr.parsers.kerchunk.translator.manifest_from_kerchunk_chunk_dict",
+      "kind": "exception",
+      "count": 7,
+      "before": "raises NotImplementedError",
+      "after": "raises ValueError: Invalid format for chunk key: ''",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The issue asks that inlined reference data stop raising NotImplementedError. With that fixed, the empty chunk key '' now hits the same invalid-key ValueError that list-form references already get."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "Inlined values are now parsed as the issue requests. The malformed chunk key is then rejected by the existing ChunkManifest key validation, so this is the normal error for a bad key."
+        },
+        {
+          "change": "c3",
+          "label": "intended",
+          "reason": "Following the issue's request to support inlined data, the NotImplementedError is gone. The invalid key now surfaces through the standard key validation."
+        },
+        {
+          "change": "c4",
+          "label": "intended",
+          "reason": "The inline string value is now accepted per the issue. The key 'INF' is not a valid chunk key, so the ValueError is the existing validation and not a new restriction."
+        },
+        {
+          "change": "c5",
+          "label": "intended",
+          "reason": "With inline-data support added as the issue asks, these malformed keys fail the same key-format check that applies to non-inlined references."
+        }
+      ],
+      "examples": [
+        {
+          "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={'': ''}, fs_root='', shape=())",
+          "before": "raises NotImplementedError",
+          "after": "raises ValueError: Invalid format for chunk key: ''"
+        },
+        {
+          "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={'\\n-Tß': ''}, fs_root='', shape=())",
+          "before": "raises NotImplementedError",
+          "after": "raises ValueError: Invalid format for chunk key: '\n-Tß'"
+        },
+        {
+          "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={'\\U00093b5a': ''}, fs_root='', shape=())",
+          "before": "raises NotImplementedError",
+          "after": "raises ValueError: Invalid format for chunk key: '򓭚'"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-fbb5f02a0c06",
+      "origin": "model",
+      "file": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 222,
+      "original": "            if raw.startswith(b\"base64:\"):",
+      "replacement": "            if not raw.startswith(b\"base64:\"):",
+      "description": "Inverted base64 prefix check.",
+      "diff": "--- a/virtualizarr/parsers/kerchunk/translator.py\n+++ b/virtualizarr/parsers/kerchunk/translator.py\n@@ -221,3 +221,3 @@\n             raw = v.encode() if isinstance(v, str) else v\n-            if raw.startswith(b\"base64:\"):\n+            if not raw.startswith(b\"base64:\"):\n                 data = base64.b64decode(raw[len(b\"base64:\") :])\n",
+      "words": "virtualizarr/parsers/kerchunk/translator.py:222: changing `            if raw.startswith(b\"base64:\"):` to `            if not raw.startswith(b\"base64:\"):` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={'m\\U0003cdc7ÑYm\\U00061ee2\\x18º\\x97\\U000bb1aci²\\x1fR\\x9fÃõ,TG': '\\\\K1å', '': 'ÜJ片\\x176\\x04'}, shape=())",
+          "fix": "raises ValueError: Invalid format for chunk key: 'm𼷇ÑYm񡻢\u0018º򻆬i²\u001fRÃõ,TG'",
+          "mutant": "raises Error"
+        }
+      ]
+    },
+    {
+      "id": "m-29be6916140c",
+      "origin": "model",
+      "file": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 223,
+      "original": "                data = base64.b64decode(raw[len(b\"base64:\") :])",
+      "replacement": "                data = base64.b64decode(raw[len(b\"base64:\") - 1 :])",
+      "description": "Off-by-one in slicing the prefix leaves the colon in the payload.",
+      "diff": "--- a/virtualizarr/parsers/kerchunk/translator.py\n+++ b/virtualizarr/parsers/kerchunk/translator.py\n@@ -222,3 +222,3 @@\n             if raw.startswith(b\"base64:\"):\n-                data = base64.b64decode(raw[len(b\"base64:\") :])\n+                data = base64.b64decode(raw[len(b\"base64:\") - 1 :])\n             else:\n",
+      "words": "virtualizarr/parsers/kerchunk/translator.py:223: changing `                data = base64.b64decode(raw[len(b\"base64:\") ...` to `                data = base64.b64decode(raw[len(b\"base64:\") ...` made no test fail; not compared with the fix: the run on the mutant did not finish",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-2d4d458725b2",
+      "origin": "model",
+      "file": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 223,
+      "original": "                data = base64.b64decode(raw[len(b\"base64:\") :])",
+      "replacement": "                data = raw[len(b\"base64:\") :]",
+      "description": "Skips base64 decoding, keeping encoded text as data.",
+      "diff": "--- a/virtualizarr/parsers/kerchunk/translator.py\n+++ b/virtualizarr/parsers/kerchunk/translator.py\n@@ -222,3 +222,3 @@\n             if raw.startswith(b\"base64:\"):\n-                data = base64.b64decode(raw[len(b\"base64:\") :])\n+                data = raw[len(b\"base64:\") :]\n             else:\n",
+      "words": "virtualizarr/parsers/kerchunk/translator.py:223: changing `                data = base64.b64decode(raw[len(b\"base64:\") ...` to `                data = raw[len(b\"base64:\") :]` made no test fail; not compared with the fix: the run on the mutant did not finish",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-c1c0173c8fdb",
+      "origin": "model",
+      "file": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 227,
+      "original": "                path=\"\", offset=0, length=len(data), data=data",
+      "replacement": "                path=\"\", offset=0, length=len(raw), data=data",
+      "description": "Length uses raw encoded length rather than decoded data length.",
+      "diff": "--- a/virtualizarr/parsers/kerchunk/translator.py\n+++ b/virtualizarr/parsers/kerchunk/translator.py\n@@ -226,3 +226,3 @@\n             chunk_entries[k] = ChunkEntry(\n-                path=\"\", offset=0, length=len(data), data=data\n+                path=\"\", offset=0, length=len(raw), data=data\n             )\n",
+      "words": "virtualizarr/parsers/kerchunk/translator.py:227: changing `                path=\"\", offset=0, length=len(data), data=da...` to `                path=\"\", offset=0, length=len(raw), data=dat...` made no test fail; not compared with the fix: the run on the mutant did not finish",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-dce85a510194",
+      "origin": "rule",
+      "file": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 222,
+      "original": "            if raw.startswith(b\"base64:\"):",
+      "replacement": "            if not (raw.startswith(b\"base64:\")):",
+      "description": "rule: `raw.startswith(b\"base64:\")` -> `not (raw.startswith(b\"base64:\"))`",
+      "diff": "--- a/virtualizarr/parsers/kerchunk/translator.py\n+++ b/virtualizarr/parsers/kerchunk/translator.py\n@@ -221,3 +221,3 @@\n             raw = v.encode() if isinstance(v, str) else v\n-            if raw.startswith(b\"base64:\"):\n+            if not (raw.startswith(b\"base64:\")):\n                 data = base64.b64decode(raw[len(b\"base64:\") :])\n",
+      "words": "virtualizarr/parsers/kerchunk/translator.py:222: changing `            if raw.startswith(b\"base64:\"):` to `            if not (raw.startswith(b\"base64:\")):` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={'m\\U0003cdc7ÑYm\\U00061ee2\\x18º\\x97\\U000bb1aci²\\x1fR\\x9fÃõ,TG': '\\\\K1å', '': 'ÜJ片\\x176\\x04'}, shape=())",
+          "fix": "raises ValueError: Invalid format for chunk key: 'm𼷇ÑYm񡻢\u0018º򻆬i²\u001fRÃõ,TG'",
+          "mutant": "raises Error"
+        }
+      ]
+    },
+    {
+      "id": "m-e55543ebd7b4",
+      "origin": "rule",
+      "file": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 227,
+      "original": "                path=\"\", offset=0, length=len(data), data=data",
+      "replacement": "                path=\"\", offset=(-1), length=len(data), data=data",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/virtualizarr/parsers/kerchunk/translator.py\n+++ b/virtualizarr/parsers/kerchunk/translator.py\n@@ -226,3 +226,3 @@\n             chunk_entries[k] = ChunkEntry(\n-                path=\"\", offset=0, length=len(data), data=data\n+                path=\"\", offset=(-1), length=len(data), data=data\n             )\n",
+      "words": "virtualizarr/parsers/kerchunk/translator.py:227: changing `                path=\"\", offset=0, length=len(data), data=da...` to `                path=\"\", offset=(-1), length=len(data), data...` made no test fail; not compared with the fix: the run on the mutant did not finish",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-5448b1c90a93",
+      "origin": "rule",
+      "file": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 227,
+      "original": "                path=\"\", offset=0, length=len(data), data=data",
+      "replacement": "                path=\"\", offset=1, length=len(data), data=data",
+      "description": "rule: `0` -> `1`",
+      "diff": "--- a/virtualizarr/parsers/kerchunk/translator.py\n+++ b/virtualizarr/parsers/kerchunk/translator.py\n@@ -226,3 +226,3 @@\n             chunk_entries[k] = ChunkEntry(\n-                path=\"\", offset=0, length=len(data), data=data\n+                path=\"\", offset=1, length=len(data), data=data\n             )\n",
+      "words": "virtualizarr/parsers/kerchunk/translator.py:227: changing `                path=\"\", offset=0, length=len(data), data=da...` to `                path=\"\", offset=1, length=len(data), data=da...` made no test fail; not compared with the fix: the run on the mutant did not finish",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "virtualizarr/parsers/kerchunk/translator.py": [
+        3,
+        221,
+        222,
+        223,
+        225,
+        226,
+        227,
+        229,
+        230,
+        232,
+        233
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 7,
+        "total": 11
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 46967,
+    "output_tokens": 7208,
+    "cost_estimate": {
+      "usd": 0.3081,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "behaviour_diff: t1: the run ran out of time at input 105; it returns when run alone, so nothing hangs, but the comparison did not finish",
+    "behaviour_diff: the behaviour diff on surviving mutant 2 ended error before it finished: ",
+    "behaviour_diff: the behaviour diff on surviving mutant 4 ended error before it finished: ",
+    "behaviour_diff: the behaviour diff on surviving mutant 8 ended error before it finished: "
+  ],
+  "previous": null
+}

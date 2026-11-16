@@ -1,0 +1,11 @@
+{
+ "key": "7e7bdfb027eca16e8a7da13ff3517d25de1e8bd6a3fbd4ccd1b280028ee509ee",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1912,
+  "output_tokens": 421,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from stats.buckets import bucket_of, histogram\\n\\n\\ndef test_bucket_of_large_value_exact() -> None:\\n    assert bucket_of(100000000000000015, 10) == 100000000000000010\\n\\n\\ndef test_bucket_of_large_value_on_boundary() -> None:\\n    assert bucket_of(100000000000000019, 10) == 100000000000000010\\n\\n\\ndef test_histogram_large_values() -> None:\\n    assert histogram([100000000000000015], 10) == {100000000000000010: 1}\\n\",\"rationale\":\"Checks that bucket_of returns the exact integer bucket start (100000000000000010) for the large value from the issue, which float division on base gets wrong. Negative values are left out because the fix does not address them.\"}"
+ },
+ "role": "reproducer"
+}

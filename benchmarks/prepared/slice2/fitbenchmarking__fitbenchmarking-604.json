@@ -1,0 +1,27 @@
+{
+ "instance_id": "fitbenchmarking__fitbenchmarking-604",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; ModuleNotFoundError pygsl",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [
+  "=3.6"
+ ],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 4,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 19.406
+}

@@ -1,0 +1,298 @@
+{
+ "instance_id": "disqus__python-phabricator-64",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.20",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis 6.119.3 -> 6.141.1"
+ ],
+ "setup_files": [],
+ "changed_files": [
+  "issue.md"
+ ],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "pytest_asyncio.plugin",
+  "pytest_bdd.plugin",
+  "pytest_benchmark.plugin",
+  "pytest_mock",
+  "requests_mock.contrib._pytest_plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 1.667,
+ "suite_timeout": 120,
+ "source_hunks": 5,
+ "variants": [
+  {
+   "index": 0,
+   "path": "phabricator/__init__.py",
+   "old_start": 224,
+   "old_len": 7,
+   "label": "no_effect",
+   "failing": 8,
+   "functions": [
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource.__init__"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "phabricator/__init__.py",
+   "old_start": 232,
+   "old_len": 7,
+   "label": "partial",
+   "failing": 6,
+   "functions": [
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource.__getattr__"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "phabricator/__init__.py",
+   "old_start": 254,
+   "old_len": 7,
+   "label": "partial",
+   "failing": 5,
+   "functions": [
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource._request"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "phabricator/__init__.py",
+   "old_start": 391,
+   "old_len": 4,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Phabricator.update_interfaces"
+    }
+   ]
+  }
+ ],
+ "kept": 2,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 9008,
+   "label": "no_effect",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "check_endpoints.py",
+     "function": null
+    },
+    {
+     "path": "check_endpoints.py",
+     "function": "check_endpoints"
+    },
+    {
+     "path": "debug_attrs.py",
+     "function": null
+    },
+    {
+     "path": "debug_attrs.py",
+     "function": "debug_attrs"
+    },
+    {
+     "path": "debug_clean.py",
+     "function": null
+    },
+    {
+     "path": "debug_clean.py",
+     "function": "debug_clean"
+    },
+    {
+     "path": "debug_clean.py",
+     "function": "debug_getattr"
+    },
+    {
+     "path": "debug_detailed.py",
+     "function": null
+    },
+    {
+     "path": "debug_detailed.py",
+     "function": "debug_detailed"
+    },
+    {
+     "path": "debug_detailed.py",
+     "function": "debug_getattr"
+    },
+    {
+     "path": "debug_issue.py",
+     "function": null
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "debug_interface_access"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Phabricator.update_interfaces"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource.__getattr__"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource.__init__"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource._request"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_interface_conflict"
+    }
+   ],
+   "differs": [
+    {
+     "path": "check_endpoints.py",
+     "function": null
+    },
+    {
+     "path": "check_endpoints.py",
+     "function": "check_endpoints"
+    },
+    {
+     "path": "debug_attrs.py",
+     "function": null
+    },
+    {
+     "path": "debug_attrs.py",
+     "function": "debug_attrs"
+    },
+    {
+     "path": "debug_clean.py",
+     "function": null
+    },
+    {
+     "path": "debug_clean.py",
+     "function": "debug_clean"
+    },
+    {
+     "path": "debug_clean.py",
+     "function": "debug_getattr"
+    },
+    {
+     "path": "debug_detailed.py",
+     "function": null
+    },
+    {
+     "path": "debug_detailed.py",
+     "function": "debug_detailed"
+    },
+    {
+     "path": "debug_detailed.py",
+     "function": "debug_getattr"
+    },
+    {
+     "path": "debug_issue.py",
+     "function": null
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "debug_interface_access"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Phabricator.update_interfaces"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource.__getattr__"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource.__init__"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource._request"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_interface_conflict"
+    },
+    {
+     "path": "setup.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "kind": "agent_ok",
+   "source_row": 2496,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Phabricator.update_interfaces"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource.__getattr__"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource.__getattribute__"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource.__init__"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource._request"
+    }
+   ],
+   "differs": [
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource.__getattr__"
+    },
+    {
+     "path": "phabricator/__init__.py",
+     "function": "Resource.__getattribute__"
+    },
+    {
+     "path": "setup.py",
+     "function": null
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "57b954c664f5375180aa3993c4fe5d6e71d00bad",
+  "gold": "3509fca170bbf3f2cf284f48282d02d7df7c87d3",
+  "v2": "d6429c41aa136fe88937a5dbd65c156c7ba878e2",
+  "agent_wrong": "c3292a4563dab65479524ad2f910996f274b1225",
+  "agent_ok": "7464c305bf191e83701f6363d78884f77bd8c790"
+ },
+ "seconds": 55.484
+}

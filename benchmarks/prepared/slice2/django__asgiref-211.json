@@ -1,0 +1,90 @@
+{
+ "instance_id": "django__asgiref-211",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.20",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis 6.119.3 -> 6.141.1"
+ ],
+ "setup_files": [],
+ "changed_files": [
+  "issue.md"
+ ],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "pytest_asyncio.plugin",
+  "pytest_bdd.plugin",
+  "pytest_benchmark.plugin",
+  "pytest_mock",
+  "requests_mock.contrib._pytest_plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 8.982,
+ "suite_timeout": 120,
+ "source_hunks": 2,
+ "variants": [
+  {
+   "index": 0,
+   "path": "asgiref/server.py",
+   "old_start": 3,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "asgiref/server.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "asgiref/server.py",
+   "old_start": 84,
+   "old_len": 10,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "asgiref/server.py",
+     "function": "StatelessServer.get_or_create_application_instance"
+    }
+   ]
+  }
+ ],
+ "kept": 0,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 53384,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "asgiref/server.py",
+     "function": null
+    },
+    {
+     "path": "asgiref/server.py",
+     "function": "StatelessServer.get_or_create_application_instance"
+    }
+   ],
+   "differs": [
+    {
+     "path": "asgiref/server.py",
+     "function": "StatelessServer.get_or_create_application_instance"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "251e9830634bdc3ee27609ea9e31505383902204",
+  "gold": "2b6f2dd5892826b99d90fbdb50c642c8753c8667",
+  "v0": "404d26f6269a56a0bd8fa87fdf24166937a52737",
+  "agent_ok": "ae62c99d540719d9706dd6c02d8ccf223c960cd1"
+ },
+ "seconds": 45.922
+}

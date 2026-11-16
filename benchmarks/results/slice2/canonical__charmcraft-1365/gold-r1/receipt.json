@@ -1,0 +1,318 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T18:10:08+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 2 of 4 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "acf98be9c75e25e31050b8c40381e4c08e11245f"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "1a6b6a1a4a771fe9dc91509c552fc0a7915bc2bf"
+  },
+  "issue": {
+    "title": "New dependency resolution fails with empty lines in requirements file",
+    "sha256": "aedb7cf276dcfd641ffb2cd95ca27a7c2cae3fb8e7ec7d943750f0ec5f6f9f44"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.10.16"
+  },
+  "summary": {
+    "text": "A test that fails on the old code with the empty-requirements-line IndexError passes after the fix, no regressions were found, and the fixed lines were covered, but the guard stage reported the fix as not guarded and mutation testing did not meet the L2 threshold. Next, look at strengthening the tests so they would catch variations of the fix (for example, whitespace-only lines or comment lines i…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 46.22,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 4.12,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 36.25,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 4 mutants; 80% is needed",
+      "duration_s": 488.52,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.5,
+        "repro_kill_rate": 0.5,
+        "pr_kill_rate": null,
+        "mutants": 4,
+        "killed": 2,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 1,
+        "killed_ids": [
+          "m-f1f96cc6e5ef",
+          "m-d54ede3497c5"
+        ],
+        "rule_mutants": 7,
+        "rule_kill_rate": 0.857,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 4 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 1408 untouched tests that passed before the fix fails after it",
+      "duration_s": 177.61,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 1408,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.39,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 1
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "1 input(s) compared on 1 function(s): 0 changed with the fix",
+      "duration_s": 11.96,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 1,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": true,
+        "l3_gate": true,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call (get_pypi_packages: it takes no parameters to vary)",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-3bb791e1b3f0",
+      "origin": "model",
+      "file": "charmcraft/utils/package.py",
+      "line": 39,
+      "original": "            if not line or line[0] not in valid_package_start_chars:",
+      "replacement": "            if not line or line[-1] not in valid_package_start_chars:",
+      "description": "Checks the last character instead of the first character.",
+      "diff": "--- a/charmcraft/utils/package.py\n+++ b/charmcraft/utils/package.py\n@@ -38,3 +38,3 @@\n             line = line.strip()\n-            if not line or line[0] not in valid_package_start_chars:\n+            if not line or line[-1] not in valid_package_start_chars:\n                 continue\n",
+      "words": "charmcraft/utils/package.py:39: changing `            if not line or line[0] not in valid_package_star...` to `            if not line or line[-1] not in valid_package_sta...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-00c16ec23336",
+      "origin": "model",
+      "file": "charmcraft/utils/package.py",
+      "line": 39,
+      "original": "            if not line or line[0] not in valid_package_start_chars:",
+      "replacement": "            if not line or line[0] not in string.ascii_letters:",
+      "description": "Rejects lines starting with a digit as package names.",
+      "diff": "--- a/charmcraft/utils/package.py\n+++ b/charmcraft/utils/package.py\n@@ -38,3 +38,3 @@\n             line = line.strip()\n-            if not line or line[0] not in valid_package_start_chars:\n+            if not line or line[0] not in string.ascii_letters:\n                 continue\n",
+      "words": "charmcraft/utils/package.py:39: changing `            if not line or line[0] not in valid_package_star...` to `            if not line or line[0] not in string.ascii_lette...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-5043d2d1cfab",
+      "origin": "rule",
+      "file": "charmcraft/utils/package.py",
+      "line": 39,
+      "original": "            if not line or line[0] not in valid_package_start_chars:",
+      "replacement": "            if not line or line[(-1)] not in valid_package_start_chars:",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/charmcraft/utils/package.py\n+++ b/charmcraft/utils/package.py\n@@ -38,3 +38,3 @@\n             line = line.strip()\n-            if not line or line[0] not in valid_package_start_chars:\n+            if not line or line[(-1)] not in valid_package_start_chars:\n                 continue\n",
+      "words": "charmcraft/utils/package.py:39: changing `            if not line or line[0] not in valid_package_star...` to `            if not line or line[(-1)] not in valid_package_s...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "charmcraft/utils/package.py": [
+        39
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 1,
+        "total": 1
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call (get_pypi_packages: it takes no parameters to vary))",
+    "Break My Fix could not attack get_pypi_packages: it takes no parameters to vary"
+  ],
+  "llm": {
+    "calls": 3,
+    "input_tokens": 10475,
+    "output_tokens": 988,
+    "cost_estimate": {
+      "usd": 0.039,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "not copied: base: tools/external (submodule)",
+    "not copied: head: tools/external (submodule)",
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "guard: 1 of the kills were crashes on the mutated line rather than failed checks; they still count (open question 26)",
+    "guard: 2 of the rule mutant kills were crashes on the mutated line",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.10.16: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": []
+}

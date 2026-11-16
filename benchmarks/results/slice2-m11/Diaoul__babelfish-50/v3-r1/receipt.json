@@ -1,0 +1,783 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T20:28:57+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: tests/test_converters.py::test_converter_opensubtitles passed before the fix and fails after it",
+    "regression: tests/test_country.py::test_eq passed before the fix and fails after it",
+    "regression: tests/test_country.py::test_ne passed before the fix and fails after it",
+    "regression: tests/test_country.py::test_hash_eq passed before the fix and fails after it",
+    "regression: tests/test_country.py::test_hasattr_name passed before the fix and fails after it",
+    "regression: tests/test_country.py::test_hasattr_alpha2 passed before the fix and fails after it",
+    "regression: tests/test_country.py::test_pickle passed before the fix and fails after it",
+    "regression: tests/test_language.py::test_eq_with_country passed before the fix and fails after it",
+    "regression: tests/test_language.py::test_ne_with_country passed before the fix and fails after it",
+    "regression: tests/test_language.py::test_hash passed before the fix and fails after it",
+    "regression: tests/test_language.py::test_pickle[language1] passed before the fix and fails after it",
+    "regression: tests/test_language.py::test_pickle[language3] passed before the fix and fails after it",
+    "regression: tests/test_language.py::test_str_ietf_format passed before the fix and fails after it",
+    "regression: tests/test_language.py::test_fromietf_with_country_and_script passed before the fix and fails after it",
+    "regression: tests/test_language.py::test_fromietf_with_country_and_no_script passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "7584c2ae86d2171094287b035a0c78fad5db4b1c"
+  },
+  "head": {
+    "ref": "tf-v3",
+    "sha": "b6dfd948b209907156e8625cb80d3099a84c2cc5"
+  },
+  "issue": {
+    "title": "Immutability issues",
+    "sha256": "f6a175555206d2b505515c94a4f32de1eca268f5e1c0abdb7a2e1ef10e1c1e75"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The fix makes 15 previously passing tests fail, including Country equality, hashing, pickling and attribute tests, Language equality/hash/pickle tests, IETF formatting and parsing, and the opensubtitles converter, and the verifier could not confirm a test guards the reported bug. Look first at the Country regressions (test_eq, test_hash_eq, test_pickle) and the Language.fromietf changes the Judge…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 1.25,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "3 changed module(s) imported from the copies (6 imports in all)",
+      "duration_s": 2.28,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 3,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 6.16,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 3 mutants; 80% is needed",
+      "duration_s": 54.86,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 2,
+        "not_run": 5,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.6,
+        "rule_kinds": [
+          "body: 2 of 2 killed",
+          "compare: 2 of 2 killed",
+          "negate_if: 1 of 2 killed",
+          "constant: 0 of 1 killed",
+          "membership: 0 of 1 killed",
+          "loop: 0 of 1 killed",
+          "drop_call: 1 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "logic",
+          "arithmetic",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "15 confirmed: tests/test_converters.py::test_converter_opensubtitles, tests/test_country.py::test_eq, tests/test_country.py::test_ne, tests/test_country.py::test_hash_eq, tests/test_country.py::test_hasattr_name and 10 more",
+      "duration_s": 8.77,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/test_converters.py tests/test_country.py tests/test_language.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 49,
+        "not_run": 0,
+        "regressions": 15,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 1.54,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 58
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "203 input(s) compared on 1 function(s): 9 changed with the fix; not complete: Country.__post_init__: not compared (a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 52.81,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 203,
+        "changes": 9,
+        "groups": 3,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 27 inputs against 15 properties",
+      "duration_s": 23.12,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_language.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 5,
+        "inputs_tried": 27,
+        "properties_counted": 15,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 10
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "fails_differently",
+      "reason": "attempt 1: fails after the fix too, but differently",
+      "duration_s": 8.23,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "babelfish.language.Language.fromietf",
+      "kind": "value",
+      "count": 4,
+      "before": "returns <Language [en-Latn]>",
+      "after": "returns <Language [en-Latn]>",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "Same language and script; only the internal field names differ, a side effect of the frozen dataclass the issue explicitly asks for (and accepts as breaking)."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "Same language value; the 'alpha3' to 'language' field rename comes from the frozen-dataclass immutability the issue requests."
+        },
+        {
+          "change": "c3",
+          "label": "intended",
+          "reason": "Same language value; only the internal representation changed as part of the frozen dataclass conversion the issue requests."
+        },
+        {
+          "change": "c4",
+          "label": "intended",
+          "reason": "Same resolved language 'abk'; only the internal field naming changed under the immutability rework the issue asks for."
+        }
+      ],
+      "examples": [
+        {
+          "call": "fromietf(ietf='eng-Latn')",
+          "before": "returns <Language [en-Latn]>",
+          "after": "returns <Language [en-Latn]>"
+        },
+        {
+          "call": "fromietf(ietf='FR')",
+          "before": "returns <Language [fr]>",
+          "after": "returns <Language [fr]>"
+        },
+        {
+          "call": "fromietf(ietf='fra')",
+          "before": "returns <Language [fr]>",
+          "after": "returns <Language [fr]>"
+        }
+      ]
+    },
+    {
+      "function": "babelfish.language.Language.fromietf",
+      "kind": "message",
+      "count": 3,
+      "before": "raises ValueError: '' is not a valid language",
+      "after": "raises ValueError: '1' is not a valid script",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c5",
+          "label": "suspicious",
+          "reason": "The error now reports an invalid script instead of the invalid empty language; the issue only asks for immutability, not a change in validation order or error messages."
+        },
+        {
+          "change": "c6",
+          "label": "suspicious",
+          "reason": "Validation order changed so the script error is raised before the invalid-language error; nothing in the issue or docstring asks for this."
+        },
+        {
+          "change": "c7",
+          "label": "suspicious",
+          "reason": "The invalid language is no longer reported first; a country error is raised instead, a reordering the immutability issue does not request."
+        }
+      ],
+      "examples": [
+        {
+          "call": "fromietf(ietf='-1')",
+          "before": "raises ValueError: '' is not a valid language",
+          "after": "raises ValueError: '1' is not a valid script"
+        },
+        {
+          "call": "fromietf(ietf='-ñ¼0')",
+          "before": "raises ValueError: '' is not a valid language",
+          "after": "raises ValueError: 'Ñ¼0' is not a valid script"
+        },
+        {
+          "call": "fromietf(ietf='5Y\"r\\U000512c3-Tß')",
+          "before": "raises ValueError: '5y\"r\\U000512c3' is not a valid language",
+          "after": "raises ValueError: 'TSS' is not a valid country"
+        }
+      ]
+    },
+    {
+      "function": "babelfish.language.Language.fromietf",
+      "kind": "value",
+      "count": 2,
+      "before": "returns <Language [fr-FR-Latn]>; left module data as babelfish.language.language_converters: babelfish.language.LanguageConverterManager(converters=builtins.dict({}), registered_converters=builtins.list([])) -> babelfish.language.LanguageConverterManager(converters=builtins.dict({'alpha2': babelfish.converters.alpha2.Alpha2Converter(codes=builtins.set({'aa', 'ab', 'ae', 'af', 'ak', 'am', 'an', 'ar', 'as', 'av', 'ay', 'az', 'ba', 'be', 'bg', 'bi', 'bm', 'bn', 'bo', 'br', 'bs', 'ca', 'ce', 'ch', 'co', 'cr', 'cs', 'cu', 'cv', 'cy', 'da', 'de', 'dv', 'dz', 'ee', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'ff', 'fi', 'fj', 'fo', 'fr', 'fy', 'ga', 'gd', 'gl', 'gn', 'gu', 'gv', 'ha', 'he', 'hi', 'ho', 'hr', 'ht', 'hu', 'hy', 'hz', 'ia', 'id', 'ie', 'ig', 'ii', 'ik', 'io', 'is', 'it', 'iu', 'ja', 'jv', 'ka', 'kg', 'ki', 'kj', 'kk', 'kl', 'km', 'kn', 'ko', 'kr', 'ks', 'ku', 'kv', 'kw', 'ky', 'la', 'lb', 'lg', 'li', 'ln', 'lo', 'lt', 'lu', 'lv', 'mg', 'mh', 'mi', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'my', 'na', 'nb', 'nd', 'ne', 'ng', 'nl', 'nn', 'n",
+      "after": "returns <unprintable Language: AttributeError>; left module data as nothing",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c8",
+          "label": "suspicious",
+          "reason": "The result is now unprintable (AttributeError), apparently because Country no longer has 'alpha2' after its field rename; this breaks README examples like <Language [pt-BR]> and an untouched test calls this input."
+        },
+        {
+          "change": "c9",
+          "label": "suspicious",
+          "reason": "The result can no longer be printed (AttributeError) where it used to give <Language [fr-FR-Latn]>; this is a regression the issue does not ask for, on an input an untouched test uses."
+        }
+      ],
+      "examples": [
+        {
+          "call": "fromietf(ietf='fr-FR')",
+          "before": "returns <Language [fr-FR]>; left module data as nothing",
+          "after": "returns <unprintable Language: AttributeError>; left module data as babelfish.language.language_converters: babelfish.language.LanguageConverterManager(converters=builtins.dict({}), registered_converters=builtins.list([])) -> babelfish.language.LanguageConverterManager(converters=builtins.dict({'alpha2': babelfish.converters.alpha2.Alpha2Converter(codes=builtins.set({'aa', 'ab', 'ae', 'af', 'ak', 'am', 'an', 'ar', 'as', 'av', 'ay', 'az', 'ba', 'be', 'bg', 'bi', 'bm', 'bn', 'bo', 'br', 'bs', 'ca', 'ce', 'ch', 'co', 'cr', 'cs', 'cu', 'cv', 'cy', 'da', 'de', 'dv', 'dz', 'ee', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'ff', 'fi', 'fj', 'fo', 'fr', 'fy', 'ga', 'gd', 'gl', 'gn', 'gu', 'gv', 'ha', 'he', 'hi', 'ho', 'hr', 'ht', 'hu', 'hy', 'hz', 'ia', 'id', 'ie', 'ig', 'ii', 'ik', 'io', 'is', 'it', 'iu', 'ja', 'jv', 'ka', 'kg', 'ki', 'kj', 'kk', 'kl', 'km', 'kn', 'ko', 'kr', 'ks', 'ku', 'kv', 'kw', 'ky', 'la', 'lb', 'lg', 'li', 'ln', 'lo', 'lt', 'lu', 'lv', 'mg', 'mh', 'mi', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'my', 'na', 'nb', 'nd', 'ne', 'ng', 'nl', 'nn', 'n"
+        },
+        {
+          "call": "fromietf(ietf='fra-FR-Latn')",
+          "before": "returns <Language [fr-FR-Latn]>; left module data as babelfish.language.language_converters: babelfish.language.LanguageConverterManager(converters=builtins.dict({}), registered_converters=builtins.list([])) -> babelfish.language.LanguageConverterManager(converters=builtins.dict({'alpha2': babelfish.converters.alpha2.Alpha2Converter(codes=builtins.set({'aa', 'ab', 'ae', 'af', 'ak', 'am', 'an', 'ar', 'as', 'av', 'ay', 'az', 'ba', 'be', 'bg', 'bi', 'bm', 'bn', 'bo', 'br', 'bs', 'ca', 'ce', 'ch', 'co', 'cr', 'cs', 'cu', 'cv', 'cy', 'da', 'de', 'dv', 'dz', 'ee', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'ff', 'fi', 'fj', 'fo', 'fr', 'fy', 'ga', 'gd', 'gl', 'gn', 'gu', 'gv', 'ha', 'he', 'hi', 'ho', 'hr', 'ht', 'hu', 'hy', 'hz', 'ia', 'id', 'ie', 'ig', 'ii', 'ik', 'io', 'is', 'it', 'iu', 'ja', 'jv', 'ka', 'kg', 'ki', 'kj', 'kk', 'kl', 'km', 'kn', 'ko', 'kr', 'ks', 'ku', 'kv', 'kw', 'ky', 'la', 'lb', 'lg', 'li', 'ln', 'lo', 'lt', 'lu', 'lv', 'mg', 'mh', 'mi', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'my', 'na', 'nb', 'nd', 'ne', 'ng', 'nl', 'nn', 'n",
+          "after": "returns <unprintable Language: AttributeError>; left module data as nothing"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/test_converters.py",
+      "test": "test_converter_opensubtitles",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 64
+    },
+    {
+      "file": "tests/test_country.py",
+      "test": "test_eq",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 7
+    },
+    {
+      "file": "tests/test_country.py",
+      "test": "test_ne",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 11
+    },
+    {
+      "file": "tests/test_country.py",
+      "test": "test_hash_eq",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 15
+    },
+    {
+      "file": "tests/test_country.py",
+      "test": "test_hasattr_name",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert False",
+      "line": 19
+    },
+    {
+      "file": "tests/test_country.py",
+      "test": "test_hasattr_alpha2",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert False",
+      "line": 23
+    },
+    {
+      "file": "tests/test_country.py",
+      "test": "test_pickle",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 32
+    },
+    {
+      "file": "tests/test_language.py",
+      "test": "test_eq_with_country",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 50
+    },
+    {
+      "file": "tests/test_language.py",
+      "test": "test_ne_with_country",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 54
+    },
+    {
+      "file": "tests/test_language.py",
+      "test": "test_hash",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert -7925703438484343201 == 6342665614943625794",
+      "line": 74
+    },
+    {
+      "file": "tests/test_language.py",
+      "test": "test_pickle[language1]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 85
+    },
+    {
+      "file": "tests/test_language.py",
+      "test": "test_pickle[language3]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 85
+    },
+    {
+      "file": "tests/test_language.py",
+      "test": "test_str_ietf_format",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 89
+    },
+    {
+      "file": "tests/test_language.py",
+      "test": "test_fromietf_with_country_and_script",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 96
+    },
+    {
+      "file": "tests/test_language.py",
+      "test": "test_fromietf_with_country_and_no_script",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AttributeError: alpha2",
+      "line": 100
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-b100e5a152ea",
+      "origin": "model",
+      "file": "babelfish/language.py",
+      "line": 58,
+      "original": "    if country is None:",
+      "replacement": "    if not country:",
+      "description": "Empty-string country becomes None instead of raising ValueError.",
+      "diff": "--- a/babelfish/language.py\n+++ b/babelfish/language.py\n@@ -57,3 +57,3 @@\n         return country\n-    if country is None:\n+    if not country:\n         return None\n",
+      "words": "babelfish/language.py:58: changing `    if country is None:` to `    if not country:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-91241a1d1c7a",
+      "origin": "model",
+      "file": "babelfish/language.py",
+      "line": 67,
+      "original": "    if script is None:",
+      "replacement": "    if not script:",
+      "description": "Empty-string script becomes None instead of raising ValueError.",
+      "diff": "--- a/babelfish/language.py\n+++ b/babelfish/language.py\n@@ -66,3 +66,3 @@\n         return script\n-    if script is None:\n+    if not script:\n         return None\n",
+      "words": "babelfish/language.py:67: changing `    if script is None:` to `    if not script:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-90b6a2a6577b",
+      "origin": "model",
+      "file": "babelfish/language.py",
+      "line": 156,
+      "original": "        if len(language_subtag) == 2:",
+      "replacement": "        if len(language_subtag) <= 2:",
+      "description": "Loosened comparison on language subtag length.",
+      "diff": "--- a/babelfish/language.py\n+++ b/babelfish/language.py\n@@ -155,3 +155,3 @@\n         language_subtag = subtags.pop(0).lower()\n-        if len(language_subtag) == 2:\n+        if len(language_subtag) <= 2:\n             simple_language = cls.fromalpha2(language_subtag)\n",
+      "words": "babelfish/language.py:156: changing `        if len(language_subtag) == 2:` to `        if len(language_subtag) <= 2:` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "Language.fromietf(ietf='')",
+          "fix": "raises ValueError: '' is not a valid language",
+          "mutant": "raises LanguageReverseError: ''"
+        },
+        {
+          "call": "Language.fromietf(ietf=' ')",
+          "fix": "raises ValueError: ' ' is not a valid language",
+          "mutant": "raises LanguageReverseError: ' '"
+        },
+        {
+          "call": "Language.fromietf(ietf='\\t')",
+          "fix": "raises ValueError: '\\t' is not a valid language",
+          "mutant": "raises LanguageReverseError: '\\t'"
+        }
+      ],
+      "kind": null
+    },
+    {
+      "id": "m-7dee587bcdad",
+      "origin": "rule",
+      "file": "babelfish/language.py",
+      "line": 56,
+      "original": "    if isinstance(country, Country):",
+      "replacement": "    if not (isinstance(country, Country)):",
+      "description": "rule: `isinstance(country, Country)` -> `not (isinstance(country, Country))`",
+      "diff": "--- a/babelfish/language.py\n+++ b/babelfish/language.py\n@@ -55,3 +55,3 @@\n     \"\"\"Convert to Country or None.\"\"\"\n-    if isinstance(country, Country):\n+    if not (isinstance(country, Country)):\n         return country\n",
+      "words": "babelfish/language.py:56: changing `    if isinstance(country, Country):` to `    if not (isinstance(country, Country)):` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "Language.fromietf(ietf='fra-FR-Latn')",
+          "fix": "returns <unprintable Language: AttributeError>",
+          "mutant": "raises AttributeError: alpha2"
+        },
+        {
+          "call": "Language.fromietf(ietf='fr-FR')",
+          "fix": "returns <unprintable Language: AttributeError>",
+          "mutant": "raises AttributeError: alpha2"
+        }
+      ],
+      "kind": "negate_if"
+    },
+    {
+      "id": "m-cfc1e92e28b4",
+      "origin": "rule",
+      "file": "babelfish/country.py",
+      "line": 56,
+      "original": "@dataclass(frozen=True)",
+      "replacement": "@dataclass(frozen=False)",
+      "description": "rule: `True` -> `False`",
+      "diff": "--- a/babelfish/country.py\n+++ b/babelfish/country.py\n@@ -55,3 +55,3 @@\n \n-@dataclass(frozen=True)\n+@dataclass(frozen=False)\n class Country(metaclass=CountryMeta):\n",
+      "words": "babelfish/country.py:56: changing `@dataclass(frozen=True)` to `@dataclass(frozen=False)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-cfa20cd066a6",
+      "origin": "rule",
+      "file": "babelfish/country.py",
+      "line": 70,
+      "original": "        if self.country not in COUNTRIES:",
+      "replacement": "        if self.country in COUNTRIES:",
+      "description": "rule: `not in` -> `in`",
+      "diff": "--- a/babelfish/country.py\n+++ b/babelfish/country.py\n@@ -69,3 +69,3 @@\n     def __post_init__(self) -> None:\n-        if self.country not in COUNTRIES:\n+        if self.country in COUNTRIES:\n             msg = f'{self.country!r} is not a valid country'\n",
+      "words": "babelfish/country.py:70: changing `        if self.country not in COUNTRIES:` to `        if self.country in COUNTRIES:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "membership"
+    },
+    {
+      "id": "m-689a753486c2",
+      "origin": "rule",
+      "file": "babelfish/language.py",
+      "line": 173,
+      "original": "                break",
+      "replacement": "                continue",
+      "description": "rule: `break` -> `continue`",
+      "diff": "--- a/babelfish/language.py\n+++ b/babelfish/language.py\n@@ -172,3 +172,3 @@\n                     raise ValueError(msg)\n-                break\n+                continue\n \n",
+      "words": "babelfish/language.py:173: changing `                break` to `                continue` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": "loop"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "babelfish/country.py": [
+        8,
+        56,
+        67,
+        69,
+        70,
+        71,
+        72
+      ],
+      "babelfish/language.py": [
+        8,
+        54,
+        56,
+        57,
+        58,
+        59,
+        60,
+        63,
+        65,
+        66,
+        67,
+        68,
+        69,
+        85,
+        106,
+        109,
+        124,
+        125,
+        127,
+        128,
+        129,
+        156,
+        157,
+        158,
+        161,
+        162,
+        166,
+        168,
+        169,
+        173,
+        175,
+        177,
+        178,
+        179,
+        184,
+        185,
+        188,
+        189,
+        190,
+        195,
+        196
+      ],
+      "babelfish/script.py": [
+        8,
+        33,
+        44,
+        46,
+        47,
+        48,
+        51,
+        52,
+        53,
+        60
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 32,
+        "total": 58
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack Country.__post_init__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Language.__bool__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Language.__getattr__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Language.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Script.__post_init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Country.__post_init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Language.__bool__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Language.__getattr__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Language.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Script.__post_init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare to_country: new with the fix: nothing to compare",
+    "the behaviour diff could not compare to_script: new with the fix: nothing to compare",
+    "the behaviour diff could not compare Script.code: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 9,
+    "input_tokens": 76210,
+    "output_tokens": 12123,
+    "cost_estimate": {
+      "usd": 0.4954,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 10 functions were shown",
+    "guard: 5 of the 8 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 37 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "blind: only the first 8 of 19 functions were shown"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "babelfish.language.to_country",
+      "path": "babelfish/language.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 2,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "babelfish.language.to_script",
+      "path": "babelfish/language.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 2,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "babelfish.language.Language.fromietf",
+      "path": "babelfish/language.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 16,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "babelfish.language.Language.alpha3",
+      "path": "babelfish/language.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 5,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "babelfish.script.Script.code",
+      "path": "babelfish/script.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 2,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

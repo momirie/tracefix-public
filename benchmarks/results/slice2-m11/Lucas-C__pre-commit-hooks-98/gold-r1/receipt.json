@@ -1,0 +1,431 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T21:49:25+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks pre_commit_hooks.insert_license.try_update_year_range",
+    "Break My Fix finding 2: an input that breaks pre_commit_hooks.insert_license.try_update_year_range"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "b26c56de7b79689a9e418a755133f17c8a127ad0"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "81f57e449c821ced7536140777366f8cdbee80c1"
+  },
+  "issue": {
+    "title": "[Enhancement] Update multiple licence year ends in one run.",
+    "sha256": "241aa028c84cf19ea3d40567271fc265df1da6134ea91e8e27985b2a81b7e6e9"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the bug, confirmed the fix guards against it with no regressions found, but Break My Fix found inputs that break try_update_year_range: a license_header_index past the end of the file raises IndexError, and a negative license_length still returns modified content. Look next at whether try_update_year_range should validate or bound license_header_index and license_length, a…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 2.73,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 2.52,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 6.85,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 5 of 6 mutants",
+      "duration_s": 46.14,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.833,
+        "repro_kill_rate": 0.5,
+        "pr_kill_rate": null,
+        "mutants": 6,
+        "killed": 5,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 2,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-b0a8f52c3aab",
+          "m-4d0a7f5e112e",
+          "m-081e0284e0dd",
+          "m-9862480fa3e3",
+          "m-3b63a3086af3"
+        ],
+        "rule_mutants": 3,
+        "rule_kill_rate": 1.0,
+        "rule_kinds": [
+          "body: 1 of 1 killed",
+          "constant: 2 of 2 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "negate_if",
+          "arithmetic",
+          "membership",
+          "loop",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 449 untouched tests that passed before the fix fails after it",
+      "duration_s": 2.75,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 449,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 1.76,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 3
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "266 input(s) compared on 1 function(s): 0 changed with the fix",
+      "duration_s": 7.33,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 266,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": true,
+        "l3_gate": true,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "2 finding(s), each proven by a failing repro file",
+      "duration_s": 18.91,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_2.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 384,
+        "properties_counted": 6,
+        "findings": 2,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 10
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 10.36,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "pre_commit_hooks.insert_license.try_update_year_range",
+      "call": "try_update_year_range(src_file_content=['/* Copyright (c) 2012-2023 Dummy             */\\n', '/*********************************************/\\n', '/* @copyright Copyright (c) 2012-2023 Dummy  */\\n', '<?php\\n'], src_filepath='file.php', license_header_index=10, license_length=3)",
+      "input": {
+        "src_file_content": "['/* Copyright (c) 2012-2023 Dummy             */\\n', '/*********************************************/\\n', '/* @copyright Copyright (c) 2012-2023 Dummy  */\\n', '<?php\\n']",
+        "src_filepath": "'file.php'",
+        "license_header_index": "10",
+        "license_length": "3"
+      },
+      "outcome": "raises IndexError: list index out of range",
+      "base_outcome": "raises IndexError: list index out of range",
+      "expected": null,
+      "property": {
+        "id": "t1.p1",
+        "name": "all_year_lines_in_header_get_current_year",
+        "kind": "returns",
+        "claim": "Every line of the license header (index..index+length) that contains a year ends up listing the current year, so multiple year lines are updated in a single run, not just the first one.",
+        "source": "issue",
+        "quote": "If one of the pre-commit runs could be avoided by changing both lines in a single run that would be great.",
+        "origin": "model"
+      },
+      "also_violates": [
+        "second_run_does_nothing",
+        "year_range_form"
+      ],
+      "other_inputs": 3,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 399: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "pre_commit_hooks/insert_license.py",
+      "line": 399,
+      "expect": {
+        "types": [
+          "IndexError"
+        ],
+        "in_file": false
+      },
+      "doubt": null
+    },
+    {
+      "number": 2,
+      "function": "pre_commit_hooks.insert_license.try_update_year_range",
+      "call": "try_update_year_range(src_file_content=['/* Copyright (c) 2012-2023 Dummy             */\\n', '/*********************************************/\\n', '/* @copyright Copyright (c) 2012-2023 Dummy  */\\n', '<?php\\n'], src_filepath='file.php', license_header_index=0, license_length=-1)",
+      "input": {
+        "src_file_content": "['/* Copyright (c) 2012-2023 Dummy             */\\n', '/*********************************************/\\n', '/* @copyright Copyright (c) 2012-2023 Dummy  */\\n', '<?php\\n']",
+        "src_filepath": "'file.php'",
+        "license_header_index": "0",
+        "license_length": "-1"
+      },
+      "outcome": "returns (['/* Copyright (c) 2012-2023 Dummy             */\\n', '/*********************************************/\\n', '/* @copyright Copyright (c) 2012-2023 Dummy  */\\n', '<?php\\n'], False)",
+      "base_outcome": "returns (['/* Copyright (c) 2012-2023 Dummy             */\\n', '/*********************************************/\\n', '/* @copyright Copyright (c) 2012-2023 Dummy  */\\n', '<?php\\n'], False)",
+      "expected": null,
+      "property": {
+        "id": "t1.p1",
+        "name": "all_year_lines_in_header_get_current_year",
+        "kind": "returns",
+        "claim": "Every line of the license header (index..index+length) that contains a year ends up listing the current year, so multiple year lines are updated in a single run, not just the first one.",
+        "source": "issue",
+        "quote": "If one of the pre-commit runs could be avoided by changing both lines in a single run that would be great.",
+        "origin": "model"
+      },
+      "also_violates": [
+        "year_range_form",
+        "flag_true_when_outdated_year_in_header"
+      ],
+      "other_inputs": 1,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 399, 407: the fix touched this path and left it broken",
+      "file": "findings/finding_2.py",
+      "path": "pre_commit_hooks/insert_license.py",
+      "line": 399,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      },
+      "doubt": null
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-9f365619f30f",
+      "origin": "model",
+      "file": "pre_commit_hooks/insert_license.py",
+      "line": 399,
+      "original": "    changed = False",
+      "replacement": "    changed = license_length == 0",
+      "description": "Initial flag is True when license length is zero, which is a wrong initial value.",
+      "diff": "--- a/pre_commit_hooks/insert_license.py\n+++ b/pre_commit_hooks/insert_license.py\n@@ -398,3 +398,3 @@\n     current_year = datetime.now().year\n-    changed = False\n+    changed = license_length == 0\n     for i in range(license_header_index, license_header_index + license_length):\n",
+      "words": "pre_commit_hooks/insert_license.py:399: changing `    changed = False` to `    changed = license_length == 0` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "try_update_year_range(src_file_content=[], src_filepath='10', license_header_index=0, license_length=0)",
+          "fix": "returns ([], False)",
+          "mutant": "returns ([], True)"
+        },
+        {
+          "call": "try_update_year_range(src_file_content=[], src_filepath='', license_header_index=2012, license_length=0)",
+          "fix": "returns ([], False)",
+          "mutant": "returns ([], True)"
+        },
+        {
+          "call": "try_update_year_range(src_file_content=[], src_filepath='', license_header_index=2023, license_length=0)",
+          "fix": "returns ([], False)",
+          "mutant": "returns ([], True)"
+        }
+      ],
+      "kind": null
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "pre_commit_hooks/insert_license.py": [
+        399,
+        406,
+        407
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 3,
+        "total": 3
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 31441,
+    "output_tokens": 8816,
+    "cost_estimate": {
+      "usd": 0.2755,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "pre_commit_hooks.insert_license.try_update_year_range",
+      "path": "pre_commit_hooks/insert_license.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 384,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

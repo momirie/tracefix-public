@@ -1,0 +1,34 @@
+{
+ "instance_id": "tox-dev__tox-2351",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; LookupError",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis 6.123.1 -> 6.141.1"
+ ],
+ "setup_files": [
+  "src/tox/version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "anyio.pytest_plugin",
+  "pytest_asyncio.plugin",
+  "pytest_bdd.plugin",
+  "pytest_benchmark.plugin",
+  "pytest_devpi_server",
+  "pytest_mock",
+  "requests_mock.contrib._pytest_plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 17.797
+}

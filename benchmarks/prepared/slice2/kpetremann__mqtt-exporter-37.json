@@ -1,0 +1,155 @@
+{
+ "instance_id": "kpetremann__mqtt-exporter-37",
+ "excluded": null,
+ "detail": "",
+ "python": "3.10.16",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.168.5",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "pylama.pytest",
+  "pytest_mock"
+ ],
+ "suite_seconds": 1.266,
+ "suite_timeout": 120,
+ "source_hunks": 2,
+ "variants": [
+  {
+   "index": 0,
+   "path": "mqtt_exporter/main.py",
+   "old_start": 162,
+   "old_len": 7,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "mqtt_exporter/main.py",
+     "function": "_normalize_name_in_topic_msg"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "mqtt_exporter/settings.py",
+   "old_start": 19,
+   "old_len": 3,
+   "label": "partial",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "mqtt_exporter/settings.py",
+     "function": null
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 61645,
+   "label": "no_effect",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "mqtt_exporter/main.py",
+     "function": "_normalize_name_in_topic_msg"
+    }
+   ],
+   "differs": [
+    {
+     "path": "mqtt_exporter/main.py",
+     "function": "_normalize_name_in_topic_msg"
+    },
+    {
+     "path": "mqtt_exporter/settings.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "kind": "agent_ok",
+   "source_row": 28526,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "debug_edge_case.py",
+     "function": null
+    },
+    {
+     "path": "debug_edge_case.py",
+     "function": "debug_shelly_relay"
+    },
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_exact_issue_scenario"
+    },
+    {
+     "path": "mqtt_exporter/main.py",
+     "function": "_normalize_name_in_topic_msg"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_shelly_3em_issue"
+    }
+   ],
+   "differs": [
+    {
+     "path": "debug_edge_case.py",
+     "function": null
+    },
+    {
+     "path": "debug_edge_case.py",
+     "function": "debug_shelly_relay"
+    },
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_exact_issue_scenario"
+    },
+    {
+     "path": "mqtt_exporter/main.py",
+     "function": "_normalize_name_in_topic_msg"
+    },
+    {
+     "path": "mqtt_exporter/settings.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_shelly_3em_issue"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "4126ec64830517ee43384dde82fa43d807701f57",
+  "gold": "3c3e841f06192ac8fb0325f37b7f766fadf47742",
+  "v1": "e72a7e2dd15e128c32641c7bbf63d5bdf22948bf",
+  "agent_wrong": "76d4b3ff720c372a99100edc40c7eb39a05346df",
+  "agent_ok": "d40d01e5422656b6724e5b2b0f4aa0e027f15b0b"
+ },
+ "seconds": 38.39
+}

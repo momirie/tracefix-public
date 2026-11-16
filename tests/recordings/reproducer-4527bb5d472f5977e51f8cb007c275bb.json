@@ -1,0 +1,11 @@
+{
+ "key": "4527bb5d472f5977e51f8cb007c275bb271432918363d649fc41ae3acdbdf0ec",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 2080,
+  "output_tokens": 174,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from svc.config import load_settings, parse_port\\n\\n\\ndef test_parse_port_unset_falls_back_to_default() -> None:\\n    assert parse_port(None) == 8080\\n\\n\\ndef test_load_settings_without_port_uses_default() -> None:\\n    assert load_settings({}).port == 8080\\n\",\"rationale\":\"When PORT is unset (None, or missing from the env mapping), parse_port/load_settings should fall back to 8080 instead of raising AttributeError.\"}"
+ },
+ "role": "reproducer"
+}

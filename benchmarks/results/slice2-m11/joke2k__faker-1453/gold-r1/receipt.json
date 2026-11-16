@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T21:38:12+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 0 of 3 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "ca43530c384807393bf2812ea86a16978738b2af"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "e13872642af0bec37e221116da7b4b97b29b8196"
+  },
+  "issue": {
+    "title": "Raises RecursionError under certain conditions",
+    "sha256": "69a4bfe759ee3d30453f6db223eea3c294f94b6edc55b2a03b164f3d8a33a409"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the RecursionError with a test that fails before the fix and passes after it, found no regressions, and confirmed the fixed lines are covered, but the guard stage reported the fix as not guarded and the mutation check did not reach the threshold needed for L2. The most important next step is to strengthen the tests so they catch mutants of the fix (for example, asserting d…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 11.93,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.13,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 21.49,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 3 mutants; 80% is needed",
+      "duration_s": 187.5,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 1,
+        "not_run": 5,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 5,
+        "rule_kill_rate": 1.0,
+        "rule_kinds": [
+          "body: 2 of 2 killed",
+          "compare: 1 of 1 killed",
+          "constant: 2 of 2 killed"
+        ],
+        "rule_kinds_absent": [
+          "logic",
+          "negate_if",
+          "arithmetic",
+          "membership",
+          "loop",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 171 untouched tests that passed before the fix fails after it",
+      "duration_s": 47.45,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 171,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.19,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 14
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call (Faker.__deepcopy__: a special method (such as __init__ or __eq__): not called yet; Faker.__getattr__: a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 0.24,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call (Faker.__deepcopy__: a special method (such as __init__ or __eq__): not called yet; Faker.__getattr__: a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 25.66,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-fae7472a64c3",
+      "origin": "model",
+      "file": "faker/proxy.py",
+      "line": 119,
+      "original": "        result._locales = copy.deepcopy(self._locales)",
+      "replacement": "        result._locales = self._locales",
+      "description": "Locales list is shared instead of deep-copied.",
+      "diff": "--- a/faker/proxy.py\n+++ b/faker/proxy.py\n@@ -118,3 +118,3 @@\n         result = cls.__new__(cls)\n-        result._locales = copy.deepcopy(self._locales)\n+        result._locales = self._locales\n         result._factories = copy.deepcopy(self._factories)\n",
+      "words": "faker/proxy.py:119: changing `        result._locales = copy.deepcopy(self._locales)` to `        result._locales = self._locales` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-2d748bd767c9",
+      "origin": "model",
+      "file": "faker/proxy.py",
+      "line": 120,
+      "original": "        result._factories = copy.deepcopy(self._factories)",
+      "replacement": "        result._factories = self._factories",
+      "description": "Factories are shared with the original instead of deep-copied.",
+      "diff": "--- a/faker/proxy.py\n+++ b/faker/proxy.py\n@@ -119,3 +119,3 @@\n         result._locales = copy.deepcopy(self._locales)\n-        result._factories = copy.deepcopy(self._factories)\n+        result._factories = self._factories\n         result._factory_map = copy.deepcopy(self._factory_map)\n",
+      "words": "faker/proxy.py:120: changing `        result._factories = copy.deepcopy(self._factories)` to `        result._factories = self._factories` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-b327c21db602",
+      "origin": "model",
+      "file": "faker/proxy.py",
+      "line": 121,
+      "original": "        result._factory_map = copy.deepcopy(self._factory_map)",
+      "replacement": "        result._factory_map = self._factory_map",
+      "description": "Factory map is shared with the original instead of deep-copied.",
+      "diff": "--- a/faker/proxy.py\n+++ b/faker/proxy.py\n@@ -120,3 +120,3 @@\n         result._factories = copy.deepcopy(self._factories)\n-        result._factory_map = copy.deepcopy(self._factory_map)\n+        result._factory_map = self._factory_map\n         result._weights = copy.deepcopy(self._weights)\n",
+      "words": "faker/proxy.py:121: changing `        result._factory_map = copy.deepcopy(self._factory_ma...` to `        result._factory_map = self._factory_map` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "faker/proxy.py": [
+        1,
+        104,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        128
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 13,
+        "total": 14
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call (Faker.__deepcopy__: a special method (such as __init__ or __eq__): not called yet; Faker.__getattr__: a special method (such as __init__ or __eq__): not called yet))",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call (Faker.__deepcopy__: a special method (such as __init__ or __eq__): not called yet; Faker.__getattr__: a special method (such as __init__ or __eq__): not called yet))",
+    "Break My Fix could not attack Faker.__deepcopy__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Faker.__getattr__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Faker.__deepcopy__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Faker.__getattr__: a special method (such as __init__ or __eq__): not called yet"
+  ],
+  "llm": {
+    "calls": 4,
+    "input_tokens": 12132,
+    "output_tokens": 1496,
+    "cost_estimate": {
+      "usd": 0.046,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 5 of the 8 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "blind: class Faker truncated to 6000 characters for the prompt"
+  ],
+  "previous": null,
+  "attack_targets": []
+}

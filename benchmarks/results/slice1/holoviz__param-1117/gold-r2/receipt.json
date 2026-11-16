@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-20T09:08:45+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L2",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "the tests guard the fix: they fail when it is reverted or broken",
+    "not L3: rx.__init__: not compared (a special method (such as __init__ or __eq__): not called yet)",
+    "not L3: rx._resolve_async: not compared (async methods are not called yet)",
+    "not L3: rx._is_async: before the fix it was not a property defined in class rx",
+    "not L3: rx._lazy_resolve: the comparison did not finish",
+    "not L3: rx._resolve: the comparison did not finish",
+    "not L3: rx._clone: the comparison did not finish",
+    "not L3: rx._lazy_resolve: no input could be compared",
+    "not L3: rx._resolve: no input could be compared",
+    "not L3: rx._clone: no input could be compared"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "1ab8c9069b1de8d08663ce679292fc5aa198f20d"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "cac87846754b9fe929095a3e277ba86d385b8c04"
+  },
+  "issue": {
+    "title": "Shared rx inputs are not reused",
+    "sha256": "4b1604f157870a58aefb6cfe2322250fe5d3a7140c1ca343499da2d86bf467b8"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "At L2, a test reproduced the repeated upstream evaluation (failing before the fix, passing after) and fails again when the fix is reverted or broken, with no regressions or breaking inputs found. The behaviour comparison was inconclusive for the changed rx methods (_resolve, _lazy_resolve, _clone, the async path and the new _is_async property), so a reviewer should check those directly, especiall…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 8.29,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.75,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 16.5,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 8 of 8 mutants",
+      "duration_s": 434.25,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 1.0,
+        "repro_kill_rate": 0.75,
+        "pr_kill_rate": null,
+        "mutants": 8,
+        "killed": 8,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-9c9f905f9d2c",
+          "m-9e57ebb8097f",
+          "m-7bd21fe49a08",
+          "m-58b7910209ab",
+          "m-48c9c344ed59",
+          "m-6b48693256a4",
+          "m-629dcd2313b6",
+          "m-73c1ed7180f7"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.9,
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 1179 untouched tests that passed before the fix fails after it",
+      "duration_s": 8.81,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 1179,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.43,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 29
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: rx.__init__: not compared (a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 11.57,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 10 inputs against 6 properties",
+      "duration_s": 45.93,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 4,
+        "inputs_tried": 10,
+        "properties_counted": 6,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.03,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-fb59e7b6c219",
+      "origin": "rule",
+      "file": "param/reactive.py",
+      "line": 1655,
+      "original": "            if self._shared._current_task:",
+      "replacement": "            if not (self._shared._current_task):",
+      "description": "rule: `self._shared._current_task` -> `not (self._shared._current_task)`",
+      "diff": "--- a/param/reactive.py\n+++ b/param/reactive.py\n@@ -1654,3 +1654,3 @@\n         if obj is None:\n-            if self._shared._current_task:\n+            if not (self._shared._current_task):\n                 await self._shared._current_task\n",
+      "words": "param/reactive.py:1655: changing `            if self._shared._current_task:` to `            if not (self._shared._current_task):` made no test fail; not compared with the fix: the run on the mutant did not finish",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "param/reactive.py": [
+        1439,
+        1465,
+        1537,
+        1538,
+        1539,
+        1540,
+        1541,
+        1542,
+        1543,
+        1544,
+        1545,
+        1651,
+        1654,
+        1655,
+        1656,
+        1657,
+        1658,
+        1659,
+        1671,
+        1687,
+        1688,
+        1689,
+        1694,
+        1695,
+        1696,
+        1698,
+        1699,
+        1703,
+        1761
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 15,
+        "total": 29
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack rx.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack rx._resolve_async: async methods are not called yet",
+    "the behaviour diff could not compare rx.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare rx._resolve_async: async methods are not called yet"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 74826,
+    "output_tokens": 5333,
+    "cost_estimate": {
+      "usd": 0.3711,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 55 functions were shown",
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "guard: only the first 10 of 21 rule mutants were run",
+    "behaviour_diff: the behaviour diff on the fixed code reported it finished but ended failed: not trusted",
+    "behaviour_diff: the behaviour diff on surviving mutant 18 reported it finished but ended failed: not trusted"
+  ],
+  "previous": null
+}

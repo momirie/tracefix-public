@@ -1,0 +1,25 @@
+{
+ "instance_id": "tophat__syrupy-761",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; ModuleNotFoundError syrupy",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "syrupy"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 15.562
+}

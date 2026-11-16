@@ -1,0 +1,141 @@
+{
+ "instance_id": "nipreps__nibabies-395",
+ "excluded": null,
+ "detail": "",
+ "python": "3.10.16",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.168.5",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [
+  "nibabies/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "pytest_env.plugin",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 10.486,
+ "suite_timeout": 120,
+ "source_hunks": 8,
+ "variants": [
+  {
+   "index": 0,
+   "path": "nibabies/utils/bids.py",
+   "old_start": 8,
+   "old_len": 8,
+   "label": "no_effect",
+   "failing": 9,
+   "functions": [
+    {
+     "path": "nibabies/utils/bids.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "nibabies/utils/bids.py",
+   "old_start": 244,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "nibabies/utils/bids.py",
+     "function": "parse_bids_for_age_months"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "nibabies/utils/bids.py",
+   "old_start": 258,
+   "old_len": 16,
+   "label": "no_effect",
+   "failing": 9,
+   "functions": [
+    {
+     "path": "nibabies/utils/bids.py",
+     "function": "_get_age_from_tsv"
+    },
+    {
+     "path": "nibabies/utils/bids.py",
+     "function": "parse_bids_for_age_months"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "nibabies/utils/bids.py",
+   "old_start": 278,
+   "old_len": 14,
+   "label": "no_effect",
+   "failing": 9,
+   "functions": [
+    {
+     "path": "nibabies/utils/bids.py",
+     "function": "_get_age_from_tsv"
+    }
+   ]
+  }
+ ],
+ "kept": 0,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 38064,
+   "label": "no_effect",
+   "failing": 3,
+   "kept": true,
+   "functions": [
+    {
+     "path": "nibabies/utils/bids.py",
+     "function": "_get_age_from_tsv"
+    },
+    {
+     "path": "nibabies/utils/bids.py",
+     "function": "parse_bids_for_age_months"
+    }
+   ],
+   "differs": [
+    {
+     "path": "nibabies/_warnings.py",
+     "function": null
+    },
+    {
+     "path": "nibabies/_warnings.py",
+     "function": "_showwarning"
+    },
+    {
+     "path": "nibabies/_warnings.py",
+     "function": "_warn"
+    },
+    {
+     "path": "nibabies/utils/bids.py",
+     "function": null
+    },
+    {
+     "path": "nibabies/utils/bids.py",
+     "function": "_get_age_from_tsv"
+    },
+    {
+     "path": "nibabies/utils/bids.py",
+     "function": "age_to_months"
+    },
+    {
+     "path": "nibabies/utils/bids.py",
+     "function": "parse_bids_for_age_months"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "f7969c8f55b4a7d94b38a9b82a81c6e544b87d1e",
+  "gold": "a21839d7a99038cf32e0b036964cb09f97e43c65",
+  "v0": "988408933c45b5373f1f18faf811403170f54e09",
+  "agent_wrong": "777c5db4787006c5334df4068de7462d913610b7"
+ },
+ "seconds": 74.094
+}

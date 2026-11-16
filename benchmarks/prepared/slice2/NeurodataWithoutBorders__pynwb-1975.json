@@ -1,0 +1,29 @@
+{
+ "instance_id": "NeurodataWithoutBorders__pynwb-1975",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; KeyError",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [
+  "src/pynwb/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "pytest_asyncio.plugin",
+  "pytest_mock",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 6,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 22.531
+}

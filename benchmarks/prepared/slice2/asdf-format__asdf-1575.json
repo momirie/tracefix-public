@@ -1,0 +1,125 @@
+{
+ "instance_id": "asdf-format__asdf-1575",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [
+  "asdf/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "pytest_asdf.plugin",
+  "pytest_doctestplus.plugin",
+  "pytest_openfiles.plugin",
+  "pytest_remotedata.plugin"
+ ],
+ "suite_seconds": 66.049,
+ "suite_timeout": 199,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 12078,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "asdf/asdf.py",
+     "function": "AsdfFile.close"
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": null
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": "test_basic_gc_fix"
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": "test_close_without_fd"
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": "test_double_close"
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": "test_manual_close_vs_context_manager"
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": "test_tree_access_after_close"
+    },
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_closed_asdf_file_gc_issue"
+    }
+   ],
+   "differs": [
+    {
+     "path": "asdf/asdf.py",
+     "function": "AsdfFile.close"
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": null
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": "test_basic_gc_fix"
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": "test_close_without_fd"
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": "test_double_close"
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": "test_manual_close_vs_context_manager"
+    },
+    {
+     "path": "comprehensive_test_v2.py",
+     "function": "test_tree_access_after_close"
+    },
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_closed_asdf_file_gc_issue"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "24d98554d9eab52c8194b122daac802e4d2c4d27",
+  "gold": "5a2671f3462c50c2fe65d189a5982c8c0bcc41df",
+  "agent_ok": "969d6a23d8f31052704837505a4dadbb641ea946"
+ },
+ "seconds": 100.203
+}

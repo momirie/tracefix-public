@@ -1,0 +1,566 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-22T17:43:24+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks photutils.detection.peakfinder.find_peaks"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "8735398edc10de91f4704f8c84e1699805ac60c3"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "5b241b987f119ef4464df1b3a7c6a12acb8ff46d"
+  },
+  "issue": {
+    "title": "IRAFStarFinder Error: self.cutout_data_nosub is size (0,)",
+    "sha256": "a2211dd712e1f7629dce5130a03d1e69e121f6cbfde432dbdfd95a863006bd7d"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.10.16"
+  },
+  "summary": {
+    "text": "The original IRAFStarFinder failure was reproduced, no regressions were found and the fix lines were covered, but no guard test was confirmed and Break My Fix found an input where find_peaks on a 5x5 array with peaks at (1,3) and (2,2), threshold=1.0 and border_width=2 raises NoDetectionsWarning saying no local peaks were found. Look next at how find_peaks handles border_width relative to array s…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 113.07,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "4 changed module(s) imported from the copies (8 imports in all)",
+      "duration_s": 7.41,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 4,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 35.84,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no photutils/aperture/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 7 mutants; 80% is needed",
+      "duration_s": 2261.98,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no photutils/aperture/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 7,
+        "killed": 0,
+        "survived": 7,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.4,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 1658 untouched tests that passed before the fix fails after it",
+      "duration_s": 110.83,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 1658,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 4.52,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no photutils/aperture/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 22
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: _IRAFStarFinderCatalog.sky: it could not be loaded after the fix: _IRAFStarFinderCatalog.sky is a property here, not a method",
+      "duration_s": 5.66,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 120.11,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "inputs_tried": 207,
+        "properties_counted": 15,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (2 reported)",
+      "duration_s": 0.04,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 2
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "photutils.detection.peakfinder.find_peaks",
+      "call": "find_peaks(data=[[0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 6.0, 0.0], [0.0, 0.0, 5.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0]], threshold=1.0, border_width=2)",
+      "input": {
+        "data": "[[0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 6.0, 0.0], [0.0, 0.0, 5.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0]]",
+        "threshold": "1.0",
+        "border_width": "2"
+      },
+      "outcome": "raises NoDetectionsWarning: No local peaks were found.",
+      "base_outcome": "raises NoDetectionsWarning: No local peaks were found.",
+      "expected": null,
+      "property": {
+        "id": "t3.p3",
+        "name": "border_excluded",
+        "kind": "returns",
+        "claim": "No peak lies within border_width pixels of the data border",
+        "source": "docstring",
+        "quote": "The width in pixels to exclude around the border of the",
+        "origin": "model"
+      },
+      "also_violates": [
+        "peak_value_matches_data",
+        "valid_border_no_error",
+        "larger_border_subset",
+        "peaks_above_threshold"
+      ],
+      "other_inputs": 1,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 128, 129, 142, 144, 168: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "photutils/detection/peakfinder.py",
+      "line": 128,
+      "expect": {
+        "types": [
+          "NoDetectionsWarning"
+        ],
+        "in_file": false
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-293537b39b7f",
+      "origin": "model",
+      "file": "photutils/detection/core.py",
+      "line": 90,
+      "original": "                yborder = (kernel.shape[0] - 1) // 2",
+      "replacement": "                yborder = kernel.shape[0] // 2",
+      "description": "Border width for ndarray kernel is off by one in y for odd sizes.",
+      "diff": "--- a/photutils/detection/core.py\n+++ b/photutils/detection/core.py\n@@ -89,3 +89,3 @@\n             if isinstance(kernel, np.ndarray):\n-                yborder = (kernel.shape[0] - 1) // 2\n+                yborder = kernel.shape[0] // 2\n                 xborder = (kernel.shape[1] - 1) // 2\n",
+      "words": "photutils/detection/core.py:90: changing `                yborder = (kernel.shape[0] - 1) // 2` to `                yborder = kernel.shape[0] // 2` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-b3373b0a36cb",
+      "origin": "model",
+      "file": "photutils/detection/core.py",
+      "line": 91,
+      "original": "                xborder = (kernel.shape[1] - 1) // 2",
+      "replacement": "                xborder = (kernel.shape[1] - 1) // 2 + 1",
+      "description": "x border is one pixel too wide for ndarray kernels.",
+      "diff": "--- a/photutils/detection/core.py\n+++ b/photutils/detection/core.py\n@@ -90,3 +90,3 @@\n                 yborder = (kernel.shape[0] - 1) // 2\n-                xborder = (kernel.shape[1] - 1) // 2\n+                xborder = (kernel.shape[1] - 1) // 2 + 1\n             else:\n",
+      "words": "photutils/detection/core.py:91: changing `                xborder = (kernel.shape[1] - 1) // 2` to `                xborder = (kernel.shape[1] - 1) // 2 + 1` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-1fff59b547be",
+      "origin": "model",
+      "file": "photutils/detection/core.py",
+      "line": 93,
+      "original": "                yborder = kernel.yradius",
+      "replacement": "                yborder = kernel.xradius",
+      "description": "Uses x radius for y border for kernel objects.",
+      "diff": "--- a/photutils/detection/core.py\n+++ b/photutils/detection/core.py\n@@ -92,3 +92,3 @@\n             else:\n-                yborder = kernel.yradius\n+                yborder = kernel.xradius\n                 xborder = kernel.xradius\n",
+      "words": "photutils/detection/core.py:93: changing `                yborder = kernel.yradius` to `                yborder = kernel.xradius` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-0171941d079c",
+      "origin": "model",
+      "file": "photutils/detection/peakfinder.py",
+      "line": 142,
+      "original": "    if border_width < 0:",
+      "replacement": "    if border_width < -1:",
+      "description": "Loosens the negative border_width check so -1 is accepted.",
+      "diff": "--- a/photutils/detection/peakfinder.py\n+++ b/photutils/detection/peakfinder.py\n@@ -141,3 +141,3 @@\n \n-    if border_width < 0:\n+    if border_width < -1:\n         raise ValueError('border_width must be a non-negative integer.')\n",
+      "words": "photutils/detection/peakfinder.py:142: changing `    if border_width < 0:` to `    if border_width < -1:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-7274ab8cf9d0",
+      "origin": "model",
+      "file": "photutils/detection/peakfinder.py",
+      "line": 168,
+      "original": "    if border_width > 0:",
+      "replacement": "    if border_width > 1:",
+      "description": "Border of width 1 is no longer excluded.",
+      "diff": "--- a/photutils/detection/peakfinder.py\n+++ b/photutils/detection/peakfinder.py\n@@ -167,3 +167,3 @@\n \n-    if border_width > 0:\n+    if border_width > 1:\n         for i in range(peak_goodmask.ndim):\n",
+      "words": "photutils/detection/peakfinder.py:168: changing `    if border_width > 0:` to `    if border_width > 1:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-bed4c6b0d92e",
+      "origin": "model",
+      "file": "photutils/detection/starfinder.py",
+      "line": 99,
+      "original": "        if denom > 0:",
+      "replacement": "        if denom >= 0:",
+      "description": "Allows division by zero when denom is exactly zero.",
+      "diff": "--- a/photutils/detection/starfinder.py\n+++ b/photutils/detection/starfinder.py\n@@ -98,3 +98,3 @@\n         denom = np.sum(kernel**2) - (np.sum(kernel)**2 / kernel.size)\n-        if denom > 0:\n+        if denom >= 0:\n             kernel = (kernel - np.sum(kernel) / kernel.size) / denom\n",
+      "words": "photutils/detection/starfinder.py:99: changing `        if denom > 0:` to `        if denom >= 0:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-e36df5c2694e",
+      "origin": "model",
+      "file": "photutils/detection/peakfinder.py",
+      "line": 144,
+      "original": "    if int(border_width) != border_width:",
+      "replacement": "    if int(border_width) > border_width:",
+      "description": "Integer check no longer catches non-integers that round down, such as 2.5.",
+      "diff": "--- a/photutils/detection/peakfinder.py\n+++ b/photutils/detection/peakfinder.py\n@@ -143,3 +143,3 @@\n         raise ValueError('border_width must be a non-negative integer.')\n-    if int(border_width) != border_width:\n+    if int(border_width) > border_width:\n         raise ValueError('border_width must be an integer.')\n",
+      "words": "photutils/detection/peakfinder.py:144: changing `    if int(border_width) != border_width:` to `    if int(border_width) > border_width:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-8c9773796408",
+      "origin": "rule",
+      "file": "photutils/detection/irafstarfinder.py",
+      "line": 456,
+      "original": "        return self.make_cutouts(self.convolved_data)",
+      "replacement": "        return None",
+      "description": "rule: body of `cutout_convdata` -> `return None`",
+      "diff": "--- a/photutils/detection/irafstarfinder.py\n+++ b/photutils/detection/irafstarfinder.py\n@@ -455,3 +455,3 @@\n     def cutout_convdata(self):  # pragma: no cover\n-        return self.make_cutouts(self.convolved_data)\n+        return None\n \n",
+      "words": "photutils/detection/irafstarfinder.py:456: changing `        return self.make_cutouts(self.convolved_data)` to `        return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-e08dd7eb0c81",
+      "origin": "rule",
+      "file": "photutils/detection/core.py",
+      "line": 89,
+      "original": "            if isinstance(kernel, np.ndarray):",
+      "replacement": "            if not (isinstance(kernel, np.ndarray)):",
+      "description": "rule: `isinstance(kernel, np.ndarray)` -> `not (isinstance(kernel, np.ndarray))`",
+      "diff": "--- a/photutils/detection/core.py\n+++ b/photutils/detection/core.py\n@@ -88,3 +88,3 @@\n         if exclude_border:\n-            if isinstance(kernel, np.ndarray):\n+            if not (isinstance(kernel, np.ndarray)):\n                 yborder = (kernel.shape[0] - 1) // 2\n",
+      "words": "photutils/detection/core.py:89: changing `            if isinstance(kernel, np.ndarray):` to `            if not (isinstance(kernel, np.ndarray)):` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-97b4008100d9",
+      "origin": "rule",
+      "file": "photutils/detection/core.py",
+      "line": 90,
+      "original": "                yborder = (kernel.shape[0] - 1) // 2",
+      "replacement": "                yborder = (kernel.shape[(-1)] - 1) // 2",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/photutils/detection/core.py\n+++ b/photutils/detection/core.py\n@@ -89,3 +89,3 @@\n             if isinstance(kernel, np.ndarray):\n-                yborder = (kernel.shape[0] - 1) // 2\n+                yborder = (kernel.shape[(-1)] - 1) // 2\n                 xborder = (kernel.shape[1] - 1) // 2\n",
+      "words": "photutils/detection/core.py:90: changing `                yborder = (kernel.shape[0] - 1) // 2` to `                yborder = (kernel.shape[(-1)] - 1) // 2` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-cd560dc2a021",
+      "origin": "rule",
+      "file": "photutils/detection/core.py",
+      "line": 90,
+      "original": "                yborder = (kernel.shape[0] - 1) // 2",
+      "replacement": "                yborder = (kernel.shape[1] - 1) // 2",
+      "description": "rule: `0` -> `1`",
+      "diff": "--- a/photutils/detection/core.py\n+++ b/photutils/detection/core.py\n@@ -89,3 +89,3 @@\n             if isinstance(kernel, np.ndarray):\n-                yborder = (kernel.shape[0] - 1) // 2\n+                yborder = (kernel.shape[1] - 1) // 2\n                 xborder = (kernel.shape[1] - 1) // 2\n",
+      "words": "photutils/detection/core.py:90: changing `                yborder = (kernel.shape[0] - 1) // 2` to `                yborder = (kernel.shape[1] - 1) // 2` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-68c1b1f35f03",
+      "origin": "rule",
+      "file": "photutils/detection/core.py",
+      "line": 90,
+      "original": "                yborder = (kernel.shape[0] - 1) // 2",
+      "replacement": "                yborder = (kernel.shape[0] + 1) // 2",
+      "description": "rule: `-` -> `+`",
+      "diff": "--- a/photutils/detection/core.py\n+++ b/photutils/detection/core.py\n@@ -89,3 +89,3 @@\n             if isinstance(kernel, np.ndarray):\n-                yborder = (kernel.shape[0] - 1) // 2\n+                yborder = (kernel.shape[0] + 1) // 2\n                 xborder = (kernel.shape[1] - 1) // 2\n",
+      "words": "photutils/detection/core.py:90: changing `                yborder = (kernel.shape[0] - 1) // 2` to `                yborder = (kernel.shape[0] + 1) // 2` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-5ca2ce7b4b41",
+      "origin": "rule",
+      "file": "photutils/detection/core.py",
+      "line": 90,
+      "original": "                yborder = (kernel.shape[0] - 1) // 2",
+      "replacement": "                yborder = (kernel.shape[0] - 0) // 2",
+      "description": "rule: `1` -> `0`",
+      "diff": "--- a/photutils/detection/core.py\n+++ b/photutils/detection/core.py\n@@ -89,3 +89,3 @@\n             if isinstance(kernel, np.ndarray):\n-                yborder = (kernel.shape[0] - 1) // 2\n+                yborder = (kernel.shape[0] - 0) // 2\n                 xborder = (kernel.shape[1] - 1) // 2\n",
+      "words": "photutils/detection/core.py:90: changing `                yborder = (kernel.shape[0] - 1) // 2` to `                yborder = (kernel.shape[0] - 0) // 2` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "photutils/detection/core.py": [
+        88,
+        89,
+        90,
+        91,
+        93,
+        94,
+        95,
+        97,
+        104,
+        109
+      ],
+      "photutils/detection/irafstarfinder.py": [
+        419,
+        455
+      ],
+      "photutils/detection/peakfinder.py": [
+        22,
+        128,
+        129,
+        142,
+        143,
+        144,
+        145,
+        168
+      ],
+      "photutils/detection/starfinder.py": [
+        99,
+        100
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 13,
+        "total": 22
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 107933,
+    "output_tokens": 11322,
+    "cost_estimate": {
+      "usd": 0.5902,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 10 functions were shown",
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "guard: only the first 10 of 44 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.10.16: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "photutils.detection.irafstarfinder._IRAFStarFinderCatalog.sky",
+      "path": "photutils/detection/irafstarfinder.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "_IRAFStarFinderCatalog.sky is a property here, not a method"
+    },
+    {
+      "function": "photutils.detection.irafstarfinder._IRAFStarFinderCatalog.cutout_convdata",
+      "path": "photutils/detection/irafstarfinder.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "_IRAFStarFinderCatalog.cutout_convdata is a property here, not a method"
+    },
+    {
+      "function": "photutils.detection.peakfinder.find_peaks",
+      "path": "photutils/detection/peakfinder.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 207,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "photutils.detection.core.StarFinderBase._find_stars",
+      "path": "photutils/detection/core.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "photutils.detection.starfinder.StarFinder._get_raw_catalog",
+      "path": "photutils/detection/starfinder.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "photutils.detection.starfinder.StarFinder.find_stars",
+      "path": "photutils/detection/starfinder.py",
+      "via": "a public caller of the changed StarFinder._get_raw_catalog",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+ "instance_id": "beeware__briefcase-645",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 4.574,
+ "suite_timeout": 120,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "src/briefcase/commands/create.py",
+   "old_start": 315,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/briefcase/commands/create.py",
+     "function": "CreateCommand.install_app_support_package"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "src/briefcase/commands/create.py",
+   "old_start": 385,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 5,
+   "functions": [
+    {
+     "path": "src/briefcase/commands/create.py",
+     "function": "CreateCommand.install_app_dependencies"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "src/briefcase/commands/create.py",
+   "old_start": 393,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/briefcase/commands/create.py",
+     "function": "CreateCommand.install_app_dependencies"
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 32661,
+   "label": "no_effect",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "src/briefcase/commands/update.py",
+     "function": null
+    },
+    {
+     "path": "src/briefcase/commands/update.py",
+     "function": "UpdateCommand.install_app_dependencies"
+    }
+   ],
+   "differs": [
+    {
+     "path": "src/briefcase/commands/create.py",
+     "function": "CreateCommand.install_app_dependencies"
+    },
+    {
+     "path": "src/briefcase/commands/create.py",
+     "function": "CreateCommand.install_app_support_package"
+    },
+    {
+     "path": "src/briefcase/commands/update.py",
+     "function": null
+    },
+    {
+     "path": "src/briefcase/commands/update.py",
+     "function": "UpdateCommand.install_app_dependencies"
+    }
+   ]
+  },
+  {
+   "kind": "agent_ok",
+   "source_row": 15983,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "src/briefcase/commands/create.py",
+     "function": "CreateCommand.install_app_dependencies"
+    }
+   ],
+   "differs": [
+    {
+     "path": "src/briefcase/commands/create.py",
+     "function": "CreateCommand.install_app_dependencies"
+    },
+    {
+     "path": "src/briefcase/commands/create.py",
+     "function": "CreateCommand.install_app_support_package"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "0b204c07dc3905f5b835a218c501189067404192",
+  "gold": "f7a13aa449aa5a691dd74ea75079aa92ab204419",
+  "v1": "df939823ff4c610a694542a2fe51f8e552c7b12e",
+  "agent_wrong": "8804aa40af93be9e9fd11c700e1604ba57b6536b",
+  "agent_ok": "4cab2302d1269aaa937525df0dc8d47aa52d9b41"
+ },
+ "seconds": 44.375
+}

@@ -1,0 +1,39 @@
+# Tracefix on pull requests from branches of this repository (docs/GITHUB_ACTION.md).
+# Copy to .github/workflows/tracefix.yml and add the ANTHROPIC_API_KEY secret.
+#
+# Pull requests from forks are skipped here with a notice (GitHub gives them no secrets on
+# `pull_request`); docs/examples/tracefix-fork.yml lets a maintainer verify one by adding a label.
+name: Tracefix
+
+on:
+  pull_request:
+
+permissions: {}
+
+# A newer push to the pull request cancels the run it replaces.
+concurrency:
+  group: tracefix-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  tracefix:
+    name: Verify the fix
+    runs-on: ubuntu-24.04 # bubblewrap (strict isolation) is known to work here
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      checks: write # the Tracefix check run
+      pull-requests: write # the one receipt comment
+      issues: read # the text of the issues the pull request closes
+      actions: read # the last receipt of this pull request, to replay its findings
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # Tracefix needs the base and head commits
+          persist-credentials: false # no token left on disk while tests run
+      # Your project's environment, with its test dependencies; Tracefix installs into it.
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      - run: uv sync --locked
+      - uses: momirie/tracefix@b46825b4fbfde70f66ff5b024e76a54c212a28f0 # pin a Tracefix commit
+        with:
+          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}

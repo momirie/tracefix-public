@@ -1,0 +1,142 @@
+{
+ "instance_id": "microsoft__debugpy-1052",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [
+  "src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_cython.cpython-39-x86_64-linux-gnu.so",
+  "src/debugpy/_vendored/pydevd/_pydevd_frame_eval/pydevd_frame_evaluator.cpython-39-x86_64-linux-gnu.so"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "pytest_asyncio.plugin",
+  "pytest_mock",
+  "pytest_timeout",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 94.412,
+ "suite_timeout": 284,
+ "source_hunks": 4,
+ "variants": [
+  {
+   "index": 0,
+   "path": "src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py",
+   "old_start": 91,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py",
+     "function": "_create_default_type_map"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "src/debugpy/server/api.py",
+   "old_start": 23,
+   "old_len": 6,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/debugpy/server/api.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "src/debugpy/server/api.py",
+   "old_start": 191,
+   "old_len": 6,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/debugpy/server/api.py",
+     "function": "listen"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "src/debugpy/server/api.py",
+   "old_start": 198,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/debugpy/server/api.py",
+     "function": "listen"
+    }
+   ]
+  }
+ ],
+ "kept": 0,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 27447,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "reproduce_ctypes_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_ctypes_issue.py",
+     "function": "test_ctypes_arrays"
+    },
+    {
+     "path": "src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py",
+     "function": "TypeResolveHandler._get_type"
+    }
+   ],
+   "differs": [
+    {
+     "path": "reproduce_ctypes_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_ctypes_issue.py",
+     "function": "test_ctypes_arrays"
+    },
+    {
+     "path": "src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py",
+     "function": "TypeResolveHandler._get_type"
+    },
+    {
+     "path": "src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py",
+     "function": "_create_default_type_map"
+    },
+    {
+     "path": "src/debugpy/server/api.py",
+     "function": null
+    },
+    {
+     "path": "src/debugpy/server/api.py",
+     "function": "listen"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "ea8c0817e40193cbc0b9f8e0e568a85555067653",
+  "gold": "6f7de080c4b0946db092dc00ffdd0c9d7b9486c4",
+  "v0": "cf6f50d4ba4d8be345a0d3a983441bf59149cb51",
+  "agent_ok": "48d786462b176feb8deae9cba7763726a4cef7d0"
+ },
+ "seconds": 143.094
+}

@@ -1,0 +1,521 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T22:09:57+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 0 of 3 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "86d38f9b4457f897445bee387554d35e45ae873e"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "792f7499c09817ea6d0c608d2fe7d7a2738f9a7e"
+  },
+  "issue": {
+    "title": "Using only country in nomenclature config breaks CodeList",
+    "sha256": "aa138782041dc27f468e3d21f21cba90bf1803f58a7e19ea3322d5436e78e656"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.10.16"
+  },
+  "summary": {
+    "text": "The bug was reproduced: a test fails before the fix and passes after it, no regressions were found, and the one behaviour change (arguments to DataStructureConfig.repos) was judged intended, but the tests did not kill enough mutants for L2 and Break My Fix was inconclusive. Next, look at whether the tests actually guard the fixed path for a region config with only the country attribute and no rep…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 10.35,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "4 changed module(s) imported from the copies (8 imports in all)",
+      "duration_s": 14.44,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 4,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 48.15,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 3 mutants; 80% is needed",
+      "duration_s": 320.1,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 7,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.7,
+        "rule_kinds": [
+          "body: 2 of 2 killed",
+          "logic: 2 of 2 killed",
+          "constant: 1 of 1 killed",
+          "arithmetic: 0 of 2 killed",
+          "membership: 1 of 1 killed",
+          "drop_call: 0 of 1 killed",
+          "reraise: 1 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "negate_if",
+          "loop"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 150 untouched tests that passed before the fix fails after it",
+      "duration_s": 37.39,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 150,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 7.71,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 53
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "1 input(s) compared on 1 function(s): 1 changed with the fix; not complete: DataStructureDefinition.__init__: not compared (a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 16.99,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 5,
+        "finished": 1,
+        "inputs_compared": 1,
+        "changes": 1,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "no candidate checked counts, but 1 could not be checked",
+      "duration_s": 26.08,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 5,
+        "inputs_tried": 10,
+        "properties_counted": 10,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 1,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.04,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 57.24,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "nomenclature.config.DataStructureConfig.repos",
+      "kind": "arguments",
+      "count": 1,
+      "before": "returns {}; left its arguments as builtins.list([builtins.tuple(['self', nomenclature.config.DataStructureConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, region=None, variable=None)])])",
+      "after": "returns {}; left its arguments as builtins.list([builtins.tuple(['self', nomenclature.config.DataStructureConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, region=nomenclature.config.RegionCodeListConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, country=False, dimension=None, repositories=builtins.set({})), variable=nomenclature.config.CodeListConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, dimension=None, repositories=builtins.set({})))])])",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The return value is still {}. The only difference is that region/variable now default to empty config objects instead of None, and that default change is how the fix stops the issue's crash when iterating over empty region.repositories."
+        }
+      ],
+      "examples": [
+        {
+          "call": "repos(self='DataStructureConfig()')",
+          "before": "returns {}; left its arguments as builtins.list([builtins.tuple(['self', nomenclature.config.DataStructureConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, region=None, variable=None)])])",
+          "after": "returns {}; left its arguments as builtins.list([builtins.tuple(['self', nomenclature.config.DataStructureConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, region=nomenclature.config.RegionCodeListConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, country=False, dimension=None, repositories=builtins.set({})), variable=nomenclature.config.CodeListConfig(BaseModel.__pydantic_extra__=None, BaseModel.__pydantic_fields_set__=builtins.set({}), BaseModel.__pydantic_private__=None, dimension=None, repositories=builtins.set({})))])])"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-bdff6ddca126",
+      "origin": "model",
+      "file": "nomenclature/codelist.py",
+      "line": 199,
+      "original": "        config = config or NomenclatureConfig()",
+      "replacement": "        config = NomenclatureConfig()",
+      "description": "Ignores the passed config and always uses the default config.",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -198,3 +198,3 @@\n         code_list = cls._parse_codelist_dir(path, file_glob_pattern)\n-        config = config or NomenclatureConfig()\n+        config = NomenclatureConfig()\n         for repo in getattr(\n",
+      "words": "nomenclature/codelist.py:199: changing `        config = config or NomenclatureConfig()` to `        config = NomenclatureConfig()` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-ed5ab82d983d",
+      "origin": "model",
+      "file": "nomenclature/codelist.py",
+      "line": 201,
+      "original": "            config.definitions, name.lower(), CodeListConfig()",
+      "replacement": "            config.definitions, name, CodeListConfig()",
+      "description": "Looks up the dimension config by the non-lowercased name, so a capitalized name misses its config.",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -200,3 +200,3 @@\n         for repo in getattr(\n-            config.definitions, name.lower(), CodeListConfig()\n+            config.definitions, name, CodeListConfig()\n         ).repositories:\n",
+      "words": "nomenclature/codelist.py:201: changing `            config.definitions, name.lower(), CodeListConfig...` to `            config.definitions, name, CodeListConfig()` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-2a4e62891046",
+      "origin": "model",
+      "file": "nomenclature/codelist.py",
+      "line": 205,
+      "original": "                cls._parse_codelist_dir(repo_path, file_glob_pattern) + code_list",
+      "replacement": "                code_list + cls._parse_codelist_dir(repo_path, file_glob_pattern)",
+      "description": "Reverses the order in which repository codes and local codes are combined.",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -204,3 +204,3 @@\n             code_list = (\n-                cls._parse_codelist_dir(repo_path, file_glob_pattern) + code_list\n+                code_list + cls._parse_codelist_dir(repo_path, file_glob_pattern)\n             )\n",
+      "words": "nomenclature/codelist.py:205: changing `                cls._parse_codelist_dir(repo_path, file_glob...` to `                code_list + cls._parse_codelist_dir(repo_pat...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-0efb6c3f110e",
+      "origin": "rule",
+      "file": "nomenclature/codelist.py",
+      "line": 203,
+      "original": "            repo_path = config.repositories[repo].local_path / \"definitions\" / name",
+      "replacement": "            repo_path = config.repositories[repo].local_path * \"definitions\" / name",
+      "description": "rule: `/` -> `*`",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -202,3 +202,3 @@\n         ).repositories:\n-            repo_path = config.repositories[repo].local_path / \"definitions\" / name\n+            repo_path = config.repositories[repo].local_path * \"definitions\" / name\n             code_list = (\n",
+      "words": "nomenclature/codelist.py:203: changing `            repo_path = config.repositories[repo].local_path...` to `            repo_path = config.repositories[repo].local_path...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "arithmetic"
+    },
+    {
+      "id": "m-e34b1a4b8319",
+      "origin": "rule",
+      "file": "nomenclature/codelist.py",
+      "line": 610,
+      "original": "                    code_list.append(RegionCode(name=c.name, hierarchy=\"Country\"))",
+      "replacement": "                    pass",
+      "description": "rule: `code_list.append(RegionCode(name=c.name, hierarchy=\"Country\"))` -> `pass`",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -609,3 +609,3 @@\n                 except AttributeError:\n-                    code_list.append(RegionCode(name=c.name, hierarchy=\"Country\"))\n+                    pass\n \n",
+      "words": "nomenclature/codelist.py:610: changing `                    code_list.append(RegionCode(name=c.name,...` to `                    pass` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "drop_call"
+    },
+    {
+      "id": "m-6e260fb9448f",
+      "origin": "rule",
+      "file": "nomenclature/codelist.py",
+      "line": 203,
+      "original": "            repo_path = config.repositories[repo].local_path / \"definitions\" / name",
+      "replacement": "            repo_path = config.repositories[repo].local_path / \"definitions\" * name",
+      "description": "rule: `/` -> `*`",
+      "diff": "--- a/nomenclature/codelist.py\n+++ b/nomenclature/codelist.py\n@@ -202,3 +202,3 @@\n         ).repositories:\n-            repo_path = config.repositories[repo].local_path / \"definitions\" / name\n+            repo_path = config.repositories[repo].local_path / \"definitions\" * name\n             code_list = (\n",
+      "words": "nomenclature/codelist.py:203: changing `            repo_path = config.repositories[repo].local_path...` to `            repo_path = config.repositories[repo].local_path...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "arithmetic"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "nomenclature/codelist.py": [
+        1,
+        8,
+        9,
+        14,
+        15,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        599,
+        600,
+        601,
+        602,
+        603,
+        604,
+        605,
+        609,
+        610,
+        613,
+        614,
+        616,
+        617,
+        618,
+        619,
+        620,
+        622,
+        623
+      ],
+      "nomenclature/config.py": [
+        30,
+        31,
+        32,
+        97,
+        98,
+        110,
+        116,
+        122,
+        123,
+        124,
+        130,
+        131,
+        132
+      ],
+      "nomenclature/definition.py": [
+        47,
+        49,
+        50
+      ],
+      "nomenclature/processor/region.py": [
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 18,
+        "total": 53
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack DataStructureDefinition.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare DataStructureDefinition.__init__: a special method (such as __init__ or __eq__): not called yet"
+  ],
+  "llm": {
+    "calls": 9,
+    "input_tokens": 86606,
+    "output_tokens": 8244,
+    "cost_estimate": {
+      "usd": 0.4406,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 10 functions were shown",
+    "guard: 7 of the 10 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 23 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.10.16: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "blind: only the first 8 of 10 functions were shown"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "nomenclature.codelist.CodeList.from_directory",
+      "path": "nomenclature/codelist.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 6,
+      "finished": true,
+      "reason": "ValidationError: 3 validation errors for NomenclatureConfig\nrepositories\n  Input should be a valid dictionary [type=dict_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v/dict_type\ndefinitions\n  Input should be a valid dictionary or instance of DataStructureConfig [type=model_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v"
+    },
+    {
+      "function": "nomenclature.codelist.RegionCodeList.from_directory",
+      "path": "nomenclature/codelist.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "ValidationError: 3 validation errors for NomenclatureConfig\nrepositories\n  Input should be a valid dictionary [type=dict_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v/dict_type\ndefinitions\n  Input should be a valid dictionary or instance of DataStructureConfig [type=model_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v"
+    },
+    {
+      "function": "nomenclature.config.DataStructureConfig.repos",
+      "path": "nomenclature/config.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 4,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "nomenclature.config.NomenclatureConfig.check_definitions_repository",
+      "path": "nomenclature/config.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "ValidationError: 3 validation errors for NomenclatureConfig\nrepositories\n  Input should be a valid dictionary [type=dict_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v/dict_type\ndefinitions\n  Input should be a valid dictionary or instance of DataStructureConfig [type=model_type, input_value=<factory>, input_type=_HAS_DEFAULT_FACTORY_CLASS]\n    For further information visit https://errors.pydantic.dev/2.11/v"
+    },
+    {
+      "function": "nomenclature.processor.region.RegionProcessor.from_directory",
+      "path": "nomenclature/processor/region.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "nothing generated"
+    }
+  ]
+}

@@ -1,0 +1,360 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T20:42:39+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks CppHeaderParser.CppHeaderParser._CppHeader.finalize"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "0a1511b12bcf396d172ffb3f1724f8b4b8b128d8"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "b0670da5ee709f02f074c69c08d409e69d102420"
+  },
+  "issue": {
+    "title": "Another regression in 4.0.0",
+    "sha256": "4724e29bf19bd7b12356b9564237c5a21835feb338ed71b5f59b67ad0c09f3b1"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.20"
+  },
+  "summary": {
+    "text": "The verifier reproduced the original KeyError, found no regressions, and confirmed the fix lines are covered, but Break My Fix found an input where calling finalize on a CppHeader built from the issue's own example raises AttributeError: 'CppHeader' object has no attribute '_precomp_macro_buf'. Check whether this comes from finalize being re-invoked on an already-finalized object (a harness artif…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 28.02,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 5.57,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 23.23,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 3 mutants; 80% is needed",
+      "duration_s": 325.85,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.667,
+        "repro_kill_rate": 0.667,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 2,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-c399a036745e",
+          "m-d33b24fe4249"
+        ],
+        "rule_mutants": 3,
+        "rule_kill_rate": 0.333,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 55 untouched tests that passed before the fix fails after it",
+      "duration_s": 114.58,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 55,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.4,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 1
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "1 input(s) compared on 1 function(s): 0 changed with the fix",
+      "duration_s": 16.05,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 1,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 53.14,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 15,
+        "properties_counted": 2,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.18,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "CppHeaderParser.CppHeaderParser._CppHeader.finalize",
+      "call": "finalize(self=\"CppHeader('\\\\ntypedef C A;\\\\n\\\\nclass B\\\\n{\\\\npublic:\\\\n   A aMethod();\\\\n}\\\\n', 'string')\")",
+      "input": {
+        "self": "\"CppHeader('\\\\ntypedef C A;\\\\n\\\\nclass B\\\\n{\\\\npublic:\\\\n   A aMethod();\\\\n}\\\\n', 'string')\""
+      },
+      "outcome": "raises AttributeError: 'CppHeader' object has no attribute '_precomp_macro_buf'",
+      "base_outcome": null,
+      "expected": null,
+      "property": {
+        "id": "t1.p1",
+        "name": "finalize_no_keyerror_on_typedef_return",
+        "kind": "raises_only",
+        "claim": "Finalizing a parsed header whose class method returns a typedef'd type must not raise (the issue's example worked before 4.0.0 and is a regression).",
+        "source": "issue",
+        "quote": "Following example fails using 4.0.0 and newer (but not with 3.3.0 and older)",
+        "origin": "model"
+      },
+      "also_violates": [
+        "finalize_keeps_classes"
+      ],
+      "other_inputs": 3,
+      "relation": "new with the fix: before it, the object could not be built (KeyError: 'typedefs')",
+      "file": "findings/finding_1.py",
+      "path": "CppHeaderParser/CppHeaderParser.py",
+      "line": 1960,
+      "expect": {
+        "types": [
+          "AttributeError"
+        ],
+        "in_file": false
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-4d3397eda5a7",
+      "origin": "model",
+      "file": "CppHeaderParser/CppHeaderParser.py",
+      "line": 1960,
+      "original": "                    \"typedefs\": 0,",
+      "replacement": "                    \"typedefs\": 1,",
+      "description": "Sets the typedefs flag to a truthy value in the hack return type dict.",
+      "diff": "--- a/CppHeaderParser/CppHeaderParser.py\n+++ b/CppHeaderParser/CppHeaderParser.py\n@@ -1959,3 +1959,3 @@\n                     \"reference\": 0,\n-                    \"typedefs\": 0,\n+                    \"typedefs\": 1,\n                 }\n",
+      "words": "CppHeaderParser/CppHeaderParser.py:1960: changing `                    \"typedefs\": 0,` to `                    \"typedefs\": 1,` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-6f07b16c03d1",
+      "origin": "rule",
+      "file": "CppHeaderParser/CppHeaderParser.py",
+      "line": 1960,
+      "original": "                    \"typedefs\": 0,",
+      "replacement": "                    \"typedefs\": (-1),",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/CppHeaderParser/CppHeaderParser.py\n+++ b/CppHeaderParser/CppHeaderParser.py\n@@ -1959,3 +1959,3 @@\n                     \"reference\": 0,\n-                    \"typedefs\": 0,\n+                    \"typedefs\": (-1),\n                 }\n",
+      "words": "CppHeaderParser/CppHeaderParser.py:1960: changing `                    \"typedefs\": 0,` to `                    \"typedefs\": (-1),` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-4d3397eda5a7",
+      "origin": "rule",
+      "file": "CppHeaderParser/CppHeaderParser.py",
+      "line": 1960,
+      "original": "                    \"typedefs\": 0,",
+      "replacement": "                    \"typedefs\": 1,",
+      "description": "rule: `0` -> `1`",
+      "diff": "--- a/CppHeaderParser/CppHeaderParser.py\n+++ b/CppHeaderParser/CppHeaderParser.py\n@@ -1959,3 +1959,3 @@\n                     \"reference\": 0,\n-                    \"typedefs\": 0,\n+                    \"typedefs\": 1,\n                 }\n",
+      "words": "CppHeaderParser/CppHeaderParser.py:1960: changing `                    \"typedefs\": 0,` to `                    \"typedefs\": 1,` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "CppHeaderParser/CppHeaderParser.py": [
+        1960
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 1,
+        "total": 1
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 31626,
+    "output_tokens": 3244,
+    "cost_estimate": {
+      "usd": 0.1539,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: style example test/test_CppHeaderParser.py truncated to 6000 characters for the prompt",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.20: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "CppHeaderParser.CppHeaderParser._CppHeader.finalize",
+      "path": "CppHeaderParser/CppHeaderParser.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 15,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

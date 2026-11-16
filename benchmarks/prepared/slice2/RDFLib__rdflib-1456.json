@@ -1,0 +1,23 @@
+{
+ "instance_id": "RDFLib__rdflib-1456",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; ModuleNotFoundError pandas",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 21.734
+}

@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-07T13:19:48+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L2",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "the tests guard the fix: they fail when it is reverted or broken",
+    "not L3: ExpressionTokenizer.equal: the comparison did not finish",
+    "not L3: 1 input(s) changed from 'raises ExpressionTokenizerError' to 'returns list' and nothing explains it (not the reproduction test, the issue or a docstring example)"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "95a4928dbb48ff8761163c21d576a055c4155a9f"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "ee2d29aaaccd43274e9e66be5bb9586314758b07"
+  },
+  "issue": {
+    "title": "Tabs in constant expression should be treated like spaces",
+    "sha256": "d9a52364a56dc16341daf4613925cf1bff25961b5ea3326ca685828cd92b262e"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The evidence shows the bug was reproduced and guarded: a test fails before the fix and passes after it, it fails again when the fix is reverted or broken, and no regressions or breaking inputs were found. Most important next: review the unexplained inputs where ExpressionTokenizer.tokenize changed from raising ExpressionTokenizerError to returning a list (the Judge labeled this intended), and not…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 2.14,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 2.91,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 17.24,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 6 of 6 mutants",
+      "duration_s": 155.29,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 1.0,
+        "repro_kill_rate": 1.0,
+        "pr_kill_rate": null,
+        "mutants": 6,
+        "killed": 6,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 1,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-b5b29ee1334c",
+          "m-62cd5f019a50",
+          "m-0227244217e7",
+          "m-8fa41f949bc3",
+          "m-18b77c4930ca",
+          "m-2c6ac079d5e6"
+        ],
+        "rule_mutants": 7,
+        "rule_kill_rate": 1.0,
+        "rule_kinds": [
+          "body: 5 of 5 killed",
+          "negate_if: 1 of 1 killed",
+          "constant: 1 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "arithmetic",
+          "membership",
+          "loop",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 236 untouched tests that passed before the fix fails after it",
+      "duration_s": 2.13,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 236,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 1.73,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 4
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "388 input(s) compared on 2 function(s): 1 changed with the fix; not complete: ExpressionTokenizer.equal: the comparison did not finish",
+      "duration_s": 6.47,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "finished": 2,
+        "inputs_compared": 388,
+        "changes": 1,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 464 inputs against 11 properties",
+      "duration_s": 28.97,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "inputs_tried": 464,
+        "properties_counted": 11,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 10
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 25.3,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "cstruct.expression.ExpressionTokenizer.tokenize",
+      "kind": "no_raise",
+      "count": 1,
+      "before": "raises ExpressionTokenizerError; left its arguments as builtins.list([builtins.tuple(['self', cstruct.expression.ExpressionTokenizer(expression='\\t', pos=0, tokens=builtins.list([]))])])",
+      "after": "returns []; left its arguments as builtins.list([builtins.tuple(['self', cstruct.expression.ExpressionTokenizer(expression='\\t', pos=1, tokens=builtins.list([]))])])",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The issue says tabs are legal whitespace and should be treated like spaces, so a lone tab now tokenizes to [] just as a lone space would instead of raising."
+        }
+      ],
+      "examples": [
+        {
+          "call": "tokenize(self=\"ExpressionTokenizer(expression='\\\\t')\")",
+          "before": "raises ExpressionTokenizerError; left its arguments as builtins.list([builtins.tuple(['self', cstruct.expression.ExpressionTokenizer(expression='\\t', pos=0, tokens=builtins.list([]))])])",
+          "after": "returns []; left its arguments as builtins.list([builtins.tuple(['self', cstruct.expression.ExpressionTokenizer(expression='\\t', pos=1, tokens=builtins.list([]))])])"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "dissect/cstruct/expression.py": [
+        4,
+        21,
+        45,
+        145
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 3,
+        "total": 4
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 9,
+    "input_tokens": 54075,
+    "output_tokens": 8071,
+    "cost_estimate": {
+      "usd": 0.3381,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 9 functions were shown",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "blind: only the first 8 of 9 functions were shown"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "cstruct.expression.ExpressionTokenizer.equal",
+      "path": "dissect/cstruct/expression.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 50,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "cstruct.expression.ExpressionTokenizer.match",
+      "path": "dissect/cstruct/expression.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 7,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "cstruct.expression.ExpressionTokenizer.tokenize",
+      "path": "dissect/cstruct/expression.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 407,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

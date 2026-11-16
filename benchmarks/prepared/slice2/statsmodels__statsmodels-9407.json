@@ -1,0 +1,53 @@
+{
+ "instance_id": "statsmodels__statsmodels-9407",
+ "excluded": "base_suite_too_slow",
+ "detail": "over 180s",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [
+  "statsmodels/_version.py",
+  "statsmodels/nonparametric/_smoothers_lowess.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/nonparametric/linbin.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/robust/_qn.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/_innovations.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/exponential_smoothing/_ets_smooth.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/holtwinters/_exponential_smoothers.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/innovations/_arma_innovations.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/regime_switching/_hamilton_filter.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/regime_switching/_kim_smoother.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_cfa_simulation_smoother.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_filters/_conventional.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_filters/_inversions.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_filters/_univariate.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_filters/_univariate_diffuse.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_initialization.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_kalman_filter.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_kalman_smoother.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_representation.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_simulation_smoother.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_smoothers/_alternative.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_smoothers/_classical.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_smoothers/_conventional.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_smoothers/_univariate.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_smoothers/_univariate_diffuse.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/statespace/_tools.cpython-39-x86_64-linux-gnu.so",
+  "statsmodels/tsa/stl/_stl.cpython-39-x86_64-linux-gnu.so"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 25,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 198.656
+}

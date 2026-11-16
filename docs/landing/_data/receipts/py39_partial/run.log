@@ -1,0 +1,15 @@
+[    0.1] tracefix: verifying 1c75aaf..d0df1eb (isolation: basic, Python 3.9.25)
+[    1.4] [1/9] environment: ok (1.3s)
+[    3.7] [2/9] import_check: ok (2.3s)
+[   10.5] [3/9] reproduce: reproduced (6.8s)
+[   67.6] [4/9] guard: guarded (57.2s)
+[   68.7] [5/9] regressions: none_found (1.1s)
+[   72.2] [6/9] fix_line_coverage: ok (3.5s)
+[   77.2] [7/9] behaviour_diff: compared (5.0s)
+[   89.6] [8/9] break_my_fix: found (12.4s)
+[   89.6] [9/9] integrity: clean (0.0s)
+[   89.7] summary: by judge
+[   89.7] level: COUNTEREXAMPLE
+[   89.7] Fix Receipt: COUNTEREXAMPLE (run status: ok)
+[   89.7] Summary by the Judge (advisory): The original bug was reproduced and the fix now passes the guard with no regressions found, but Break My Fix found an input that still breaks it: ordinal(111) returns '111st' instead of '111th'. Look next at how the fix handles the teens exception for numbers above 100 (for example 111, 112, 113), likely by checking n % 100 rather than n itself.
+[   89.7] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json

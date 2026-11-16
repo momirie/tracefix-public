@@ -1,0 +1,48 @@
+{
+ "instance_id": "mathause__mplotutils-136",
+ "excluded": null,
+ "detail": "",
+ "python": "3.10.16",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.168.5",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 8.983,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 35497,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "mplotutils/_colorbar.py",
+     "function": "colorbar"
+    }
+   ],
+   "differs": [
+    {
+     "path": "mplotutils/_colorbar.py",
+     "function": "colorbar"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "52068a62b13eaa1b2a1b3a80627a0d3df4b6a390",
+  "gold": "6479ebc2e0f1ce98178623be912e07f991cb9c84",
+  "agent_ok": "c0b4da0b4f2846dd4b2548fb162669fe637bd3f7"
+ },
+ "seconds": 58.797
+}

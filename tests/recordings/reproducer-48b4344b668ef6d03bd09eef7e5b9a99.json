@@ -1,0 +1,11 @@
+{
+ "key": "48b4344b668ef6d03bd09eef7e5b9a99353a8e3e675403c0d43d63da1ee5ba10",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1303,
+  "output_tokens": 227,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from textutil.trunc import truncate\\n\\n\\ndef test_truncate_result_not_longer_than_max_len() -> None:\\n    result = truncate('hello world', 5)\\n    assert len(result) <= 5\\n\\n\\ndef test_truncate_result_fits_with_custom_ellipsis() -> None:\\n    result = truncate('hello world', 8, '..')\\n    assert len(result) <= 8\\n\",\"rationale\":\"Checks that truncating 'hello world' to 5 characters (and to 8 with a custom ellipsis) yields a string no longer than max_len, which currently fails because the ellipsis is appended after slicing to max_len.\"}"
+ },
+ "role": "reproducer"
+}

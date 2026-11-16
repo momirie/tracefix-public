@@ -1,0 +1,15 @@
+[    0.0] tracefix: verifying 9e0465b..5678c1f (isolation: basic)
+[    1.0] [1/9] environment: ok (0.9s)
+[    2.9] [2/9] import_check: ok (1.9s)
+[    8.7] [3/9] reproduce: reproduced (5.9s)
+[   38.6] [4/9] guard: guarded (29.8s)
+[   39.6] [5/9] regressions: none_found (1.0s)
+[   41.0] [6/9] fix_line_coverage: ok (1.4s)
+[   47.5] [7/9] behaviour_diff: compared (6.5s)
+[   58.6] [8/9] break_my_fix: found (11.1s)
+[   61.3] [9/9] integrity: clean (2.7s)
+[   61.3] summary: by judge
+[   61.3] level: COUNTEREXAMPLE
+[   61.3] Fix Receipt: COUNTEREXAMPLE (run status: ok)
+[   61.3] Summary by the Judge (advisory): The original bug was reproduced and the fix guards against it with no regressions found, but Break My Fix found that days_in_month(year=2200, month=2) still returns 29, so the leap-year logic appears to handle 2100 but not other century years. Look next at the century/400-year rule in billing.calendar.days_in_month and add a test covering years like 2200 and 2000.
+[   61.3] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json

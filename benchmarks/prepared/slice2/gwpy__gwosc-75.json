@@ -1,0 +1,29 @@
+{
+ "instance_id": "gwpy__gwosc-75",
+ "excluded": "hidden_tests_fail_on_gold",
+ "detail": "11 of 16",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [
+  "gwosc/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "pytest_socket",
+  "requests_mock.contrib._pytest_plugin",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 3.872,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 44.422
+}

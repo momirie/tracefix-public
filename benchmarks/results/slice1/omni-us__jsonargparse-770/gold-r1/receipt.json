@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-16T12:42:09+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L0",
+  "level_reasons": [
+    "not L1: no attempt reproduced the bug; last: the test uses names it must not use: inspect"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "cb4e6338efbadd60f39b670cb311dbdd17ee2877"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "17d119b43932cf68a2e0bd969deb6a4993a468e2"
+  },
+  "issue": {
+    "title": "Any ways to support torch functions",
+    "sha256": "2d800fb9fcf781856206ad2b7300c8e52f86c02831518f86fbb7951c42eceb14"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "The evidence is at L0 because no reproduction attempt showed the original bug; the last attempt was rejected for using a disallowed name (inspect), so nothing here demonstrates that the fix changes the failing behaviour. Other checks found no regressions or breaking inputs and the fix lines were covered, but the next step is a valid reproduction test that configures a plain function like torch.ar…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 11.67,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 5.79,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "not_reproduced",
+      "reason": "no attempt reproduced the bug; last: the test uses names it must not use: inspect",
+      "duration_s": 57.81,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no jsonargparse_tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 3,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "skipped",
+      "reason": "there is no reproduction test to judge the tests with (not_reproduced)",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": null,
+        "repro_kill_rate": null,
+        "pr_kill_rate": null,
+        "mutants": 0,
+        "killed": 0,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 0,
+        "rule_kill_rate": null,
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 1106 untouched tests that passed before the fix fails after it",
+      "duration_s": 12.23,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 1106,
+        "not_run": 1,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 13
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "1 input(s) compared on 2 function(s): 0 changed with the fix; not complete: jsonargparse/_common.py: module-level code that computes a value changed (line 99); what uses it is not compared",
+      "duration_s": 8.09,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "finished": 2,
+        "inputs_compared": 1,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 6 inputs against 7 properties",
+      "duration_s": 69.87,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 6,
+        "properties_counted": 7,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "jsonargparse/_common.py": [
+        99,
+        111,
+        158,
+        159,
+        160,
+        161
+      ],
+      "jsonargparse/_stubs_resolver.py": [
+        9,
+        107,
+        108,
+        109,
+        201,
+        204,
+        214
+      ]
+    },
+    "sets": [],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "guard: skipped (there is no reproduction test to judge the tests with (not_reproduced))",
+    "Break My Fix could not attack get_stubs_resolver: it takes no parameters to vary"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 73243,
+    "output_tokens": 8042,
+    "cost_estimate": {
+      "usd": 0.3446,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: style example jsonargparse_tests/test_actions.py truncated to 6000 characters for the prompt",
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "regressions: 1 untouched test(s) that passed before the fix did not run after it (skipped or not collected), so they were not compared"
+  ],
+  "previous": null
+}

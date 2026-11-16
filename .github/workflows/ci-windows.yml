@@ -1,0 +1,72 @@
+name: CI (Windows)
+
+# Windows on demand: the same steps as ci.yml (tests.yml), on Python 3.13, split over five jobs.
+# Windows runners are slow (private repos get 2 cores) and their minutes count double, so they run
+# only when asked: add the `ci-windows` label to a PR (remove and re-add it to run again after new
+# pushes), or start the workflow by hand (Actions tab; only once this file is on main). Every
+# milestone gets the label before it merges (finish-milestone skill, step 6).
+#
+# Windows has its own test times, `.test_durations_windows`, measured on these runners: the
+# laptop's times (`.test_durations`, for Linux) left the groups 24 to 40 minutes apart. Every job
+# records its times and the `durations` job merges them into one artifact, `test-durations-windows`;
+# commit it as `.test_durations_windows` when the groups drift apart (docs/NOTES.md, "CI fit").
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Adding another label to the PR doesn't cancel a Windows run: the label is part of the group.
+concurrency:
+  group: ci-windows-${{ github.ref }}-${{ github.event.label.name || 'dispatch' }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'ci-windows'
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [1, 2, 3, 4, 5]
+    # A job-level call is always read from the running commit, so zizmor's `$/` advice
+    # (for step-level actions) adds nothing here.
+    uses: ./.github/workflows/tests.yml # zizmor: ignore[self-repository]
+    with:
+      os: windows-latest
+      python: "3.13"
+      group: ${{ matrix.group }}
+      splits: 5
+      # Room for the 2-core runner; still a hang guard.
+      timeout: 60
+      # One end-to-end case at a time: two on two cores pushed method_good's attack past its
+      # 120 s safety limit (docs/NOTES.md, 13 Oct 2026).
+      acceptance-workers: 1
+      durations: .test_durations_windows
+      store-durations: true
+
+  # One durations file from the jobs' own (scripts/merge_durations.py), even when tests failed.
+  durations:
+    if: always() && needs.check.result != 'skipped'
+    needs: check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: durations-*
+          path: job-durations
+      - run: >-
+          python3 scripts/merge_durations.py .test_durations_windows
+          job-durations/*/.test_durations_windows --out merged/.test_durations_windows
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: test-durations-windows
+          path: merged/.test_durations_windows
+          include-hidden-files: true # the file's name starts with a dot
+          if-no-files-found: error
+          retention-days: 30

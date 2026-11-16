@@ -1,0 +1,38 @@
+{
+  "action": "synchronize",
+  "number": 7,
+  "before": "1111111111111111111111111111111111111111",
+  "after": "2222222222222222222222222222222222222222",
+  "pull_request": {
+    "url": "https://api.github.com/repos/octo/svc/pulls/7",
+    "id": 2100000007,
+    "number": 7,
+    "state": "open",
+    "locked": false,
+    "title": "Fix crash when PORT is unset",
+    "user": {"login": "octo-dev", "id": 5000001, "type": "User"},
+    "body": "Fixes #1\r\n\r\nAn empty PORT now falls back to the default.",
+    "draft": false,
+    "head": {
+      "label": "octo:fix-port",
+      "ref": "fix-port",
+      "sha": "2222222222222222222222222222222222222222",
+      "user": {"login": "octo", "id": 5000000, "type": "Organization"},
+      "repo": {"id": 900000001, "name": "svc", "full_name": "octo/svc", "private": true, "fork": false}
+    },
+    "base": {
+      "label": "octo:main",
+      "ref": "main",
+      "sha": "3333333333333333333333333333333333333333",
+      "user": {"login": "octo", "id": 5000000, "type": "Organization"},
+      "repo": {"id": 900000001, "name": "svc", "full_name": "octo/svc", "private": true, "fork": false}
+    },
+    "author_association": "MEMBER",
+    "merged": false,
+    "commits": 1,
+    "changed_files": 2
+  },
+  "repository": {"id": 900000001, "name": "svc", "full_name": "octo/svc", "private": true},
+  "sender": {"login": "octo-dev", "id": 5000001, "type": "User"}
+}
+

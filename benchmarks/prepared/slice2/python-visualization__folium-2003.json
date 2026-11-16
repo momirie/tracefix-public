@@ -1,0 +1,25 @@
+{
+ "instance_id": "python-visualization__folium-2003",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; ModuleNotFoundError pandas",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [
+  "folium/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 9,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 17.234
+}

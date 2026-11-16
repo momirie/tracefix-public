@@ -1,0 +1,127 @@
+{
+ "instance_id": "snowblink14__smatch-30",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.20",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis 6.119.3 -> 6.141.1"
+ ],
+ "setup_files": [],
+ "changed_files": [
+  "issue.md"
+ ],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "pytest_asyncio.plugin",
+  "pytest_bdd.plugin",
+  "pytest_benchmark.plugin",
+  "pytest_mock",
+  "requests_mock.contrib._pytest_plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 1.467,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 12220,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": false,
+   "functions": [
+    {
+     "path": "smatch.py",
+     "function": "compute_pool"
+    }
+   ],
+   "differs": [
+    {
+     "path": "amr.py",
+     "function": "AMR.parse_AMR_line"
+    },
+    {
+     "path": "smatch.py",
+     "function": "compute_pool"
+    }
+   ]
+  },
+  {
+   "kind": "agent_ok",
+   "source_row": 27050,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "amr.py",
+     "function": "AMR.parse_AMR_line"
+    },
+    {
+     "path": "debug_matching.py",
+     "function": null
+    },
+    {
+     "path": "debug_matching.py",
+     "function": "debug_matching"
+    },
+    {
+     "path": "edge_case_tests.py",
+     "function": null
+    },
+    {
+     "path": "edge_case_tests.py",
+     "function": "test_edge_cases"
+    },
+    {
+     "path": "final_demo.py",
+     "function": null
+    },
+    {
+     "path": "final_demo.py",
+     "function": "demonstrate_fix"
+    }
+   ],
+   "differs": [
+    {
+     "path": "amr.py",
+     "function": "AMR.parse_AMR_line"
+    },
+    {
+     "path": "debug_matching.py",
+     "function": null
+    },
+    {
+     "path": "debug_matching.py",
+     "function": "debug_matching"
+    },
+    {
+     "path": "edge_case_tests.py",
+     "function": null
+    },
+    {
+     "path": "edge_case_tests.py",
+     "function": "test_edge_cases"
+    },
+    {
+     "path": "final_demo.py",
+     "function": null
+    },
+    {
+     "path": "final_demo.py",
+     "function": "demonstrate_fix"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "e045328a410deadd0c78e61bbb7674b5be28014a",
+  "gold": "b62eed0e46c404ec6ff6a3107cad59c8fb7b0232",
+  "agent_ok": "4cddf2d7a72f27de7d0e3393c7e1423f624a3e09"
+ },
+ "seconds": 29.469
+}

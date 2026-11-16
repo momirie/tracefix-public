@@ -1,0 +1,52 @@
+{
+ "instance_id": "yt-project__unyt-437",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [
+  "unyt/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "pytest_doctestplus.plugin",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 7.379,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 64086,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "unyt/array.py",
+     "function": "unyt_array.to_astropy"
+    }
+   ],
+   "differs": [
+    {
+     "path": "unyt/array.py",
+     "function": "unyt_array.to_astropy"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "f794930a3d4b3a295954d861239c2ea62f7f4ef1",
+  "gold": "951da6fcdde44c874cf7cab9f374f884bcc61a50",
+  "agent_ok": "324208f93d2930782a1b267cea9108ae1d8a016e"
+ },
+ "seconds": 49.828
+}

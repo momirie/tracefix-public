@@ -1,0 +1,333 @@
+{
+ "instance_id": "Diaoul__babelfish-50",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 0.615,
+ "suite_timeout": 120,
+ "source_hunks": 13,
+ "variants": [
+  {
+   "index": 0,
+   "path": "babelfish/country.py",
+   "old_start": 5,
+   "old_len": 6,
+   "label": "broken",
+   "failing": 35,
+   "functions": [
+    {
+     "path": "babelfish/country.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "babelfish/country.py",
+   "old_start": 52,
+   "old_len": 6,
+   "label": "broken",
+   "failing": 35,
+   "functions": [
+    {
+     "path": "babelfish/country.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "babelfish/country.py",
+   "old_start": 61,
+   "old_len": 13,
+   "label": "broken",
+   "failing": 35,
+   "functions": [
+    {
+     "path": "babelfish/country.py",
+     "function": null
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__init__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__post_init__"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "babelfish/country.py",
+   "old_start": 82,
+   "old_len": 31,
+   "label": "no_effect",
+   "failing": 14,
+   "functions": [
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__eq__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__getattr__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__getstate__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__hash__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__ne__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__setstate__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.alpha2"
+    }
+   ]
+  }
+ ],
+ "kept": 3,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 7936,
+   "label": "no_effect",
+   "failing": 2,
+   "kept": true,
+   "functions": [
+    {
+     "path": "babelfish/country.py",
+     "function": null
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__hash__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__init__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__setattr__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__setstate__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": null
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__hash__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__init__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__setattr__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__setstate__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.fromietf"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": null
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__hash__"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__init__"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__setattr__"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__setstate__"
+    }
+   ],
+   "differs": [
+    {
+     "path": "babelfish/country.py",
+     "function": null
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__eq__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__getattr__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__getstate__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__hash__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__init__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__ne__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__post_init__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__setattr__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.__setstate__"
+    },
+    {
+     "path": "babelfish/country.py",
+     "function": "Country.alpha2"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": null
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__bool__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__eq__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__getattr__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__getstate__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__hash__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__init__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__ne__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__setattr__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.__setstate__"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.alpha3"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "Language.fromietf"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "to_country"
+    },
+    {
+     "path": "babelfish/language.py",
+     "function": "to_script"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": null
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__eq__"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__getstate__"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__hash__"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__init__"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__ne__"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__post_init__"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__setattr__"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.__setstate__"
+    },
+    {
+     "path": "babelfish/script.py",
+     "function": "Script.code"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "7584c2ae86d2171094287b035a0c78fad5db4b1c",
+  "gold": "f99f6169ecde343500829dbd7f10bd6ef0a918f6",
+  "v3": "b6dfd948b209907156e8625cb80d3099a84c2cc5",
+  "agent_wrong": "e138fa795d8b2e942bbafc186679a7aeb18176d8"
+ },
+ "seconds": 28.375
+}

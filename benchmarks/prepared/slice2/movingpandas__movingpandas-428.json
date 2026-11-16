@@ -1,0 +1,125 @@
+{
+ "instance_id": "movingpandas__movingpandas-428",
+ "excluded": null,
+ "detail": "",
+ "python": "3.10.17",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.168.5",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov",
+  "typeguard._pytest_plugin"
+ ],
+ "suite_seconds": 19.207,
+ "suite_timeout": 120,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "movingpandas/trajectory.py",
+   "old_start": 1369,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory._get_df_with_distance"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "movingpandas/trajectory.py",
+   "old_start": 1383,
+   "old_len": 7,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory._get_df_with_speed"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "movingpandas/trajectory.py",
+   "old_start": 1396,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory._get_df_with_acceleration"
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 63550,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory._get_df_with_acceleration"
+    },
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory._get_df_with_distance"
+    },
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory._get_df_with_speed"
+    },
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory.add_angular_difference"
+    },
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory.add_direction"
+    }
+   ],
+   "differs": [
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory._get_df_with_acceleration"
+    },
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory._get_df_with_distance"
+    },
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory._get_df_with_speed"
+    },
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory.add_angular_difference"
+    },
+    {
+     "path": "movingpandas/trajectory.py",
+     "function": "Trajectory.add_direction"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "843ef836d789074849c5e7f5a297fb747aa38801",
+  "gold": "c045bcf978427df5e038565dc460e9b4879aeccf",
+  "v1": "8fcba9a275daeafb24e29260b4d32aaa33e08174",
+  "agent_ok": "aa9ccad5674d5db755ff18724219c67a5a066c10"
+ },
+ "seconds": 207.016
+}

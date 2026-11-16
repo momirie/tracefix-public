@@ -1,0 +1,141 @@
+{
+ "instance_id": "abhinavsingh__proxy.py-137",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 0.415,
+ "suite_timeout": 120,
+ "source_hunks": 5,
+ "variants": [
+  {
+   "index": 0,
+   "path": "benchmark.py",
+   "old_start": 56,
+   "old_len": 27,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "benchmark.py",
+     "function": "Benchmark.parse_pipeline_response"
+    },
+    {
+     "path": "benchmark.py",
+     "function": "Benchmark.recv"
+    },
+    {
+     "path": "benchmark.py",
+     "function": "Benchmark.send"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "proxy.py",
+   "old_start": 257,
+   "old_len": 8,
+   "label": "partial",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "proxy.py",
+     "function": "build_http_response"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "proxy.py",
+   "old_start": 501,
+   "old_len": 10,
+   "label": "unsettled",
+   "failing": 91,
+   "functions": [
+    {
+     "path": "proxy.py",
+     "function": "ChunkParser.parse"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "proxy.py",
+   "old_start": 651,
+   "old_len": 27,
+   "label": "no_effect",
+   "failing": 2,
+   "functions": [
+    {
+     "path": "proxy.py",
+     "function": "HttpParser.parse"
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 49545,
+   "label": "no_effect",
+   "failing": 2,
+   "kept": true,
+   "functions": [
+    {
+     "path": "proxy.py",
+     "function": "HttpParser.process_line"
+    }
+   ],
+   "differs": [
+    {
+     "path": "benchmark.py",
+     "function": "Benchmark.parse_pipeline_response"
+    },
+    {
+     "path": "benchmark.py",
+     "function": "Benchmark.recv"
+    },
+    {
+     "path": "benchmark.py",
+     "function": "Benchmark.send"
+    },
+    {
+     "path": "proxy.py",
+     "function": "ChunkParser.parse"
+    },
+    {
+     "path": "proxy.py",
+     "function": "HttpParser.parse"
+    },
+    {
+     "path": "proxy.py",
+     "function": "HttpParser.process"
+    },
+    {
+     "path": "proxy.py",
+     "function": "HttpParser.process_line"
+    },
+    {
+     "path": "proxy.py",
+     "function": "build_http_response"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "69445a8921ba82738bde1f64e0939a34d08aaae2",
+  "gold": "3f02ee1d57f7d931c3e6d0ff1699e2d7ace5120c",
+  "v1": "55b97a292bb276429022011982180214b8340303",
+  "agent_wrong": "b90594032c50df01f419013c28dd538315f3ce44"
+ },
+ "seconds": 160.735
+}

@@ -1,0 +1,485 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-20T12:09:33+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 5 of 7 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "3194b095ede4abaa9d9d0daaa91a6f0424cc4a93"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "718532e745e918a3e60e60c01e67fa12ee0cc47a"
+  },
+  "issue": {
+    "title": "Error reading inlined reference data when trying to roundtrip virtual dataset",
+    "sha256": "850a4bd16b4d94eceb05987913d87311358409fdd8fbb60824bfee4701ab0f2e"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "At L1, the bug was reproduced: a test fails before the fix and passes after it, and the only behaviour changes observed are exception changes in manifest_from_kerchunk_chunk_dict that the Judge labelled intended. The tests did not kill enough mutants to reach L2 and Break My Fix was inconclusive, so the next thing to look at is strengthening tests around reading inlined kerchunk references so the…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 16.24,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 7.92,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 29.62,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no virtualizarr/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 5 of 7 mutants; 80% is needed",
+      "duration_s": 296.36,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no virtualizarr/tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.714,
+        "repro_kill_rate": 0.571,
+        "pr_kill_rate": null,
+        "mutants": 7,
+        "killed": 5,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-fbb5f02a0c06",
+          "m-2d4d458725b2",
+          "m-23dbabc05fc7",
+          "m-cbf6cb8bc150",
+          "m-1e55a00534e6"
+        ],
+        "rule_mutants": 5,
+        "rule_kill_rate": 0.6,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 5 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 271 untouched tests that passed before the fix fails after it",
+      "duration_s": 57.08,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 271,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 4.57,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no virtualizarr/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 11
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "149 input(s) compared on 1 function(s): 29 changed with the fix",
+      "duration_s": 75.68,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no virtualizarr/tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 149,
+        "changes": 29,
+        "groups": 2,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack on manifest_from_kerchunk_chunk_dict did not finish",
+      "duration_s": 191.77,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 1,
+        "properties_counted": 1,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 6
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "virtualizarr.parsers.kerchunk.translator.manifest_from_kerchunk_chunk_dict",
+      "kind": "exception",
+      "count": 16,
+      "before": "raises NotImplementedError",
+      "after": "raises TypeError",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The issue asks that inlined string refs stop raising NotImplementedError; the TypeError comes from pre-existing handling of the malformed tuple entries, not from the new inline path."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "Inline refs are now accepted as the issue requests; the TypeError comes from pre-existing validation of the malformed tuple refs elsewhere in the dict."
+        },
+        {
+          "change": "c3",
+          "label": "intended",
+          "reason": "Inline refs are now accepted as the issue requests; the TypeError comes from pre-existing validation of the malformed tuple refs elsewhere in the dict."
+        },
+        {
+          "change": "c4",
+          "label": "intended",
+          "reason": "Inline refs are now accepted as the issue requests; the TypeError comes from pre-existing validation of the invalid tuple refs elsewhere in the dict."
+        },
+        {
+          "change": "c5",
+          "label": "intended",
+          "reason": "Inline refs are now accepted as the issue requests; the TypeError comes from pre-existing validation of the malformed tuple refs elsewhere in the dict."
+        },
+        {
+          "change": "c6",
+          "label": "intended",
+          "reason": "Inline refs are now accepted as the issue requests; the TypeError comes from pre-existing validation of the malformed tuple refs elsewhere in the dict."
+        },
+        {
+          "change": "c7",
+          "label": "intended",
+          "reason": "Inline refs are now accepted as the issue requests; the TypeError comes from pre-existing validation of the invalid tuple refs elsewhere in the dict."
+        },
+        {
+          "change": "c8",
+          "label": "intended",
+          "reason": "Inline refs are now accepted as the issue requests; the TypeError comes from pre-existing validation of the invalid tuple refs elsewhere in the dict."
+        },
+        {
+          "change": "c9",
+          "label": "intended",
+          "reason": "Inline refs are now accepted as the issue requests; the TypeError comes from pre-existing validation of the malformed tuple refs elsewhere in the dict."
+        },
+        {
+          "change": "c10",
+          "label": "intended",
+          "reason": "Inline refs are now accepted as the issue requests; the TypeError comes from pre-existing validation of the malformed tuple refs elsewhere in the dict."
+        },
+        {
+          "change": "c11",
+          "label": "intended",
+          "reason": "Inline refs are now accepted as the issue requests; the TypeError comes from pre-existing validation of the malformed tuple refs elsewhere in the dict."
+        }
+      ],
+      "examples": [
+        {
+          "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={'': '\\x88', '\\U0007431c:': ('N£',)}, fs_root='anon', shape=(0,))",
+          "before": "raises NotImplementedError",
+          "after": "raises TypeError"
+        },
+        {
+          "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={'\"Î': '', 'lj': ('',), '¾ëÕ%\\x93u': '\\U0001a78cÚ\\x8a\\U000bb8bdÙ\\x1b\\x15', '': ('J¹o\\U00010dde\\x84\\U000cf517;a',)}, shape=None)",
+          "before": "raises NotImplementedError",
+          "after": "raises TypeError"
+        },
+        {
+          "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={\"\\U00055de8𦍻\\U000fd9bc'kgÑÿ\\U0001eef4\": '\\U00060bbdÊ\\x7f', '\\x14\\r\\U000f54b2§': ('\\x0e\\x99\\U0006dfc3~\\U00042b31.¬',), 'À': ('',)}, fs_root='', shape=(-1,))",
+          "before": "raises NotImplementedError",
+          "after": "raises TypeError"
+        }
+      ]
+    },
+    {
+      "function": "virtualizarr.parsers.kerchunk.translator.manifest_from_kerchunk_chunk_dict",
+      "kind": "exception",
+      "count": 13,
+      "before": "raises NotImplementedError",
+      "after": "raises ValueError: Invalid format for chunk key: ''",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c12",
+          "label": "intended",
+          "reason": "Inline data no longer raises NotImplementedError, per the issue; the invalid chunk key '' is now rejected by the existing ChunkManifest key validation."
+        },
+        {
+          "change": "c13",
+          "label": "intended",
+          "reason": "Inline data no longer raises NotImplementedError, per the issue; the invalid chunk key is now rejected by the existing key validation."
+        },
+        {
+          "change": "c14",
+          "label": "intended",
+          "reason": "Inline data no longer raises NotImplementedError, per the issue; the invalid chunk key is now rejected by the existing key validation."
+        },
+        {
+          "change": "c15",
+          "label": "intended",
+          "reason": "Inline data no longer raises NotImplementedError, per the issue; the invalid chunk key is now rejected by the existing key validation."
+        },
+        {
+          "change": "c16",
+          "label": "intended",
+          "reason": "Inline data no longer raises NotImplementedError, per the issue; the invalid chunk key is now rejected by the existing key validation."
+        },
+        {
+          "change": "c17",
+          "label": "intended",
+          "reason": "Inline data no longer raises NotImplementedError, per the issue; the invalid chunk key is now rejected by the existing key validation."
+        },
+        {
+          "change": "c18",
+          "label": "intended",
+          "reason": "Inline data no longer raises NotImplementedError, per the issue; the invalid chunk key is now rejected by the existing key validation."
+        }
+      ],
+      "examples": [
+        {
+          "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={'': ''}, fs_root='', shape=())",
+          "before": "raises NotImplementedError",
+          "after": "raises ValueError: Invalid format for chunk key: ''"
+        },
+        {
+          "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={'': '\\U000d733cO\\rÿ'}, fs_root='😀', shape=(1,))",
+          "before": "raises NotImplementedError",
+          "after": "raises ValueError: Invalid format for chunk key: ''"
+        },
+        {
+          "call": "manifest_from_kerchunk_chunk_dict(kerchunk_chunk_dict={'Ê': 'W\\U000fb908¡¡'}, fs_root='g19.json')",
+          "before": "raises NotImplementedError",
+          "after": "raises ValueError: Invalid format for chunk key: 'Ê'"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-29be6916140c",
+      "origin": "model",
+      "file": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 223,
+      "original": "                data = base64.b64decode(raw[len(b\"base64:\") :])",
+      "replacement": "                data = base64.b64decode(raw[len(b\"base64:\") - 1 :])",
+      "description": "Off-by-one in prefix slicing leaves the colon in the payload to decode.",
+      "diff": "--- a/virtualizarr/parsers/kerchunk/translator.py\n+++ b/virtualizarr/parsers/kerchunk/translator.py\n@@ -222,3 +222,3 @@\n             if raw.startswith(b\"base64:\"):\n-                data = base64.b64decode(raw[len(b\"base64:\") :])\n+                data = base64.b64decode(raw[len(b\"base64:\") - 1 :])\n             else:\n",
+      "words": "virtualizarr/parsers/kerchunk/translator.py:223: changing `                data = base64.b64decode(raw[len(b\"base64:\") ...` to `                data = base64.b64decode(raw[len(b\"base64:\") ...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-c1c0173c8fdb",
+      "origin": "model",
+      "file": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 227,
+      "original": "                path=\"\", offset=0, length=len(data), data=data",
+      "replacement": "                path=\"\", offset=0, length=len(raw), data=data",
+      "description": "Uses the raw (pre-decode) length instead of the decoded data length.",
+      "diff": "--- a/virtualizarr/parsers/kerchunk/translator.py\n+++ b/virtualizarr/parsers/kerchunk/translator.py\n@@ -226,3 +226,3 @@\n             chunk_entries[k] = ChunkEntry(\n-                path=\"\", offset=0, length=len(data), data=data\n+                path=\"\", offset=0, length=len(raw), data=data\n             )\n",
+      "words": "virtualizarr/parsers/kerchunk/translator.py:227: changing `                path=\"\", offset=0, length=len(data), data=da...` to `                path=\"\", offset=0, length=len(raw), data=dat...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-e55543ebd7b4",
+      "origin": "rule",
+      "file": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 227,
+      "original": "                path=\"\", offset=0, length=len(data), data=data",
+      "replacement": "                path=\"\", offset=(-1), length=len(data), data=data",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/virtualizarr/parsers/kerchunk/translator.py\n+++ b/virtualizarr/parsers/kerchunk/translator.py\n@@ -226,3 +226,3 @@\n             chunk_entries[k] = ChunkEntry(\n-                path=\"\", offset=0, length=len(data), data=data\n+                path=\"\", offset=(-1), length=len(data), data=data\n             )\n",
+      "words": "virtualizarr/parsers/kerchunk/translator.py:227: changing `                path=\"\", offset=0, length=len(data), data=da...` to `                path=\"\", offset=(-1), length=len(data), data...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-5448b1c90a93",
+      "origin": "rule",
+      "file": "virtualizarr/parsers/kerchunk/translator.py",
+      "line": 227,
+      "original": "                path=\"\", offset=0, length=len(data), data=data",
+      "replacement": "                path=\"\", offset=1, length=len(data), data=data",
+      "description": "rule: `0` -> `1`",
+      "diff": "--- a/virtualizarr/parsers/kerchunk/translator.py\n+++ b/virtualizarr/parsers/kerchunk/translator.py\n@@ -226,3 +226,3 @@\n             chunk_entries[k] = ChunkEntry(\n-                path=\"\", offset=0, length=len(data), data=data\n+                path=\"\", offset=1, length=len(data), data=data\n             )\n",
+      "words": "virtualizarr/parsers/kerchunk/translator.py:227: changing `                path=\"\", offset=0, length=len(data), data=da...` to `                path=\"\", offset=1, length=len(data), data=da...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "virtualizarr/parsers/kerchunk/translator.py": [
+        3,
+        221,
+        222,
+        223,
+        225,
+        226,
+        227,
+        229,
+        230,
+        232,
+        233
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 6,
+        "total": 11
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 57261,
+    "output_tokens": 9706,
+    "cost_estimate": {
+      "usd": 0.3977,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: pyproject truncated to 3000 characters for the prompt"
+  ],
+  "previous": null
+}

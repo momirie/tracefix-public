@@ -1,0 +1,62 @@
+# Tracefix on pull requests from forks, approved one commit at a time by a maintainer
+# (docs/GITHUB_ACTION.md, "Fork pull requests"). Copy to .github/workflows/tracefix-fork.yml.
+#
+# A maintainer reads the pull request, then adds the `tracefix` label. Then:
+# - job `verify` checks out the BASE branch only and installs the base's dependencies. The pull
+#   request's commits are fetched as git data and run only inside bubblewrap (strict isolation,
+#   required: without it the run is refused). It holds the model key and a read-only token.
+# - job `report` posts the check run and the comment from the uploaded receipt. It holds a token
+#   that can write, never the model key, and runs no project code. It removes the label, so each
+#   new commit needs a new approval.
+# Never add a step that checks out or installs the pull request's code: Tracefix refuses to run
+# when the pull request's commits are in the checkout.
+name: Tracefix (fork pull requests)
+
+on:
+  # zizmor: ignore[dangerous-triggers] the label is the maintainer's approval; PR code runs only in bubblewrap
+  pull_request_target:
+    types: [labeled]
+
+permissions: {}
+
+concurrency:
+  group: tracefix-fork-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify the fix (strict isolation)
+    if: github.event.label.name == 'tracefix'
+    runs-on: ubuntu-24.04 # bubblewrap (strict isolation) is known to work here
+    timeout-minutes: 30
+    permissions:
+      contents: read # the pull request's commits, as git data
+      issues: read # the text of the issues the pull request closes
+      actions: read # the last receipt of this pull request, to replay its findings
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # Tracefix needs the base and head commits
+          persist-credentials: false # no token left on disk while tests run
+      # The base branch's environment. A fix that needs a new dependency stays unverified here.
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          enable-cache: false # no cache a pull request could poison
+      - run: uv sync --locked
+      - uses: momirie/tracefix@b46825b4fbfde70f66ff5b024e76a54c212a28f0 # pin a Tracefix commit
+        with:
+          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
+          trust: untrusted
+          report: false
+
+  report:
+    name: Post the receipt
+    needs: verify
+    if: ${{ !cancelled() && github.event.label.name == 'tracefix' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      checks: write # the Tracefix check run
+      pull-requests: write # the one receipt comment, and removing the label
+    steps:
+      - uses: momirie/tracefix/report@b46825b4fbfde70f66ff5b024e76a54c212a28f0 # pin a Tracefix commit

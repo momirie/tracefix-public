@@ -1,0 +1,1341 @@
+{
+ "funnel": {
+  "cases": 150,
+  "prepared": 111,
+  "excluded": {
+   "base_suite_cannot_run": 45,
+   "base_suite_too_slow": 5,
+   "fail_to_pass_passes_on_base": 1,
+   "hidden_tests_fail_on_gold": 4
+  },
+  "ready": 56,
+  "ready_with_partial": 32,
+  "agents": {
+   "agent_ok: does_not_apply (not run)": 2,
+   "agent_ok: hidden_tests_pass": 40,
+   "agent_wrong: does_not_apply (not run)": 1,
+   "agent_wrong: hidden_tests_pass (not run)": 1,
+   "agent_wrong: no_effect": 21,
+   "agent_wrong: partial": 3,
+   "agent_wrong: unsettled (not run)": 1
+  },
+  "isolation_at_prepare": {
+   "strict": 56
+  },
+  "setup_commit_needed": 21,
+  "runs": {
+   "gold": {
+    "receipt": 53,
+    "timeout": 1
+   },
+   "partial": {
+    "receipt": 30
+   },
+   "agent_wrong": {
+    "receipt": 22
+   },
+   "agent_ok": {
+    "receipt": 39
+   }
+  },
+  "receipt_status": {
+   "ok": 144
+  },
+  "exit_codes": {
+   "0": 144
+  },
+  "isolation": {
+   "strict": 144
+  },
+  "stage_errors": {}
+ },
+ "splits": {
+  "dev": 53
+ },
+ "set_aside": {
+  "gold": {
+   "n": 6,
+   "of": 53
+  },
+  "partial": {
+   "n": 2,
+   "of": 30
+  },
+  "agent_wrong": {
+   "n": 2,
+   "of": 22
+  },
+  "agent_ok": {
+   "n": 1,
+   "of": 39
+  },
+  "tasks": "NREL__hescore-hpxml-149, disqus__python-phabricator-64, encode__httpx-653, nipreps__nibabies-395, python-cmd2__cmd2-115, scipp__scippnexus-106"
+ },
+ "gold": {
+  "levels": {
+   "COUNTEREXAMPLE": 9,
+   "L0": 2,
+   "L1": 25,
+   "L2": 11,
+   "L3": 0,
+   "L4": 0
+  },
+  "counterexample": {
+   "n": 9,
+   "of": 47
+  },
+  "false_alarm": {
+   "n": 5,
+   "of": 47
+  },
+  "real_bug_in_gold": {
+   "n": 3,
+   "of": 47
+  },
+  "false_alarm_proposed": {
+   "n": 0,
+   "of": 47
+  },
+  "unreviewed": {
+   "n": 0,
+   "of": 47
+  },
+  "at_least_l2": {
+   "n": 11,
+   "of": 47
+  },
+  "at_least_l3": {
+   "n": 0,
+   "of": 47
+  },
+  "l4": {
+   "n": 0,
+   "of": 47
+  }
+ },
+ "partial": {
+  "levels": {
+   "COUNTEREXAMPLE": 19,
+   "L0": 4,
+   "L1": 3,
+   "L2": 2,
+   "L3": 0,
+   "L4": 0
+  },
+  "detection": {
+   "n": 19,
+   "of": 28
+  },
+  "not_green_lit": {
+   "n": 26,
+   "of": 28
+  },
+  "false_pass_l2": {
+   "n": 2,
+   "of": 28
+  },
+  "false_pass_l3": {
+   "n": 0,
+   "of": 28
+  },
+  "leftover_found": {
+   "n": 4,
+   "of": 28
+  },
+  "real_bug_by_label": {
+   "n": 1,
+   "of": 28
+  },
+  "unreviewed": {
+   "n": 0,
+   "of": 28
+  }
+ },
+ "separation": {
+  "gold_above": {
+   "n": 17,
+   "of": 24
+  },
+  "same": {
+   "n": 5,
+   "of": 24
+  },
+  "gold_below": {
+   "n": 2,
+   "of": 24
+  }
+ },
+ "agent_wrong": {
+  "levels": {
+   "COUNTEREXAMPLE": 6,
+   "L0": 0,
+   "L1": 10,
+   "L2": 4,
+   "L3": 0,
+   "L4": 0
+  },
+  "detection": {
+   "n": 6,
+   "of": 20
+  },
+  "not_green_lit": {
+   "n": 16,
+   "of": 20
+  },
+  "false_pass_l2": {
+   "n": 4,
+   "of": 20
+  },
+  "false_pass_l3": {
+   "n": 0,
+   "of": 20
+  },
+  "leftover_found": {
+   "n": 0,
+   "of": 20
+  },
+  "real_bug_by_label": {
+   "n": 2,
+   "of": 20
+  },
+  "unreviewed": {
+   "n": 0,
+   "of": 20
+  }
+ },
+ "agent_ok": {
+  "levels": {
+   "COUNTEREXAMPLE": 5,
+   "L0": 1,
+   "L1": 24,
+   "L2": 8,
+   "L3": 0,
+   "L4": 0
+  },
+  "counterexample": {
+   "n": 5,
+   "of": 38
+  },
+  "false_alarm": {
+   "n": 2,
+   "of": 38
+  },
+  "real_bug_in_gold": {
+   "n": 3,
+   "of": 38
+  },
+  "false_alarm_proposed": {
+   "n": 0,
+   "of": 38
+  },
+  "unreviewed": {
+   "n": 0,
+   "of": 38
+  },
+  "at_least_l2": {
+   "n": 8,
+   "of": 38
+  },
+  "at_least_l3": {
+   "n": 0,
+   "of": 38
+  },
+  "l4": {
+   "n": 0,
+   "of": 38
+  },
+  "differs_from_gold": {
+   "n": 0,
+   "of": 38
+  }
+ },
+ "correct_fixes": {
+  "levels": {
+   "COUNTEREXAMPLE": 14,
+   "L0": 3,
+   "L1": 49,
+   "L2": 19,
+   "L3": 0,
+   "L4": 0
+  },
+  "counterexample": {
+   "n": 14,
+   "of": 85
+  },
+  "false_alarm": {
+   "n": 7,
+   "of": 85
+  },
+  "real_bug_in_gold": {
+   "n": 6,
+   "of": 85
+  },
+  "false_alarm_proposed": {
+   "n": 0,
+   "of": 85
+  },
+  "unreviewed": {
+   "n": 0,
+   "of": 85
+  },
+  "at_least_l2": {
+   "n": 19,
+   "of": 85
+  },
+  "at_least_l3": {
+   "n": 0,
+   "of": 85
+  },
+  "l4": {
+   "n": 0,
+   "of": 85
+  }
+ },
+ "separation_agent_wrong": {
+  "gold_above": {
+   "n": 3,
+   "of": 17
+  },
+  "same": {
+   "n": 8,
+   "of": 17
+  },
+  "gold_below": {
+   "n": 6,
+   "of": 17
+  }
+ },
+ "by_split": {
+  "dev": {
+   "correct_false_alarm": {
+    "n": 7,
+    "of": 85
+   },
+   "correct_unreviewed": {
+    "n": 0,
+    "of": 85
+   },
+   "agent_ok_false_alarm": {
+    "n": 2,
+    "of": 38
+   },
+   "partial_caught": {
+    "n": 19,
+    "of": 28
+   },
+   "partial_not_green_lit": {
+    "n": 26,
+    "of": 28
+   },
+   "partial_leftover_found": {
+    "n": 4,
+    "of": 28
+   },
+   "agent_wrong_caught": {
+    "n": 6,
+    "of": 20
+   },
+   "agent_wrong_not_green_lit": {
+    "n": 16,
+    "of": 20
+   },
+   "agent_wrong_leftover_found": {
+    "n": 0,
+    "of": 20
+   }
+  },
+  "held_out": {
+   "correct_false_alarm": {
+    "n": 0,
+    "of": 0
+   },
+   "correct_unreviewed": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_ok_false_alarm": {
+    "n": 0,
+    "of": 0
+   },
+   "partial_caught": {
+    "n": 0,
+    "of": 0
+   },
+   "partial_not_green_lit": {
+    "n": 0,
+    "of": 0
+   },
+   "partial_leftover_found": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_caught": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_not_green_lit": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_leftover_found": {
+    "n": 0,
+    "of": 0
+   }
+  }
+ },
+ "by_python": {
+  "3.9/3.10": {
+   "correct_false_alarm": {
+    "n": 7,
+    "of": 83
+   },
+   "correct_unreviewed": {
+    "n": 0,
+    "of": 83
+   },
+   "agent_ok_false_alarm": {
+    "n": 2,
+    "of": 37
+   },
+   "partial_caught": {
+    "n": 19,
+    "of": 28
+   },
+   "partial_not_green_lit": {
+    "n": 26,
+    "of": 28
+   },
+   "partial_leftover_found": {
+    "n": 4,
+    "of": 28
+   },
+   "agent_wrong_caught": {
+    "n": 6,
+    "of": 20
+   },
+   "agent_wrong_not_green_lit": {
+    "n": 16,
+    "of": 20
+   },
+   "agent_wrong_leftover_found": {
+    "n": 0,
+    "of": 20
+   }
+  },
+  "3.11+": {
+   "correct_false_alarm": {
+    "n": 0,
+    "of": 2
+   },
+   "correct_unreviewed": {
+    "n": 0,
+    "of": 2
+   },
+   "agent_ok_false_alarm": {
+    "n": 0,
+    "of": 1
+   },
+   "partial_caught": {
+    "n": 0,
+    "of": 0
+   },
+   "partial_not_green_lit": {
+    "n": 0,
+    "of": 0
+   },
+   "partial_leftover_found": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_caught": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_not_green_lit": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_leftover_found": {
+    "n": 0,
+    "of": 0
+   }
+  }
+ },
+ "reproducer": {
+  "statuses": {
+   "fix_does_not_fix": 2,
+   "not_reproduced": 2,
+   "reproduced": 49
+  },
+  "fail_to_pass": {
+   "n": 49,
+   "of": 53
+  },
+  "fix_does_not_fix": {
+   "n": 2,
+   "of": 53
+  }
+ },
+ "guard": {
+  "gold": {
+   "statuses": {
+    "guarded": 14,
+    "inconclusive": 1,
+    "not_guarded": 34,
+    "skipped": 4
+   },
+   "guarded": {
+    "n": 14,
+    "of": 53
+   },
+   "kill_rate": {
+    "n": 49,
+    "mean": 0.559,
+    "median": 0.6,
+    "p90": 1.0,
+    "max": 1.0
+   },
+   "crash_only_kills": {
+    "n": 3,
+    "of": 167
+   }
+  },
+  "partial": {
+   "statuses": {
+    "guarded": 2,
+    "inconclusive": 1,
+    "not_guarded": 11,
+    "skipped": 16
+   },
+   "guarded": {
+    "n": 2,
+    "of": 30
+   },
+   "kill_rate": {
+    "n": 14,
+    "mean": 0.454,
+    "median": 0.55,
+    "p90": 0.833,
+    "max": 1.0
+   },
+   "crash_only_kills": {
+    "n": 0,
+    "of": 36
+   }
+  },
+  "agent_wrong": {
+   "statuses": {
+    "guarded": 5,
+    "inconclusive": 1,
+    "not_guarded": 15,
+    "skipped": 1
+   },
+   "guarded": {
+    "n": 5,
+    "of": 22
+   },
+   "kill_rate": {
+    "n": 21,
+    "mean": 0.404,
+    "median": 0.333,
+    "p90": 0.889,
+    "max": 1.0
+   },
+   "crash_only_kills": {
+    "n": 0,
+    "of": 58
+   }
+  },
+  "agent_ok": {
+   "statuses": {
+    "guarded": 9,
+    "inconclusive": 1,
+    "not_guarded": 28,
+    "skipped": 1
+   },
+   "guarded": {
+    "n": 9,
+    "of": 39
+   },
+   "kill_rate": {
+    "n": 38,
+    "mean": 0.583,
+    "median": 0.6,
+    "p90": 1.0,
+    "max": 1.0
+   },
+   "crash_only_kills": {
+    "n": 3,
+    "of": 131
+   }
+  }
+ },
+ "break_my_fix": {
+  "gold": {
+   "statuses": {
+    "found": 7,
+    "inconclusive": 16,
+    "none_found": 19,
+    "skipped": 11
+   },
+   "skip_reasons": {
+    "no candidate checked counts, but N could not be checked": 1,
+    "no target could be attacked: asdf/asdf.py could not be imported as a module here (tried asdf.asdf, asdf)": 1,
+    "no target could be attacked: its objects' code can't run here: DataFrame is not the module's own name or plain data": 1,
+    "no target could be attacked: its objects' code can't run here: Frequency is not the module's own name or plain data": 1,
+    "the attack on ContextRegistry.disable_contexts did not finish": 1,
+    "the attack ran no input": 11,
+    "the fix changes no function Break My Fix can call": 4,
+    "the fix changes no function Break My Fix can call (Command.handle.display_properties: a nested function: it can't be imported, not attacked yet; Command.handle.": 1,
+    "the fix changes no function Break My Fix can call (Faker.__deepcopy__: a special method (such as __init__ or __eq__): not called yet; Faker.__getattr__: a speci": 1,
+    "the fix changes no function Break My Fix can call (PackageURL.__hash__: a special method (such as __init__ or __eq__): not called yet)": 1,
+    "the fix changes no function Break My Fix can call (Query.from_string.process_string: a nested function: it can't be imported, not attacked yet; WildcardRegex.__": 1,
+    "the fix changes no function Break My Fix can call (URL.__init__: a special method (such as __init__ or __eq__): not called yet)": 1,
+    "the fix changes no function Break My Fix can call (get_pypi_packages: it takes no parameters to vary)": 1,
+    "the fix changes no function Break My Fix can call (main: it takes no parameters to vary; ReportseffParameters.__init__: a special method (such as __init__ or __": 1
+   },
+   "targets": 102,
+   "inputs_per_target": 62.1,
+   "pre_existing": 0,
+   "first_l4_blocker": {}
+  },
+  "partial": {
+   "statuses": {
+    "found": 6,
+    "inconclusive": 6,
+    "none_found": 8,
+    "skipped": 10
+   },
+   "skip_reasons": {
+    "no candidate checked counts, but N could not be checked": 1,
+    "no target could be attacked: its objects' code can't run here: DataFrame is not the module's own name or plain data": 1,
+    "the attack ran no input": 4,
+    "the fix changes no function Break My Fix can call": 7,
+    "the fix changes no function Break My Fix can call (Faker.__deepcopy__: a special method (such as __init__ or __eq__): not called yet; Faker.__getattr__: a speci": 1,
+    "the fix changes no function Break My Fix can call (ReportseffParameters.__init__: a special method (such as __init__ or __eq__): not called yet)": 1,
+    "the fix changes no function Break My Fix can call (WildcardRegex.__init__: a special method (such as __init__ or __eq__): not called yet)": 1
+   },
+   "targets": 60,
+   "inputs_per_target": 62.2,
+   "pre_existing": 1,
+   "first_l4_blocker": {}
+  },
+  "agent_wrong": {
+   "statuses": {
+    "found": 4,
+    "inconclusive": 9,
+    "none_found": 5,
+    "skipped": 4
+   },
+   "skip_reasons": {
+    "no candidate checked counts, but N could not be checked": 1,
+    "no target could be attacked: its objects' code can't run here: DocumenterBridge is not the module's own name or plain data": 1,
+    "the attack ran no input": 7,
+    "the fix changes no function Break My Fix can call": 1,
+    "the fix changes no function Break My Fix can call (Command.handle.display_properties: a nested function: it can't be imported, not attacked yet)": 1,
+    "the fix changes no function Break My Fix can call (debug_dual_boundary_pairing: it takes no parameters to vary; debug_specific_timestamp: it takes no parameters": 1,
+    "the fix changes no function Break My Fix can call (demonstrate_click_behavior: it takes no parameters to vary; test_color_parameter_default: it takes no paramet": 1
+   },
+   "targets": 31,
+   "inputs_per_target": 71.6,
+   "pre_existing": 1,
+   "first_l4_blocker": {}
+  },
+  "agent_ok": {
+   "statuses": {
+    "found": 4,
+    "inconclusive": 14,
+    "none_found": 14,
+    "skipped": 7
+   },
+   "skip_reasons": {
+    "every property was contradicted or could not run": 1,
+    "no target could be attacked: asdf/asdf.py could not be imported as a module here (tried asdf.asdf, asdf)": 1,
+    "no target could be attacked: its objects' code can't run here: DataFrame is not the module's own name or plain data": 1,
+    "no target could be attacked: its objects' code can't run here: DocumenterBridge is not the module's own name or plain data": 1,
+    "the attack on ContextRegistry.disable_contexts did not finish": 1,
+    "the attack ran no input": 9,
+    "the fix changes no function Break My Fix can call": 2,
+    "the fix changes no function Break My Fix can call (PackageURL.__hash__: a special method (such as __init__ or __eq__): not called yet)": 1,
+    "the fix changes no function Break My Fix can call (URL.__init__: a special method (such as __init__ or __eq__): not called yet; test_params_merge: it takes no p": 1,
+    "the fix changes no function Break My Fix can call (cleanup_dummy_files: it takes no parameters to vary; test_freesurfer_algorithm: it takes no parameters to var": 1,
+    "the fix changes no function Break My Fix can call (get_pypi_packages: it takes no parameters to vary)": 1,
+    "the fix changes no function Break My Fix can call (main: it takes no parameters to vary; ReportseffParameters.__init__: a special method (such as __init__ or __": 1
+   },
+   "targets": 60,
+   "inputs_per_target": 116.9,
+   "pre_existing": 1,
+   "first_l4_blocker": {}
+  }
+ },
+ "behaviour_diff": {
+  "gold": {
+   "statuses": {
+    "compared": 6,
+    "inconclusive": 31,
+    "partial": 7,
+    "skipped": 9
+   },
+   "l3_gate_open": {
+    "n": 2,
+    "of": 53
+   },
+   "first_l3_blocker": {
+    "<name>: module-level code that computes a value changed (line N); what uses it is not compared": 2,
+    "<name>: not compared (a nested function: it can't be imported, not attacked yet)": 1,
+    "<name>: not compared (a special method (such as __init__ or __eq__): not called yet)": 1,
+    "<name>: the comparison did not finish": 6,
+    "N input(s) changed from 'raises IndexError' to 'returns tuple' and nothing explains it (not the reproduction test, the issue or a docstring example)": 1
+   }
+  },
+  "partial": {
+   "statuses": {
+    "compared": 1,
+    "inconclusive": 13,
+    "partial": 6,
+    "skipped": 10
+   },
+   "l3_gate_open": {
+    "n": 0,
+    "of": 30
+   },
+   "first_l3_blocker": {
+    "<name>: not compared (a special method (such as __init__ or __eq__): not called yet)": 1,
+    "<name>: the comparison did not finish": 1
+   }
+  },
+  "agent_wrong": {
+   "statuses": {
+    "compared": 1,
+    "inconclusive": 10,
+    "partial": 2,
+    "skipped": 9
+   },
+   "l3_gate_open": {
+    "n": 0,
+    "of": 22
+   },
+   "first_l3_blocker": {
+    "<name>: before the fix it was not a method defined in class UpdateCommand": 1,
+    "<name>: module-level code that computes a value changed (line N, N, N, N, N); what uses it is not compared": 1,
+    "<name>: no input could be compared": 1,
+    "process: the comparison did not finish": 1
+   }
+  },
+  "agent_ok": {
+   "statuses": {
+    "compared": 5,
+    "inconclusive": 24,
+    "partial": 3,
+    "skipped": 7
+   },
+   "l3_gate_open": {
+    "n": 2,
+    "of": 39
+   },
+   "first_l3_blocker": {
+    "<name>: before the fix it was not a method defined in class AutoSummClassDocumenter": 1,
+    "<name>: not compared (past the cap of N functions)": 1,
+    "<name>: the comparison did not finish": 5,
+    "N input(s) changed from 'raises IndexError' to 'returns tuple' and nothing explains it (not the reproduction test, the issue or a docstring example)": 1
+   }
+  }
+ },
+ "report_only": {
+  "gold": {
+   "fix_line_coverage": {
+    "repro": {
+     "n": 385,
+     "of": 584
+    }
+   },
+   "regressions": {
+    "found": 9,
+    "none_found": 41,
+    "skipped": 3
+   }
+  },
+  "partial": {
+   "fix_line_coverage": {
+    "repro": {
+     "n": 105,
+     "of": 243
+    }
+   },
+   "regressions": {
+    "found": 12,
+    "none_found": 17,
+    "skipped": 1
+   }
+  },
+  "agent_wrong": {
+   "fix_line_coverage": {
+    "pr_test": {
+     "n": 112,
+     "of": 1535
+    },
+    "repro": {
+     "n": 308,
+     "of": 1451
+    }
+   },
+   "regressions": {
+    "found": 3,
+    "none_found": 17,
+    "skipped": 2
+   }
+  },
+  "agent_ok": {
+   "fix_line_coverage": {
+    "pr_test": {
+     "n": 109,
+     "of": 958
+    },
+    "repro": {
+     "n": 216,
+     "of": 1211
+    }
+   },
+   "regressions": {
+    "found": 2,
+    "inconclusive": 1,
+    "none_found": 33,
+    "skipped": 3
+   }
+  }
+ },
+ "cost_and_time": {
+  "usd_per_run": {
+   "n": 144,
+   "mean": 0.258,
+   "median": 0.233,
+   "p90": 0.471,
+   "max": 0.786
+  },
+  "usd_unknown": 0,
+  "usd_spent_live": 10.58,
+  "usd_spent_known": 7.58,
+  "live_attempts_cost_unknown": 1,
+  "calls": {
+   "n": 144,
+   "mean": 6.972,
+   "median": 7.0,
+   "p90": 9.0,
+   "max": 11.0
+  },
+  "tokens": {
+   "n": 144,
+   "mean": 54094.688,
+   "median": 48190.0,
+   "p90": 103463.0,
+   "max": 135144.0
+  },
+  "seconds_per_run": {
+   "n": 144,
+   "mean": 402.984,
+   "median": 190.227,
+   "p90": 848.906,
+   "max": 4286.046
+  },
+  "seconds_per_stage": {
+   "behaviour_diff": {
+    "n": 144,
+    "mean": 11.592,
+    "median": 3.83,
+    "p90": 26.56,
+    "max": 488.19
+   },
+   "blind": {
+    "n": 144,
+    "mean": 21.951,
+    "median": 17.15,
+    "p90": 43.48,
+    "max": 175.91
+   },
+   "break_my_fix": {
+    "n": 144,
+    "mean": 24.366,
+    "median": 14.23,
+    "p90": 33.62,
+    "max": 888.74
+   },
+   "environment": {
+    "n": 144,
+    "mean": 19.552,
+    "median": 6.475,
+    "p90": 68.56,
+    "max": 141.56
+   },
+   "fix_line_coverage": {
+    "n": 144,
+    "mean": 3.517,
+    "median": 2.53,
+    "p90": 6.83,
+    "max": 20.68
+   },
+   "guard": {
+    "n": 144,
+    "mean": 247.036,
+    "median": 89.7,
+    "p90": 511.63,
+    "max": 4089.16
+   },
+   "import_check": {
+    "n": 144,
+    "mean": 4.984,
+    "median": 4.425,
+    "p90": 7.12,
+    "max": 25.69
+   },
+   "integrity": {
+    "n": 144,
+    "mean": 0.14,
+    "median": 0.02,
+    "p90": 0.08,
+    "max": 8.86
+   },
+   "regressions": {
+    "n": 144,
+    "mean": 43.208,
+    "median": 13.875,
+    "p90": 100.55,
+    "max": 450.86
+   },
+   "reproduce": {
+    "n": 144,
+    "mean": 25.348,
+    "median": 16.83,
+    "p90": 48.15,
+    "max": 161.75
+   }
+  }
+ },
+ "stability": {
+  "groups": 0,
+  "level_flips": {
+   "n": 0,
+   "of": 0
+  },
+  "counterexample_flips": {
+   "n": 0,
+   "of": 0
+  },
+  "guard_flips": {
+   "n": 0,
+   "of": 0
+  },
+  "finding_flips": {
+   "n": 0,
+   "of": 0
+  }
+ },
+ "findings": [
+  {
+   "instance_id": "Diaoul__babelfish-50",
+   "run": "agent_wrong-r1",
+   "finding": 1,
+   "call": "fromietf(ietf='\u0130')",
+   "outcome": "raises LanguageReverseError: 'i\u0307'",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "Diaoul__babelfish-50",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: tests/test_country.py::test_hash_eq passed before the fix and fails after it (and 1 more)",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "Diaoul__babelfish-50",
+   "run": "gold-r1",
+   "finding": 1,
+   "call": "fromietf(ietf='script')",
+   "outcome": "raises ValueError: 'script' is not a valid language",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "Diaoul__babelfish-50",
+   "run": "gold-r1",
+   "finding": 2,
+   "call": "fromietf(ietf='\u0130')",
+   "outcome": "raises LanguageReverseError: 'i\u0307'",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "Lucas-C__pre-commit-hooks-98",
+   "run": "gold-r1",
+   "finding": 1,
+   "call": "try_update_year_range(src_file_content=['/* Copyright (c) 2012-2023 Dummy             */\\n', '/*********************************************/\\n', '/* @copyright Copyright (c) 2012-2023 Dummy  */\\n', '<?php\\n'], src_filepath='file.php', license_header_index=10, license_length=3)",
+   "outcome": "raises IndexError: list index out of range",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "Lucas-C__pre-commit-hooks-98",
+   "run": "gold-r1",
+   "finding": 2,
+   "call": "try_update_year_range(src_file_content=['/* Copyright (c) 2012-2023 Dummy             */\\n', '/*********************************************/\\n', '/* @copyright Copyright (c) 2012-2023 Dummy  */\\n', '<?php\\n'], src_filepath='file.php', license_header_index=0, license_length=-1)",
+   "outcome": "returns (['/* Copyright (c) 2012-2023 Dummy             */\\n', '/*********************************************/\\n', '/* @copyright Copyright (c) 2012-2023 Dummy  */\\n', '<?php\\n'], False)",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "NREL__hescore-hpxml-149",
+   "run": "agent_ok-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: tests/test_translation.py::TestOtherHouses.test_external_id_passthru passed before the fix and fails after it (and 1 more)",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "NREL__hescore-hpxml-149",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: tests/test_translation.py::TestOtherHouses.test_external_id_passthru passed before the fix and fails after it (and 1 more)",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "abhinavsingh__proxy.py-137",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "the fix does not fix the bug: the reproduction test fails the same way before and after it",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "abhinavsingh__proxy.py-137",
+   "run": "gold-r1",
+   "finding": 1,
+   "call": "parse(self='HttpParser(parser_type=1)', raw=b'\\r\\n')",
+   "outcome": "raises IndexError: list index out of range",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "abhinavsingh__proxy.py-137",
+   "run": "v1-r1",
+   "finding": 1,
+   "call": "parse(self='HttpParser(parser_type=1)', raw=b'\\r\\n')",
+   "outcome": "raises IndexError: list index out of range",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "aburrell__ocbpy-144",
+   "run": "v0-r1",
+   "finding": 1,
+   "call": "set_good_ind(self='DualBoundary(stime=datetime.datetime(2002, 10, 30), etime=datetime.datetime(2002, 11, 1), hemisphere=1)')",
+   "outcome": "returns None",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "asdf-format__asdf-1575",
+   "run": "agent_ok-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: asdf/_tests/test_info.py::test_info_module passed before the fix and fails after it",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "clld__clldutils-27",
+   "run": "agent_wrong-r1",
+   "finding": 1,
+   "call": "badge(subject='', status='', color='green', message='1-2', label='a-b', fmt='svg', markdown=False)",
+   "outcome": "returns 'https://img.shields.io/badge/a-b-1-2-green.svg'",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "clld__clldutils-27",
+   "run": "agent_wrong-r1",
+   "finding": 2,
+   "call": "badge(subject='', status='', color='green', message='X-X', label='', fmt='svg', markdown=False)",
+   "outcome": "returns 'https://img.shields.io/badge/X-X-green.svg'",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "clld__clldutils-27",
+   "run": "gold-r1",
+   "finding": 1,
+   "call": "badge(subject='a b', status='c', color='blue', markdown=False)",
+   "outcome": "returns 'https://img.shields.io/badge/a%20b-c-blue.svg'",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "disqus__python-phabricator-64",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: phabricator/tests/test_phabricator.py::PhabricatorTest.test_endpoint_shadowing passed before the fix and fails after it",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "django__asgiref-211",
+   "run": "v0-r1",
+   "finding": 1,
+   "call": "get_or_create_application_instance(self='StatelessServer(StatelessServer, 2)', scope_id='a', scope={'type': 'x'})",
+   "outcome": "raises NameError: name 'guarantee_single_callable' is not defined",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "encode__httpx-653",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: tests/models/test_url.py::test_url_params passed before the fix and fails after it",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "encode__httpx-883",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "the fix does not fix the bug: the reproduction test fails the same way before and after it (and 11 more)",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "unclear",
+   "by": "developer"
+  },
+  {
+   "instance_id": "fox-it__dissect.cstruct-88",
+   "run": "agent_ok-r1",
+   "finding": 1,
+   "call": "tokenize(self=\"ExpressionTokenizer(expression='#define B 1\\\\n#define C 2\\\\n#define A\\\\t(B + C)\\\\t// comment\\\\n')\")",
+   "outcome": "raises ExpressionTokenizerError: Tokenizer does not recognize following token '#'",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "kpetremann__mqtt-exporter-37",
+   "run": "agent_wrong-r1",
+   "finding": 1,
+   "call": "_normalize_name_in_topic_msg(topic='shellies/shelly/emeter/0/power', payload='123.45')",
+   "outcome": "returns ('shellies/shelly', {'power': '123.45'})",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "kpetremann__mqtt-exporter-37",
+   "run": "v1-r1",
+   "finding": 1,
+   "call": "_normalize_name_in_topic_msg(topic='shellies/room/sensor/temperature', payload='20.00')",
+   "outcome": "raises AttributeError: module 'mqtt_exporter.settings' has no attribute 'KEEP_FULL_TOPIC'",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "nipreps__nibabies-395",
+   "run": "agent_wrong-r1",
+   "finding": 1,
+   "call": "parse_bids_for_age_months(bids_root='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', subject_id='100619')",
+   "outcome": "raises OSError: [Errno 36] File name too long: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "nipreps__nibabies-395",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: nibabies/utils/tests/test_bids.py::test_get_age_from_tsv[session_id-x1-data0-False-None] passed before the fix and fails after it",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "nipreps__nibabies-395",
+   "run": "v0-r1",
+   "finding": 1,
+   "call": "parse_bids_for_age_months(bids_root='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', subject_id='sub-100619')",
+   "outcome": "raises OSError: [Errno 36] File name too long: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "omni-us__jsonargparse-263",
+   "run": "agent_ok-r1",
+   "finding": 1,
+   "call": "yaml_load(stream='on:')",
+   "outcome": "raises TypeError: unsupported operand type(s) for +: 'bool' and 'str'",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "omni-us__jsonargparse-263",
+   "run": "gold-r1",
+   "finding": 1,
+   "call": "yaml_load(stream='null:')",
+   "outcome": "raises TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "open-contracting__ocdskit-51",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: tests/commands/test_mapping_sheet.py::test_command passed before the fix and fails after it",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "python-cmd2__cmd2-115",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: tests/test_cmd2.py::test_base_help passed before the fix and fails after it (and 10 more)",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "robotpy__robotpy-cppheaderparser-44",
+   "run": "agent_ok-r1",
+   "finding": 1,
+   "call": "finalize(self=\"CppHeader('\\\\ntypedef C A;\\\\n\\\\nclass B\\\\n{\\\\npublic:\\\\n   A aMethod();\\\\n};\\\\n', 'string')\")",
+   "outcome": "raises AttributeError: 'CppHeader' object has no attribute '_precomp_macro_buf'",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "robotpy__robotpy-cppheaderparser-44",
+   "run": "gold-r1",
+   "finding": 1,
+   "call": "finalize(self=\"CppHeader('\\\\ntypedef C A;\\\\n\\\\nclass B\\\\n{\\\\npublic:\\\\n   A aMethod();\\\\n};\\\\n', 'string')\")",
+   "outcome": "raises AttributeError: 'CppHeader' object has no attribute '_precomp_macro_buf'",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "scipp__scippnexus-106",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: tests/nxtransformations_test.py::test_chain_with_single_values_and_different_unit passed before the fix and fails after it (and 2 more)",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "false_alarm",
+   "by": "developer"
+  },
+  {
+   "instance_id": "smdabdoub__kraken-biom-9",
+   "run": "v0-r1",
+   "finding": 1,
+   "call": "parse_tax_lvl(entry={'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'D', 'ncbi_tax': '2759', 'sci_name': 'Eukaryota'})",
+   "outcome": "raises NameError: name 're' is not defined",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "smdabdoub__kraken-biom-9",
+   "run": "v0-r1",
+   "finding": 2,
+   "call": "parse_kraken_report(kdata=[{'pct_reads': '0.00', 'clade_reads': '10', 'taxon_reads': '0', 'rank': '-', 'ncbi_tax': '1', 'sci_name': 'root'}, {'pct_reads': '0.00', 'clade_reads': '10', 'taxon_reads': '0', 'rank': 'D', 'ncbi_tax': '2759', 'sci_name': '  Eukaryota'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'P', 'ncbi_tax': '3041', 'sci_name': '    Chlorophyta'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '1', 'rank': 'C', 'ncbi_tax': '75966', 'sci_name': '      Trebouxiophyceae'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': '-', 'ncbi_tax': '33682', 'sci_name': '    Euglenozoa'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'O', 'ncbi_tax': '5653', 'sci_name': '      Kinetoplastida'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'F', 'ncbi_tax': '5654', 'sci_name': '        Trypanosomatidae'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'G', 'ncbi_tax': '5690', 'sci_name': '          Trypanosoma'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': '-', 'ncbi_tax': '47570', 'sci_name': '            Schizotrypanum'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '0', 'rank': 'S', 'ncbi_tax': '5693', 'sci_name': '              Trypanosoma cruzi'}, {'pct_reads': '0.00', 'clade_reads': '1', 'taxon_reads': '1', 'rank': '-', 'ncbi_tax': '353153', 'sci_name': '                Trypanosoma cruzi strain CL Brener'}], max_rank='O', min_rank='S')",
+   "outcome": "raises NameError: name 're' is not defined",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "yt-project__unyt-437",
+   "run": "agent_ok-r1",
+   "finding": 1,
+   "call": "to_astropy(self=\"unyt_array([1, 2, 3], 'km/m')\")",
+   "outcome": "returns <Quantity [1., 2., 3.]>",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": "real_bug",
+   "by": "developer"
+  },
+  {
+   "instance_id": "yt-project__unyt-437",
+   "run": "gold-r1",
+   "finding": 1,
+   "call": "to_astropy(self=\"unyt_quantity(5.0, 'km/m')\")",
+   "outcome": "returns <Quantity 5.>",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": "real_bug",
+   "by": "developer"
+  }
+ ]
+}

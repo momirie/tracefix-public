@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T23:45:30+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L2",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "the tests guard the fix: they fail when it is reverted or broken",
+    "not L3: UpdateCommand.install_app_dependencies: before the fix it was not a method defined in class UpdateCommand",
+    "not L3: no changed function was compared"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "0b204c07dc3905f5b835a218c501189067404192"
+  },
+  "head": {
+    "ref": "tf-agent_wrong",
+    "sha": "8804aa40af93be9e9fd11c700e1604ba57b6536b"
+  },
+  "issue": {
+    "title": "Remove previous install artefacts when updating app_packages",
+    "sha256": "ba245583053c57f35fabfd90dacdda8ce774b35514bbed7b359f5fba2e9a2cb2"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "At L2, a test reproduced the leftover app_packages artefacts (it failed before the fix and passed after), and the tests fail again when the fix is reverted or broken, with no regressions found. Behaviour comparison was skipped because UpdateCommand.install_app_dependencies is new, and Break My Fix was inconclusive, so a reviewer should check by hand that clearing app_packages before reinstalling…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 5.4,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 3.83,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 29.0,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 5 of 6 mutants",
+      "duration_s": 75.97,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.833,
+        "repro_kill_rate": 0.833,
+        "pr_kill_rate": null,
+        "mutants": 6,
+        "killed": 5,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 5,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-7a73faaff176",
+          "m-96687eecebbe",
+          "m-44b01b0750a2",
+          "m-b3c349ae5151",
+          "m-a6ae4052b315"
+        ],
+        "rule_mutants": 7,
+        "rule_kill_rate": 0.714,
+        "rule_kinds": [
+          "body: 1 of 1 killed",
+          "negate_if: 2 of 2 killed",
+          "drop_call: 2 of 4 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "constant",
+          "arithmetic",
+          "membership",
+          "loop",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 805 untouched tests that passed before the fix fails after it",
+      "duration_s": 6.04,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 805,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.65,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 11
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call",
+      "duration_s": 0.42,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 2.81,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 0,
+        "properties_counted": 2,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "fails_on_head",
+      "reason": "attempt 2: fails the same way before and after the fix",
+      "duration_s": 25.22,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-09e903076ca8",
+      "origin": "model",
+      "file": "src/briefcase/commands/update.py",
+      "line": 46,
+      "original": "        super().install_app_dependencies(app)",
+      "replacement": "        return None",
+      "description": "Dependencies are cleared but never reinstalled.",
+      "diff": "--- a/src/briefcase/commands/update.py\n+++ b/src/briefcase/commands/update.py\n@@ -45,3 +45,3 @@\n         # Install dependencies as normal\n-        super().install_app_dependencies(app)\n+        return None\n \n",
+      "words": "src/briefcase/commands/update.py:46: changing `        super().install_app_dependencies(app)` to `        return None` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-0b99069e058f",
+      "origin": "rule",
+      "file": "src/briefcase/commands/update.py",
+      "line": 37,
+      "original": "            print('[{app.app_name}] Removing old dependencies...'.format(app=app))",
+      "replacement": "            pass",
+      "description": "rule: `print('[{app.app_name}] Removing old dependencies...'.format(app=app))` -> `pass`",
+      "diff": "--- a/src/briefcase/commands/update.py\n+++ b/src/briefcase/commands/update.py\n@@ -36,3 +36,3 @@\n         if app_packages_path.exists():\n-            print('[{app.app_name}] Removing old dependencies...'.format(app=app))\n+            pass\n             # Remove all contents of the app_packages directory\n",
+      "words": "src/briefcase/commands/update.py:37: changing `            print('[{app.app_name}] Removing old dependencie...` to `            pass` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "drop_call"
+    },
+    {
+      "id": "m-5225b1848362",
+      "origin": "rule",
+      "file": "src/briefcase/commands/update.py",
+      "line": 46,
+      "original": "        super().install_app_dependencies(app)",
+      "replacement": "        pass",
+      "description": "rule: `super().install_app_dependencies(app)` -> `pass`",
+      "diff": "--- a/src/briefcase/commands/update.py\n+++ b/src/briefcase/commands/update.py\n@@ -45,3 +45,3 @@\n         # Install dependencies as normal\n-        super().install_app_dependencies(app)\n+        pass\n \n",
+      "words": "src/briefcase/commands/update.py:46: changing `        super().install_app_dependencies(app)` to `        pass` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "drop_call"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "src/briefcase/commands/update.py": [
+        1,
+        3,
+        28,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        46
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 11,
+        "total": 11
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call)"
+  ],
+  "llm": {
+    "calls": 10,
+    "input_tokens": 37750,
+    "output_tokens": 6284,
+    "cost_estimate": {
+      "usd": 0.1945,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "briefcase.commands.update.UpdateCommand.install_app_dependencies",
+      "path": "src/briefcase/commands/update.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "nothing was judged, and 4 object(s) of UpdateCommand could not be built here (no object from UpdateCommand(): TypeError: Can't instantiate abstract class UpdateCommand with abstract methods binary_path, distribution_path)"
+    }
+  ]
+}

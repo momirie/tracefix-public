@@ -1,0 +1,63 @@
+{
+ "instance_id": "a2aproject__a2a-python-682_interface",
+ "excluded": null,
+ "detail": "",
+ "python": "3.12.13",
+ "isolation": "strict",
+ "pip_changes": [
+  "anthropic - -> 1.15.0",
+  "defusedxml - -> 0.7.1",
+  "docstring-parser - -> 0.18.0",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis - -> 6.170.0",
+  "idna 3.13 -> 3.20",
+  "jiter - -> 0.17.0",
+  "pydantic 2.13.3 -> 2.14.1",
+  "pydantic-core 2.46.3 -> 2.50.1",
+  "pyyaml - -> 6.0.3",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.15.0 -> 4.16.0",
+  "typing-inspection 0.4.2 -> 0.4.4"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "anyio.pytest_plugin",
+  "pytest_asyncio.plugin",
+  "pytest_mock",
+  "pytest_timeout",
+  "respx.plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 6.727,
+ "suite_timeout": 120,
+ "source_hunks": 2,
+ "variants": [
+  {
+   "index": 0,
+   "path": "src/a2a/client/transports/base.py",
+   "old_start": 1,
+   "old_len": 5,
+   "label": "broken",
+   "failing": 7
+  },
+  {
+   "index": 1,
+   "path": "src/a2a/client/transports/base.py",
+   "old_start": 19,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 2
+  }
+ ],
+ "kept": 1,
+ "commits": {
+  "base": "c91d4fba517190d8f7c76b42ea26914a4275f1d5",
+  "gold": "059b1830760f3656de543ca8f9e723673deef0dc",
+  "v1": "b7218e39ff6219fac7964dbfef514b23cf4be68e"
+ },
+ "seconds": 45.328
+}

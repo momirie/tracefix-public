@@ -1,0 +1,95 @@
+[project]
+name = "tracefix"
+version = "0.0.1"
+description = "Independent fix verifier: executed evidence that a bug fix works, and inputs that break it."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "momirie" }]
+requires-python = ">=3.11.4"
+dependencies = [
+    "anthropic>=1.11.0",
+    "defusedxml>=0.7.1",
+    "hypothesis>=6.168.3",
+    "pydantic>=2.13.5",
+    "pytest>=8",
+    "pyyaml>=6.0.2",
+]
+
+[project.scripts]
+tracefix = "tracefix.cli:main"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "types-defusedxml>=0.7.0.20260504",
+    "vulture>=2.16",
+    "pytest-xdist>=3.8.0",
+    "pytest-split>=0.11.0",
+    "actionlint-py>=1.7.12.25",
+    "zizmor>=1.30.1",
+    "types-pyyaml>=6.0.12.20260906",
+    "markdown-it-py>=4.2.0",
+    "pytest-cov>=7.1.0",
+    "vermin>=1.9.2",
+    "pytest-testmon>=2.2.0",
+    "shellcheck-py>=0.11.0.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tracefix"]
+
+# The source package holds only what the wheel is built from. Left to its default, hatchling
+# packs the whole repository (benchmarks, tests, the journal, founder notes) and PyPI would
+# publish it; .github/workflows/release.yml checks the list before it uploads.
+[tool.hatch.build.targets.sdist]
+include = ["/src/tracefix", "/README.md", "/LICENSE"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# Fixture repos are deliberately buggy ground truth; reformatting them would change their commits.
+# The vulture whitelist is a list of bare names, read by vulture only. Benchmark results hold
+# model-written tests as the receipts recorded them: evidence, never reformatted; so do the
+# fixture receipts the website shows (docs/landing/_data/receipts, scripts/landing_run.py).
+extend-exclude = [
+    "tests/fixtures", "scripts/vulture_whitelist.py", "benchmarks/results",
+    "docs/landing/_data/receipts",
+]
+# Tracefix's in-run code runs inside the project's Python, 3.9 and later (M10 part 2); vermin and
+# a mypy pass at 3.10 check it too (scripts/check.py).
+per-file-target-version = { "src/tracefix/attack_runtime.py" = "py39", "src/tracefix/runtime_state.py" = "py39" }
+
+[tool.vulture]
+# Dead-code check (scripts/check.py, CI). False positives go in the whitelist, with a reason.
+paths = ["src", "tests", "scripts"]
+exclude = ["tests/fixtures/"]
+min_confidence = 60
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "C4"]
+
+[tool.mypy]
+strict = true
+# The harness (scripts/bench) is held to the same bar as the package.
+files = ["src", "scripts/bench", "scripts/benchmark.py", "scripts/merge_durations.py", "scripts/build_site.py", "scripts/site_data.py", "scripts/site_benchmark.py", "scripts/site_receipts.py", "scripts/site_method.py", "scripts/site_home.py", "scripts/site_talk.py", "scripts/site_palette.py"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["scripts"]
+# Never collect the fixture repos' own tests as ours.
+norecursedirs = [".*", "build", "fixtures"]
+# A misspelt marker is an error, not silently ignored: a `serial` test that ran in the parallel pool
+# would set off other tests' tamper watches. An xfail test that starts passing fails too.
+addopts = ["--strict-markers"]
+xfail_strict = true
+markers = [
+    "live: calls a real LLM API (costs money; opt-in with TRACEFIX_LIVE=1)",
+    "serial: must not run beside other tests (writes where every tamper watch looks); scripts/check.py and CI run these after the parallel pass",
+    "acceptance: the end-to-end pipeline cases (load-sensitive, docs/NOTES.md); scripts/check.py and CI run them in a phase of their own with few workers",
+]

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "case": "env_broken",
+  "summary": "The fix itself is correct, but the project imports an internal package (acme_metrics) that cannot be installed, so no test can run on either ref.",
+  "receipt": {
+    "status": "ENVIRONMENT_ERROR",
+    "level": {
+      "exactly": "L0"
+    },
+    "stages": {
+      "environment": "ENVIRONMENT_ERROR"
+    },
+    "must_find": [
+      {
+        "stage": "environment",
+        "error": "ModuleNotFoundError",
+        "module": "acme_metrics"
+      }
+    ],
+    "must_not_find": [
+      "break_my_fix_finding",
+      "integrity_flag",
+      "suspicious_behaviour_change"
+    ]
+  },
+  "checks": [
+    {
+      "tests": "suite",
+      "ref": "base",
+      "expect": "error",
+      "match": "No module named 'acme_metrics'"
+    },
+    {
+      "tests": "suite",
+      "ref": "head",
+      "expect": "error",
+      "match": "No module named 'acme_metrics'"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "base",
+      "expect": "error",
+      "match": "No module named 'acme_metrics'"
+    }
+  ]
+}

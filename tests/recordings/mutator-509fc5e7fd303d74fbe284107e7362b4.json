@@ -1,0 +1,11 @@
+{
+ "key": "509fc5e7fd303d74fbe284107e7362b49ea2533fed5d86088a92eac3b6e7291c",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1200,
+  "output_tokens": 1133,
+  "stop_reason": "end_turn",
+  "text": "{\"mutants\":[{\"path\":\"src/stats/buckets.py\",\"line\":15,\"original\":\"return value // width * width\",\"replacement\":\"return value // width\",\"description\":\"Returns the bucket index instead of the bucket start.\"},{\"path\":\"src/stats/buckets.py\",\"line\":15,\"original\":\"return value // width * width\",\"replacement\":\"return value % width * width\",\"description\":\"Uses modulo instead of floor division.\"},{\"path\":\"src/stats/buckets.py\",\"line\":15,\"original\":\"return value // width * width\",\"replacement\":\"return (value // width + 1) * width\",\"description\":\"Returns the next bucket's start (off by one bucket).\"},{\"path\":\"src/stats/buckets.py\",\"line\":15,\"original\":\"return value // width * width\",\"replacement\":\"return -(-value // width) * width\",\"description\":\"Rounds up (ceiling) instead of down, so non-multiples land in the wrong bucket.\"},{\"path\":\"src/stats/buckets.py\",\"line\":15,\"original\":\"return value // width * width\",\"replacement\":\"return value // (width + 1) * width\",\"description\":\"Divides by width+1, an off-by-one in the divisor.\"},{\"path\":\"src/stats/buckets.py\",\"line\":15,\"original\":\"return value // width * width\",\"replacement\":\"return value // width * (width - 1)\",\"description\":\"Multiplies back by width-1, so bucket starts are wrong.\"},{\"path\":\"src/stats/buckets.py\",\"line\":15,\"original\":\"return value // width * width\",\"replacement\":\"return (value + width // 2) // width * width\",\"description\":\"Rounds to the nearest bucket instead of flooring.\"},{\"path\":\"src/stats/buckets.py\",\"line\":15,\"original\":\"return value // width * width\",\"replacement\":\"return value // width * value\",\"description\":\"Multiplies by value instead of width.\"},{\"path\":\"src/stats/buckets.py\",\"line\":15,\"original\":\"return value // width * width\",\"replacement\":\"return (value - 1) // width * width\",\"description\":\"Off-by-one on value shifts exact multiples into the previous bucket.\"}]}"
+ },
+ "role": "mutator"
+}

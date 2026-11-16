@@ -1,0 +1,410 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T21:11:21+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: phabricator/tests/test_phabricator.py::PhabricatorTest.test_connect passed before the fix and fails after it",
+    "regression: phabricator/tests/test_phabricator.py::PhabricatorTest.test_user_whoami passed before the fix and fails after it",
+    "regression: phabricator/tests/test_phabricator.py::PhabricatorTest.test_bad_status passed before the fix and fails after it",
+    "regression: phabricator/tests/test_phabricator.py::PhabricatorTest.test_maniphest_find passed before the fix and fails after it",
+    "regression: phabricator/tests/test_phabricator.py::PhabricatorTest.test_validation passed before the fix and fails after it",
+    "regression: phabricator/tests/test_phabricator.py::PhabricatorTest.test_endpoint_shadowing passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "57b954c664f5375180aa3993c4fe5d6e71d00bad"
+  },
+  "head": {
+    "ref": "tf-v2",
+    "sha": "d6429c41aa136fe88937a5dbd65c156c7ba878e2"
+  },
+  "issue": {
+    "title": "Conflict between Resource class attribute and new almanac interface endpoints",
+    "sha256": "c7bf5b8dd3b29f88fcb2e52f6f065c1914b9d9a73ffd9c75661e83bc74d6eda7"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.20"
+  },
+  "summary": {
+    "text": "The verifier reproduced the original bug, but six existing tests in phabricator/tests/test_phabricator.py (including test_connect, test_user_whoami, test_validation and test_endpoint_shadowing) passed before the fix and fail after it, which is a counterexample against this change. Look first at why these previously passing tests now fail, starting with test_endpoint_shadowing and test_connect, si…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 2.44,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 4.51,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 28.61,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no phabricator/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 4 mutants; 80% is needed",
+      "duration_s": 73.46,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no phabricator/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.5,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 4,
+        "killed": 2,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 5,
+        "not_run": 4,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-99a5d3ce8073",
+          "m-9dda56ad7759"
+        ],
+        "rule_mutants": 4,
+        "rule_kill_rate": 0.75,
+        "rule_kinds": [
+          "body: 2 of 3 killed",
+          "logic: 1 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "negate_if",
+          "constant",
+          "arithmetic",
+          "membership",
+          "loop",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 4 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "6 confirmed: phabricator/tests/test_phabricator.py::PhabricatorTest.test_connect, phabricator/tests/test_phabricator.py::PhabricatorTest.test_user_whoami, phabricator/tests/test_phabricator.py::PhabricatorTest.test_bad_status, phabricator/tests/test_phabricator.py::PhabricatorTest.test_maniphest_find, phabricator/tests/test_phabricator.py::PhabricatorTest.test_validation and 1 more",
+      "duration_s": 18.15,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors phabricator/tests/test_phabricator.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 10,
+        "not_run": 0,
+        "regressions": 6,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.6,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no phabricator/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 4
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: Resource.__getattr__: not compared (a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 11.92,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 3 inputs against 3 properties",
+      "duration_s": 5.55,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 3,
+        "properties_counted": 3,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "fails_differently",
+      "reason": "attempt 1: fails after the fix too, but differently",
+      "duration_s": 18.26,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no phabricator/tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "phabricator/tests/test_phabricator.py",
+      "test": "PhabricatorTest.test_connect",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: __call__() takes 1 positional argument but 3 were given",
+      "line": 47
+    },
+    {
+      "file": "phabricator/tests/test_phabricator.py",
+      "test": "PhabricatorTest.test_user_whoami",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: __call__() takes 1 positional argument but 3 were given",
+      "line": 64
+    },
+    {
+      "file": "phabricator/tests/test_phabricator.py",
+      "test": "PhabricatorTest.test_bad_status",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: __call__() takes 1 positional argument but 3 were given",
+      "line": 99
+    },
+    {
+      "file": "phabricator/tests/test_phabricator.py",
+      "test": "PhabricatorTest.test_maniphest_find",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: __call__() takes 1 positional argument but 3 were given",
+      "line": 114
+    },
+    {
+      "file": "phabricator/tests/test_phabricator.py",
+      "test": "PhabricatorTest.test_validation",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: __call__() takes 1 positional argument but 3 were given",
+      "line": 139
+    },
+    {
+      "file": "phabricator/tests/test_phabricator.py",
+      "test": "PhabricatorTest.test_endpoint_shadowing",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: TypeError: __call__() takes 1 positional argument but 3 were given",
+      "line": 165
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-1e82c5a4ab9a",
+      "origin": "model",
+      "file": "phabricator/__init__.py",
+      "line": 227,
+      "original": "        self._interface = interface or copy.deepcopy(parse_interfaces(INTERFACES))",
+      "replacement": "        self._interface = interface or parse_interfaces(INTERFACES)",
+      "description": "Drops the deepcopy so the shared module-level interface is mutated across instances.",
+      "diff": "--- a/phabricator/__init__.py\n+++ b/phabricator/__init__.py\n@@ -226,3 +226,3 @@\n         self.api = api\n-        self._interface = interface or copy.deepcopy(parse_interfaces(INTERFACES))\n+        self._interface = interface or parse_interfaces(INTERFACES)\n         self.endpoint = endpoint\n",
+      "words": "phabricator/__init__.py:227: changing `        self._interface = interface or copy.deepcopy(parse_i...` to `        self._interface = interface or parse_interfaces(INTE...` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-68ed007c1d69",
+      "origin": "model",
+      "file": "phabricator/__init__.py",
+      "line": 394,
+      "original": "        self._interface = parse_interfaces(interfaces)",
+      "replacement": "        self._interface = interfaces",
+      "description": "Stores the raw query result without parsing.",
+      "diff": "--- a/phabricator/__init__.py\n+++ b/phabricator/__init__.py\n@@ -393,2 +393,2 @@\n \n-        self._interface = parse_interfaces(interfaces)\n+        self._interface = interfaces\n",
+      "words": "phabricator/__init__.py:394: changing `        self._interface = parse_interfaces(interfaces)` to `        self._interface = interfaces` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-075a789aaf25",
+      "origin": "rule",
+      "file": "phabricator/__init__.py",
+      "line": 390,
+      "original": "        query = Resource(api=self, method='conduit', endpoint='query')\n\n        interfaces = query()\n\n        self._interface = parse_interfaces(interfaces)",
+      "replacement": "        return None",
+      "description": "rule: body of `update_interfaces` -> `return None`",
+      "diff": "--- a/phabricator/__init__.py\n+++ b/phabricator/__init__.py\n@@ -389,6 +389,2 @@\n     def update_interfaces(self):\n-        query = Resource(api=self, method='conduit', endpoint='query')\n-\n-        interfaces = query()\n-\n-        self._interface = parse_interfaces(interfaces)\n+        return None\n",
+      "words": "phabricator/__init__.py:390: changing `        query = Resource(api=self, method='conduit', endpoin...` to `        return None` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "phabricator/__init__.py": [
+        227,
+        235,
+        394
+      ],
+      "setup.py": [
+        17
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 2,
+        "total": 4
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack Resource.__getattr__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Resource.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Resource.__getattr__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Resource.__init__: a special method (such as __init__ or __eq__): not called yet"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 26116,
+    "output_tokens": 4821,
+    "cost_estimate": {
+      "usd": 0.1483,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 4 of the 8 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.20: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "phabricator.Phabricator.update_interfaces",
+      "path": "phabricator/__init__.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 3,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

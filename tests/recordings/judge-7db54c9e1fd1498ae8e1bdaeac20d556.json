@@ -1,0 +1,11 @@
+{
+ "key": "7db54c9e1fd1498ae8e1bdaeac20d556ad74498cfd81aa0b555152b84ad38f7c",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 2067,
+  "output_tokens": 308,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"The issue names Listener().port(None) and expects the default port; default_port is 8080 here, so returning 8080 matches the docstring.\"},{\"change\":\"c2\",\"label\":\"suspicious\",\"reason\":\"The docstring says None gives self.default_port, which is 9000 here, but the fix returns a hardcoded 8080.\"},{\"change\":\"c3\",\"label\":\"suspicious\",\"reason\":\"The docstring says None gives self.default_port, which is 0 here, but the fix returns a hardcoded 8080 instead.\"},{\"change\":\"c4\",\"label\":\"suspicious\",\"reason\":\"The docstring says None gives self.default_port, which is 2 here, but the fix returns a hardcoded 8080.\"},{\"change\":\"c5\",\"label\":\"suspicious\",\"reason\":\"The docstring says None gives self.default_port, which is 9 here, but the fix returns a hardcoded 8080.\"}]}"
+ },
+ "role": "judge"
+}

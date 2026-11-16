@@ -1,0 +1,43 @@
+{
+  // Python: the project's .venv (created by `uv sync`) is picked up automatically.
+
+  // Ruff and mypy from the project's .venv, so the editor uses the same versions and config
+  // (pyproject.toml) as `scripts/check.py` and CI.
+  "ruff.importStrategy": "fromEnvironment",
+  "mypy-type-checker.importStrategy": "fromEnvironment",
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+
+  // Testing panel: run one test or one file instead of the whole suite.
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": ["tests"],
+
+  // The fixture repos are deliberately buggy ground truth with pinned commits: never reformat them.
+  // (ruff also excludes them in pyproject.toml; this stops other formatters too.)
+  "files.readonlyInclude": {
+    "tests/fixtures/**": true
+  },
+
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.mypy_cache": true,
+    "**/.ruff_cache": true,
+    "**/.pytest_cache": true
+  },
+  "search.exclude": {
+    "**/.venv": true,
+    "uv.lock": true
+  },
+
+  // Coverage Gutters reads this file; create it with:
+  //   uv run --with pytest-cov pytest --cov=tracefix --cov-report=xml
+  "coverage-gutters.coverageFileNames": ["coverage.xml"],
+
+  "editor.rulers": [100]
+}

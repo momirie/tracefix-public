@@ -1,0 +1,11 @@
+{
+ "key": "c5407fbf176d05acd6963e068e7cc7359a5c6dad25d4f1bdb394ce32cd9a3bff",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1295,
+  "output_tokens": 178,
+  "stop_reason": "end_turn",
+  "text": "{\"summary\":\"The original crash was reproduced and the fix stops it, but Break My Fix found inputs that still break Listener.port: an empty string still raises ValueError, a listener built with default_port=9000 returns 8080 for a None port (ignoring the configured default), and Arabic-Indic digits '\\u0661\\u0662' are accepted as port 12. Look first at the default_port=9000 case, since the issue asks for the listener's own default port and the fix appears to return a hardcoded 8080 instead.\",\"flag_notes\":[]}"
+ },
+ "role": "judge"
+}

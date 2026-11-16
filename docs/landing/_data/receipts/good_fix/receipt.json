@@ -1,0 +1,349 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T14:07:18+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L4",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "the tests guard the fix: they fail when it is reverted or broken",
+    "the behaviour diff found no unexplained change in what it observes",
+    "Break My Fix attacked every changed function to the end and found nothing"
+  ],
+  "repo": {
+    "name": "good_fix"
+  },
+  "base": {
+    "ref": "base",
+    "sha": "c8e4f112ba6c8bbbed32b9d2ee1671e41f15fafe"
+  },
+  "head": {
+    "ref": "head",
+    "sha": "d6954de59ef880c9790b864d37cb8b9846c6a5d8"
+  },
+  "issue": {
+    "title": "Orders list is missing the last order",
+    "sha256": "0de3fe25210c14fb41d61c7d244d438eacf00246744b2ec0fbecdaa45e826644"
+  },
+  "isolation": {
+    "level": "basic",
+    "why": "bubblewrap (bwrap) is not installed",
+    "warning": "Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.",
+    "python": null
+  },
+  "summary": {
+    "text": "At L4, a test reproduced the missing-last-page bug (failing before the fix, passing after), the tests fail when the fix is reverted or broken, the only behaviour change is the intended value change in pager.pagination.total_pages, and Break My Fix found no breaking inputs in any changed function. Next, check whether other callers of total_pages rely on the old value, for example a counts that div…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 0.97,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 1.88,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 14.56,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "basic"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 4 of 4 mutants",
+      "duration_s": 39.92,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_pagination.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 1.0,
+        "repro_kill_rate": 0.75,
+        "pr_kill_rate": 1.0,
+        "mutants": 4,
+        "killed": 4,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-b2b309b25e0b",
+          "m-7ffae7731939",
+          "m-d5fdf5621417",
+          "m-cc4d562089a3"
+        ],
+        "rule_mutants": 7,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [
+          "tests/test_pagination.py"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 6 untouched tests that passed before the fix fails after it",
+      "duration_s": 0.96,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 6,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.94,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_pagination.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 1
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "258 input(s) compared on 1 function(s): 86 changed with the fix",
+      "duration_s": 4.81,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 258,
+        "changes": 86,
+        "groups": 1,
+        "l3_checks": true,
+        "l3_gate": true,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 1007 inputs against 8 properties",
+      "duration_s": 25.86,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_pagination.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 1007,
+        "properties_counted": 8,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 10
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "pager.pagination.total_pages",
+      "kind": "value",
+      "count": 86,
+      "before": "returns 3",
+      "after": "returns 4",
+      "explained": [
+        "the reproduction test calls this input"
+      ],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "Issue: 10 orders at 3 per page must give 4 pages so order #10 appears; this is the reported bug."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "Same rule from the issue: a partial last page counts as a page (docstring: pages needed to show n_items), so 1 item needs 1 page."
+        },
+        {
+          "change": "c3",
+          "label": "intended",
+          "reason": "Same ceiling-division rule the issue asks for: a remainder of items needs one extra page, per the docstring 'how many pages are needed'."
+        },
+        {
+          "change": "c4",
+          "label": "intended",
+          "reason": "9 items with a huge per_page still need one page to be shown, per the docstring; same partial-page rule the issue reports."
+        },
+        {
+          "change": "c5",
+          "label": "intended",
+          "reason": "Fewer items than per_page still need one page per the docstring; same partial-last-page rule as the issue."
+        }
+      ],
+      "examples": [
+        {
+          "call": "total_pages(n_items=10, per_page=3)",
+          "before": "returns 3",
+          "after": "returns 4"
+        },
+        {
+          "call": "total_pages(n_items=1, per_page=3)",
+          "before": "returns 0",
+          "after": "returns 1"
+        },
+        {
+          "call": "total_pages(n_items=2147483647, per_page=3)",
+          "before": "returns 715827882",
+          "after": "returns 715827883"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "src/pager/pagination.py": [
+        27
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 1,
+        "total": 1
+      },
+      {
+        "name": "pr_test",
+        "ran": 1,
+        "total": 1
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 20175,
+    "output_tokens": 4392,
+    "cost_estimate": {
+      "usd": 0.1549,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "pager.pagination.total_pages",
+      "path": "src/pager/pagination.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 1007,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

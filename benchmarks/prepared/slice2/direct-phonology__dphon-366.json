@@ -1,0 +1,131 @@
+{
+ "instance_id": "direct-phonology__dphon-366",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 4.978,
+ "suite_timeout": 120,
+ "source_hunks": 9,
+ "variants": [
+  {
+   "index": 0,
+   "path": "dphon/cli.py",
+   "old_start": 42,
+   "old_len": 8,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "dphon/cli.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "dphon/cli.py",
+   "old_start": 200,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "dphon/cli.py",
+     "function": "process"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "dphon/cli.py",
+   "old_start": 231,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "dphon/cli.py",
+     "function": "process"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "dphon/cli.py",
+   "old_start": 248,
+   "old_len": 15,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "dphon/cli.py",
+     "function": "process"
+    }
+   ]
+  }
+ ],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 26611,
+   "label": "no_effect",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "dphon/cli.py",
+     "function": "process"
+    }
+   ],
+   "differs": [
+    {
+     "path": "dphon/cli.py",
+     "function": null
+    },
+    {
+     "path": "dphon/cli.py",
+     "function": "process"
+    },
+    {
+     "path": "dphon/match.py",
+     "function": null
+    },
+    {
+     "path": "dphon/reuse.py",
+     "function": "MatchGraph.align"
+    },
+    {
+     "path": "dphon/reuse.py",
+     "function": "MatchGraph.extend"
+    },
+    {
+     "path": "dphon/reuse.py",
+     "function": "MatchGraph.group"
+    },
+    {
+     "path": "dphon/reuse.py",
+     "function": "MatchGraph.number_of_docs"
+    },
+    {
+     "path": "dphon/reuse.py",
+     "function": "MatchGraph.number_of_matches"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "ebeb2491fd75f3e296b163b1979394d24867bde1",
+  "gold": "7a178103cafcea6c6fcfd16b510cf6a9dc6d9d86",
+  "agent_wrong": "447e20c137bf2fd7a8d35cd9f2a35b685b869a4f"
+ },
+ "seconds": 60.828
+}

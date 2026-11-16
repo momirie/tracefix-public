@@ -1,0 +1,439 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T14:20:40+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks stats.buckets.bucket_of",
+    "Break My Fix finding 2: an input that breaks stats.buckets.bucket_of"
+  ],
+  "repo": {
+    "name": "wrong_but_green"
+  },
+  "base": {
+    "ref": "base",
+    "sha": "3c7e67a54edfe8745cd3ca82b57110c269797179"
+  },
+  "head": {
+    "ref": "head",
+    "sha": "458c063fd5dff268a0900bffbb44c6ab77a9b223"
+  },
+  "issue": {
+    "title": "Histogram buckets are wrong for large values",
+    "sha256": "c1a361925f666d4259a4e6139f9a6f21fe502fe8b00b13c0d63c913450621f7a"
+  },
+  "isolation": {
+    "level": "basic",
+    "why": "bubblewrap (bwrap) is not installed",
+    "warning": "Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.",
+    "python": null
+  },
+  "summary": {
+    "text": "The original bug was reproduced and the fix guards it with no regressions found, but Break My Fix found inputs that break the fixed bucket_of: negative values such as bucket_of(-5, 10) returning -10 and bucket_of(-15, 10) returning -20. Next, check how bucket_of should handle negative values (floor versus truncation toward zero) and review the behaviour changes the Judge labeled suspicious.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 1.33,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 2.85,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 20.09,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "basic"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 5 of 5 mutants",
+      "duration_s": 35.13,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_buckets.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 1.0,
+        "repro_kill_rate": 0.8,
+        "pr_kill_rate": 1.0,
+        "mutants": 5,
+        "killed": 5,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-71d00378c1d2",
+          "m-c84b0661376f",
+          "m-104d13ebf062",
+          "m-24744af92e8e",
+          "m-c367638c1cf9"
+        ],
+        "rule_mutants": 4,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [
+          "tests/test_buckets.py"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 5 untouched tests that passed before the fix fails after it",
+      "duration_s": 1.03,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 5,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.89,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_buckets.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 1
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "248 input(s) compared on 1 function(s): 38 changed with the fix",
+      "duration_s": 5.44,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 248,
+        "changes": 38,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "2 finding(s), each proven by a failing repro file",
+      "duration_s": 14.98,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_2.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_buckets.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 510,
+        "properties_counted": 9,
+        "findings": 2,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 10
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "stats.buckets.bucket_of",
+      "call": "bucket_of(value=-5, width=10)",
+      "input": {
+        "value": "-5",
+        "width": "10"
+      },
+      "outcome": "returns -10",
+      "base_outcome": "returns 0",
+      "expected": "0",
+      "property": {
+        "id": "t1.doc1",
+        "name": "docstring example t1.doc1",
+        "kind": "example",
+        "claim": "the docstring's example holds: bucket_of(-5, 10) == 0",
+        "source": "docstring",
+        "quote": "bucket_of(-5, 10) == 0",
+        "origin": "docstring"
+      },
+      "also_violates": [
+        "truncates_toward_zero_reference",
+        "truncates_toward_zero_reference",
+        "bucket_contains_value",
+        "symmetric_around_zero",
+        "bucket_contains_value"
+      ],
+      "other_inputs": 3,
+      "relation": "new with the fix: before it, this input returns 0",
+      "file": "findings/finding_1.py",
+      "path": "src/stats/buckets.py",
+      "line": 15,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    },
+    {
+      "number": 2,
+      "function": "stats.buckets.bucket_of",
+      "call": "bucket_of(value=-15, width=10)",
+      "input": {
+        "value": "-15",
+        "width": "10"
+      },
+      "outcome": "returns -20",
+      "base_outcome": "returns -10",
+      "expected": "-10",
+      "property": {
+        "id": "t1.doc2",
+        "name": "docstring example t1.doc2",
+        "kind": "example",
+        "claim": "the docstring's example holds: bucket_of(-15, 10) == -10",
+        "source": "docstring",
+        "quote": "bucket_of(-15, 10) == -10",
+        "origin": "docstring"
+      },
+      "also_violates": [
+        "truncates_toward_zero_reference",
+        "truncates_toward_zero_reference",
+        "bucket_contains_value",
+        "symmetric_around_zero",
+        "bucket_contains_value"
+      ],
+      "other_inputs": 0,
+      "relation": "new with the fix: before it, this input returns -10",
+      "file": "findings/finding_2.py",
+      "path": "src/stats/buckets.py",
+      "line": 15,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "stats.buckets.bucket_of",
+      "kind": "value",
+      "count": 38,
+      "before": "returns 0",
+      "after": "returns -10",
+      "explained": [
+        "the reproduction test calls this input",
+        "the issue names this call"
+      ],
+      "contradicts": [
+        "it breaks the docstring example `bucket_of(-15, 10) == -10`",
+        "it breaks the docstring example `bucket_of(-5, 10) == 0`"
+      ],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "suspicious",
+          "reason": "The docstring says buckets truncate toward zero with the example bucket_of(-5, 10) == 0, and the fix's floor division breaks that example."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "This is the exact call named in the issue; 100000000000000010 is the correct bucket, replacing the float-precision error."
+        },
+        {
+          "change": "c3",
+          "label": "suspicious",
+          "reason": "The old result -2147483640 already matched the docstring's truncate-toward-zero rule; the floor division moves this negative value to -2147483650, which nothing asks for."
+        },
+        {
+          "change": "c4",
+          "label": "suspicious",
+          "reason": "The old value had a precision error, but the docstring's truncation rule gives -9223372036854775800; the new -9223372036854775810 is floored, which contradicts the documented contract."
+        },
+        {
+          "change": "c5",
+          "label": "suspicious",
+          "reason": "Under the docstring's truncate-toward-zero rule, -2 belongs in bucket 0, as before the fix; the floored result -100000000000000015 contradicts that rule."
+        },
+        {
+          "change": "c6",
+          "label": "suspicious",
+          "reason": "Truncation toward zero, as the docstring documents, gives 0, which was the old result; the new floored negative bucket goes beyond the issue, which is about precision for large values."
+        }
+      ],
+      "examples": [
+        {
+          "call": "bucket_of(value=-5, width=10)",
+          "before": "returns 0",
+          "after": "returns -10"
+        },
+        {
+          "call": "bucket_of(value=100000000000000015, width=10)",
+          "before": "returns 100000000000000020",
+          "after": "returns 100000000000000010"
+        },
+        {
+          "call": "bucket_of(value=-2147483647, width=10)",
+          "before": "returns -2147483640",
+          "after": "returns -2147483650"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "src/stats/buckets.py": [
+        15
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 1,
+        "total": 1
+      },
+      {
+        "name": "pr_test",
+        "ran": 1,
+        "total": 1
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 20179,
+    "output_tokens": 6487,
+    "cost_estimate": {
+      "usd": 0.192,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "stats.buckets.bucket_of",
+      "path": "src/stats/buckets.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 510,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+ "instance_id": "django__asgiref-471",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "pytest_asyncio.plugin"
+ ],
+ "suite_seconds": 13.041,
+ "suite_timeout": 120,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "asgiref/sync.py",
+   "old_start": 217,
+   "old_len": 8,
+   "label": "unsettled",
+   "failing": 44,
+   "functions": [
+    {
+     "path": "asgiref/sync.py",
+     "function": "AsyncToSync.__call__"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "asgiref/sync.py",
+   "old_start": 302,
+   "old_len": 8,
+   "label": "unsettled",
+   "failing": 44,
+   "functions": [
+    {
+     "path": "asgiref/sync.py",
+     "function": "AsyncToSync.main_wrap"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "asgiref/sync.py",
+   "old_start": 326,
+   "old_len": 9,
+   "label": "unsettled",
+   "failing": 44,
+   "functions": [
+    {
+     "path": "asgiref/sync.py",
+     "function": "AsyncToSync.main_wrap"
+    }
+   ]
+  }
+ ],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 45481,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "asgiref/sync.py",
+     "function": "AsyncToSync.__call__"
+    },
+    {
+     "path": "asgiref/sync.py",
+     "function": "AsyncToSync.main_wrap"
+    }
+   ],
+   "differs": [
+    {
+     "path": "asgiref/sync.py",
+     "function": "AsyncToSync.__call__"
+    },
+    {
+     "path": "asgiref/sync.py",
+     "function": "AsyncToSync.main_wrap"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "b7aaa795fbbea7ca88458279cf8302533d249101",
+  "gold": "10348c73798790e8007261d131957915ccbede43",
+  "agent_ok": "3ab4dc3e683f223324602b9c20c3dfa73fd67165"
+ },
+ "seconds": 439.578
+}

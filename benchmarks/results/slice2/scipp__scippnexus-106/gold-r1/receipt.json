@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T16:29:48+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: tests/nxtransformations_test.py::test_chain_with_single_values_and_different_unit passed before the fix and fails after it",
+    "regression: tests/nxtransformations_test.py::test_chain_with_multiple_values passed before the fix and fails after it",
+    "regression: tests/nxtransformations_test.py::test_chain_with_multiple_values_and_different_time_unit passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "6da58568bef5810b1556cd38dc3d8125bfe02cd4"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "4456bebcd41f9e702952b96e86bcaa4ec5fa794f"
+  },
+  "issue": {
+    "title": "Improve loading of NXtransformations",
+    "sha256": "580d792de1b5b266fc794b770534eab9fb18479bb4fc838a0112ae4e830ae078"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the issue, but three previously passing tests in tests/nxtransformations_test.py (test_chain_with_single_values_and_different_unit, test_chain_with_multiple_values, and test_chain_with_multiple_values_and_different_time_unit) fail after the fix, and no test was found that guards the new behaviour. Look first at why these depends_on chain tests now fail, since changing how…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 4.95,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "3 changed module(s) imported from the copies (6 imports in all)",
+      "duration_s": 3.12,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 3,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 35.06,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 5 mutants; 80% is needed",
+      "duration_s": 144.85,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.4,
+        "repro_kill_rate": 0.2,
+        "pr_kill_rate": null,
+        "mutants": 5,
+        "killed": 2,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 2,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-4eca36d2cc97",
+          "m-d7ceab9a94e5"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.8,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 5 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "3 confirmed: tests/nxtransformations_test.py::test_chain_with_single_values_and_different_unit, tests/nxtransformations_test.py::test_chain_with_multiple_values, tests/nxtransformations_test.py::test_chain_with_multiple_values_and_different_time_unit",
+      "duration_s": 38.85,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/nxtransformations_test.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 131,
+        "not_run": 0,
+        "regressions": 3,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.16,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 28
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: _get_transformations: not compared (past the cap of 6 functions)",
+      "duration_s": 8.99,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 4,
+        "finished": 1,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 2 inputs against 8 properties",
+      "duration_s": 53.03,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "inputs_tried": 2,
+        "properties_counted": 8,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.03,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/nxtransformations_test.py",
+      "test": "test_chain_with_single_values_and_different_unit",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert False",
+      "line": 61
+    },
+    {
+      "file": "tests/nxtransformations_test.py",
+      "test": "test_chain_with_multiple_values",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert False",
+      "line": 117
+    },
+    {
+      "file": "tests/nxtransformations_test.py",
+      "test": "test_chain_with_multiple_values_and_different_time_unit",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: assert False",
+      "line": 149
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-519a6986c49a",
+      "origin": "model",
+      "file": "src/scippnexus/nxtransformations.py",
+      "line": 137,
+      "original": "    transformations = _get_transformations(t0, index=() if index is None else index)",
+      "replacement": "    transformations = _get_transformations(t0, index=())",
+      "description": "Ignores the user-provided index when collecting transformations.",
+      "diff": "--- a/src/scippnexus/nxtransformations.py\n+++ b/src/scippnexus/nxtransformations.py\n@@ -136,3 +136,3 @@\n         index: ScippIndex = None) -> Union[None, sc.DataArray, sc.Variable]:\n-    transformations = _get_transformations(t0, index=() if index is None else index)\n+    transformations = _get_transformations(t0, index=())\n \n",
+      "words": "src/scippnexus/nxtransformations.py:137: changing `    transformations = _get_transformations(t0, index=() if i...` to `    transformations = _get_transformations(t0, index=())` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-1f4ee191e5bd",
+      "origin": "model",
+      "file": "src/scippnexus/nxtransformations.py",
+      "line": 172,
+      "original": "        transformations.append(t[index])",
+      "replacement": "        transformations.append(t[()])",
+      "description": "Ignores the index when reading each transformation in the chain.",
+      "diff": "--- a/src/scippnexus/nxtransformations.py\n+++ b/src/scippnexus/nxtransformations.py\n@@ -171,3 +171,3 @@\n     while t is not None:\n-        transformations.append(t[index])\n+        transformations.append(t[()])\n         t = t.depends_on\n",
+      "words": "src/scippnexus/nxtransformations.py:172: changing `        transformations.append(t[index])` to `        transformations.append(t[()])` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-a8786a154dd2",
+      "origin": "model",
+      "file": "src/scippnexus/nxtransformations.py",
+      "line": 130,
+      "original": "    return get_full_transformation_starting_at(t0)",
+      "replacement": "    return get_full_transformation_starting_at(t0, index=None)",
+      "description": "Explicitly passes None index; behaviour equivalent but kept subtle.",
+      "diff": "--- a/src/scippnexus/nxtransformations.py\n+++ b/src/scippnexus/nxtransformations.py\n@@ -129,3 +129,3 @@\n         return None\n-    return get_full_transformation_starting_at(t0)\n+    return get_full_transformation_starting_at(t0, index=None)\n \n",
+      "words": "src/scippnexus/nxtransformations.py:130: changing `    return get_full_transformation_starting_at(t0)` to `    return get_full_transformation_starting_at(t0, index=Non...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-a11cbb1aa4c9",
+      "origin": "rule",
+      "file": "src/scippnexus/nxdetector.py",
+      "line": 95,
+      "original": "        return self._nxevent_data.unit",
+      "replacement": "        return None",
+      "description": "rule: body of `unit` -> `return None`",
+      "diff": "--- a/src/scippnexus/nxdetector.py\n+++ b/src/scippnexus/nxdetector.py\n@@ -94,3 +94,3 @@\n     def unit(self) -> None:\n-        return self._nxevent_data.unit\n+        return None\n \n",
+      "words": "src/scippnexus/nxdetector.py:95: changing `        return self._nxevent_data.unit` to `        return None` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-4fc2ff97c077",
+      "origin": "rule",
+      "file": "src/scippnexus/nxtransformations.py",
+      "line": 143,
+      "original": "        elif isinstance(total_transform, sc.DataArray) and isinstance(",
+      "replacement": "        elif isinstance(total_transform, sc.DataArray) or isinstance(",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/src/scippnexus/nxtransformations.py\n+++ b/src/scippnexus/nxtransformations.py\n@@ -142,3 +142,3 @@\n             total_transform = transform\n-        elif isinstance(total_transform, sc.DataArray) and isinstance(\n+        elif isinstance(total_transform, sc.DataArray) or isinstance(\n                 transform, sc.DataArray):\n",
+      "words": "src/scippnexus/nxtransformations.py:143: changing `        elif isinstance(total_transform, sc.DataArray) and i...` to `        elif isinstance(total_transform, sc.DataArray) or is...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "src/scippnexus/nexus_classes.py": [
+        16,
+        27
+      ],
+      "src/scippnexus/nxdetector.py": [
+        7,
+        94,
+        95,
+        167
+      ],
+      "src/scippnexus/nxtransformations.py": [
+        4,
+        6,
+        10,
+        19,
+        27,
+        28,
+        30,
+        31,
+        32,
+        33,
+        34,
+        121,
+        130,
+        133,
+        136,
+        137,
+        139,
+        141,
+        142,
+        143,
+        166,
+        172
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 25,
+        "total": 28
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "the behaviour diff could not compare _get_transformations: past the cap of 6 functions",
+    "the behaviour diff could not compare get_full_transformation_starting_at: new with the fix: nothing to compare",
+    "the behaviour diff could not compare NXtransformations._getitem: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 49285,
+    "output_tokens": 6252,
+    "cost_estimate": {
+      "usd": 0.2604,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 12 functions were shown",
+    "behaviour_diff: only the first 6 of 7 functions are attacked",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "break_my_fix: only the first 6 of 7 functions are attacked"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "scippnexus.nxdetector._EventField.unit",
+      "path": "src/scippnexus/nxdetector.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "scippnexus.nxtransformations.make_transformation",
+      "path": "src/scippnexus/nxtransformations.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 2,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "scippnexus.nxtransformations.get_full_transformation",
+      "path": "src/scippnexus/nxtransformations.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "scippnexus.nxtransformations.get_full_transformation_starting_at",
+      "path": "src/scippnexus/nxtransformations.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "scippnexus.nxdetector.NXdetector._event_grouping",
+      "path": "src/scippnexus/nxdetector.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "scippnexus.nxtransformations.NXtransformations._getitem",
+      "path": "src/scippnexus/nxtransformations.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

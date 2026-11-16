@@ -1,0 +1,11 @@
+{
+ "key": "2c35b97001c40c9f5bd0fa04efcdee6a92e2d34f03bff2b04b88a3e2c75d7d9e",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1772,
+  "output_tokens": 213,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from pager.pagination import page_slice, total_pages\\n\\n\\ndef test_total_pages_rounds_up_for_partial_last_page() -> None:\\n    assert total_pages(10, 3) == 4\\n\\n\\ndef test_last_partial_page_contains_final_item() -> None:\\n    items = list(range(1, 11))\\n    assert page_slice(items, 4, 3) == [10]\\n\",\"rationale\":\"With 10 items and 3 per page, total_pages should be 4 (partial last page), and page 4 should return the last item; the buggy floor division gives 3 and raises PageOutOfRange.\"}"
+ },
+ "role": "reproducer"
+}

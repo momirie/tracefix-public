@@ -1,0 +1,87 @@
+<main id="main" tabindex="-1" class="page rc-page">
+<!-- ONE RECEIPT. Every fact fills a hole from scripts/site_receipts.py: the receipt folder in
+     docs/landing/_data/receipts/{{case}}/ and the fixture in tests/fixtures/{{case}}/. -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow crumbs"><a href="../">Receipts</a> / {{case}}</p>
+    <h1 style="{{vt_title}}">{{issue_title}}</h1>
+    <p class="lede" data-reveal style="--d:1">{{fix_summary}}</p>
+    <p class="rc-facts" data-reveal style="--d:2">{{level_badge}}<span>{{known_answer}}</span><span>run {{run_time}}</span></p>
+    <ul class="jump" aria-label="On this page" data-reveal style="--d:3">
+      <li><a href="#fix">The issue and the fix</a></li>
+      {{jump_cx}}
+      <li><a href="#receipt">The receipt</a></li>
+      <li><a href="#tests">The tests it wrote</a></li>
+      <li><a href="#run">The run</a></li>
+    </ul>
+  </div>
+</section>
+
+<section id="fix" class="band" aria-labelledby="fix-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="fix-h" class="h2" data-words>The issue and the fix. <span class="soft">What Tracefix was given.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The issue text, the commit before the fix and the commit with it. The known answer stays outside the repo Tracefix sees.</p>
+    </div>
+    <div class="rc-given">
+      <figure class="panel md md-issue" data-reveal><figcaption>ISSUE.md</figcaption><div class="md-body">
+{{issue}}
+      </div></figure>
+      <div class="rc-diffs" data-reveal style="--d:1">
+        <p class="label">{{diffstat}}</p>
+{{diff}}
+      </div>
+    </div>
+  </div>
+</section>
+
+{{cx_section}}
+
+<section id="receipt" class="band" aria-labelledby="receipt-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="receipt-h" class="h2" data-words>The receipt. <span class="soft">As it reads in a PR comment.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The receipt.md Tracefix wrote, rendered the way GitHub renders it. The same run also wrote <a href="{{receipt_json}}">receipt.json</a>, the record the level is computed from (<a href="{{receipt_md}}">receipt.md as text</a>).</p>
+    </div>
+    <article class="panel md md-receipt" aria-label="Fix Receipt"><div class="panel-head">receipt.md</div><div class="md-body">
+{{receipt}}
+    </div></article>
+  </div>
+</section>
+
+<section id="tests" class="band" aria-labelledby="tests-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="tests-h" class="h2" data-words>The tests it wrote. <span class="soft">Run them with pytest.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The reproduction test fails before the fix and passes after it. A finding’s file fails for as long as the fixed code still breaks the property it names.</p>
+    </div>
+    <div class="rc-written" data-reveal>
+{{written}}
+    </div>
+  </div>
+</section>
+
+<section id="run" class="band" aria-labelledby="run-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="run-h" class="h2" data-words>The run. <span class="soft">Seconds since the start on the left.</span></h2>
+      <p class="mute" data-reveal style="--d:2">What <code>tracefix verify</code> printed, with the test suite’s recorded model answers. <a href="{{fixture}}">This fixture on GitHub</a>.</p>
+    </div>
+    <div class="replay" data-reveal>
+      <div class="replay-bar">
+        <p class="label" data-replay-clock>Run time {{run_time}}</p>
+        <button type="button" class="btn btn-sm" data-replay hidden>Replay the run</button>
+      </div>
+      {{timeline}}
+      <figure class="panel term-log"><figcaption>tracefix verify</figcaption><pre class="code" tabindex="0" data-replay-out>{{run_log}}</pre></figure>
+    </div>
+  </div>
+</section>
+
+<!-- PAGER: the neighbouring receipts in the gallery's order -->
+<nav class="band" aria-label="More receipts">
+  <div class="frame pad pager" data-reveal>
+{{pager}}
+  </div>
+</nav>
+</main>

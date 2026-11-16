@@ -1,0 +1,81 @@
+{
+ "instance_id": "Chilipp__autodocsumm-101",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 3.822,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 34217,
+   "label": "no_effect",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "autodocsumm/__init__.py",
+     "function": "AutosummaryDocumenter.get_grouped_documenters"
+    }
+   ],
+   "differs": [
+    {
+     "path": "autodocsumm/__init__.py",
+     "function": "AutoSummClassDocumenter.add_content"
+    },
+    {
+     "path": "autodocsumm/__init__.py",
+     "function": "AutosummaryDocumenter.get_grouped_documenters"
+    }
+   ]
+  },
+  {
+   "kind": "agent_ok",
+   "source_row": 43150,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "autodocsumm/__init__.py",
+     "function": "AutoSummClassDocumenter._is_class_alias"
+    },
+    {
+     "path": "autodocsumm/__init__.py",
+     "function": "AutoSummClassDocumenter.add_content"
+    }
+   ],
+   "differs": [
+    {
+     "path": "autodocsumm/__init__.py",
+     "function": "AutoSummClassDocumenter._is_class_alias"
+    },
+    {
+     "path": "autodocsumm/__init__.py",
+     "function": "AutoSummClassDocumenter.add_content"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "354e67b443fe212401b1fc0f9e2f0d669c5852c4",
+  "gold": "08b77d662d7ca26ab9ba491aae412ec464975d80",
+  "agent_wrong": "39ce39f4930ad13fffb56b15cf96804da1ce15c9",
+  "agent_ok": "7ace577f56cc3c0824307c80be4638f1e8ca11a3"
+ },
+ "seconds": 53.921
+}

@@ -1,0 +1,11 @@
+{
+ "key": "8da5a3fd05862191395f3429998ecaa0f8f304345e611c402b32193b511f76e7",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1993,
+  "output_tokens": 96,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"The issue reports Version(1,2,3).bump(\\\"minor\\\") giving 1.3.3 and expects 1.3.0; the docstring says \\\"minor\\\" resets patch and its example shows patch=0.\"}]}"
+ },
+ "role": "judge"
+}

@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T22:33:47+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks unyt.array.unyt_array.to_astropy"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "f794930a3d4b3a295954d861239c2ea62f7f4ef1"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "951da6fcdde44c874cf7cab9f374f884bcc61a50"
+  },
+  "issue": {
+    "title": "unyt fails to convert dimensionless array to astropy using .to_astropy()",
+    "sha256": "3fb54e58477933587f9e7eda0582c579612f7da844e2b72b123e869d0dc1ebef"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The original dimensionless to_astropy() failure was reproduced and no regressions were found. However, Break My Fix found that unyt_quantity(5.0, 'km/m').to_astropy() returns <Quantity 5.>, which appears to drop the km/m scale factor, so check how the fix handles dimensionless units that carry a non-unit scale, and note that no guarding test was confirmed.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 8.84,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 6.34,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 21.23,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no unyt/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 4 mutants; 80% is needed",
+      "duration_s": 133.4,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no unyt/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.5,
+        "repro_kill_rate": 0.25,
+        "pr_kill_rate": null,
+        "mutants": 4,
+        "killed": 2,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 2,
+        "not_run": 2,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-e0c4d1cabcf8",
+          "m-f41799dd24b3"
+        ],
+        "rule_mutants": 3,
+        "rule_kill_rate": 1.0,
+        "rule_kinds": [
+          "body: 1 of 1 killed",
+          "negate_if: 1 of 1 killed",
+          "arithmetic: 1 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "constant",
+          "membership",
+          "loop",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 4 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 491 untouched tests that passed before the fix fails after it",
+      "duration_s": 33.57,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 491,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 6.15,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no unyt/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 4
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: unyt_array.to_astropy: the comparison did not finish",
+      "duration_s": 4.51,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 29.62,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 16,
+        "properties_counted": 7,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.07,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 24.56,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no unyt/tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "unyt.array.unyt_array.to_astropy",
+      "call": "to_astropy(self=\"unyt_quantity(5.0, 'km/m')\")",
+      "input": {
+        "self": "\"unyt_quantity(5.0, 'km/m')\""
+      },
+      "outcome": "returns <Quantity 5.>",
+      "base_outcome": "returns <Quantity 5. km / m>",
+      "expected": null,
+      "property": {
+        "id": "t1.p2",
+        "name": "dimensionless_preserves_scaled_value",
+        "kind": "returns",
+        "claim": "For dimensionless units, including scaled ones like cm/m, the astropy quantity must have the same pure-number value once its units are cancelled out.",
+        "source": "docstring",
+        "quote": "Creates a new AstroPy quantity with the same unit information.",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 2,
+      "relation": "new with the fix: before it, this input returns <Quantity 5. km / m>",
+      "file": "findings/finding_1.py",
+      "path": "unyt/array.py",
+      "line": 1316,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      },
+      "doubt": null
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-6fd8706d4ec5",
+      "origin": "model",
+      "file": "unyt/array.py",
+      "line": 1317,
+      "original": "            s_units = \"\"",
+      "replacement": "            s_units = \"1\"",
+      "description": "Uses the string \"1\" instead of an empty string for dimensionless units.",
+      "diff": "--- a/unyt/array.py\n+++ b/unyt/array.py\n@@ -1316,3 +1316,3 @@\n         if self.units.is_dimensionless:\n-            s_units = \"\"\n+            s_units = \"1\"\n         else:\n",
+      "words": "unyt/array.py:1317: changing `            s_units = \"\"` to `            s_units = \"1\"` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-2bbc2d92ddac",
+      "origin": "model",
+      "file": "unyt/array.py",
+      "line": 1319,
+      "original": "            s_units = str(self.units)",
+      "replacement": "            s_units = str(self.units.expr)",
+      "description": "Uses the unit expression string, which may lose the base-unit formatting.",
+      "diff": "--- a/unyt/array.py\n+++ b/unyt/array.py\n@@ -1318,3 +1318,3 @@\n         else:\n-            s_units = str(self.units)\n+            s_units = str(self.units.expr)\n         return self.value * _astropy.units.Unit(s_units, **kwargs)\n",
+      "words": "unyt/array.py:1319: changing `            s_units = str(self.units)` to `            s_units = str(self.units.expr)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "unyt/array.py": [
+        1316,
+        1317,
+        1319,
+        1320
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 3,
+        "total": 4
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 34134,
+    "output_tokens": 6461,
+    "cost_estimate": {
+      "usd": 0.2328,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 2 of the 6 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "unyt.array.unyt_array.to_astropy",
+      "path": "unyt/array.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 16,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

@@ -1,0 +1,569 @@
+{
+ "slice": "slice1",
+ "split": "dev",
+ "summary": {
+  "excluded_tasks": 0,
+  "groups": {
+   "agent_ok": {
+    "constant_reads": {
+     "n": 0,
+     "of": 0
+    },
+    "fixes": 0,
+    "replaced_code": {
+     "n": 0,
+     "of": 0
+    },
+    "replaced_line": {
+     "n": 0,
+     "of": 0
+    },
+    "same_name": {
+     "n": 0,
+     "of": 0
+    }
+   },
+   "agent_wrong": {
+    "constant_reads": {
+     "n": 0,
+     "of": 0
+    },
+    "fixes": 0,
+    "replaced_code": {
+     "n": 0,
+     "of": 0
+    },
+    "replaced_line": {
+     "n": 0,
+     "of": 0
+    },
+    "same_name": {
+     "n": 0,
+     "of": 0
+    }
+   },
+   "gold": {
+    "constant_reads": {
+     "n": 1,
+     "of": 13
+    },
+    "fixes": 14,
+    "replaced_code": {
+     "n": 1,
+     "of": 14
+    },
+    "replaced_line": {
+     "n": 2,
+     "of": 14
+    },
+    "same_name": {
+     "n": 2,
+     "of": 14
+    }
+   },
+   "partial": {
+    "constant_reads": {
+     "n": 1,
+     "of": 10
+    },
+    "fixes": 11,
+    "in_dropped_hunk": 0,
+    "replaced_code": {
+     "n": 1,
+     "of": 11
+    },
+    "replaced_line": {
+     "n": 2,
+     "of": 11
+    },
+    "same_name": {
+     "n": 2,
+     "of": 11
+    }
+   }
+  }
+ },
+ "tasks": [
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [
+      {
+       "fixed_at": "sqlglot/generator.py:2179",
+       "line": 1363,
+       "path": "sqlglot/dialects/tsql.py",
+       "text": "into = self.sql(expression, \"into\")"
+      }
+     ],
+     "same_name": []
+    },
+    "v0": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [
+      {
+       "fixed_at": "sqlglot/generator.py:2179",
+       "line": 1363,
+       "path": "sqlglot/dialects/tsql.py",
+       "text": "into = self.sql(expression, \"into\")"
+      }
+     ],
+     "same_name": []
+    }
+   },
+   "instance_id": "tobymao__sqlglot-6413",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "stefmolin__data-morph-265",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v2": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "nesquena__hermes-webui-2056",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_npm_reference.py:3",
+       "line": 5,
+       "path": "dependencies/scripts/download_packages.py",
+       "text": "from typing import Any"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_npm_reference.py:3",
+       "line": 2,
+       "path": "src/twyn/dependency_parser/parsers/package_lock_json.py",
+       "text": "from typing import Any"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_npm_reference.py:3",
+       "line": 2,
+       "path": "src/twyn/trusted_packages/trusted_packages.py",
+       "text": "from typing import Any"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_pypi_reference.py:3",
+       "line": 5,
+       "path": "dependencies/scripts/download_packages.py",
+       "text": "from typing import Any"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_pypi_reference.py:3",
+       "line": 2,
+       "path": "src/twyn/dependency_parser/parsers/package_lock_json.py",
+       "text": "from typing import Any"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_pypi_reference.py:3",
+       "line": 2,
+       "path": "src/twyn/trusted_packages/trusted_packages.py",
+       "text": "from typing import Any"
+      }
+     ],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/base.py:32 AbstractPackageReference.normalize_packages",
+       "line": 23,
+       "path": "src/twyn/trusted_packages/references/top_npm_reference.py",
+       "text": "def normalize_packages(packages: set[str]) -> set[str]:"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/base.py:32 AbstractPackageReference.normalize_packages",
+       "line": 23,
+       "path": "src/twyn/trusted_packages/references/top_pypi_reference.py",
+       "text": "def normalize_packages(packages: set[str]) -> set[str]:"
+      }
+     ]
+    },
+    "v0": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_npm_reference.py:3",
+       "line": 5,
+       "path": "dependencies/scripts/download_packages.py",
+       "text": "from typing import Any"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_npm_reference.py:3",
+       "line": 2,
+       "path": "src/twyn/dependency_parser/parsers/package_lock_json.py",
+       "text": "from typing import Any"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_npm_reference.py:3",
+       "line": 2,
+       "path": "src/twyn/trusted_packages/trusted_packages.py",
+       "text": "from typing import Any"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_pypi_reference.py:3",
+       "line": 5,
+       "path": "dependencies/scripts/download_packages.py",
+       "text": "from typing import Any"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_pypi_reference.py:3",
+       "line": 2,
+       "path": "src/twyn/dependency_parser/parsers/package_lock_json.py",
+       "text": "from typing import Any"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/top_pypi_reference.py:3",
+       "line": 2,
+       "path": "src/twyn/trusted_packages/trusted_packages.py",
+       "text": "from typing import Any"
+      }
+     ],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/base.py:31 AbstractPackageReference.normalize_packages",
+       "line": 23,
+       "path": "src/twyn/trusted_packages/references/top_npm_reference.py",
+       "text": "def normalize_packages(packages: set[str]) -> set[str]:"
+      },
+      {
+       "fixed_at": "src/twyn/trusted_packages/references/base.py:31 AbstractPackageReference.normalize_packages",
+       "line": 23,
+       "path": "src/twyn/trusted_packages/references/top_pypi_reference.py",
+       "text": "def normalize_packages(packages: set[str]) -> set[str]:"
+      }
+     ]
+    }
+   },
+   "instance_id": "elementsinteractive__twyn-317",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [
+      "RE_BRACKET_INLINE",
+      "RE_DOLLAR_INLINE",
+      "RE_SMART_DOLLAR_INLINE"
+     ],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "facelessuser__pymdown-extensions-2807",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [
+      "parsing_settings"
+     ],
+     "constants": [
+      "parsing_settings"
+     ],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v3": {
+     "constant_reads": [
+      "parsing_settings"
+     ],
+     "constants": [
+      "parsing_settings"
+     ],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "omni-us__jsonargparse-770",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "ASPP__pelita-863",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "yt-project__unyt-593",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "omni-us__jsonargparse-827",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": null,
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v0": {
+     "constant_reads": null,
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "mitmproxy__mitmproxy-7827",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [
+      {
+       "fixed_at": "app/storage/analysis.py:38",
+       "line": 215,
+       "path": "app/modules/speedtest/routes.py",
+       "text": "\"ds_correctable_errors\": s.get(\"ds_correctable_errors\", 0),"
+      },
+      {
+       "fixed_at": "app/storage/analysis.py:38",
+       "line": 214,
+       "path": "app/modules/speedtest/routes.py",
+       "text": "\"ds_uncorrectable_errors\": s.get(\"ds_uncorrectable_errors\", 0),"
+      }
+     ],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [
+      {
+       "fixed_at": "app/storage/analysis.py:38",
+       "line": 215,
+       "path": "app/modules/speedtest/routes.py",
+       "text": "\"ds_correctable_errors\": s.get(\"ds_correctable_errors\", 0),"
+      },
+      {
+       "fixed_at": "app/storage/analysis.py:38",
+       "line": 214,
+       "path": "app/modules/speedtest/routes.py",
+       "text": "\"ds_uncorrectable_errors\": s.get(\"ds_uncorrectable_errors\", 0),"
+      }
+     ],
+     "same_name": []
+    }
+   },
+   "instance_id": "itsdnns__docsight-437",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "benefits/core/admin/transit.py:11 TransitAgencyAdmin.get_exclude",
+       "line": 119,
+       "path": "benefits/core/admin/enrollment.py",
+       "text": "def get_exclude(self, request, obj=None):"
+      },
+      {
+       "fixed_at": "benefits/core/admin/transit.py:25 TransitAgencyAdmin.get_readonly_fields",
+       "line": 136,
+       "path": "benefits/core/admin/enrollment.py",
+       "text": "def get_readonly_fields(self, request, obj=None):"
+      }
+     ]
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": [
+      {
+       "fixed_at": "benefits/core/admin/transit.py:27 TransitAgencyAdmin.get_readonly_fields",
+       "line": 136,
+       "path": "benefits/core/admin/enrollment.py",
+       "text": "def get_readonly_fields(self, request, obj=None):"
+      }
+     ]
+    }
+   },
+   "instance_id": "cal-itp__benefits-3198",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "a2aproject__a2a-python-682_interface",
+   "notes": []
+  },
+  {
+   "excluded": null,
+   "fixes": {
+    "gold": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "gold",
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    },
+    "v1": {
+     "constant_reads": [],
+     "constants": [],
+     "group": "partial",
+     "in_dropped_hunk": false,
+     "replaced_code": [],
+     "replaced_line": [],
+     "same_name": []
+    }
+   },
+   "instance_id": "joke2k__django-environ-592",
+   "notes": []
+  }
+ ]
+}

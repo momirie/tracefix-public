@@ -1,0 +1,33 @@
+<main id="main" tabindex="-1" class="page">
+<!-- RECEIPTS. No number is typed here: every count fills a hole from scripts/site_receipts.py, which reads
+     the fixtures' receipts (docs/landing/_data/receipts/) and the fixtures (tests/fixtures/). -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow">Receipts</p>
+    <h1 data-words>Every fixture’s receipt. <span class="soft">Read what Tracefix hands back.</span></h1>
+    <p class="lede" data-reveal style="--d:3">The regression fixtures are {{cases_total}} small buggy repos with a known answer: a bug, a fix that is right or wrong in a known way, and the level its receipt must reach. Each page below shows the issue, the fix, the receipt as it reads in a PR comment, the tests Tracefix wrote and the run in the terminal.</p>
+    <p class="standing-line" data-reveal style="--d:4">{{cases_matching}} of {{cases_total}} receipts meet their known answer; {{cases_cx}} come with a counterexample.</p>
+    <p class="mute small" data-reveal style="--d:5">Made by the real pipeline on the real fixture repos, with the test suite’s recorded model answers, so a run costs nothing and comes out the same each time. A receipt that misses its known answer fails the test suite. <a href="https://github.com/momirie/tracefix/tree/main/tests/fixtures">The fixtures on GitHub</a>.</p>
+  </div>
+</section>
+
+<section class="band" aria-label="The receipts">
+  <div class="frame pad">
+    <div class="filters" role="group" aria-label="Show receipts by level" data-filters hidden>{{filters}}<span id="filter-shown" class="label" aria-live="polite"></span></div>
+    <ul class="rcards">
+{{cards}}
+    </ul>
+  </div>
+</section>
+
+<!-- NEXT: from the fixtures to real fixes -->
+<section class="band" aria-label="Next page">
+  <div class="frame pad next">
+    <a class="next-card" href="../benchmark/" data-reveal>
+      <span class="eyebrow">Next</span>
+      <span class="next-title">Fixtures have known answers. Real fixes don’t. <span class="soft">How often it is right on real bug fixes, and every miss.</span></span>
+      <span class="next-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+</main>

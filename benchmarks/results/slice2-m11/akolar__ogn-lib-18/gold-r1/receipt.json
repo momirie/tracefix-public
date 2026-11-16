@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T20:34:54+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 1 of 3 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "e02e610d4de1ad3c3544c3510a07dc6204f3f4e1"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "81d7f291e9bf2dae7845cf8adad50fdb977be805"
+  },
+  "issue": {
+    "title": "Capturs parser has invalid callsign",
+    "sha256": "e3b842a1c70b6bff6f58ef66fa5a59d05891041944e1d358d5ace0bf32953668"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.20"
+  },
+  "summary": {
+    "text": "A test reproducing the wrong Capturs callsign (OGLT24 instead of OGCAPT) fails before the fix and passes after it, with no regressions found and the fix lines covered. The guard stage reported the fix as not guarded and the tests did not kill enough mutants to reach L2, so the next step is strengthening the test so it reliably catches a reintroduced wrong callsign.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 3.13,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 5.15,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 36.46,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 1 of 3 mutants; 80% is needed",
+      "duration_s": 36.98,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.333,
+        "repro_kill_rate": 0.333,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 1,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 6,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-bac90037c446"
+        ],
+        "rule_mutants": 0,
+        "rule_kill_rate": null,
+        "rule_kinds": [],
+        "rule_kinds_absent": [],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 1 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 98 untouched tests that passed before the fix fails after it",
+      "duration_s": 7.83,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 98,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.47,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 1
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call",
+      "duration_s": 0.05,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "not_reproduced_on_base",
+      "reason": "no attempt failed properly on base; last: the test uses names it must not use: __file__, import_module",
+      "duration_s": 20.68,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-5390eeda568b",
+      "origin": "model",
+      "file": "ogn_lib/parser.py",
+      "line": 776,
+      "original": "    __destto__ = ['OGCAPT', 'OGCAPT-1']",
+      "replacement": "    __destto__ = ['OGCAPT']",
+      "description": "Drops the 'OGCAPT-1' destination so messages addressed to it are no longer handled.",
+      "diff": "--- a/ogn_lib/parser.py\n+++ b/ogn_lib/parser.py\n@@ -775,3 +775,3 @@\n class Capturs(Parser):\n-    __destto__ = ['OGCAPT', 'OGCAPT-1']\n+    __destto__ = ['OGCAPT']\n \n",
+      "words": "ogn_lib/parser.py:776: changing `    __destto__ = ['OGCAPT', 'OGCAPT-1']` to `    __destto__ = ['OGCAPT']` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-4be082bd3019",
+      "origin": "model",
+      "file": "ogn_lib/parser.py",
+      "line": 776,
+      "original": "    __destto__ = ['OGCAPT', 'OGCAPT-1']",
+      "replacement": "    __destto__ = ['OGCAPT', 'OGCAPT-2']",
+      "description": "Uses the wrong suffix so 'OGCAPT-1' is not recognized.",
+      "diff": "--- a/ogn_lib/parser.py\n+++ b/ogn_lib/parser.py\n@@ -775,3 +775,3 @@\n class Capturs(Parser):\n-    __destto__ = ['OGCAPT', 'OGCAPT-1']\n+    __destto__ = ['OGCAPT', 'OGCAPT-2']\n \n",
+      "words": "ogn_lib/parser.py:776: changing `    __destto__ = ['OGCAPT', 'OGCAPT-1']` to `    __destto__ = ['OGCAPT', 'OGCAPT-2']` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "ogn_lib/parser.py": [
+        776
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 1,
+        "total": 1
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call)",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call)"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 5774,
+    "output_tokens": 3377,
+    "cost_estimate": {
+      "usd": 0.0499,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 6 of the 9 mutants were not run: the tests could no longer reach 80% even if they killed them all"
+  ],
+  "previous": null,
+  "attack_targets": []
+}

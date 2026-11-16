@@ -1,0 +1,150 @@
+{
+ "instance_id": "Fatal1ty__mashumaro-191",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "pytest_mock",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 77.355,
+ "suite_timeout": 233,
+ "source_hunks": 11,
+ "variants": [
+  {
+   "index": 0,
+   "path": "mashumaro/core/meta/code/builder.py",
+   "old_start": 1,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "mashumaro/core/meta/code/builder.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "mashumaro/core/meta/code/builder.py",
+   "old_start": 35,
+   "old_len": 6,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "mashumaro/core/meta/code/builder.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "mashumaro/core/meta/code/builder.py",
+   "old_start": 334,
+   "old_len": 19,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "mashumaro/core/meta/code/builder.py",
+     "function": "CodeBuilder.evaluate_forward_ref"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "mashumaro/core/meta/helpers.py",
+   "old_start": 2,
+   "old_len": 6,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "mashumaro/core/meta/helpers.py",
+     "function": null
+    }
+   ]
+  }
+ ],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 47587,
+   "label": "no_effect",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "mashumaro/jsonschema/schema.py",
+     "function": null
+    },
+    {
+     "path": "mashumaro/jsonschema/schema.py",
+     "function": "_evaluate_forward_ref"
+    },
+    {
+     "path": "mashumaro/jsonschema/schema.py",
+     "function": "on_typed_dict"
+    }
+   ],
+   "differs": [
+    {
+     "path": "mashumaro/core/meta/code/builder.py",
+     "function": null
+    },
+    {
+     "path": "mashumaro/core/meta/code/builder.py",
+     "function": "CodeBuilder.evaluate_forward_ref"
+    },
+    {
+     "path": "mashumaro/core/meta/helpers.py",
+     "function": null
+    },
+    {
+     "path": "mashumaro/core/meta/helpers.py",
+     "function": "get_forward_ref_referencing_globals"
+    },
+    {
+     "path": "mashumaro/core/meta/helpers.py",
+     "function": "get_function_arg_annotation"
+    },
+    {
+     "path": "mashumaro/jsonschema/schema.py",
+     "function": null
+    },
+    {
+     "path": "mashumaro/jsonschema/schema.py",
+     "function": "Instance.derive"
+    },
+    {
+     "path": "mashumaro/jsonschema/schema.py",
+     "function": "_evaluate_forward_ref"
+    },
+    {
+     "path": "mashumaro/jsonschema/schema.py",
+     "function": "on_special_typing_primitive"
+    },
+    {
+     "path": "mashumaro/jsonschema/schema.py",
+     "function": "on_typed_dict"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "c3c6739640533426ac08b231b747607aeb596c9c",
+  "gold": "4d84137f85deaa42e025440447cb48a91333da2a",
+  "agent_wrong": "148f3c6d7183f94d696c118cbe6686524a7113f3"
+ },
+ "seconds": 116.672
+}

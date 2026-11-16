@@ -1,0 +1,530 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T14:19:06+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the PR's test file tests/test_trunc.py does not fail with the fix reverted (passed)"
+  ],
+  "repo": {
+    "name": "unguarded_test"
+  },
+  "base": {
+    "ref": "base",
+    "sha": "47cc8c4606eeed586fbad0ff98e4077b8db2f38b"
+  },
+  "head": {
+    "ref": "head",
+    "sha": "9f620ef67ccea6631762cbad46129919542738a9"
+  },
+  "issue": {
+    "title": "truncate() returns strings longer than max_len",
+    "sha256": "23985096b51eee866e3522d089e64bb9e72a0cc006a5a8094a13c8cdd2c0e264"
+  },
+  "isolation": {
+    "level": "basic",
+    "why": "bubblewrap (bwrap) is not installed",
+    "warning": "Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.",
+    "python": null
+  },
+  "summary": {
+    "text": "The verifier reproduced the bug with a test that fails before the fix and passes after it, and it found no regressions, no breaking inputs, and only behaviour changes judged intended. However, the PR's own test file tests/test_trunc.py still passes with the fix reverted, so next look at adding a test there that actually fails on the old code (for example, asserting len(truncate('hello world', 5))…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 0.98,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 1.83,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 14.98,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "basic"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the PR's test file tests/test_trunc.py does not fail with the fix reverted (passed)",
+      "duration_s": 40.45,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_trunc.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.2,
+        "repro_kill_rate": 0.2,
+        "pr_kill_rate": 0.2,
+        "mutants": 5,
+        "killed": 1,
+        "survived": 4,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-d21dae11a889"
+        ],
+        "rule_mutants": 6,
+        "rule_kill_rate": 0.667,
+        "pr_test_files": [
+          "tests/test_trunc.py"
+        ],
+        "findings": [
+          "pr_tests_pass_on_revert: the PR's test file tests/test_trunc.py does not fail with the fix reverted (passed)",
+          "low_kill_rate: the tests killed 1 of 5 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 4 untouched tests that passed before the fix fails after it",
+      "duration_s": 0.99,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 4,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.92,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_trunc.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 2
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "287 input(s) compared on 1 function(s): 24 changed with the fix",
+      "duration_s": 15.28,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 287,
+        "changes": 24,
+        "groups": 1,
+        "l3_checks": true,
+        "l3_gate": true,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 990 inputs against 7 properties",
+      "duration_s": 17.11,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_trunc.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 990,
+        "properties_counted": 7,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "textutil.trunc.truncate",
+      "kind": "value",
+      "count": 24,
+      "before": "returns 'hello…'",
+      "after": "returns 'hell…'",
+      "explained": [
+        "the issue names this call"
+      ],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The issue names this exact call: the result must not exceed max_len=5, and 'hell…' is 5 characters."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "Same issue rule with a multi-character ellipsis: the old 11-character result exceeded max_len=8, and the new one is exactly 8."
+        },
+        {
+          "change": "c3",
+          "label": "intended",
+          "reason": "The result must never exceed max_len per the issue; with max_len=0 the only fitting result is '', which the new docstring states."
+        },
+        {
+          "change": "c4",
+          "label": "intended",
+          "reason": "Same as the issue's example on a longer text: the 6-character result is cut to 5."
+        },
+        {
+          "change": "c5",
+          "label": "intended",
+          "reason": "max_len=0 must give a result of at most 0 characters per the issue; the docstring says max_len == 0 gives ''."
+        },
+        {
+          "change": "c6",
+          "label": "intended",
+          "reason": "A custom ellipsis longer than max_len=0 is cut to fit, which is the issue's length rule; the docstring states it."
+        },
+        {
+          "change": "c7",
+          "label": "intended",
+          "reason": "Same max_len=0 rule: the old 2-character result exceeded max_len, and '' fits."
+        },
+        {
+          "change": "c8",
+          "label": "intended",
+          "reason": "The old 2-character result exceeded max_len=1; the issue's rule requires at most 1 character, and the ellipsis alone fits."
+        },
+        {
+          "change": "c9",
+          "label": "intended",
+          "reason": "The old 2-character result exceeded max_len=1 with a custom ellipsis; the same issue rule applies."
+        }
+      ],
+      "examples": [
+        {
+          "call": "truncate(text='hello world', max_len=5)",
+          "before": "returns 'hello…'",
+          "after": "returns 'hell…'"
+        },
+        {
+          "call": "truncate(text='hello world', max_len=8, ellipsis='...')",
+          "before": "returns 'hello wo...'",
+          "after": "returns 'hello...'"
+        },
+        {
+          "call": "truncate(text='hi', max_len=0)",
+          "before": "returns '…'",
+          "after": "returns ''"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-579fad2b936a",
+      "origin": "model",
+      "file": "src/textutil/trunc.py",
+      "line": 17,
+      "original": "    keep = max(max_len - len(ellipsis), 0)",
+      "replacement": "    keep = max(max_len - len(ellipsis), 1)",
+      "description": "Lower bound of keep is 1 instead of 0, so short max_len keeps a text character.",
+      "diff": "--- a/src/textutil/trunc.py\n+++ b/src/textutil/trunc.py\n@@ -16,3 +16,3 @@\n         return text\n-    keep = max(max_len - len(ellipsis), 0)\n+    keep = max(max_len - len(ellipsis), 1)\n     return (text[:keep] + ellipsis)[:max_len]\n",
+      "words": "src/textutil/trunc.py:17: changing `    keep = max(max_len - len(ellipsis), 0)` to `    keep = max(max_len - len(ellipsis), 1)` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "truncate(text='hi', max_len=1)",
+          "fix": "returns '…'",
+          "mutant": "returns 'h'"
+        },
+        {
+          "call": "truncate(text='hello', max_len=1)",
+          "fix": "returns '…'",
+          "mutant": "returns 'h'"
+        },
+        {
+          "call": "truncate(text='Õ븗*s', max_len=1, ellipsis='\\U000ebb1b')",
+          "fix": "returns '\\U000ebb1b'",
+          "mutant": "returns 'Õ'"
+        }
+      ]
+    },
+    {
+      "id": "m-f80fdb4af18f",
+      "origin": "model",
+      "file": "src/textutil/trunc.py",
+      "line": 18,
+      "original": "    return (text[:keep] + ellipsis)[:max_len]",
+      "replacement": "    return (text[:keep] + ellipsis)[:max_len + 1]",
+      "description": "Off-by-one in final slice: result can exceed max_len when ellipsis is too long.",
+      "diff": "--- a/src/textutil/trunc.py\n+++ b/src/textutil/trunc.py\n@@ -17,2 +17,2 @@\n     keep = max(max_len - len(ellipsis), 0)\n-    return (text[:keep] + ellipsis)[:max_len]\n+    return (text[:keep] + ellipsis)[:max_len + 1]\n",
+      "words": "src/textutil/trunc.py:18: changing `    return (text[:keep] + ellipsis)[:max_len]` to `    return (text[:keep] + ellipsis)[:max_len + 1]` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "truncate(text='hi', max_len=0)",
+          "fix": "returns ''",
+          "mutant": "returns '…'"
+        },
+        {
+          "call": "truncate(text='hello', max_len=0)",
+          "fix": "returns ''",
+          "mutant": "returns '…'"
+        },
+        {
+          "call": "truncate(text=';-Æ\\x97\\x06b', max_len=1, ellipsis=';-Æ\\x97\\x06b')",
+          "fix": "returns ';'",
+          "mutant": "returns ';-'"
+        }
+      ]
+    },
+    {
+      "id": "m-6db47f738159",
+      "origin": "model",
+      "file": "src/textutil/trunc.py",
+      "line": 18,
+      "original": "    return (text[:keep] + ellipsis)[:max_len]",
+      "replacement": "    return (text[:keep] + ellipsis)[-max_len:]",
+      "description": "Cuts from the end instead of the start, keeping the wrong part of the ellipsis; for max_len 0 returns whole string.",
+      "diff": "--- a/src/textutil/trunc.py\n+++ b/src/textutil/trunc.py\n@@ -17,2 +17,2 @@\n     keep = max(max_len - len(ellipsis), 0)\n-    return (text[:keep] + ellipsis)[:max_len]\n+    return (text[:keep] + ellipsis)[-max_len:]\n",
+      "words": "src/textutil/trunc.py:18: changing `    return (text[:keep] + ellipsis)[:max_len]` to `    return (text[:keep] + ellipsis)[-max_len:]` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "truncate(text='hi', max_len=0)",
+          "fix": "returns ''",
+          "mutant": "returns '…'"
+        },
+        {
+          "call": "truncate(text='hello', max_len=0)",
+          "fix": "returns ''",
+          "mutant": "returns '…'"
+        },
+        {
+          "call": "truncate(text=';-Æ\\x97\\x06b', max_len=1, ellipsis=';-Æ\\x97\\x06b')",
+          "fix": "returns ';'",
+          "mutant": "returns 'b'"
+        }
+      ]
+    },
+    {
+      "id": "m-51752bbfdc07",
+      "origin": "model",
+      "file": "src/textutil/trunc.py",
+      "line": 18,
+      "original": "    return (text[:keep] + ellipsis)[:max_len]",
+      "replacement": "    return text[:keep] + ellipsis",
+      "description": "Drops the final truncation so the result may exceed max_len when ellipsis is longer.",
+      "diff": "--- a/src/textutil/trunc.py\n+++ b/src/textutil/trunc.py\n@@ -17,2 +17,2 @@\n     keep = max(max_len - len(ellipsis), 0)\n-    return (text[:keep] + ellipsis)[:max_len]\n+    return text[:keep] + ellipsis\n",
+      "words": "src/textutil/trunc.py:18: changing `    return (text[:keep] + ellipsis)[:max_len]` to `    return text[:keep] + ellipsis` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "truncate(text='hi', max_len=0)",
+          "fix": "returns ''",
+          "mutant": "returns '…'"
+        },
+        {
+          "call": "truncate(text='hello', max_len=0)",
+          "fix": "returns ''",
+          "mutant": "returns '…'"
+        },
+        {
+          "call": "truncate(text=';-Æ\\x97\\x06b', max_len=1, ellipsis=';-Æ\\x97\\x06b')",
+          "fix": "returns ';'",
+          "mutant": "returns ';-Æ\\x97\\x06b'"
+        }
+      ]
+    },
+    {
+      "id": "m-c52cf8322818",
+      "origin": "rule",
+      "file": "src/textutil/trunc.py",
+      "line": 17,
+      "original": "    keep = max(max_len - len(ellipsis), 0)",
+      "replacement": "    keep = max(max_len - len(ellipsis), (-1))",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/src/textutil/trunc.py\n+++ b/src/textutil/trunc.py\n@@ -16,3 +16,3 @@\n         return text\n-    keep = max(max_len - len(ellipsis), 0)\n+    keep = max(max_len - len(ellipsis), (-1))\n     return (text[:keep] + ellipsis)[:max_len]\n",
+      "words": "src/textutil/trunc.py:17: changing `    keep = max(max_len - len(ellipsis), 0)` to `    keep = max(max_len - len(ellipsis), (-1))` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-579fad2b936a",
+      "origin": "rule",
+      "file": "src/textutil/trunc.py",
+      "line": 17,
+      "original": "    keep = max(max_len - len(ellipsis), 0)",
+      "replacement": "    keep = max(max_len - len(ellipsis), 1)",
+      "description": "rule: `0` -> `1`",
+      "diff": "--- a/src/textutil/trunc.py\n+++ b/src/textutil/trunc.py\n@@ -16,3 +16,3 @@\n         return text\n-    keep = max(max_len - len(ellipsis), 0)\n+    keep = max(max_len - len(ellipsis), 1)\n     return (text[:keep] + ellipsis)[:max_len]\n",
+      "words": "src/textutil/trunc.py:17: changing `    keep = max(max_len - len(ellipsis), 0)` to `    keep = max(max_len - len(ellipsis), 1)` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "truncate(text='hi', max_len=1)",
+          "fix": "returns '…'",
+          "mutant": "returns 'h'"
+        },
+        {
+          "call": "truncate(text='hello', max_len=1)",
+          "fix": "returns '…'",
+          "mutant": "returns 'h'"
+        },
+        {
+          "call": "truncate(text='Õ븗*s', max_len=1, ellipsis='\\U000ebb1b')",
+          "fix": "returns '\\U000ebb1b'",
+          "mutant": "returns 'Õ'"
+        }
+      ]
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "src/textutil/trunc.py": [
+        17,
+        18
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 2,
+        "total": 2
+      },
+      {
+        "name": "pr_test",
+        "ran": 2,
+        "total": 2
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 19311,
+    "output_tokens": 5020,
+    "cost_estimate": {
+      "usd": 0.1622,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 1 of the rule mutant kills were crashes on the mutated line"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "textutil.trunc.truncate",
+      "path": "src/textutil/trunc.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 990,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

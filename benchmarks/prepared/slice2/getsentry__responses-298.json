@@ -1,0 +1,111 @@
+{
+ "instance_id": "getsentry__responses-298",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.20",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis 6.119.3 -> 6.141.1"
+ ],
+ "setup_files": [],
+ "changed_files": [
+  "issue.md"
+ ],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "pytest_asyncio.plugin",
+  "pytest_bdd.plugin",
+  "pytest_benchmark.plugin",
+  "pytest_localserver.plugin",
+  "pytest_mock",
+  "requests_mock.contrib._pytest_plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 2.319,
+ "suite_timeout": 120,
+ "source_hunks": 2,
+ "variants": [
+  {
+   "index": 0,
+   "path": "responses.py",
+   "old_start": 527,
+   "old_len": 14,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "responses.py",
+     "function": "RequestsMock.add_passthru"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "responses.py",
+   "old_start": 624,
+   "old_len": 7,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "responses.py",
+     "function": "RequestsMock._on_request"
+    }
+   ]
+  }
+ ],
+ "kept": 0,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 15863,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "responses.py",
+     "function": "RequestsMock.__init__"
+    },
+    {
+     "path": "responses.py",
+     "function": "RequestsMock._on_request"
+    },
+    {
+     "path": "responses.py",
+     "function": "RequestsMock.add_passthru"
+    },
+    {
+     "path": "responses.py",
+     "function": "RequestsMock.reset"
+    }
+   ],
+   "differs": [
+    {
+     "path": "responses.py",
+     "function": "RequestsMock.__init__"
+    },
+    {
+     "path": "responses.py",
+     "function": "RequestsMock._on_request"
+    },
+    {
+     "path": "responses.py",
+     "function": "RequestsMock.add_passthru"
+    },
+    {
+     "path": "responses.py",
+     "function": "RequestsMock.reset"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "b741b6e6d83aafd89fcc059ff7f3a5c87107c468",
+  "gold": "1a017137a71f45776a58af81618696f3fcae35cc",
+  "v0": "893e0a94a387b3b59a494b7bda787891c5d1ea4b",
+  "agent_ok": "b384a4231ed57f19dacc3ac8b825438df319f4b4"
+ },
+ "seconds": 64.563
+}

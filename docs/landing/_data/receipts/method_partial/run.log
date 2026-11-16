@@ -1,0 +1,15 @@
+[    0.0] tracefix: verifying 0ac383a..4ae629c (isolation: basic)
+[    1.1] [1/9] environment: ok (1.0s)
+[    3.0] [2/9] import_check: ok (1.9s)
+[   14.9] [3/9] reproduce: reproduced (11.9s)
+[   50.8] [4/9] guard: not_guarded (35.9s)
+[   51.8] [5/9] regressions: none_found (1.0s)
+[   54.7] [6/9] fix_line_coverage: ok (2.9s)
+[   62.0] [7/9] behaviour_diff: compared (7.3s)
+[   91.2] [8/9] break_my_fix: found (29.2s)
+[   91.2] [9/9] integrity: clean (0.0s)
+[   91.2] summary: by judge
+[   91.2] level: COUNTEREXAMPLE
+[   91.2] Fix Receipt: COUNTEREXAMPLE (run status: ok)
+[   91.2] Summary by the Judge (advisory): The original crash was reproduced and the fix stops port(None) from raising, but Break My Fix found two inputs that still break it: port('') raises ValueError, and Listener(default_port=9000).port(None) returns 8080 instead of the configured default. The most important thing to look at next is the second finding, since it suggests the fix returns a hardcoded 8080 rather than the listener's own de\u2026
+[   91.2] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json

@@ -1,0 +1,72 @@
+{
+ "instance_id": "xCDAT__xcdat-569",
+ "excluded": null,
+ "detail": "",
+ "python": "3.11.12",
+ "isolation": "strict",
+ "pip_changes": [
+  "annotated-types - -> 0.8.0",
+  "anthropic - -> 2.1.0",
+  "anyio 4.9.0 -> 4.15.1",
+  "docstring-parser - -> 0.18.0",
+  "h11 0.14.0 -> 0.16.0",
+  "httpcore2 - -> 2.16.0",
+  "httpx2 - -> 2.16.0",
+  "hypothesis - -> 6.170.5",
+  "idna 3.10 -> 3.20",
+  "jiter - -> 0.17.0",
+  "opentelemetry-api - -> 1.45.1",
+  "pydantic - -> 2.14.1",
+  "pydantic-core - -> 2.50.1",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.13.2 -> 4.16.0",
+  "typing-inspection - -> 0.4.4"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "anyio.pytest_plugin",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 20.155,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 3835,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "xcdat/bounds.py",
+     "function": null
+    },
+    {
+     "path": "xcdat/bounds.py",
+     "function": "BoundsAccessor.add_missing_bounds"
+    }
+   ],
+   "differs": [
+    {
+     "path": "xcdat/bounds.py",
+     "function": null
+    },
+    {
+     "path": "xcdat/bounds.py",
+     "function": "BoundsAccessor.add_missing_bounds"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "c83f46e2f35095d00ea5e05dde1142b7a318c719",
+  "gold": "601a5882a5b3ebdb06a7666a3ae0d1528881cc15",
+  "agent_ok": "8fbba14bca194d1622e5e4feb19a0c96500945ac"
+ },
+ "seconds": 95.907
+}

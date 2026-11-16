@@ -1,0 +1,488 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T19:03:51+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: tests/test_translation.py::TestOtherHouses.test_external_id_passthru passed before the fix and fails after it",
+    "regression: tests/test_translation.py::TestOtherHouses.test_external_id_extension_passthru passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "e5af84582b4524ad92bac0a9f153051f2d39f5eb"
+  },
+  "head": {
+    "ref": "tf-agent_wrong",
+    "sha": "92bf5a62bbe65d90c0155f1be35ae2d3c25db4d5"
+  },
+  "issue": {
+    "title": "Move external_building_id to building_address",
+    "sha256": "924cf63e9b7d80caf2fa9b5cae607516d7009b7b08e4d7f509feb54ae622ab49"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier found two regressions: tests/test_translation.py::TestOtherHouses.test_external_id_passthru and test_external_id_extension_passthru passed before the fix and fail after it. Next, check whether these tests still expect external_building_id under building.about and need updating to building_address, or whether the fix broke the passthrough itself.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 4.43,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (3 imports in all)",
+      "duration_s": 2.62,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 3: fails before the fix and passes after it",
+      "duration_s": 19.97,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 3,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the PR's test file comprehensive_test.py does not fail with the fix reverted (passed); the PR's test file test_external_id_reproduction.py does not fail with the fix reverted (passed)",
+      "duration_s": 142.23,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_external_id_reproduction.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py test_external_id_reproduction.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.75,
+        "repro_kill_rate": 0.5,
+        "pr_kill_rate": 0.5,
+        "mutants": 4,
+        "killed": 3,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-d98556bb102f",
+          "m-785717ef8cde",
+          "m-5bad6acc1b54"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.2,
+        "pr_test_files": [
+          "comprehensive_test.py",
+          "test_external_id_reproduction.py"
+        ],
+        "findings": [
+          "pr_tests_pass_on_revert: the PR's test file comprehensive_test.py does not fail with the fix reverted (passed)",
+          "pr_tests_pass_on_revert: the PR's test file test_external_id_reproduction.py does not fail with the fix reverted (passed)",
+          "low_kill_rate: the tests killed 3 of 4 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "2 confirmed: tests/test_translation.py::TestOtherHouses.test_external_id_passthru, tests/test_translation.py::TestOtherHouses.test_external_id_extension_passthru",
+      "duration_s": 32.56,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/test_translation.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 172,
+        "not_run": 0,
+        "regressions": 2,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.62,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py test_external_id_reproduction.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 45
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: debug_priority.py: module-level code that computes a value changed (line 9, 66, 67); what uses it is not compared",
+      "duration_s": 2.17,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 25.73,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 0,
+        "properties_counted": 5,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (1 reported)",
+      "duration_s": 0.1,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 1
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/test_translation.py",
+      "test": "TestOtherHouses.test_external_id_passthru",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: '51e8b90a979d4ac0b73efc780d7dddec' != None",
+      "line": 1052
+    },
+    {
+      "file": "tests/test_translation.py",
+      "test": "TestOtherHouses.test_external_id_extension_passthru",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: 'b39f2803447f4cdc89ef0cfe4b9a1677' != None",
+      "line": 1061
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-16258169ce36",
+      "origin": "model",
+      "file": "hescorehpxml/base.py",
+      "line": 823,
+      "original": "                break",
+      "replacement": "                continue",
+      "description": "Does not stop after the first found ID, so the lower-priority expression overrides it.",
+      "diff": "--- a/hescorehpxml/base.py\n+++ b/hescorehpxml/base.py\n@@ -822,3 +822,3 @@\n                 bldgaddr['external_building_id'] = external_id_value\n-                break\n+                continue\n         transaction_type = xpath(self.hpxmldoc, 'h:XMLTransactionHeaderInformation/h:Transaction/text()')\n",
+      "words": "hescorehpxml/base.py:823: changing `                break` to `                continue` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-632b4c8a7b22",
+      "origin": "rule",
+      "file": "debug_priority.py",
+      "line": 18,
+      "original": "    print(\"=== Debugging Priority Order ===\")\n    \n    # Load a basic example\n    translator = HPXMLtoHEScoreTranslator('examples/hescore_min.xml')\n    \n    # Add external_building_id using BOTH XPath...",
+      "replacement": "    return None",
+      "description": "rule: body of `debug_priority` -> `return None`",
+      "diff": "--- a/debug_priority.py\n+++ b/debug_priority.py\n@@ -17,48 +17,3 @@\n     \"\"\"Debug the priority order\"\"\"\n-    print(\"=== Debugging Priority Order ===\")\n-    \n-    # Load a basic example\n-    translator = HPXMLtoHEScoreTranslator('examples/hescore_min.xml')\n-    \n-    # Add external_building_id using BOTH XPath expressions\n-    root = translator.hpxmldoc\n-    ns = translator.ns\n-    \n-    # Find the Building element\n-    building = root.xpath('//h:Building', namespaces=ns)[0]\n-    \n-    # Add SendingSystemIdentifierValue to BuildingID (should take priority)\n-    building_id = building.xpath('h:BuildingID', namespaces=ns)[0]\n-    # Remove any existing first\n-    for elem in building_id.xpath('h:SendingSystemIdentifierValue', namespaces=ns):\n-        building_id.remove(elem)\n-    ext_id_elem1 = etree.SubElement(building_id, f'{{{ns[\"h\"]}}}SendingSystemIdentifierValue')\n-    ext_id_elem1.text = 'PRIORITY_ID_1'\n-    print(f\"Added first XPath value: PRIORITY_ID_1\")\n-    \n-    # Also add extension/HESExternalID (should be ignored)\n-    # Remove any existing extension first\n-    for elem in building.xpath('h:extension', namespaces=ns):\n-        building.remove(elem)\n-    extension_elem = etree.SubElement(building, f'{{{ns[\"h\"]}}}extension')\n... 22 more lines",
+      "words": "debug_priority.py:18: changing `    print(\"=== Debugging Priority Order ===\")\n    \n    # Loa...` to `    return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-8f8dcbacd2af",
+      "origin": "rule",
+      "file": "debug_priority.py",
+      "line": 9,
+      "original": "sys.path.insert(0, os.path.join(os.path.dirname(__file__), '.'))",
+      "replacement": "sys.path.insert((-1), os.path.join(os.path.dirname(__file__), '.'))",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/debug_priority.py\n+++ b/debug_priority.py\n@@ -8,3 +8,3 @@\n import os\n-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '.'))\n+sys.path.insert((-1), os.path.join(os.path.dirname(__file__), '.'))\n \n",
+      "words": "debug_priority.py:9: changing `sys.path.insert(0, os.path.join(os.path.dirname(__file__), '...` to `sys.path.insert((-1), os.path.join(os.path.dirname(__file__)...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-4fa4d68239e7",
+      "origin": "rule",
+      "file": "debug_priority.py",
+      "line": 9,
+      "original": "sys.path.insert(0, os.path.join(os.path.dirname(__file__), '.'))",
+      "replacement": "sys.path.insert(1, os.path.join(os.path.dirname(__file__), '.'))",
+      "description": "rule: `0` -> `1`",
+      "diff": "--- a/debug_priority.py\n+++ b/debug_priority.py\n@@ -8,3 +8,3 @@\n import os\n-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '.'))\n+sys.path.insert(1, os.path.join(os.path.dirname(__file__), '.'))\n \n",
+      "words": "debug_priority.py:9: changing `sys.path.insert(0, os.path.join(os.path.dirname(__file__), '...` to `sys.path.insert(1, os.path.join(os.path.dirname(__file__), '...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-c358c04a5c5e",
+      "origin": "rule",
+      "file": "debug_priority.py",
+      "line": 28,
+      "original": "    building = root.xpath('//h:Building', namespaces=ns)[0]",
+      "replacement": "    building = root.xpath('//h:Building', namespaces=ns)[(-1)]",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/debug_priority.py\n+++ b/debug_priority.py\n@@ -27,3 +27,3 @@\n     # Find the Building element\n-    building = root.xpath('//h:Building', namespaces=ns)[0]\n+    building = root.xpath('//h:Building', namespaces=ns)[(-1)]\n     \n",
+      "words": "debug_priority.py:28: changing `    building = root.xpath('//h:Building', namespaces=ns)[0]` to `    building = root.xpath('//h:Building', namespaces=ns)[(-1...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-c22b093e2548",
+      "origin": "rule",
+      "file": "debug_priority.py",
+      "line": 28,
+      "original": "    building = root.xpath('//h:Building', namespaces=ns)[0]",
+      "replacement": "    building = root.xpath('//h:Building', namespaces=ns)[1]",
+      "description": "rule: `0` -> `1`",
+      "diff": "--- a/debug_priority.py\n+++ b/debug_priority.py\n@@ -27,3 +27,3 @@\n     # Find the Building element\n-    building = root.xpath('//h:Building', namespaces=ns)[0]\n+    building = root.xpath('//h:Building', namespaces=ns)[1]\n     \n",
+      "words": "debug_priority.py:28: changing `    building = root.xpath('//h:Building', namespaces=ns)[0]` to `    building = root.xpath('//h:Building', namespaces=ns)[1]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-4e01988415cf",
+      "origin": "rule",
+      "file": "debug_priority.py",
+      "line": 31,
+      "original": "    building_id = building.xpath('h:BuildingID', namespaces=ns)[0]",
+      "replacement": "    building_id = building.xpath('h:BuildingID', namespaces=ns)[(-1)]",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/debug_priority.py\n+++ b/debug_priority.py\n@@ -30,3 +30,3 @@\n     # Add SendingSystemIdentifierValue to BuildingID (should take priority)\n-    building_id = building.xpath('h:BuildingID', namespaces=ns)[0]\n+    building_id = building.xpath('h:BuildingID', namespaces=ns)[(-1)]\n     # Remove any existing first\n",
+      "words": "debug_priority.py:31: changing `    building_id = building.xpath('h:BuildingID', namespaces=...` to `    building_id = building.xpath('h:BuildingID', namespaces=...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-6948763a50f4",
+      "origin": "rule",
+      "file": "debug_priority.py",
+      "line": 31,
+      "original": "    building_id = building.xpath('h:BuildingID', namespaces=ns)[0]",
+      "replacement": "    building_id = building.xpath('h:BuildingID', namespaces=ns)[1]",
+      "description": "rule: `0` -> `1`",
+      "diff": "--- a/debug_priority.py\n+++ b/debug_priority.py\n@@ -30,3 +30,3 @@\n     # Add SendingSystemIdentifierValue to BuildingID (should take priority)\n-    building_id = building.xpath('h:BuildingID', namespaces=ns)[0]\n+    building_id = building.xpath('h:BuildingID', namespaces=ns)[1]\n     # Remove any existing first\n",
+      "words": "debug_priority.py:31: changing `    building_id = building.xpath('h:BuildingID', namespaces=...` to `    building_id = building.xpath('h:BuildingID', namespaces=...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-2e138a448cd2",
+      "origin": "rule",
+      "file": "debug_priority.py",
+      "line": 50,
+      "original": "    building_xml = building.xpath('.', namespaces=ns)[0]",
+      "replacement": "    building_xml = building.xpath('.', namespaces=ns)[(-1)]",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/debug_priority.py\n+++ b/debug_priority.py\n@@ -49,3 +49,3 @@\n     print(\"\\nBuilding XML structure:\")\n-    building_xml = building.xpath('.', namespaces=ns)[0]\n+    building_xml = building.xpath('.', namespaces=ns)[(-1)]\n     print(etree.tostring(building_xml, pretty_print=True, encoding='unicode')[:1000])\n",
+      "words": "debug_priority.py:50: changing `    building_xml = building.xpath('.', namespaces=ns)[0]` to `    building_xml = building.xpath('.', namespaces=ns)[(-1)]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "debug_priority.py": [
+        3,
+        7,
+        8,
+        9,
+        11,
+        12,
+        13,
+        16,
+        18,
+        21,
+        24,
+        25,
+        28,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        49,
+        50,
+        51,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        62,
+        63,
+        66,
+        67
+      ],
+      "hescorehpxml/base.py": [
+        815,
+        819,
+        820,
+        821,
+        822,
+        823,
+        883
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 7,
+        "total": 45
+      },
+      {
+        "name": "pr_test",
+        "ran": 7,
+        "total": 45
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack debug_priority: it takes no parameters to vary",
+    "the behaviour diff could not compare debug_priority: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 66200,
+    "output_tokens": 4277,
+    "cost_estimate": {
+      "usd": 0.2548,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: only the first 10 of 17 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "hescorehpxml.base.HPXMLtoHEScoreTranslatorBase.get_building_address",
+      "path": "hescorehpxml/base.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "hescorehpxml.base.HPXMLtoHEScoreTranslatorBase.get_building_about",
+      "path": "hescorehpxml/base.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

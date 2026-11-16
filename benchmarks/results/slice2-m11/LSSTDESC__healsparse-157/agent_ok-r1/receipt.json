@@ -1,0 +1,487 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T22:46:55+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the PR's test file test_exact_issue.py does not fail with the fix reverted (passed); the PR's test file test_pathlib_comprehensive.py does not fail with the fix reverted (passed); the PR's test file test_pathlib_issue.py does not fail with the fix reverted (passed)"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "833509256873ae92db52af8e15e17ff9d9559a01"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "841f07900144f45065ec8614434c08d0fac4eee6"
+  },
+  "issue": {
+    "title": "healsparse won't read a `pathlib.Path`",
+    "sha256": "de3e09fe3d7d3a9591e6df1db8ff18042dcbbfe4ae4374891c2c0cbeb2654147"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the bug (reading a pathlib.Path raised the misleading \"only supports fits and parquet\" error): a test fails before the fix and passes after it, and no regressions or breaking inputs were found. The PR's own test files (test_exact_issue.py, test_pathlib_comprehensive.py, test_pathlib_issue.py) all still pass with the fix reverted, so the next thing to check is why they don'…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 36.33,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "5 changed module(s) imported from the copies (10 imports in all)",
+      "duration_s": 3.38,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 5,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 9.61,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the PR's test file test_exact_issue.py does not fail with the fix reverted (passed); the PR's test file test_pathlib_comprehensive.py does not fail with the fix reverted (passed); the PR's test file test_pathlib_issue.py does not fail with the fix reverted (passed)",
+      "duration_s": 441.87,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_exact_issue.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_pathlib_comprehensive.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_pathlib_issue.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_exact_issue.py test_pathlib_comprehensive.py test_pathlib_issue.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.4,
+        "repro_kill_rate": 0.4,
+        "pr_kill_rate": 0.0,
+        "mutants": 5,
+        "killed": 2,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 5,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-6b7d38bcc031",
+          "m-6aad1cd92123"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.8,
+        "rule_kinds": [
+          "body: 5 of 5 killed",
+          "negate_if: 2 of 2 killed",
+          "constant: 0 of 2 killed",
+          "drop_call: 1 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "arithmetic",
+          "membership",
+          "loop",
+          "reraise"
+        ],
+        "pr_test_files": [
+          "test_exact_issue.py",
+          "test_pathlib_comprehensive.py",
+          "test_pathlib_issue.py"
+        ],
+        "findings": [
+          "pr_tests_pass_on_revert: the PR's test file test_exact_issue.py does not fail with the fix reverted (passed)",
+          "pr_tests_pass_on_revert: the PR's test file test_pathlib_comprehensive.py does not fail with the fix reverted (passed)",
+          "pr_tests_pass_on_revert: the PR's test file test_pathlib_issue.py does not fail with the fix reverted (passed)",
+          "low_kill_rate: the tests killed 2 of 5 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 201 untouched tests that passed before the fix fails after it",
+      "duration_s": 40.95,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 201,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 5.32,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_exact_issue.py test_pathlib_comprehensive.py test_pathlib_issue.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 22
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: _read_healsparse_fits_file: not compared (past the cap of 6 functions)",
+      "duration_s": 2.83,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 402 inputs against 2 properties",
+      "duration_s": 7.12,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "inputs_tried": 402,
+        "properties_counted": 2,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 2
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.05,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 13.49,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-8b3888e81225",
+      "origin": "model",
+      "file": "healsparse/io_coverage_fits.py",
+      "line": 25,
+      "original": "        fits = HealSparseFits(str(filename_or_fits))",
+      "replacement": "        fits = HealSparseFits(filename_or_fits)",
+      "description": "Drops str conversion so Path objects are passed to HealSparseFits.",
+      "diff": "--- a/healsparse/io_coverage_fits.py\n+++ b/healsparse/io_coverage_fits.py\n@@ -24,3 +24,3 @@\n     if isinstance(filename_or_fits, (str, Path)):\n-        fits = HealSparseFits(str(filename_or_fits))\n+        fits = HealSparseFits(filename_or_fits)\n     else:\n",
+      "words": "healsparse/io_coverage_fits.py:25: changing `        fits = HealSparseFits(str(filename_or_fits))` to `        fits = HealSparseFits(filename_or_fits)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-2f1613fd4bf4",
+      "origin": "model",
+      "file": "healsparse/io_coverage.py",
+      "line": 36,
+      "original": "            fits = HealSparseFits(str(filename_or_fits))",
+      "replacement": "            fits = HealSparseFits(filename_or_fits)",
+      "description": "Drops str conversion when probing for a fits file.",
+      "diff": "--- a/healsparse/io_coverage.py\n+++ b/healsparse/io_coverage.py\n@@ -35,3 +35,3 @@\n         try:\n-            fits = HealSparseFits(str(filename_or_fits))\n+            fits = HealSparseFits(filename_or_fits)\n             is_fits = True\n",
+      "words": "healsparse/io_coverage.py:36: changing `            fits = HealSparseFits(str(filename_or_fits))` to `            fits = HealSparseFits(filename_or_fits)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-4f07764eb128",
+      "origin": "model",
+      "file": "healsparse/io_map.py",
+      "line": 53,
+      "original": "        fits = HealSparseFits(str(filename))",
+      "replacement": "        fits = HealSparseFits(filename)",
+      "description": "Path filenames are not converted to str when opening.",
+      "diff": "--- a/healsparse/io_map.py\n+++ b/healsparse/io_map.py\n@@ -52,3 +52,3 @@\n     try:\n-        fits = HealSparseFits(str(filename))\n+        fits = HealSparseFits(filename)\n         is_fits_file = True\n",
+      "words": "healsparse/io_map.py:53: changing `        fits = HealSparseFits(str(filename))` to `        fits = HealSparseFits(filename)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-c7a4b9244039",
+      "origin": "rule",
+      "file": "healsparse/cat_healsparse_files.py",
+      "line": 111,
+      "original": "    with HealSparseFits(str(file_list[0])) as fits:",
+      "replacement": "    with HealSparseFits(str(file_list[(-1)])) as fits:",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/healsparse/cat_healsparse_files.py\n+++ b/healsparse/cat_healsparse_files.py\n@@ -110,3 +110,3 @@\n     # We need to create a stub of a sparse map (the overflow), with the correct dtype\n-    with HealSparseFits(str(file_list[0])) as fits:\n+    with HealSparseFits(str(file_list[(-1)])) as fits:\n         s_hdr = fits.read_ext_header('SPARSE')\n",
+      "words": "healsparse/cat_healsparse_files.py:111: changing `    with HealSparseFits(str(file_list[0])) as fits:` to `    with HealSparseFits(str(file_list[(-1)])) as fits:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-696b30b9b0ae",
+      "origin": "rule",
+      "file": "healsparse/cat_healsparse_files.py",
+      "line": 111,
+      "original": "    with HealSparseFits(str(file_list[0])) as fits:",
+      "replacement": "    with HealSparseFits(str(file_list[1])) as fits:",
+      "description": "rule: `0` -> `1`",
+      "diff": "--- a/healsparse/cat_healsparse_files.py\n+++ b/healsparse/cat_healsparse_files.py\n@@ -110,3 +110,3 @@\n     # We need to create a stub of a sparse map (the overflow), with the correct dtype\n-    with HealSparseFits(str(file_list[0])) as fits:\n+    with HealSparseFits(str(file_list[1])) as fits:\n         s_hdr = fits.read_ext_header('SPARSE')\n",
+      "words": "healsparse/cat_healsparse_files.py:111: changing `    with HealSparseFits(str(file_list[0])) as fits:` to `    with HealSparseFits(str(file_list[1])) as fits:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "healsparse/cat_healsparse_files.py": [
+        4,
+        111,
+        153,
+        165
+      ],
+      "healsparse/io_coverage.py": [
+        2,
+        34,
+        36
+      ],
+      "healsparse/io_coverage_fits.py": [
+        1,
+        2,
+        24,
+        25
+      ],
+      "healsparse/io_map.py": [
+        2,
+        53
+      ],
+      "healsparse/io_map_fits.py": [
+        2,
+        48,
+        67,
+        100,
+        179,
+        232,
+        260,
+        406,
+        447
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 13,
+        "total": 22
+      },
+      {
+        "name": "pr_test",
+        "ran": 13,
+        "total": 22
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "the behaviour diff could not compare _read_healsparse_fits_file: past the cap of 6 functions",
+    "the behaviour diff could not compare _read_healsparse_fits_file_and_degrade: past the cap of 6 functions"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 112035,
+    "output_tokens": 6690,
+    "cost_estimate": {
+      "usd": 0.4439,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 10 functions were shown",
+    "reproduce: style example tests/test_applymask.py truncated to 6000 characters for the prompt",
+    "guard: 5 of the 10 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 13 rule mutants were run",
+    "behaviour_diff: only the first 6 of 8 functions are attacked",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "break_my_fix: only the first 6 of 8 functions are attacked",
+    "blind: only the first 8 of 10 functions were shown",
+    "blind: style example tests/test_applymask.py truncated to 6000 characters for the prompt"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "healsparse.cat_healsparse_files.cat_healsparse_files",
+      "path": "healsparse/cat_healsparse_files.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    },
+    {
+      "function": "healsparse.io_coverage._read_coverage",
+      "path": "healsparse/io_coverage.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 201,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "healsparse.io_coverage_fits._read_coverage_fits",
+      "path": "healsparse/io_coverage_fits.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    },
+    {
+      "function": "healsparse.io_map._read_map",
+      "path": "healsparse/io_map.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 201,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "healsparse.io_map_fits._read_map_fits",
+      "path": "healsparse/io_map_fits.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    },
+    {
+      "function": "healsparse.io_map_fits._read_moc_fits",
+      "path": "healsparse/io_map_fits.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    }
+  ]
+}

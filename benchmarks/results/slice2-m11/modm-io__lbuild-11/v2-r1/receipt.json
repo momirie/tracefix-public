@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T18:42:33+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 0 of 3 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "b27975301922834e0173369873cd705673391708"
+  },
+  "head": {
+    "ref": "tf-v2",
+    "sha": "5f58009ccf9de613ced8a8cbd9c5cf90cf9fa832"
+  },
+  "issue": {
+    "title": "No warning/error on non-existing modules",
+    "sha256": "af40b9e724e04233c0fa87d489d19ba3aa3839edfdadcdac56b8005608788cbc"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "A test reproducing the missing error for non-existent module names failed before the fix and passes after it, no regressions were found, and Break My Fix found no inputs that break the fixed code. The next thing to look at is the guard stage, which reported the fix as not guarded, along with the inconclusive behaviour diff; the verifier's L2 note on mutant kills is garbled (\"N of N\", \"N%\"), so ch…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 2.03,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 2.45,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 3: fails before the fix and passes after it",
+      "duration_s": 38.23,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 3,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 3 mutants; 80% is needed",
+      "duration_s": 35.53,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 4,
+        "not_run": 4,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 2,
+        "rule_kill_rate": 0.5,
+        "rule_kinds": [
+          "body: 1 of 1 killed",
+          "drop_call: 0 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "negate_if",
+          "constant",
+          "arithmetic",
+          "membership",
+          "loop",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 78 untouched tests that passed before the fix fails after it",
+      "duration_s": 2.12,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 78,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 1.78,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 2
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: lbuild/main.py: module-level code that computes a value changed (line 27); what uses it is not compared",
+      "duration_s": 1.73,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 8 inputs against 5 properties",
+      "duration_s": 4.86,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 8,
+        "properties_counted": 5,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "fails_on_head",
+      "reason": "attempt 1: fails the same way before and after the fix",
+      "duration_s": 14.45,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-2cf61eb7b2f8",
+      "origin": "model",
+      "file": "lbuild/node.py",
+      "line": 311,
+      "original": "                LOGGER.debug(\"ignoring\", dependency_name)",
+      "replacement": "                return",
+      "description": "Returns early on an ignored failure, skipping the remaining dependencies and children.",
+      "diff": "--- a/lbuild/node.py\n+++ b/lbuild/node.py\n@@ -310,3 +310,3 @@\n                     raise LbuildException(\"Cannot resolve dependencies!\\n\" + str(b))\n-                LOGGER.debug(\"ignoring\", dependency_name)\n+                return\n         self._dependencies = list(dependencies)\n",
+      "words": "lbuild/node.py:311: changing `                LOGGER.debug(\"ignoring\", dependency_name)` to `                return` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-ead861bcbb16",
+      "origin": "model",
+      "file": "lbuild/node.py",
+      "line": 311,
+      "original": "                LOGGER.debug(\"ignoring\", dependency_name)",
+      "replacement": "                continue",
+      "description": "Silently skips the failed dependency and drops the debug logging.",
+      "diff": "--- a/lbuild/node.py\n+++ b/lbuild/node.py\n@@ -310,3 +310,3 @@\n                     raise LbuildException(\"Cannot resolve dependencies!\\n\" + str(b))\n-                LOGGER.debug(\"ignoring\", dependency_name)\n+                continue\n         self._dependencies = list(dependencies)\n",
+      "words": "lbuild/node.py:311: changing `                LOGGER.debug(\"ignoring\", dependency_name)` to `                continue` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-885b8cba5ec1",
+      "origin": "model",
+      "file": "lbuild/node.py",
+      "line": 311,
+      "original": "                LOGGER.debug(\"ignoring\", dependency_name)",
+      "replacement": "                LOGGER.debug(\"ignoring\" + dependency_name)",
+      "description": "Changes the debug call to build the message by string concatenation instead of passing the name as a separate argument.",
+      "diff": "--- a/lbuild/node.py\n+++ b/lbuild/node.py\n@@ -310,3 +310,3 @@\n                     raise LbuildException(\"Cannot resolve dependencies!\\n\" + str(b))\n-                LOGGER.debug(\"ignoring\", dependency_name)\n+                LOGGER.debug(\"ignoring\" + dependency_name)\n         self._dependencies = list(dependencies)\n",
+      "words": "lbuild/node.py:311: changing `                LOGGER.debug(\"ignoring\", dependency_name)` to `                LOGGER.debug(\"ignoring\" + dependency_name)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-aba64f45dbdf",
+      "origin": "rule",
+      "file": "lbuild/node.py",
+      "line": 311,
+      "original": "                LOGGER.debug(\"ignoring\", dependency_name)",
+      "replacement": "                pass",
+      "description": "rule: `LOGGER.debug(\"ignoring\", dependency_name)` -> `pass`",
+      "diff": "--- a/lbuild/node.py\n+++ b/lbuild/node.py\n@@ -310,3 +310,3 @@\n                     raise LbuildException(\"Cannot resolve dependencies!\\n\" + str(b))\n-                LOGGER.debug(\"ignoring\", dependency_name)\n+                pass\n         self._dependencies = list(dependencies)\n",
+      "words": "lbuild/node.py:311: changing `                LOGGER.debug(\"ignoring\", dependency_name)` to `                pass` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "drop_call"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "lbuild/main.py": [
+        27
+      ],
+      "lbuild/node.py": [
+        311
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 2,
+        "total": 2
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 10,
+    "input_tokens": 59232,
+    "output_tokens": 9126,
+    "cost_estimate": {
+      "usd": 0.2983,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 4 of the 7 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "lbuild.node.BaseNode._resolve_dependencies",
+      "path": "lbuild/node.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 7,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "lbuild.node.BaseNode.dependencies",
+      "path": "lbuild/node.py",
+      "via": "a public caller of the changed BaseNode._resolve_dependencies",
+      "attacked": true,
+      "inputs_tried": 1,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

@@ -1,0 +1,539 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T20:31:40+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks babelfish.language.Language.fromietf"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "7584c2ae86d2171094287b035a0c78fad5db4b1c"
+  },
+  "head": {
+    "ref": "tf-agent_wrong",
+    "sha": "e138fa795d8b2e942bbafc186679a7aeb18176d8"
+  },
+  "issue": {
+    "title": "Immutability issues",
+    "sha256": "f6a175555206d2b505515c94a4f32de1eca268f5e1c0abdb7a2e1ef10e1c1e75"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the original issue and found no regressions, but Break My Fix found an input that breaks the fixed code: Language.fromietf('İ') raises LanguageReverseError: 'i̇'. Look first at how fromietf handles case conversion of non-ASCII input such as the Turkish dotted capital I, since lowercasing it yields a two-character string that the reverse lookup rejects; note also that the f…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 1.28,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "3 changed module(s) imported from the copies (6 imports in all)",
+      "duration_s": 2.19,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 3,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 6.11,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 3 mutants; 80% is needed",
+      "duration_s": 51.29,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 1,
+        "not_run": 6,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.9,
+        "rule_kinds": [
+          "body: 2 of 3 killed",
+          "compare: 1 of 1 killed",
+          "constant: 2 of 2 killed",
+          "membership: 2 of 2 killed",
+          "drop_call: 2 of 2 killed"
+        ],
+        "rule_kinds_absent": [
+          "logic",
+          "negate_if",
+          "arithmetic",
+          "loop",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 49 untouched tests that passed before the fix fails after it",
+      "duration_s": 1.31,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 49,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 1.63,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 49
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "204 input(s) compared on 1 function(s): 6 changed with the fix; not complete: Country.__hash__: not compared (a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 34.22,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 204,
+        "changes": 6,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 18.74,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_language.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 46,
+        "properties_counted": 6,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 10
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 10.77,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "babelfish.language.Language.fromietf",
+      "call": "fromietf(ietf='İ')",
+      "input": {
+        "ietf": "'İ'"
+      },
+      "outcome": "raises LanguageReverseError: 'i̇'",
+      "base_outcome": "raises LanguageReverseError: 'i̇'",
+      "expected": null,
+      "property": {
+        "id": "t1.p1",
+        "name": "returns_language_instance",
+        "kind": "raises_only",
+        "claim": "fromietf returns a Language instance (or raises ValueError for unrecognised codes)",
+        "source": "docstring",
+        "quote": ":return: the corresponding :class:`Language` instance",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 3,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 144: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "babelfish/language.py",
+      "line": 144,
+      "expect": {
+        "types": [
+          "LanguageReverseError"
+        ],
+        "in_file": false
+      },
+      "doubt": "refused"
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "babelfish.language.Language.fromietf",
+      "kind": "value",
+      "count": 6,
+      "before": "returns <Language [fr-FR-Latn]>",
+      "after": "returns <Language [fr-FR-Latn]>",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "Same alpha3/country/script as before; the only difference is the internal __slots__/_hash state that the issue's request for true immutability calls for."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "Logical value (eng, Latn script) is unchanged; only the slot-based immutable representation, which the issue asks for, differs."
+        },
+        {
+          "change": "c3",
+          "label": "intended",
+          "reason": "Same fra/FR/Latn result; the difference is only the immutable slot layout the issue requests, not the parsed value."
+        },
+        {
+          "change": "c4",
+          "label": "intended",
+          "reason": "Still returns fra with no country or script; the added _hash slot is an artefact of the immutability the issue asks for."
+        },
+        {
+          "change": "c5",
+          "label": "intended",
+          "reason": "Same fra value as before; only the internal immutable representation that the issue requests has changed."
+        }
+      ],
+      "examples": [
+        {
+          "call": "fromietf(ietf='fr-FR')",
+          "before": "returns <Language [fr-FR]>",
+          "after": "returns <Language [fr-FR]>"
+        },
+        {
+          "call": "fromietf(ietf='eng-Latn')",
+          "before": "returns <Language [en-Latn]>",
+          "after": "returns <Language [en-Latn]>"
+        },
+        {
+          "call": "fromietf(ietf='fra-FR-Latn')",
+          "before": "returns <Language [fr-FR-Latn]>",
+          "after": "returns <Language [fr-FR-Latn]>"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-5ee141576d4c",
+      "origin": "model",
+      "file": "babelfish/language.py",
+      "line": 152,
+      "original": "                country = Country(subtag.upper())",
+      "replacement": "                country = Country(subtag)",
+      "description": "Country subtag no longer uppercased, breaking lowercase country codes.",
+      "diff": "--- a/babelfish/language.py\n+++ b/babelfish/language.py\n@@ -151,3 +151,3 @@\n             if len(subtag) == 2:\n-                country = Country(subtag.upper())\n+                country = Country(subtag)\n             else:\n",
+      "words": "babelfish/language.py:152: changing `                country = Country(subtag.upper())` to `                country = Country(subtag)` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-09e3788c6bdb",
+      "origin": "model",
+      "file": "babelfish/language.py",
+      "line": 154,
+      "original": "                script = Script(subtag.capitalize())",
+      "replacement": "                script = Script(subtag)",
+      "description": "Script subtag no longer capitalized.",
+      "diff": "--- a/babelfish/language.py\n+++ b/babelfish/language.py\n@@ -153,3 +153,3 @@\n             else:\n-                script = Script(subtag.capitalize())\n+                script = Script(subtag)\n             if script is not None:\n",
+      "words": "babelfish/language.py:154: changing `                script = Script(subtag.capitalize())` to `                script = Script(subtag)` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-7472b63e98f3",
+      "origin": "model",
+      "file": "babelfish/language.py",
+      "line": 155,
+      "original": "            if script is not None:",
+      "replacement": "            if script is not None and not subtags:",
+      "description": "Unmatched subtags error never raised after script.",
+      "diff": "--- a/babelfish/language.py\n+++ b/babelfish/language.py\n@@ -154,3 +154,3 @@\n                 script = Script(subtag.capitalize())\n-            if script is not None:\n+            if script is not None and not subtags:\n                 if subtags:\n",
+      "words": "babelfish/language.py:155: changing `            if script is not None:` to `            if script is not None and not subtags:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-eb24adde2072",
+      "origin": "rule",
+      "file": "babelfish/country.py",
+      "line": 77,
+      "original": "        msg = f\"can't set attribute '{name}' on immutable Country instance\"\n        raise AttributeError(msg)",
+      "replacement": "        return None",
+      "description": "rule: body of `__setattr__` -> `return None`",
+      "diff": "--- a/babelfish/country.py\n+++ b/babelfish/country.py\n@@ -76,4 +76,3 @@\n         \"\"\"Prevent modification of immutable attributes.\"\"\"\n-        msg = f\"can't set attribute '{name}' on immutable Country instance\"\n-        raise AttributeError(msg)\n+        return None\n \n",
+      "words": "babelfish/country.py:77: changing `        msg = f\"can't set attribute '{name}' on immutable Co...` to `        return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "babelfish/country.py": [
+        64,
+        72,
+        73,
+        75,
+        77,
+        78,
+        97,
+        98,
+        107,
+        108,
+        109
+      ],
+      "babelfish/language.py": [
+        86,
+        100,
+        101,
+        103,
+        105,
+        107,
+        109,
+        111,
+        113,
+        115,
+        117,
+        118,
+        144,
+        146,
+        147,
+        152,
+        154,
+        155,
+        162,
+        168,
+        169,
+        170,
+        171,
+        172,
+        184,
+        185,
+        186
+      ],
+      "babelfish/script.py": [
+        42,
+        50,
+        51,
+        53,
+        55,
+        56,
+        67,
+        68,
+        71,
+        72,
+        73
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 17,
+        "total": 49
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack Country.__hash__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Country.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Country.__setattr__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Country.__setstate__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Language.__hash__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Language.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Language.__setattr__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Language.__setstate__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Script.__hash__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Script.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Script.__setattr__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack Script.__setstate__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Country.__hash__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Country.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Country.__setattr__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Country.__setstate__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Language.__hash__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Language.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Language.__setattr__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Language.__setstate__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Script.__hash__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Script.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Script.__setattr__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare Script.__setstate__: a special method (such as __init__ or __eq__): not called yet"
+  ],
+  "llm": {
+    "calls": 9,
+    "input_tokens": 64010,
+    "output_tokens": 10282,
+    "cost_estimate": {
+      "usd": 0.4094,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 13 functions were shown",
+    "guard: 6 of the 9 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 46 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "blind: only the first 8 of 13 functions were shown"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "babelfish.language.Language.fromietf",
+      "path": "babelfish/language.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 46,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

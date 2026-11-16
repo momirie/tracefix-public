@@ -1,0 +1,614 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-07T13:45:54+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: asdf/_tests/test_info.py::test_info_module passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "24d98554d9eab52c8194b122daac802e4d2c4d27"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "969d6a23d8f31052704837505a4dadbb641ea946"
+  },
+  "issue": {
+    "title": "closed `AsdfFile` instances hold private reference to tree",
+    "sha256": "55393f402bdec65b59bff4d105f48b93b78d64bf8a50100d8f54aac143acd3a9"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the issue and the fix guards against it, but asdf/_tests/test_info.py::test_info_module passed before the fix and fails after it, which is a regression. Look first at why clearing the tree on close breaks the info module test, for example whether the info code reads the tree after the file is closed.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 68.56,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "4 changed module(s) imported from the copies (5 imports in all)",
+      "duration_s": 5.64,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 4,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 22.7,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no asdf/_jsonschema/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 5 of 6 mutants",
+      "duration_s": 2017.97,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no asdf/_jsonschema/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no debug_test.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.833,
+        "repro_kill_rate": 0.167,
+        "pr_kill_rate": 0.333,
+        "mutants": 6,
+        "killed": 5,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 1,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-8fd677d2d2eb",
+          "m-0765c5271786",
+          "m-14f4e8478192",
+          "m-d348c75384ea",
+          "m-0eebbca61101"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.2,
+        "rule_kinds": [
+          "body: 1 of 2 killed",
+          "compare: 0 of 2 killed",
+          "logic: 0 of 1 killed",
+          "constant: 1 of 2 killed",
+          "membership: 0 of 1 killed",
+          "drop_call: 0 of 1 killed",
+          "reraise: 0 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "negate_if",
+          "arithmetic",
+          "loop"
+        ],
+        "pr_test_files": [
+          "comprehensive_test.py"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "1 confirmed: asdf/_tests/test_info.py::test_info_module",
+      "duration_s": 294.26,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors asdf/_tests/test_info.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 1220,
+        "not_run": 0,
+        "regressions": 1,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 12.73,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no asdf/_jsonschema/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py debug_test.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 130
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: test_closed_asdf_file_gc_issue: not compared (past the cap of 6 functions)",
+      "duration_s": 3.33,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "no target could be attacked: asdf/asdf.py could not be imported as a module here (tried asdf.asdf, asdf)",
+      "duration_s": 2.97,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 0,
+        "properties_counted": 1,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (2 reported)",
+      "duration_s": 0.04,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 2
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 24.21,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no asdf/_jsonschema/tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "asdf/_tests/test_info.py",
+      "test": "test_info_module",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: OSError: Cannot access data from closed ASDF file",
+      "line": 13
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-54c0286c83da",
+      "origin": "model",
+      "file": "asdf/asdf.py",
+      "line": 460,
+      "original": "        self._tree = None",
+      "replacement": "        self._tree = {}",
+      "description": "Tree is replaced with empty dict instead of None, so access no longer raises the closed-file error.",
+      "diff": "--- a/asdf/asdf.py\n+++ b/asdf/asdf.py\n@@ -459,3 +459,3 @@\n         self._blocks.close()\n-        self._tree = None\n+        self._tree = {}\n         self._closed = True\n",
+      "words": "asdf/asdf.py:460: changing `        self._tree = None` to `        self._tree = {}` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-9ca1decf586e",
+      "origin": "rule",
+      "file": "comprehensive_test_v2.py",
+      "line": 118,
+      "original": "if __name__ == \"__main__\":",
+      "replacement": "if __name__ != \"__main__\":",
+      "description": "rule: `==` -> `!=`",
+      "diff": "--- a/comprehensive_test_v2.py\n+++ b/comprehensive_test_v2.py\n@@ -117,3 +117,3 @@\n \n-if __name__ == \"__main__\":\n+if __name__ != \"__main__\":\n     try:\n",
+      "words": "comprehensive_test_v2.py:118: changing `if __name__ == \"__main__\":` to `if __name__ != \"__main__\":` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-cebd224effb7",
+      "origin": "rule",
+      "file": "reproduce_issue.py",
+      "line": 42,
+      "original": "    if not success:",
+      "replacement": "    if success:",
+      "description": "rule: drop `not`",
+      "diff": "--- a/reproduce_issue.py\n+++ b/reproduce_issue.py\n@@ -41,3 +41,3 @@\n     success = test_closed_asdf_file_gc_issue()\n-    if not success:\n+    if success:\n         print(\"\\nREPRODUCTION SUCCESSFUL: Memory leak issue confirmed\")\n",
+      "words": "reproduce_issue.py:42: changing `    if not success:` to `    if success:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    },
+    {
+      "id": "m-afb4f249f678",
+      "origin": "rule",
+      "file": "comprehensive_test_v2.py",
+      "line": 21,
+      "original": "        assert array_ref() is not None",
+      "replacement": "        assert array_ref() is None",
+      "description": "rule: `is not` -> `is`",
+      "diff": "--- a/comprehensive_test_v2.py\n+++ b/comprehensive_test_v2.py\n@@ -20,3 +20,3 @@\n         array_ref = weakref.ref(af['arr'])\n-        assert array_ref() is not None\n+        assert array_ref() is None\n     \n",
+      "words": "comprehensive_test_v2.py:21: changing `        assert array_ref() is not None` to `        assert array_ref() is None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "membership"
+    },
+    {
+      "id": "m-4388eaa4c5b6",
+      "origin": "rule",
+      "file": "comprehensive_test_v2.py",
+      "line": 14,
+      "original": "    print(\"Testing basic garbage collection fix...\")",
+      "replacement": "    pass",
+      "description": "rule: `print(\"Testing basic garbage collection fix...\")` -> `pass`",
+      "diff": "--- a/comprehensive_test_v2.py\n+++ b/comprehensive_test_v2.py\n@@ -13,3 +13,3 @@\n     \"\"\"Test basic garbage collection fix.\"\"\"\n-    print(\"Testing basic garbage collection fix...\")\n+    pass\n     \n",
+      "words": "comprehensive_test_v2.py:14: changing `    print(\"Testing basic garbage collection fix...\")` to `    pass` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "drop_call"
+    },
+    {
+      "id": "m-f441e29180a4",
+      "origin": "rule",
+      "file": "comprehensive_test_v2.py",
+      "line": 43,
+      "original": "        assert \"Cannot access data from closed ASDF file\" in str(e)",
+      "replacement": "        raise\n        assert \"Cannot access data from closed ASDF file\" in str(e)",
+      "description": "rule: re-raise at the start of the `except` body",
+      "diff": "--- a/comprehensive_test_v2.py\n+++ b/comprehensive_test_v2.py\n@@ -42,2 +42,3 @@\n     except OSError as e:\n+        raise\n         assert \"Cannot access data from closed ASDF file\" in str(e)\n",
+      "words": "comprehensive_test_v2.py:43: changing `        assert \"Cannot access data from closed ASDF file\" in...` to `        raise\n        assert \"Cannot access data from closed...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "reraise"
+    },
+    {
+      "id": "m-2beb6b7111b0",
+      "origin": "rule",
+      "file": "comprehensive_test_v2.py",
+      "line": 14,
+      "original": "    print(\"Testing basic garbage collection fix...\")\n    \n    fn = 'test_basic.asdf'\n    asdf.AsdfFile({'arr': np.arange(100)}).write_to(fn)\n    \n    with asdf.open(fn, copy_arrays=True, lazy_load=Fal...",
+      "replacement": "    return None",
+      "description": "rule: body of `test_basic_gc_fix` -> `return None`",
+      "diff": "--- a/comprehensive_test_v2.py\n+++ b/comprehensive_test_v2.py\n@@ -13,14 +13,3 @@\n     \"\"\"Test basic garbage collection fix.\"\"\"\n-    print(\"Testing basic garbage collection fix...\")\n-    \n-    fn = 'test_basic.asdf'\n-    asdf.AsdfFile({'arr': np.arange(100)}).write_to(fn)\n-    \n-    with asdf.open(fn, copy_arrays=True, lazy_load=False) as af:\n-        array_ref = weakref.ref(af['arr'])\n-        assert array_ref() is not None\n-    \n-    # After closing, weakref should be None\n-    assert array_ref() is None, \"Memory leak: weakref should be None after closing\"\n-    print(\"✓ Basic GC fix works\")\n+    return None\n \n",
+      "words": "comprehensive_test_v2.py:14: changing `    print(\"Testing basic garbage collection fix...\")\n    \n  ...` to `    return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    },
+    {
+      "id": "m-868c503f79d3",
+      "origin": "rule",
+      "file": "reproduce_issue.py",
+      "line": 40,
+      "original": "if __name__ == \"__main__\":",
+      "replacement": "if __name__ != \"__main__\":",
+      "description": "rule: `==` -> `!=`",
+      "diff": "--- a/reproduce_issue.py\n+++ b/reproduce_issue.py\n@@ -39,3 +39,3 @@\n \n-if __name__ == \"__main__\":\n+if __name__ != \"__main__\":\n     success = test_closed_asdf_file_gc_issue()\n",
+      "words": "reproduce_issue.py:40: changing `if __name__ == \"__main__\":` to `if __name__ != \"__main__\":` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-6a49427336df",
+      "origin": "rule",
+      "file": "comprehensive_test_v2.py",
+      "line": 17,
+      "original": "    asdf.AsdfFile({'arr': np.arange(100)}).write_to(fn)",
+      "replacement": "    asdf.AsdfFile({'arr': np.arange(101)}).write_to(fn)",
+      "description": "rule: `100` -> `101`",
+      "diff": "--- a/comprehensive_test_v2.py\n+++ b/comprehensive_test_v2.py\n@@ -16,3 +16,3 @@\n     fn = 'test_basic.asdf'\n-    asdf.AsdfFile({'arr': np.arange(100)}).write_to(fn)\n+    asdf.AsdfFile({'arr': np.arange(101)}).write_to(fn)\n     \n",
+      "words": "comprehensive_test_v2.py:17: changing `    asdf.AsdfFile({'arr': np.arange(100)}).write_to(fn)` to `    asdf.AsdfFile({'arr': np.arange(101)}).write_to(fn)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "asdf/asdf.py": [
+        455,
+        456,
+        460,
+        461
+      ],
+      "comprehensive_test_v2.py": [
+        2,
+        7,
+        8,
+        9,
+        12,
+        14,
+        16,
+        17,
+        19,
+        20,
+        21,
+        24,
+        25,
+        28,
+        30,
+        32,
+        33,
+        35,
+        36,
+        39,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        51,
+        54,
+        56,
+        58,
+        59,
+        60,
+        63,
+        64,
+        67,
+        68,
+        69,
+        70,
+        71,
+        73,
+        76,
+        78,
+        81,
+        82,
+        84,
+        85,
+        86,
+        88,
+        89,
+        90,
+        91,
+        92,
+        94,
+        97,
+        99,
+        101,
+        102,
+        105,
+        106,
+        107,
+        108,
+        111,
+        112,
+        113,
+        115,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130
+      ],
+      "final_verification.py": [
+        2,
+        6,
+        7,
+        8,
+        11,
+        12,
+        14,
+        15,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        28
+      ],
+      "reproduce_issue.py": [
+        2,
+        7,
+        8,
+        9,
+        11,
+        14,
+        17,
+        20,
+        21,
+        22,
+        25,
+        26,
+        27,
+        28,
+        29,
+        32,
+        33,
+        34,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        44,
+        46,
+        47
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 4,
+        "total": 130
+      },
+      {
+        "name": "pr_test",
+        "ran": 4,
+        "total": 130
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack test_basic_gc_fix: it takes no parameters to vary",
+    "Break My Fix could not attack test_close_without_fd: it takes no parameters to vary",
+    "Break My Fix could not attack test_double_close: it takes no parameters to vary",
+    "Break My Fix could not attack test_manual_close_vs_context_manager: it takes no parameters to vary",
+    "Break My Fix could not attack test_tree_access_after_close: it takes no parameters to vary",
+    "Break My Fix could not attack test_closed_asdf_file_gc_issue: it takes no parameters to vary",
+    "the behaviour diff could not compare test_closed_asdf_file_gc_issue: past the cap of 6 functions",
+    "the behaviour diff could not compare test_basic_gc_fix: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_tree_access_after_close: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_double_close: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_close_without_fd: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_manual_close_vs_context_manager: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 37553,
+    "output_tokens": 2154,
+    "cost_estimate": {
+      "usd": 0.1339,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 26 functions were shown",
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "guard: debug_test.py has no tests, so it is not counted as a PR test",
+    "guard: only the first 10 of 120 rule mutants were run",
+    "behaviour_diff: only the first 6 of 7 functions are attacked",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "blind: only the first 8 of 20 functions were shown",
+    "blind: pyproject truncated to 3000 characters for the prompt"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "asdf.asdf.AsdfFile.close",
+      "path": "asdf/asdf.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "asdf/asdf.py could not be imported as a module here (tried asdf.asdf, asdf)"
+    }
+  ]
+}

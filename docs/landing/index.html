@@ -1,0 +1,337 @@
+<!doctype html>
+<!-- Built by scripts/build_site.py from docs/landing/_src/. Edit the source, then run the script. -->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tracefix: break your fix before your users do</title>
+<meta name="description" content="Tracefix runs a bug fix from a coding agent or a person, attacks it with inputs the tests never tried, and hands back a receipt with the ones that still break it.">
+<!-- Search engines: SEARCHABLE in scripts/build_site.py, off while the site is a private preview
+     (until the release gates hold, DECISIONS 2026-11-06). -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0b" id="theme-color">
+<link rel="canonical" href="https://tracefix.dev/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tracefix.dev/">
+<meta property="og:title" content="Tracefix: your fix passed CI. Now let’s try to break it.">
+<meta property="og:description" content="An open-source fix verifier for Python. It attacks a bug fix with inputs the tests never tried and hands back a receipt with the ones that still break it.">
+<meta property="og:image" content="https://tracefix.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  // Before first paint: mark JS, and apply the theme: Dark unless the visitor saved Light or System.
+  (function () {
+    var d = document.documentElement, t = 'dark'; d.className = 'js';
+    try { var saved = localStorage.getItem('tracefix-theme'); if (saved === 'light' || saved === 'system') t = saved; } catch (e) {}
+    d.setAttribute('data-theme', t);
+    // Fail-safe: site.css hides the reveal blocks until site.js shows them. If site.js fails to load
+    // (its onerror) or has not started the reveals in 2.5 s, show every block as it is.
+    function showAll() {
+      if (d.classList.contains('reveals-on')) return;
+      var all = document.querySelectorAll('[data-reveal],[data-words],[data-reveal-group],.hero');
+      for (var i = 0; i < all.length; i++) all[i].classList.add('is-in');
+    }
+    window.tracefixShowAll = showAll;
+    setTimeout(showAll, 2500);
+  })();
+</script>
+<link rel="stylesheet" href="assets/site.css">
+<!-- Fetch a page of this site when a link to it is hovered or pressed, so the next page is ready. -->
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="preview-note" aria-label="Private preview"><p>Private preview: Tracefix is not released yet, so its GitHub links open only for collaborators. <a href="talk/">Talk to me</a></p></aside>
+
+<header class="site-head" id="head">
+  <div class="frame">
+    <a class="logo" href="#top" aria-label="Tracefix home"><img class="lt" src="assets/logo.svg" alt="" width="100" height="36"><img class="dk" src="assets/logo-reversed.svg" alt="" width="100" height="36"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="benchmark/">Benchmark<i class="nm" aria-hidden="true"></i></a>
+      <a href="receipts/">Receipts<i class="nm" aria-hidden="true"></i></a>
+      <a href="method/">Method<i class="nm" aria-hidden="true"></i></a>
+      <a href="#install">Install</a>
+      <button type="button" class="pal-open" data-palette-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><span class="pal-open-label">Search</span><kbd data-palette-key>Ctrl K</kbd></button>
+      <div class="theme" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+        <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+        <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+      </div>
+      <a class="btn btn-sm" href="talk/">Talk to me</a>
+    </nav>
+    <details class="menu">
+      <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span class="menu-label">Menu</span></summary>
+      <nav aria-label="Menu">
+        <a href="benchmark/">Benchmark</a>
+        <a href="receipts/">Receipts</a>
+        <a href="method/">Method</a>
+        <a href="talk/">Talk to me</a>
+        <a href="#install">Install</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<!-- HOME. No number is typed here: every count, cost, level and code line fills a hole from
+     scripts/site_home.py (the benchmark data, the partial_fix receipt and fixture, pyproject.toml).
+     tests/test_site_home.py fails if this file's text holds a digit outside a level name. -->
+<!-- HERO: the statement over a field of inputs being tried; the replay sits right under it -->
+<section id="top" class="hero">
+  <div class="frame">
+    <canvas class="field" id="field" aria-hidden="true"></canvas>
+    <button class="field-toggle" id="field-toggle" type="button" hidden><svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="3" height="9"/><rect x="7" y="1.5" width="3" height="9"/></svg><span>Pause background</span></button>
+    <h1 data-words><span class="l1">Your fix passed CI.</span><span class="l2">Now let’s try to break it<span class="stop" aria-hidden="true"></span><span class="sr-only">.</span></span></h1>
+    <p class="lede" data-reveal style="--d:4">Give Tracefix a bug fix from a coding agent or a person: the commit before, the commit after and the issue. It attacks the fix with inputs the tests never tried and hands back a receipt with the ones that still break it.</p>
+    <div class="ctas" data-reveal style="--d:5">
+      <a class="btn" href="#attack">Watch it break a fix</a>
+      <a class="btn-ghost" href="method/">How it decides</a>
+    </div>
+    <div class="facts" data-reveal style="--d:6">
+      <ul aria-label="What it needs"><li>Pre-alpha</li><li>Python 3.11.4+ and pytest</li><li>An Anthropic API key</li></ul>
+      <p>Your code and the issue go to Anthropic’s API. On real fixes a live run took 3.7 minutes and $0.21 of model calls at the median, $0.72 at most.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SET-PIECE: a browser replay of Break My Fix on the real partial_fix code -->
+<section id="attack" class="band wash" aria-labelledby="attack-h">
+  <div class="frame demo">
+    <div class="demo-col">
+      <h2 id="attack-h" data-words>The fix stops the crash. <span class="soft">PORT unset no longer takes the service down.</span></h2>
+      <p class="mute" data-reveal>The issue said the service crashed with no PORT. This fix handles a missing value, and its test passes. The docstring makes one more promise. Press the button to see whether the fix keeps it.</p>
+      <p class="mute" data-reveal style="--d:1">A blank PORT is not exotic: <code>PORT=</code> in a .env file, or an empty value in Docker or Kubernetes config, gets here as <code>''</code>.</p>
+      <figure class="panel" data-reveal style="--d:2">
+        <figcaption>src/svc/config.py</figcaption>
+        <div class="lines">
+          <div class="ln">def parse_port(raw: str | None) -&gt; int:</div>
+          <div class="ln">    &quot;&quot;&quot;Parse the PORT variable.</div>
+          <div class="ln"> </div>
+          <div class="ln ln-doc" id="doc-line">    PORT: TCP port to listen on. Optional; if unset or blank, DEFAULT_PORT (8080) is used.</div>
+          <div class="ln">    Surrounding whitespace is ignored. Raises ConfigError if the port is outside 1..65535.</div>
+          <div class="ln">    &quot;&quot;&quot;</div>
+          <div class="ln ln-add">    if raw is None:</div>
+          <div class="ln ln-add">        return DEFAULT_PORT</div>
+          <div class="ln">    port = int(raw.strip())</div>
+          <div class="ln">    if not MIN_PORT &lt;= port &lt;= MAX_PORT:</div>
+          <div class="ln">        raise ConfigError(f&quot;PORT must be between {MIN_PORT} and {MAX_PORT}, got {port}&quot;)</div>
+          <div class="ln">    return port</div>
+        </div>
+      </figure>
+      <ul class="nums" aria-label="The real run, from its receipt" data-reveal style="--d:3"><li>Break My Fix: 420 inputs, 1 finding</li><li>Guard: 4 of 4 mutants killed</li><li>Behaviour diff: 200 inputs, 1 change, explained</li><li>8 model calls ($0.15 when live)</li><li>Run time 1:14 (model answers replayed)</li></ul>
+      <a class="more" href="receipts/partial_fix/" data-reveal style="--d:3">Read the full receipt and its run</a>
+    </div>
+
+    <div class="demo-col" data-reveal style="--d:1; gap: 18px">
+      <div class="demo-bar">
+        <p id="tally" class="label" style="font-size: 14px">Inputs ready</p>
+        <p id="tally-say" class="sr-only" aria-live="polite"></p>
+        <button id="run" class="btn" type="button">Replay the attack</button>
+      </div>
+      <p class="mute" style="font-size: 14px">A replay in your browser: the fixed <code>parse_port</code>, ported line for line to JavaScript, on the inputs below. The real run executed the Python code and wrote the receipt this replay ends in.</p>
+      <div id="grid" class="grid" role="group" aria-label="Inputs tried against parse_port. Hover or focus one to see its result; arrow keys move between them."></div>
+      <form id="try" class="try" hidden>
+        <label for="try-in">Or try your own value</label>
+        <div class="try-row">
+          <span id="try-mark" class="try-mark" aria-hidden="true"></span>
+          <span class="try-pre" aria-hidden="true">PORT=</span>
+          <input id="try-in" type="text" name="port" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="try-note">
+        </div>
+        <div id="try-picks" class="try-picks" role="group" aria-label="Values to try"></div>
+        <p id="try-note" class="mute">What you type is text, as an environment variable is. A finding needs a promise: where the docstring says nothing, nothing counts against the fix.</p>
+        <output id="try-out" class="sr-only" for="try-in"></output>
+      </form>
+      <div id="read" class="read">
+        <div id="read-call">parse_port(raw=None)</div>
+        <div id="read-result" class="mute">Not tried yet. Each circle is one input.</div>
+        <noscript><div class="mute">The replay needs JavaScript. The receipt it ends in: parse_port(raw=&#x27;&#x27;) raises ValueError: invalid literal for int() with base 10: &#x27;&#x27;, though the docstring promises “if unset or blank, DEFAULT_PORT (8080) is used”.</div></noscript>
+      </div>
+    </div>
+
+    <div id="done" class="receipt" hidden>
+      <div>
+        <p class="verdict"><i class="pop" aria-hidden="true"></i>Fix Receipt: COUNTEREXAMPLE</p>
+        <p><code>parse_port(raw=&#x27;&#x27;)</code> raises ValueError: invalid literal for int() with base 10: &#x27;&#x27;. The docstring promises: “if unset or blank, DEFAULT_PORT (8080) is used”. 3 more inputs break it the same way.</p>
+        <p class="mute small">A finding only counts when it comes with a pytest file that fails on the fixed code. This is the one Tracefix wrote:</p>
+      </div>
+      <figure class="panel">
+        <figcaption>findings/finding_1.py</figcaption>
+        <pre class="code" tabindex="0" aria-label="findings/finding_1.py">from svc.config import parse_port
+
+
+def test_break_my_fix_1() -&gt; None:
+    raw = &#x27;&#x27;
+    # The property applies to this input: raw is not None and raw.strip() == &#x27;&#x27;
+    result = parse_port(raw=raw)
+    assert result == (8080)</pre>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- STANDING: where Tracefix stands on real fixes, right after the showcase, with the benchmark's
+     own caveat (council 2026-11-07: the showcase must not read better than the numbers) -->
+<section id="stands" class="band" aria-labelledby="stands-h">
+  <div class="frame pad stands">
+    <div class="stands-say">
+      <h2 id="stands-h" class="h2" data-words>Where it stands. <span class="soft">A brake, not yet a detector.</span></h2>
+      <p class="standing-line" data-reveal>Slice 2, dev (4 Nov 2026), real bug fixes from open-source Python projects. Of 20 wrong fixes written by a coding agent, Tracefix gave 6 a counterexample, but only 1 of those 6 rests on the agent’s own mistake; 4 still reached L2. Of 85 correct fixes, 8 got a false alarm.</p>
+      <p class="mute" data-reveal style="--d:1">0 of 7 release gates hold, so Tracefix is not released, and not yet good enough to gate merges on its own.</p>
+      <a class="more" href="benchmark/" data-reveal style="--d:2">How it was measured, and every counted miss</a>
+    </div>
+    <!-- The same counts as the sentence, one mark per fix (scripts/site_home.py standing_marks) -->
+    <div class="tallies" role="group" aria-label="The same counts, one mark per fix">
+      <figure class="tally" data-reveal><figcaption><b>20</b> wrong fixes written by a coding agent</figcaption><div class="marks" style="--cols:10" aria-hidden="true"><i class="mk mk-cx" style="--n:0"></i><i class="mk mk-cxo" style="--n:1"></i><i class="mk mk-cxo" style="--n:2"></i><i class="mk mk-cxo" style="--n:3"></i><i class="mk mk-cxo" style="--n:4"></i><i class="mk mk-cxo" style="--n:5"></i><i class="mk mk-l2" style="--n:6"></i><i class="mk mk-l2" style="--n:7"></i><i class="mk mk-l2" style="--n:8"></i><i class="mk mk-l2" style="--n:9"></i><i class="mk mk-low" style="--n:10"></i><i class="mk mk-low" style="--n:11"></i><i class="mk mk-low" style="--n:12"></i><i class="mk mk-low" style="--n:13"></i><i class="mk mk-low" style="--n:14"></i><i class="mk mk-low" style="--n:15"></i><i class="mk mk-low" style="--n:16"></i><i class="mk mk-low" style="--n:17"></i><i class="mk mk-low" style="--n:18"></i><i class="mk mk-low" style="--n:19"></i></div><ul class="tally-key"><li data-k="cx"><i class="mk mk-cx" aria-hidden="true"></i><span><b>1</b> counterexample that rests on the agent’s own mistake</span></li><li data-k="cxo"><i class="mk mk-cxo" aria-hidden="true"></i><span><b>5</b> counterexamples that rest on something the merged fix shares</span></li><li data-k="l2"><i class="mk mk-l2" aria-hidden="true"></i><span><b>4</b> reached L2: a wrong fix that looked guarded</span></li><li data-k="low"><i class="mk mk-low" aria-hidden="true"></i><span><b>10</b> stopped at L1 or below</span></li></ul></figure><figure class="tally" data-reveal><figcaption><b>85</b> correct fixes</figcaption><div class="marks" style="--cols:17" aria-hidden="true"><i class="mk mk-cxo" style="--n:0"></i><i class="mk mk-cxo" style="--n:1"></i><i class="mk mk-cxo" style="--n:2"></i><i class="mk mk-cxo" style="--n:3"></i><i class="mk mk-cxo" style="--n:4"></i><i class="mk mk-cxo" style="--n:5"></i><i class="mk mk-cxo" style="--n:6"></i><i class="mk mk-cxo" style="--n:7"></i><i class="mk mk-cx" style="--n:8"></i><i class="mk mk-cx" style="--n:9"></i><i class="mk mk-cx" style="--n:10"></i><i class="mk mk-cx" style="--n:11"></i><i class="mk mk-cx" style="--n:12"></i><i class="mk mk-cx" style="--n:13"></i><i class="mk mk-cx" style="--n:14"></i><i class="mk mk-l2" style="--n:15"></i><i class="mk mk-l2" style="--n:16"></i><i class="mk mk-l2" style="--n:17"></i><i class="mk mk-l2" style="--n:18"></i><i class="mk mk-l2" style="--n:19"></i><i class="mk mk-l2" style="--n:20"></i><i class="mk mk-l2" style="--n:21"></i><i class="mk mk-l2" style="--n:22"></i><i class="mk mk-l2" style="--n:23"></i><i class="mk mk-l2" style="--n:24"></i><i class="mk mk-l2" style="--n:25"></i><i class="mk mk-l2" style="--n:26"></i><i class="mk mk-l2" style="--n:27"></i><i class="mk mk-l2" style="--n:28"></i><i class="mk mk-l2" style="--n:29"></i><i class="mk mk-l2" style="--n:30"></i><i class="mk mk-l2" style="--n:31"></i><i class="mk mk-l2" style="--n:32"></i><i class="mk mk-l2" style="--n:33"></i><i class="mk mk-l2" style="--n:34"></i><i class="mk mk-l2" style="--n:35"></i><i class="mk mk-l2" style="--n:36"></i><i class="mk mk-low" style="--n:37"></i><i class="mk mk-low" style="--n:38"></i><i class="mk mk-low" style="--n:39"></i><i class="mk mk-low" style="--n:40"></i><i class="mk mk-low" style="--n:41"></i><i class="mk mk-low" style="--n:42"></i><i class="mk mk-low" style="--n:43"></i><i class="mk mk-low" style="--n:44"></i><i class="mk mk-low" style="--n:45"></i><i class="mk mk-low" style="--n:46"></i><i class="mk mk-low" style="--n:47"></i><i class="mk mk-low" style="--n:48"></i><i class="mk mk-low" style="--n:49"></i><i class="mk mk-low" style="--n:50"></i><i class="mk mk-low" style="--n:51"></i><i class="mk mk-low" style="--n:52"></i><i class="mk mk-low" style="--n:53"></i><i class="mk mk-low" style="--n:54"></i><i class="mk mk-low" style="--n:55"></i><i class="mk mk-low" style="--n:56"></i><i class="mk mk-low" style="--n:57"></i><i class="mk mk-low" style="--n:58"></i><i class="mk mk-low" style="--n:59"></i><i class="mk mk-low" style="--n:60"></i><i class="mk mk-low" style="--n:61"></i><i class="mk mk-low" style="--n:62"></i><i class="mk mk-low" style="--n:63"></i><i class="mk mk-low" style="--n:64"></i><i class="mk mk-low" style="--n:65"></i><i class="mk mk-low" style="--n:66"></i><i class="mk mk-low" style="--n:67"></i><i class="mk mk-low" style="--n:68"></i><i class="mk mk-low" style="--n:69"></i><i class="mk mk-low" style="--n:70"></i><i class="mk mk-low" style="--n:71"></i><i class="mk mk-low" style="--n:72"></i><i class="mk mk-low" style="--n:73"></i><i class="mk mk-low" style="--n:74"></i><i class="mk mk-low" style="--n:75"></i><i class="mk mk-low" style="--n:76"></i><i class="mk mk-low" style="--n:77"></i><i class="mk mk-low" style="--n:78"></i><i class="mk mk-low" style="--n:79"></i><i class="mk mk-low" style="--n:80"></i><i class="mk mk-low" style="--n:81"></i><i class="mk mk-low" style="--n:82"></i><i class="mk mk-low" style="--n:83"></i><i class="mk mk-low" style="--n:84"></i></div><ul class="tally-key"><li data-k="cxo"><i class="mk mk-cxo" aria-hidden="true"></i><span><b>8</b> false alarms: a counterexample that was not a real bug</span></li><li data-k="cx"><i class="mk mk-cx" aria-hidden="true"></i><span><b>7</b> other counterexamples, 6 of them labelled a real bug in the fix</span></li><li data-k="l2"><i class="mk mk-l2" aria-hidden="true"></i><span><b>22</b> reached L2</span></li><li data-k="low"><i class="mk mk-low" aria-hidden="true"></i><span><b>48</b> stopped at L1 or below</span></li></ul></figure>
+      <p class="tally-note" data-reveal>One mark per fix. A square is a counterexample, hollow when it does not count against that fix: a false alarm, or something the merged fix does too. A circle is the level the receipt stopped at.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM: three more fixtures as tabs, each as its real receipt reports it (scripts/site_home.py) -->
+<section class="band" aria-labelledby="moves-h">
+  <div class="frame pad" style="padding-bottom: 64px">
+    <h2 id="moves-h" class="h2" data-words style="max-width: 22ch">A green fix can still be wrong. <span class="soft">More ways it happens, each a fixture with its real receipt.</span></h2>
+    <div class="cases">
+      <div id="moves" class="tablist" role="tablist" aria-label="Ways a fix goes wrong" data-reveal>
+        <button class="move" type="button" role="tab" id="butterfly" aria-controls="case" aria-selected="true"><span class="move-name">The Butterfly</span><span class="move-line">Fixes the bug and quietly moves something else.</span></button>
+        <button class="move" type="button" role="tab" id="hard-code" aria-controls="case" aria-selected="false" tabindex="-1"><span class="move-name">The Hard-Code</span><span class="move-line">Special-cases the value from the report.</span></button>
+        <button class="move" type="button" role="tab" id="lawyer" aria-controls="case" aria-selected="false" tabindex="-1"><span class="move-name">The Lawyer</span><span class="move-line">Changes the test until the test agrees.</span></button>
+      </div>
+      <div id="case" class="case" role="tabpanel" aria-labelledby="butterfly" data-reveal style="--d:1">
+        <p id="mv-issue" class="quote">“Histogram buckets are wrong for large values”</p>
+        <figure class="panel">
+          <figcaption id="mv-file">src/stats/buckets.py</figcaption>
+          <div id="mv-diff" class="lines" tabindex="0" role="region" aria-labelledby="mv-file"><div class="d d-del">- return int(value / width) * width</div><div class="d d-add">+ return value // width * width</div></div>
+        </figure>
+        <div class="finds">
+          <span class="eyebrow">The receipt says</span>
+          <span id="mv-finds">Break My Fix: bucket_of(value=-5, width=10) returns -10 (before: returns 0). Level: COUNTEREXAMPLE.</span>
+        </div>
+        <a id="mv-open" class="more" href="receipts/wrong_but_green/">Open this receipt</a>
+      </div>
+    </div>
+    <script type="application/json" id="moves-data">[{"case": "wrong_but_green", "issue": "Histogram buckets are wrong for large values", "file": "src/stats/buckets.py", "diff": [["-", "return int(value / width) * width"], ["+", "return value // width * width"]], "finds": "Break My Fix: bucket_of(value=-5, width=10) returns -10 (before: returns 0). Level: COUNTEREXAMPLE."}, {"case": "special_cased", "issue": "Lease schedule contains a payment on 29 Feb 2100", "file": "src/billing/calendar.py", "diff": [["+", "if year == 2100 and month == 2:"], ["+", "    return 28"]], "finds": "Break My Fix: days_in_month(year=2200, month=2) returns 29 (the same before the fix). Level: COUNTEREXAMPLE."}, {"case": "test_weakened", "issue": "Trailing dash in slugs for titles ending in punctuation", "file": "tests/test_slug.py", "diff": [["-", "assert slugify(\"Rock & Roll\") == \"rock-roll\""]], "finds": "Integrity check: the fix removes assert slugify(\"Rock & Roll\") == \"rock-roll\" from tests/test_slug.py, an assert that passes before the fix and fails on it: AssertionError: assert 'rock--roll' == 'rock-roll'. Level: COUNTEREXAMPLE."}]</script>
+  </div>
+</section>
+
+<!-- INVERSION: the rule at display size and the evidence ladder. A fixture's receipt climbs it on
+     the Method page (DECISIONS 2026-11-14 "Home page cut"). -->
+<section id="levels" class="band ink" aria-labelledby="rule-h">
+  <div class="frame pad">
+    <h2 id="rule-h" class="rule" data-words>AI proposes. <span class="dim">Code decides.</span></h2>
+    <p class="rule-p" data-scrub>A model may write the tests and pick the attacks. Every level comes from running code: an exit code, a diff or a counter. Some of what runs was written by a model, and the receipt says which.</p>
+    <dl class="ladder" data-reveal-group>
+      <div style="--d:0"><dt><span class="cx-sq" aria-hidden="true"></span><span class="cx">COUNTEREXAMPLE</span></dt><dd>Proof against the fix: an input that breaks it, a regression, a weakened test, or the bug isn’t fixed.</dd></div>
+      <div style="--d:1"><dt><span class="lk">L0</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span></dt><dd>Not reproduced, the tests could not run, or tampering was detected.</dd></div>
+      <div style="--d:2"><dt><span class="lk">L1</span><span class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span></dt><dd>Reproduced: a test fails before the fix and passes after it.</dd></div>
+      <div style="--d:3"><dt><span class="lk">L2</span><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i></span></dt><dd>L1, and the tests guard the fix: revert it or plant bugs in it and they notice.</dd></div>
+      <div style="--d:4"><dt><span class="lk">L3</span><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></dt><dd>L2, and every behaviour change the diff observed is explained.</dd></div>
+      <div style="--d:5"><dt><span class="lk">L4</span><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></dt><dd>L3, and a full Break My Fix attack found nothing. No real correct fix has reached L3 yet: 0 of 85 in Slice 2, dev (4 Nov 2026).</dd></div>
+    </dl>
+    <p class="never" data-reveal>L4 means we tried hard to break it and nothing broke. It never means “this is correct”.</p>
+    <p class="ladder-more" data-reveal><a class="more" href="method/#ladder">Put a fixture’s real receipt through the ladder</a></p>
+  </div>
+</section>
+
+<!-- INSTALL: tabbed real commands with a working copy button -->
+<section id="install" class="band" aria-labelledby="install-h">
+  <div class="frame pad install">
+    <div data-reveal>
+      <h2 id="install-h" class="h2">Point it at a fix.</h2>
+      <p class="mute">Give it the commit before the fix, the commit with it, and the issue. On real fixes a live run took 3.7 minutes at the median (16.5 minutes at the 90th percentile) and writes a receipt that is safe to post as a PR comment. <a href="method/#loop">What a pull request gets</a>: a check, a comment and the receipt as JSON.</p>
+      <p class="mute small">Pre-alpha. Tracefix needs Python 3.11.4+, git 2.32+ and an Anthropic API key; your code and the issue are sent to Anthropic’s API. Not released yet: the repository opens on release, so until then the clone works only for collaborators. Not on PyPI: the commands install it from a clone into your project, so the project must allow Python 3.11.4+. Without uv: <code>pip install ~/tracefix</code>, then drop <code>uv run</code>. Project on an older Python (3.9 or later): <code>uv tool install ~/tracefix</code> and add <code>--python .venv/bin/python</code>.</p>
+    </div>
+    <div data-reveal style="--d:1">
+      <div id="itabs" class="itabs" role="tablist" aria-label="Where to run it">
+        <button class="itab" type="button" role="tab" id="itab-0" aria-controls="term" aria-selected="true">Command line</button>
+        <button class="itab" type="button" role="tab" id="itab-1" aria-controls="term" aria-selected="false" tabindex="-1">GitHub Action</button>
+      </div>
+      <figure id="term" class="term" role="tabpanel" aria-labelledby="itab-0">
+        <div class="term-head">
+          <figcaption id="term-where">Terminal, in your project</figcaption>
+          <button id="copy" class="copy" type="button" hidden>Copy</button>
+        </div>
+        <pre id="term-code" tabindex="0" aria-label="Install commands">git clone https://github.com/momirie/tracefix ~/tracefix
+uv add --dev ~/tracefix
+export ANTHROPIC_API_KEY=sk-ant-...
+uv run tracefix verify --repo . --base main --head my-fix \
+    --issue "Service crashes at startup when PORT is not set"</pre>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ: native details ledger with the README's own answers -->
+<section id="faq" class="band" aria-labelledby="faq-h">
+  <div class="frame pad faq">
+    <div data-reveal>
+      <h2 id="faq-h" class="h2">Questions</h2>
+      <p class="closing">Try to break the next fix <span class="soft">before your users do.</span></p>
+      <a class="btn" href="talk/" style="min-height: 48px">Talk to me</a>
+      <p class="mute small">Not released yet: the GitHub repository opens on release.</p>
+    </div>
+    <div data-reveal style="--d:1">
+      <details>
+        <summary>Does it fix my bug?<span class="plus" aria-hidden="true">+</span></summary>
+        <p>No. It’s the friend who reads your fix and asks “what if the string is empty?”</p>
+      </details>
+      <details>
+        <summary>Is it an AI code reviewer?<span class="plus" aria-hidden="true">+</span></summary>
+        <p>No. Models write test code. Whether anything passed is decided by running it.</p>
+      </details>
+      <details>
+        <summary>Does it raise false alarms?<span class="plus" aria-hidden="true">+</span></summary>
+        <p>Sometimes. On the latest benchmark of real fixes, 8 of 85 correct fixes got a finding that was not a real bug. Every finding comes with a pytest file you can run yourself. If a receipt is wrong, <a href="talk/#feedback">tell me</a>.</p>
+      </details>
+      <details>
+        <summary>Is it safe on untrusted pull requests?<span class="plus" aria-hidden="true">+</span></summary>
+        <p>Fork pull requests run only after a maintainer adds a label, and only with strict isolation (Linux with bubblewrap). The job that posts results never holds the API key.</p>
+      </details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="band ink foot">
+  <div class="frame">
+    <img src="assets/logo-reversed.svg" alt="Tracefix" width="100" height="36">
+    <nav aria-label="Footer">
+      <a href="#levels">Evidence levels</a>
+      <a href="benchmark/">Benchmark</a>
+      <a href="receipts/">Receipts</a>
+      <a href="method/">Method</a>
+      <a href="talk/">Talk to me</a>
+      <a href="talk/#feedback">Report a wrong receipt</a>
+      <a href="https://github.com/momirie/tracefix">GitHub (after release)</a>
+      <span>MIT licence</span>
+    </nav>
+    <div class="theme" role="group" aria-label="Colour theme">
+      <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+      <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+      <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<!-- The command palette (Ctrl or Cmd + K, or "/"): site.js fills it from the entries below
+     (scripts/site_palette.py) and shows the buttons that open it. -->
+<dialog id="palette" class="palette" aria-label="Search this site" data-root="">
+  <div class="pal-top">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+    <input id="pal-in" type="text" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-autocomplete="list" aria-label="Search pages, receipts and sections" placeholder="Search pages, receipts and sections" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <button type="button" class="pal-close" data-palette-close>Esc</button>
+  </div>
+  <ul id="pal-list" class="pal-list" role="listbox" aria-label="Results"></ul>
+  <p id="pal-none" class="pal-none" role="status" hidden>Nothing matches. Try a fixture name, a level or a page.</p>
+  <p class="pal-foot" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></p>
+</dialog>
+<script type="application/json" id="palette-data">[{"g":"Pages","t":"Home","h":"Watch Tracefix break a fix","u":""},{"g":"Pages","t":"Benchmark","h":"How often it is right on real fixes, and every miss","u":"benchmark/"},{"g":"Pages","t":"Receipts","h":"What Tracefix hands back, for every fixture","u":"receipts/"},{"g":"Pages","t":"Method","h":"How it decides, and where it stops","u":"method/"},{"g":"Pages","t":"Talk to me","h":"A conversation before anything ships","u":"talk/"},{"g":"Receipts","t":"good_fix","h":"Orders list is missing the last order","u":"receipts/good_fix/","lv":"L4"},{"g":"Receipts","t":"partial_fix","h":"Service crashes at startup when PORT is not set","u":"receipts/partial_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"wrong_but_green","h":"Histogram buckets are wrong for large values","u":"receipts/wrong_but_green/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"test_weakened","h":"Trailing dash in slugs for titles ending in punctuation","u":"receipts/test_weakened/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"special_cased","h":"Lease schedule contains a payment on 29 Feb 2100","u":"receipts/special_cased/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"unguarded_test","h":"truncate() returns strings longer than max_len","u":"receipts/unguarded_test/","lv":"L1"},{"g":"Receipts","t":"no_fix","h":"Contact import creates duplicates for differently-capitalised emails","u":"receipts/no_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"env_broken","h":"weekly_report() week number off by one on Mondays","u":"receipts/env_broken/","lv":"L0"},{"g":"Receipts","t":"method_partial","h":"Listener crashes when no port is configured","u":"receipts/method_partial/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"method_good","h":"Minor bump keeps the old patch number","u":"receipts/method_good/","lv":"L4"},{"g":"Receipts","t":"py39_partial","h":"Final table says \"11st place\"","u":"receipts/py39_partial/","lv":"COUNTEREXAMPLE"},{"g":"Sections","t":"Replay the attack","h":"Home","u":"#attack"},{"g":"Sections","t":"Try your own input","h":"Home","u":"#try"},{"g":"Sections","t":"Where it stands","h":"Home","u":"#stands"},{"g":"Sections","t":"The Butterfly","h":"Home","u":"#butterfly"},{"g":"Sections","t":"The Hard-Code","h":"Home","u":"#hard-code"},{"g":"Sections","t":"The Lawyer","h":"Home","u":"#lawyer"},{"g":"Sections","t":"Evidence levels","h":"Home","u":"#levels"},{"g":"Sections","t":"Install","h":"Home","u":"#install"},{"g":"Sections","t":"Questions","h":"Home","u":"#faq"},{"g":"Sections","t":"Release gates","h":"Benchmark","u":"benchmark/#gates"},{"g":"Sections","t":"Results per slice","h":"Benchmark","u":"benchmark/#results"},{"g":"Sections","t":"Every counted miss","h":"Benchmark","u":"benchmark/#misses"},{"g":"Sections","t":"How it was measured","h":"Benchmark","u":"benchmark/#method"},{"g":"Sections","t":"The rule","h":"Method","u":"method/#rule"},{"g":"Sections","t":"The run, stage by stage","h":"Method","u":"method/#run"},{"g":"Sections","t":"The ladder and the strict L4 gate","h":"Method","u":"method/#ladder"},{"g":"Sections","t":"Isolation and the tamper watch","h":"Method","u":"method/#isolation"},{"g":"Sections","t":"In the pull request","h":"Method","u":"method/#loop"},{"g":"Sections","t":"Fork pull requests","h":"Method","u":"method/#forks"},{"g":"Sections","t":"What is sent to Anthropic","h":"Method","u":"method/#sent"},{"g":"Sections","t":"What I would ask","h":"Talk to me","u":"talk/#ask"},{"g":"Sections","t":"Report a wrong receipt","h":"Talk to me","u":"talk/#feedback"}]</script>
+<script src="assets/site.js" onerror="tracefixShowAll()"></script>
+<script src="assets/home.js"></script>
+</body>
+</html>

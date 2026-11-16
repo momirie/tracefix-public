@@ -1,0 +1,11 @@
+{
+ "key": "f0a6e83e5b805c493c2895ac49f84b9e7cc56feff4b6b25bd4b03cb1f04ac2d5",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1600,
+  "output_tokens": 98,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"The issue reports that 29 Feb 2100 does not exist, so February 2100 must have 28 days. The hardcoded special case is a narrow fix, but this specific input's change is exactly what the issue asks for.\"}]}"
+ },
+ "role": "judge"
+}

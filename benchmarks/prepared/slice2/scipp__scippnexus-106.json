@@ -1,0 +1,145 @@
+{
+ "instance_id": "scipp__scippnexus-106",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 3.726,
+ "suite_timeout": 120,
+ "source_hunks": 11,
+ "variants": [
+  {
+   "index": 0,
+   "path": "src/scippnexus/nexus_classes.py",
+   "old_start": 13,
+   "old_len": 6,
+   "label": "broken",
+   "failing": 10,
+   "functions": [
+    {
+     "path": "src/scippnexus/nexus_classes.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "src/scippnexus/nexus_classes.py",
+   "old_start": 23,
+   "old_len": 10,
+   "label": "partial",
+   "failing": 4,
+   "functions": [
+    {
+     "path": "src/scippnexus/nexus_classes.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "src/scippnexus/nxdetector.py",
+   "old_start": 4,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/scippnexus/nxdetector.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "src/scippnexus/nxdetector.py",
+   "old_start": 91,
+   "old_len": 8,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/scippnexus/nxdetector.py",
+     "function": "_EventField.unit"
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 12689,
+   "label": "partial",
+   "failing": 4,
+   "kept": true,
+   "functions": [
+    {
+     "path": "src/scippnexus/nexus_classes.py",
+     "function": "NXtransformations._getitem"
+    }
+   ],
+   "differs": [
+    {
+     "path": "src/scippnexus/nexus_classes.py",
+     "function": null
+    },
+    {
+     "path": "src/scippnexus/nexus_classes.py",
+     "function": "NXtransformations._getitem"
+    },
+    {
+     "path": "src/scippnexus/nxdetector.py",
+     "function": null
+    },
+    {
+     "path": "src/scippnexus/nxdetector.py",
+     "function": "NXdetector._event_grouping"
+    },
+    {
+     "path": "src/scippnexus/nxdetector.py",
+     "function": "_EventField.unit"
+    },
+    {
+     "path": "src/scippnexus/nxtransformations.py",
+     "function": null
+    },
+    {
+     "path": "src/scippnexus/nxtransformations.py",
+     "function": "NXtransformations._getitem"
+    },
+    {
+     "path": "src/scippnexus/nxtransformations.py",
+     "function": "_get_transformations"
+    },
+    {
+     "path": "src/scippnexus/nxtransformations.py",
+     "function": "get_full_transformation"
+    },
+    {
+     "path": "src/scippnexus/nxtransformations.py",
+     "function": "get_full_transformation_starting_at"
+    },
+    {
+     "path": "src/scippnexus/nxtransformations.py",
+     "function": "make_transformation"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "6da58568bef5810b1556cd38dc3d8125bfe02cd4",
+  "gold": "4456bebcd41f9e702952b96e86bcaa4ec5fa794f",
+  "v1": "1f5c73b612a9a7e4a9aad3ccb2ced13e32d140b8",
+  "agent_wrong": "0f95efe15b2d366a8aff17d75ca66f8cbd39cd39"
+ },
+ "seconds": 47.625
+}

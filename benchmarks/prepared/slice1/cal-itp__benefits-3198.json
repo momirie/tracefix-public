@@ -1,0 +1,74 @@
+{
+ "instance_id": "cal-itp__benefits-3198",
+ "excluded": null,
+ "detail": "",
+ "python": "3.12.12",
+ "isolation": "strict",
+ "pip_changes": [
+  "annotated-types - -> 0.8.0",
+  "anthropic - -> 1.15.0",
+  "anyio - -> 4.15.1",
+  "defusedxml - -> 0.7.1",
+  "docstring-parser - -> 0.18.0",
+  "h11 - -> 0.16.0",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis - -> 6.170.0",
+  "idna 3.11 -> 3.20",
+  "jiter - -> 0.17.0",
+  "opentelemetry-api - -> 1.45.1",
+  "pydantic - -> 2.14.1",
+  "pydantic-core - -> 2.50.1",
+  "sniffio - -> 1.3.1",
+  "sortedcontainers - -> 2.4.0",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.15.0 -> 4.16.0",
+  "typing-inspection - -> 0.4.4"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "pytest_base_url.plugin",
+  "pytest_django.plugin",
+  "pytest_mock",
+  "pytest_playwright.pytest_playwright",
+  "pytest_socket"
+ ],
+ "suite_seconds": 40.043,
+ "suite_timeout": 121,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "benefits/core/admin/transit.py",
+   "old_start": 2,
+   "old_len": 6,
+   "label": "hidden_tests_pass",
+   "failing": 0
+  },
+  {
+   "index": 1,
+   "path": "benefits/core/admin/transit.py",
+   "old_start": 16,
+   "old_len": 8,
+   "label": "partial",
+   "failing": 1
+  },
+  {
+   "index": 2,
+   "path": "benefits/core/admin/transit.py",
+   "old_start": 30,
+   "old_len": 7,
+   "label": "partial",
+   "failing": 1
+  }
+ ],
+ "kept": 1,
+ "commits": {
+  "base": "f9203e4c17f1aa1ba475776752681f9a70d27088",
+  "gold": "211ae35d352798e121c9e98288677f73ad3402f4",
+  "v1": "024f756496bc9971ebf47485b170136b7470c673"
+ },
+ "seconds": 126.812
+}

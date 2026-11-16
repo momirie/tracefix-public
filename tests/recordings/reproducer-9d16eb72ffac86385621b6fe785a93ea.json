@@ -1,0 +1,11 @@
+{
+ "key": "9d16eb72ffac86385621b6fe785a93ea091f5ebb15f5e33f0a67731ee7f84284",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1679,
+  "output_tokens": 291,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from standings.ordinal import ordinal, ordinals\\n\\n\\ndef test_teens_take_th() -> None:\\n    assert ordinal(11) == \\\"11th\\\"\\n    assert ordinal(12) == \\\"12th\\\"\\n    assert ordinal(13) == \\\"13th\\\"\\n    assert ordinal(111) == \\\"111th\\\"\\n    assert ordinal(112) == \\\"112th\\\"\\n    assert ordinal(113) == \\\"113th\\\"\\n\\n\\ndef test_ordinals_teens() -> None:\\n    assert ordinals([10, 11, 12, 13]) == [\\\"10th\\\", \\\"11th\\\", \\\"12th\\\", \\\"13th\\\"]\\n\",\"rationale\":\"Checks that 11, 12, 13 (and 111-113) get the 'th' suffix via ordinal and ordinals, as the docstring specifies.\"}"
+ },
+ "role": "reproducer"
+}

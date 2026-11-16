@@ -1,0 +1,337 @@
+{
+ "labels": [
+  {
+   "instance_id": "python-cmd2__cmd2-115",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-10-22T16:45:35+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "All 11 regressions are tests of the `list` command, which the issue asks to remove (merged into `history`); the PR's test patch deletes or rewrites them in tests/test_cmd2.py and the transcripts. Intended change, not a bug. The PR's own test patch rewrites this test (set aside by the report already)."
+  },
+  {
+   "instance_id": "kpetremann__mqtt-exporter-37",
+   "run": "agent_wrong-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-10-22T17:02:51+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "The agent keeps the emeter phase only when the device name starts with 'shelly-', so 'shellies/shelly/emeter/0/power' and '/1/power' both normalise to 'shellies/shelly' and the phases collapse again, which is exactly the issue. The hidden test uses 'shellies/room/emeter/0/power', so this is the agent's real mistake. Same outcome on base, as expected for an input the wrong fix leaves unfixed."
+  },
+  {
+   "instance_id": "clld__clldutils-27",
+   "run": "gold-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-10-22T17:33:03+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "The property is about the markdown output ('markdown=True'), but the input sets markdown=False, so both calls return the bare URL and '](' can never appear; same on base. The adversary's input ignored the property's own precondition (no 'applies to this input' line was written for it)."
+  },
+  {
+   "instance_id": "clld__clldutils-27",
+   "run": "agent_wrong-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-10-22T17:35:34+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "label='a-b', message='1-2' gives .../badge/a-b-1-2-green.svg; shields.io splits the path on single dashes (a literal dash must be written '--'), so the badge shows the wrong label/message. Real for an issue asking to expose all of shields.io, but the same defect is in base and gold (quote() leaves '-'), and it is not the agent's actual mistake (the hidden test fails because the agent made `label` the URL label instead of the markdown alt text). Developer: real_bug or unclear?"
+  },
+  {
+   "instance_id": "clld__clldutils-27",
+   "run": "agent_wrong-r1",
+   "finding": 2,
+   "receipt_created_at": "2026-10-22T17:35:34+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "message='X-X' with no label gives .../badge/X-X-green.svg, which shields.io reads as label 'X', message 'X'. Same root cause as #1 (dashes not escaped as '--'; shared with base and gold; not the agent's actual mistake)."
+  },
+  {
+   "instance_id": "astropy__photutils-1943",
+   "run": "gold-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-10-22T17:43:24+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "No peak survives border_width=2 (the 5.0 is not a local maximum next to the 6.0), so find_peaks warns NoDetectionsWarning and returns None, its documented behaviour, which the property allows. It shows as 'raises' only because photutils' pyproject sets pytest filterwarnings = ['error', ...] (checked at the base commit). Same on base."
+  },
+  {
+   "instance_id": "astropy__photutils-1943",
+   "run": "v1-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-10-22T18:27:48+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "All-zero data: find_peaks warns 'Input data is constant' (NoDetectionsWarning) and returns None, which the property allows; it 'raises' only through the project's filterwarnings = error. Same on base and on gold (replay still_fails)."
+  },
+  {
+   "instance_id": "astropy__photutils-1943",
+   "run": "v1-r1",
+   "finding": 2,
+   "receipt_created_at": "2026-10-22T18:27:48+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "With border_width=2 on a 5x5 grid no peak remains, so the second call warns NoDetectionsWarning (raised through the project's filterwarnings = error) instead of returning None, which the property allows. Same on base and on gold (replay still_fails)."
+  },
+  {
+   "instance_id": "fox-it__dissect.cstruct-88",
+   "run": "agent_ok-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-10-22T19:05:28+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "The input feeds a whole '#define A<tab>(B + C)<tab>// comment' source text to ExpressionTokenizer, which only ever receives a constant's value expression (the parser strips the directive and the comment first), so '#' being rejected is expected; same on base. The issue's example is parser input, not tokenizer input."
+  },
+  {
+   "instance_id": "encode__httpx-653",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-10-22T19:11:04+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "test_url_params expected params= to replace the URL's own query; the fix keeps it and appends (`?b=456&a=123`), and the PR's test patch changes that very assertion. Intended change. The PR's own test patch rewrites this test (set aside by the report already)."
+  },
+  {
+   "instance_id": "nipreps__nibabies-395",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-10-22T19:20:32+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "test_get_age_from_tsv[session_id-x1-...] belongs to the old parametrisation of the age parser the fix rewrites; the PR's test patch replaces the whole test (new ids ses-1/sub-1, `units` instead of `sidecar`). Intended change. The PR's own test patch rewrites this test (set aside by the report already)."
+  },
+  {
+   "instance_id": "nipreps__nibabies-395",
+   "run": "v0-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-10-22T19:33:35+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "bids_root is a single path component of over 1,000 characters, so the OS refuses it (ENAMETOOLONG) before any nibabies logic runs; a BIDS root is an existing directory. Same on base. (This run's real leftover is counterexample 2, the regression NameError 'pd'.)"
+  },
+  {
+   "instance_id": "nipreps__nibabies-395",
+   "run": "agent_wrong-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-10-22T19:47:10+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Same as v0-r1 #1: a 1,000+ character bids_root makes the OS raise ENAMETOOLONG; not about age parsing, same on base. The agent's real mistake was not found."
+  },
+  {
+   "instance_id": "django__asgiref-211",
+   "run": "v0-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T16:15:17+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "The partial fix drops the import hunk, so every new scope in get_or_create_application_instance raises NameError: guarantee_single_callable. That is the removed hunk's defect (the odd input, the server class as its own application, does not matter: any call reaches the name)."
+  },
+  {
+   "instance_id": "abhinavsingh__proxy.py-137",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-11-03T16:18:33+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "The repro test is the issue's own case: HttpParser(REQUEST_PARSER).parse(b'\\r\\n') raises IndexError in process_line. The gold patch never touches process_line (it fixes pipelined response parsing, which is what the hidden tests check), so the issue's exact crash is still there. Tracefix is right; the task's gold does not fix its issue."
+  },
+  {
+   "instance_id": "abhinavsingh__proxy.py-137",
+   "run": "gold-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T16:18:33+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "parse(b'\\r\\n') -> IndexError: the issue's telnet-Enter crash, unchanged by the gold patch. Same root as the run's 'fix does not fix'."
+  },
+  {
+   "instance_id": "abhinavsingh__proxy.py-137",
+   "run": "v1-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T16:21:02+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "The same blank-line IndexError as gold #1 (replay on gold: still_fails), so it is the issue's unfixed bug, not a leftover of the removed hunk."
+  },
+  {
+   "instance_id": "scipp__scippnexus-106",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-11-03T16:29:48+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "The 3 regressions are chain tests whose expected value included an identity affine_transform; the fix drops it (chains start from the first transformation) and the PR's test patch rewrites the expectations (all 3 are FAIL_TO_PASS). Intended change, not a bug: the PR's own test patch rewrites this test (set aside by the report already)."
+  },
+  {
+   "instance_id": "Diaoul__babelfish-50",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-11-03T16:47:49+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Both regressions (test_hash_eq, test_hash) assert hash(Country('US')) == hash('US'); the issue asks for frozen dataclasses and says 'This will surely be a breaking change', and the PR's test patch inverts both into *_incorrect. Intended change, not a bug: the PR's own test patch rewrites this test (set aside by the report already)."
+  },
+  {
+   "instance_id": "Diaoul__babelfish-50",
+   "run": "gold-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T16:47:49+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "'__' is not a language code; fromietf raises the library's own LanguageReverseError, the same on base. A relation property (same code gives equal languages) counted a raise on an invalid input as a break. Input outside the domain (NOTES 40)."
+  },
+  {
+   "instance_id": "Diaoul__babelfish-50",
+   "run": "gold-r1",
+   "finding": 2,
+   "receipt_created_at": "2026-11-03T16:47:49+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "'script' is not a language code; ValueError \"'script' is not a valid language\" is the constructor's deliberate validation, same on base. Same pattern as #1 (NOTES 40)."
+  },
+  {
+   "instance_id": "Diaoul__babelfish-50",
+   "run": "agent_wrong-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T16:59:19+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "'00' is not an alpha2 code; LanguageReverseError is the documented error for an unknown code, same on base. The model's raises_only claim allowed only ValueError, the wrong exception type. Not the agent's actual mistake (it fails the hidden hash tests)."
+  },
+  {
+   "instance_id": "disqus__python-phabricator-64",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-11-03T18:35:27+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "The old test reads api.interface; the fix deliberately renames the attribute to _interface (CHANGES says so), so the old name now goes through __getattr__ and tries a network call. The PR's test patch updates that line. Intended change, not a bug: the PR's own test patch rewrites this test (set aside by the report already)."
+  },
+  {
+   "instance_id": "NREL__hescore-hpxml-149",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-11-03T18:58:47+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "The issue asks to move external_building_id from building.about to building_address; both regressions assert the old location and the PR's test patch updates them. Intended change, not a bug: the PR's own test patch rewrites this test (set aside by the report already)."
+  },
+  {
+   "instance_id": "aburrell__ocbpy-144",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-11-03T17:38:07+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "test_custom_ind_selection gets a new 'max' branch and test_vort_unexpected_line moves to expect IOError (the loader now raises instead of logging and returning None), both in the PR's test patch. Intended change, not a bug: the PR's own test patch rewrites this test (set aside by the report already)."
+  },
+  {
+   "instance_id": "NREL__hescore-hpxml-149",
+   "run": "agent_ok-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-11-03T19:07:47+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Same two tests as gold: they assert the location the issue asks to move away from. The agent did not update them, which a reviewer should see, but the code change is the intended one."
+  },
+  {
+   "instance_id": "omni-us__jsonargparse-263",
+   "run": "gold-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T19:17:52+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "yaml_load('null:') raises TypeError: the fix does next(iter(value.keys())) + ':', but YAML parses the key 'null' as None (also 'true:', 'on:', '1:'...). Base returned {None: None}, so a str argument 'null:' now crashes with a TypeError instead of a parse error. New with the fix, in the issue's own case (a word followed by a colon). Minor but real."
+  },
+  {
+   "instance_id": "omni-us__jsonargparse-263",
+   "run": "agent_ok-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T19:21:32+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "yaml_load('on:') raises TypeError: same defect as gold #1 (key + ':' with YAML's non-string key True). New with the fix."
+  },
+  {
+   "instance_id": "asdf-format__asdf-1575",
+   "run": "agent_ok-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-11-03T19:36:34+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "test_info_module is untouched by the PR, passes on base (also alone) and on gold (0 of 1220 untouched tests fail), and fails in all 4 attempts on the agent fix with 'Cannot access data from closed ASDF file'. The agent moved `self._closed = True` out of the `if self._fd` branch, so close() now marks every AsdfFile closed and drops its tree, not only one that owns a file. Checked in the source: the test builds an in-memory AsdfFile (no file handle), calls asdf.info(af), then reads af.tree; base close() sets _closed only inside `if self._fd and not self._closed`. The task's PASS_TO_PASS is empty, so the hidden tests could not see it: 'agent_ok' is wrong here (differs from gold)."
+  },
+  {
+   "instance_id": "Lucas-C__pre-commit-hooks-98",
+   "run": "gold-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T20:26:14+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "license_header_index=10 in a 4-line file: an index the caller (license_found) never passes; IndexError the same on base. Input outside the domain (NOTES 40)."
+  },
+  {
+   "instance_id": "Lucas-C__pre-commit-hooks-98",
+   "run": "gold-r1",
+   "finding": 2,
+   "receipt_created_at": "2026-11-03T20:26:14+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "license_length=-1 is not a length; the function loops over nothing (as on base) while the property's slice [0:-1] reads it as 'all but the last line'. Input outside the domain (NOTES 40)."
+  },
+  {
+   "instance_id": "robotpy__robotpy-cppheaderparser-44",
+   "run": "gold-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T20:33:04+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Verified in the source at the base commit: CppHeader.__init__ calls self.finalize() (line 3004), then deletes _precomp_macro_buf and 20 other parse-time attributes (lines 3007-3031). The attack calls finalize() a second time on that finished object, so the AttributeError is certain and no user path reaches it. The issue's own example builds fine with the fix (base could not build it). A lifecycle method called again on a finished object."
+  },
+  {
+   "instance_id": "robotpy__robotpy-cppheaderparser-44",
+   "run": "agent_ok-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T20:42:39+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "Same as gold #1 (identical code change): Verified in the source at the base commit: CppHeader.__init__ calls self.finalize() (line 3004), then deletes _precomp_macro_buf and 20 other parse-time attributes (lines 3007-3031). The attack calls finalize() a second time on that finished object, so the AttributeError is certain and no user path reaches it. The issue's own example builds fine with the fix (base could not build it). A lifecycle method called again on a finished object."
+  },
+  {
+   "instance_id": "yt-project__unyt-437",
+   "run": "gold-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T21:26:02+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "unyt_quantity(5.0, 'km/m') is 5000 as a pure number; to_astropy() now returns <Quantity 5.> (dimensionless), wrong by 1000x and silent. Base returned <Quantity 5. km / m>, which is right. The fix replaces every dimensionless unit with '' and drops its scale. New with the fix."
+  },
+  {
+   "instance_id": "yt-project__unyt-437",
+   "run": "agent_ok-r1",
+   "finding": 1,
+   "receipt_created_at": "2026-11-03T21:30:28+00:00",
+   "label": "real_bug",
+   "by": "developer",
+   "note": "Same silent scale loss as gold #1: unyt_array([1,2,3], 'km/m') -> <Quantity [1., 2., 3.]> via dimensionless_unscaled, should be 1000, 2000, 3000. New with the fix."
+  },
+  {
+   "instance_id": "encode__httpx-883",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-11-03T21:35:24+00:00",
+   "label": "unclear",
+   "by": "developer",
+   "note": "Two causes. (1) 'fix does not fix': the repro test checks that httpx.Client(app=asgi_app) no longer gives a raw TypeError; it still does. The maintainers resolved the issue as a docs error (the docstring now says WSGI), and the issue itself asks 'if you confirm this is a bug in httpx'. (2) 11 regressions are content-length tests the PR's test patch rewrites (intended). Developer: is a still-unhelpful traceback a real bug here?"
+  },
+  {
+   "instance_id": "open-contracting__ocdskit-51",
+   "run": "gold-r1",
+   "finding": 0,
+   "receipt_created_at": "2026-11-03T21:46:47+00:00",
+   "label": "false_alarm",
+   "by": "developer",
+   "note": "test_command compares against tests/fixtures/mapping-sheet.csv, which the PR's test patch updates with the new 'reference' rows the issue asks for (it is the FAIL_TO_PASS test). Intended change, not a bug: the PR's own test patch rewrites this test (set aside by the report already)."
+  }
+ ]
+}

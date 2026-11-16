@@ -1,0 +1,369 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-07T15:20:06+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks ocbpy._boundary.DualBoundary.set_good_ind",
+    "regression: ocbpy/tests/test_vort.py::TestVortLogWarnings.test_vort_unexpected_line passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "728bfcbc9fa45e3ec152bcd5146291527a657b88"
+  },
+  "head": {
+    "ref": "tf-v0",
+    "sha": "1a5739089fb6ff142d94ca607f351d9645884f6f"
+  },
+  "issue": {
+    "title": "dual boundary class can have a bad pair",
+    "sha256": "df0b89ebbdaec29b1769274cd6105d54d6735eaacf18bdeab34158668fce44bf"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier found a counterexample: calling DualBoundary.set_good_ind on a DualBoundary spanning 2002-10-30 to 2002-11-01 (hemisphere 1) returns None after the fix. Also, test_vort.py::TestVortLogWarnings.test_vort_unexpected_line passed before the fix and fails after it, and the original failure was not reproduced.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 99.01,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 3.4,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "not_reproduced",
+      "reason": "attempt 3 failed the same way before and after the fix, but the model never got to review that result, so it does not count as fix_does_not_fix",
+      "duration_s": 161.05,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no ocbpy/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 3,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "skipped",
+      "reason": "there is no reproduction test to judge the tests with (not_reproduced)",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": null,
+        "repro_kill_rate": null,
+        "pr_kill_rate": null,
+        "mutants": 0,
+        "killed": 0,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 0,
+        "rule_kill_rate": null,
+        "rule_kinds": [],
+        "rule_kinds_absent": [],
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "1 confirmed: ocbpy/tests/test_vort.py::TestVortLogWarnings.test_vort_unexpected_line",
+      "duration_s": 400.58,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors ocbpy/tests/test_vort.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 363,
+        "not_run": 0,
+        "regressions": 1,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 0.03,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 28
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "1 input(s) compared on 2 function(s): 0 changed with the fix",
+      "duration_s": 488.19,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "finished": 2,
+        "inputs_compared": 1,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 888.74,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no ocbpy/tests/test_vort.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 14,
+        "properties_counted": 12,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.05,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "not_run",
+      "reason": "the main test did not reproduce the bug",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 0,
+        "test_file": null,
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "ocbpy._boundary.DualBoundary.set_good_ind",
+      "call": "set_good_ind(self='DualBoundary(stime=datetime.datetime(2002, 10, 30), etime=datetime.datetime(2002, 11, 1), hemisphere=1)')",
+      "input": {
+        "self": "'DualBoundary(stime=datetime.datetime(2002, 10, 30), etime=datetime.datetime(2002, 11, 1), hemisphere=1)'"
+      },
+      "outcome": "returns None",
+      "base_outcome": "returns None",
+      "expected": null,
+      "property": {
+        "id": "t1.p3",
+        "name": "eab_indices_within_data_range",
+        "kind": "returns",
+        "claim": "All paired EAB indices are valid indices into the EAB data",
+        "source": "issue",
+        "quote": "a 'pair' was established with a good OCB and an EAB index outside of the data range",
+        "origin": "model"
+      },
+      "also_violates": [
+        "eab_indices_in_range"
+      ],
+      "other_inputs": 1,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 1292, 1293: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "ocbpy/_boundary.py",
+      "line": 1292,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      },
+      "doubt": null
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "ocbpy/tests/test_vort.py",
+      "test": "TestVortLogWarnings.test_vort_unexpected_line",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: OSError: unexpected line encountered when number of entries line expected [0 1 13 14    5532.5  0.0011232   3.0527",
+      "line": 60
+    }
+  ],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "ocbpy/_boundary.py": [
+        1292,
+        1293
+      ],
+      "ocbpy/instruments/vort.py": [
+        273,
+        274,
+        275,
+        282,
+        283,
+        284,
+        285,
+        300,
+        301,
+        304,
+        305,
+        306,
+        307,
+        308,
+        315,
+        316,
+        331,
+        332,
+        333,
+        334,
+        335,
+        356,
+        357,
+        358,
+        360,
+        361
+      ]
+    },
+    "sets": [],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "guard: skipped (there is no reproduction test to judge the tests with (not_reproduced))"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 89679,
+    "output_tokens": 10338,
+    "cost_estimate": {
+      "usd": 0.4459,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "ocbpy._boundary.DualBoundary.set_good_ind",
+      "path": "ocbpy/_boundary.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": false,
+      "reason": "its attack did not finish"
+    },
+    {
+      "function": "ocbpy.instruments.vort.load_vorticity_ascii_data",
+      "path": "ocbpy/instruments/vort.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 14,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

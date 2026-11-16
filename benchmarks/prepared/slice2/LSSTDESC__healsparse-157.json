@@ -1,0 +1,173 @@
+{
+ "instance_id": "LSSTDESC__healsparse-157",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 35.338,
+ "suite_timeout": 120,
+ "source_hunks": 2,
+ "variants": [
+  {
+   "index": 0,
+   "path": "healsparse/io_coverage.py",
+   "old_start": 1,
+   "old_len": 4,
+   "label": "no_effect",
+   "failing": 10,
+   "functions": [
+    {
+     "path": "healsparse/io_coverage.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "healsparse/io_coverage.py",
+   "old_start": 30,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 3,
+   "functions": [
+    {
+     "path": "healsparse/io_coverage.py",
+     "function": "_read_coverage"
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 63722,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "healsparse/cat_healsparse_files.py",
+     "function": null
+    },
+    {
+     "path": "healsparse/cat_healsparse_files.py",
+     "function": "cat_healsparse_files"
+    },
+    {
+     "path": "healsparse/io_coverage.py",
+     "function": null
+    },
+    {
+     "path": "healsparse/io_coverage.py",
+     "function": "_read_coverage"
+    },
+    {
+     "path": "healsparse/io_coverage_fits.py",
+     "function": null
+    },
+    {
+     "path": "healsparse/io_coverage_fits.py",
+     "function": "_read_coverage_fits"
+    },
+    {
+     "path": "healsparse/io_map.py",
+     "function": null
+    },
+    {
+     "path": "healsparse/io_map.py",
+     "function": "_read_map"
+    },
+    {
+     "path": "healsparse/io_map_fits.py",
+     "function": null
+    },
+    {
+     "path": "healsparse/io_map_fits.py",
+     "function": "_read_healsparse_fits_file"
+    },
+    {
+     "path": "healsparse/io_map_fits.py",
+     "function": "_read_healsparse_fits_file_and_degrade"
+    },
+    {
+     "path": "healsparse/io_map_fits.py",
+     "function": "_read_map_fits"
+    },
+    {
+     "path": "healsparse/io_map_fits.py",
+     "function": "_read_moc_fits"
+    }
+   ],
+   "differs": [
+    {
+     "path": "healsparse/cat_healsparse_files.py",
+     "function": null
+    },
+    {
+     "path": "healsparse/cat_healsparse_files.py",
+     "function": "cat_healsparse_files"
+    },
+    {
+     "path": "healsparse/io_coverage.py",
+     "function": null
+    },
+    {
+     "path": "healsparse/io_coverage.py",
+     "function": "_read_coverage"
+    },
+    {
+     "path": "healsparse/io_coverage_fits.py",
+     "function": null
+    },
+    {
+     "path": "healsparse/io_coverage_fits.py",
+     "function": "_read_coverage_fits"
+    },
+    {
+     "path": "healsparse/io_map.py",
+     "function": null
+    },
+    {
+     "path": "healsparse/io_map.py",
+     "function": "_read_map"
+    },
+    {
+     "path": "healsparse/io_map_fits.py",
+     "function": null
+    },
+    {
+     "path": "healsparse/io_map_fits.py",
+     "function": "_read_healsparse_fits_file"
+    },
+    {
+     "path": "healsparse/io_map_fits.py",
+     "function": "_read_healsparse_fits_file_and_degrade"
+    },
+    {
+     "path": "healsparse/io_map_fits.py",
+     "function": "_read_map_fits"
+    },
+    {
+     "path": "healsparse/io_map_fits.py",
+     "function": "_read_moc_fits"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "833509256873ae92db52af8e15e17ff9d9559a01",
+  "gold": "96cd5e141baa90512404871a3966c75ce27826dc",
+  "v1": "985ef979e13f10bf64e6871ffa442614f1a89621",
+  "agent_ok": "841f07900144f45065ec8614434c08d0fac4eee6"
+ },
+ "seconds": 109.828
+}

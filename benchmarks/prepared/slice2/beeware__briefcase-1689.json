@@ -1,0 +1,25 @@
+{
+ "instance_id": "beeware__briefcase-1689",
+ "excluded": "hidden_tests_fail_on_gold",
+ "detail": "4 of 127",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 32.981,
+ "suite_timeout": 120,
+ "source_hunks": 19,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 141.234
+}

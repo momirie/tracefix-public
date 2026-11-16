@@ -1,0 +1,166 @@
+{
+ "instance_id": "scipp__plopp-151",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "anyio.pytest_plugin"
+ ],
+ "suite_seconds": 21.21,
+ "suite_timeout": 120,
+ "source_hunks": 10,
+ "variants": [
+  {
+   "index": 0,
+   "path": "src/plopp/backends/matplotlib/line.py",
+   "old_start": 97,
+   "old_len": 8,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/plopp/backends/matplotlib/line.py",
+     "function": "Line._make_line"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "src/plopp/backends/matplotlib/line.py",
+   "old_start": 114,
+   "old_len": 8,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/plopp/backends/matplotlib/line.py",
+     "function": "Line._make_line"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "src/plopp/backends/matplotlib/line.py",
+   "old_start": 123,
+   "old_len": 37,
+   "label": "no_effect",
+   "failing": 11,
+   "functions": [
+    {
+     "path": "src/plopp/backends/matplotlib/line.py",
+     "function": "Line._make_line"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "src/plopp/backends/matplotlib/line.py",
+   "old_start": 161,
+   "old_len": 37,
+   "label": "no_effect",
+   "failing": 11,
+   "functions": [
+    {
+     "path": "src/plopp/backends/matplotlib/line.py",
+     "function": "Line._make_data"
+    },
+    {
+     "path": "src/plopp/backends/matplotlib/line.py",
+     "function": "Line._preprocess_hist"
+    }
+   ]
+  }
+ ],
+ "kept": 2,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 43694,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue_fixed.py",
+     "function": null
+    },
+    {
+     "path": "src/plopp/backends/matplotlib/line.py",
+     "function": "Line._preprocess_hist"
+    },
+    {
+     "path": "src/plopp/backends/plotly/line.py",
+     "function": "Line._preprocess_hist"
+    }
+   ],
+   "differs": [
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue_fixed.py",
+     "function": null
+    },
+    {
+     "path": "src/plopp/backends/matplotlib/line.py",
+     "function": "Line._make_data"
+    },
+    {
+     "path": "src/plopp/backends/matplotlib/line.py",
+     "function": "Line._make_line"
+    },
+    {
+     "path": "src/plopp/backends/matplotlib/line.py",
+     "function": "Line._preprocess_hist"
+    },
+    {
+     "path": "src/plopp/backends/matplotlib/line.py",
+     "function": "Line.update"
+    },
+    {
+     "path": "src/plopp/backends/plotly/line.py",
+     "function": "Line._make_data"
+    },
+    {
+     "path": "src/plopp/backends/plotly/line.py",
+     "function": "Line._make_line"
+    },
+    {
+     "path": "src/plopp/backends/plotly/line.py",
+     "function": "Line._preprocess_hist"
+    },
+    {
+     "path": "src/plopp/backends/plotly/line.py",
+     "function": "Line.update"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "df3a5f224ede8bd257882417f8e4a8c90d0a8be2",
+  "gold": "a11ae82ce954b13f291dc9d70e0e56afbe8335a5",
+  "v2": "ff238f69889b4d8fa02287a91ea95a3457a7e1ab",
+  "agent_ok": "3ca2da0d1d04f65b64a7b41f9e7ac00f9f1bacc2"
+ },
+ "seconds": 70.985
+}

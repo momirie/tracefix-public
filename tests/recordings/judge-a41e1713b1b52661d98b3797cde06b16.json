@@ -1,0 +1,11 @@
+{
+ "key": "a41e1713b1b52661d98b3797cde06b162d35f4bdd9ad6ea70ede4f22ec3b267c",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 4677,
+  "output_tokens": 1021,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"This is the exact call the issue reports: truncate('hello world', 5) returned 6 characters, and it now returns 5.\"},{\"change\":\"c2\",\"label\":\"intended\",\"reason\":\"The issue's rule that the result must not be longer than max_len, applied with a custom ellipsis: the old 11-character result is now 8.\"},{\"change\":\"c3\",\"label\":\"intended\",\"reason\":\"The issue's 'not longer than max_len' rule at max_len=0: '' is the only string that fits, and the original docstring only raises for negative max_len.\"},{\"change\":\"c4\",\"label\":\"intended\",\"reason\":\"Same overflow as the issue's example, on a long input: the result is now 5 characters, not 6.\"},{\"change\":\"c5\",\"label\":\"intended\",\"reason\":\"With max_len=0 the issue's length rule leaves '' as the only valid result; the old 1-character ellipsis overflowed.\"},{\"change\":\"c6\",\"label\":\"intended\",\"reason\":\"With max_len=0 the issue's length rule leaves '' as the only valid result; the old 1-character ellipsis overflowed.\"},{\"change\":\"c7\",\"label\":\"intended\",\"reason\":\"With a custom ellipsis and max_len=0, the issue's length rule still leaves '' as the only valid result.\"},{\"change\":\"c8\",\"label\":\"intended\",\"reason\":\"With a custom ellipsis and max_len=0, the issue's length rule still leaves '' as the only valid result.\"},{\"change\":\"c9\",\"label\":\"intended\",\"reason\":\"The old 3-character ellipsis exceeded max_len=0; the issue's length rule requires ''.\"},{\"change\":\"c10\",\"label\":\"intended\",\"reason\":\"The old 2-character ellipsis exceeded max_len=0; the issue's length rule requires ''.\"},{\"change\":\"c11\",\"label\":\"intended\",\"reason\":\"The old result was 4 characters with max_len=2; it now fits in 2, as the issue requires, and is just the ellipsis since nothing else fits.\"},{\"change\":\"c12\",\"label\":\"intended\",\"reason\":\"With max_len=0 the issue's length rule leaves '' as the only valid result, and the original docstring only raises for negative max_len.\"}]}"
+ },
+ "role": "judge"
+}

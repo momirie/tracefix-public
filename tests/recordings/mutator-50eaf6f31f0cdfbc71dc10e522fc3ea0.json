@@ -1,0 +1,11 @@
+{
+ "key": "50eaf6f31f0cdfbc71dc10e522fc3ea0e7f4bc7bf58a9e71073e9faf220df5e2",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1279,
+  "output_tokens": 628,
+  "stop_reason": "end_turn",
+  "text": "{\"mutants\":[{\"path\":\"src/svc/config.py\",\"line\":34,\"original\":\"    if raw is None:\",\"replacement\":\"    if raw is not None:\",\"description\":\"Inverted None check returns default for set values and crashes on None.\"},{\"path\":\"src/svc/config.py\",\"line\":34,\"original\":\"    if raw is None:\",\"replacement\":\"    if raw is None or raw == \\\"\\\":\",\"description\":\"Handles empty string but not whitespace-only blank, so blank with spaces still fails parsing.\"},{\"path\":\"src/svc/config.py\",\"line\":35,\"original\":\"        return DEFAULT_PORT\",\"replacement\":\"        return MIN_PORT\",\"description\":\"Returns the minimum port instead of the default when unset.\"},{\"path\":\"src/svc/config.py\",\"line\":35,\"original\":\"        return DEFAULT_PORT\",\"replacement\":\"        return MAX_PORT\",\"description\":\"Returns the maximum port instead of the default when unset.\"},{\"path\":\"src/svc/config.py\",\"line\":34,\"original\":\"    if raw is None:\",\"replacement\":\"    if raw is None or raw.strip() == \\\"0\\\":\",\"description\":\"Treats port 0 as unset, returning default instead of raising an error.\"},{\"path\":\"src/svc/config.py\",\"line\":34,\"original\":\"    if raw is None:\",\"replacement\":\"    if raw is None or len(raw) == 0:\",\"description\":\"Only empty strings are treated as blank; whitespace-only input still crashes.\"},{\"path\":\"src/svc/config.py\",\"line\":34,\"original\":\"    if raw is None:\",\"replacement\":\"    if not raw:\",\"description\":\"Treats empty string as unset but whitespace-only blank still raises ValueError.\"},{\"path\":\"src/svc/config.py\",\"line\":34,\"original\":\"    if raw is None:\",\"replacement\":\"    if raw is None or raw.strip() == \\\"\\\" and False:\",\"description\":\"Blank check is effectively disabled so blank strings raise ValueError instead of using default.\"}]}"
+ },
+ "role": "mutator"
+}

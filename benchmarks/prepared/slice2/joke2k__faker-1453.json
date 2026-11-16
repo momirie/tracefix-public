@@ -1,0 +1,243 @@
+{
+ "instance_id": "joke2k__faker-1453",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 10.435,
+ "suite_timeout": 120,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "faker/proxy.py",
+   "old_start": 1,
+   "old_len": 3,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "faker/proxy.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "faker/proxy.py",
+   "old_start": 100,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "faker/proxy.py",
+     "function": "Faker.__getattr__"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "faker/proxy.py",
+   "old_start": 113,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 1,
+   "functions": [
+    {
+     "path": "faker/proxy.py",
+     "function": "Faker.__deepcopy__"
+    }
+   ]
+  }
+ ],
+ "kept": 0,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 50121,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "debug_issue.py",
+     "function": null
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "MyFaker.__init__"
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "MyFaker.example"
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "debug_deepcopy"
+    },
+    {
+     "path": "deep_debug.py",
+     "function": null
+    },
+    {
+     "path": "deep_debug.py",
+     "function": "test_deep"
+    },
+    {
+     "path": "faker/proxy.py",
+     "function": "Faker.__getattr__"
+    },
+    {
+     "path": "faker/proxy.py",
+     "function": "UniqueProxy.__getattr__"
+    },
+    {
+     "path": "full_traceback.py",
+     "function": null
+    },
+    {
+     "path": "full_traceback.py",
+     "function": "MyFaker.__init__"
+    },
+    {
+     "path": "full_traceback.py",
+     "function": "MyFaker.example"
+    },
+    {
+     "path": "full_traceback.py",
+     "function": "main"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "MyFaker.__init__"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "MyFaker.example"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_deepcopy_recursion_error"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_hasattr_setstate"
+    },
+    {
+     "path": "simple_debug.py",
+     "function": null
+    },
+    {
+     "path": "simple_debug.py",
+     "function": "test_simple"
+    }
+   ],
+   "differs": [
+    {
+     "path": "debug_issue.py",
+     "function": null
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "MyFaker.__init__"
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "MyFaker.example"
+    },
+    {
+     "path": "debug_issue.py",
+     "function": "debug_deepcopy"
+    },
+    {
+     "path": "deep_debug.py",
+     "function": null
+    },
+    {
+     "path": "deep_debug.py",
+     "function": "test_deep"
+    },
+    {
+     "path": "faker/proxy.py",
+     "function": null
+    },
+    {
+     "path": "faker/proxy.py",
+     "function": "Faker.__deepcopy__"
+    },
+    {
+     "path": "faker/proxy.py",
+     "function": "Faker.__getattr__"
+    },
+    {
+     "path": "faker/proxy.py",
+     "function": "UniqueProxy.__getattr__"
+    },
+    {
+     "path": "full_traceback.py",
+     "function": null
+    },
+    {
+     "path": "full_traceback.py",
+     "function": "MyFaker.__init__"
+    },
+    {
+     "path": "full_traceback.py",
+     "function": "MyFaker.example"
+    },
+    {
+     "path": "full_traceback.py",
+     "function": "main"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "MyFaker.__init__"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "MyFaker.example"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_deepcopy_recursion_error"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_hasattr_setstate"
+    },
+    {
+     "path": "simple_debug.py",
+     "function": null
+    },
+    {
+     "path": "simple_debug.py",
+     "function": "test_simple"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "ca43530c384807393bf2812ea86a16978738b2af",
+  "gold": "e13872642af0bec37e221116da7b4b97b29b8196",
+  "v0": "d7ac64e3d0dd84f16f3bf0324bdca744965f0c0d",
+  "agent_ok": "72e5848a95a149c24d722d9ca977e46784f85c7f"
+ },
+ "seconds": 56.203
+}

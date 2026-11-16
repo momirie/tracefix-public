@@ -1,0 +1,11 @@
+{
+ "key": "0b071d53a4be43ae0c22f314b70114570cfc9d9803e26f672bbe7e6319e5802e",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1829,
+  "output_tokens": 280,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from billing.calendar import days_in_month, is_leap, payment_dates\\n\\n\\ndef test_2100_is_not_leap() -> None:\\n    assert not is_leap(2100)\\n    assert days_in_month(2100, 2) == 28\\n\\n\\ndef test_payment_dates_2100_february_clamped() -> None:\\n    assert payment_dates(2099, 12, 29, 4) == [\\n        \\\"2099-12-29\\\",\\n        \\\"2100-01-29\\\",\\n        \\\"2100-02-28\\\",\\n        \\\"2100-03-29\\\",\\n    ]\\n\",\"rationale\":\"2100 is divisible by 100 but not 400, so it is not a leap year; the test checks days_in_month(2100, 2) is 28 and that payment_dates clamps the February 2100 payment to the 28th.\"}"
+ },
+ "role": "reproducer"
+}

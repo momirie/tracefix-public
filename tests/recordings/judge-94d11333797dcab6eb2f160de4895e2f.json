@@ -1,0 +1,11 @@
+{
+ "key": "94d11333797dcab6eb2f160de4895e2f037d721843aa506134ce6bdc835ee331",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1146,
+  "output_tokens": 185,
+  "stop_reason": "end_turn",
+  "text": "{\"summary\":\"At L4, the evidence shows a test that reproduces the minor-bump bug (1.2.3 becoming 1.3.3) fails before the fix and passes after it, the tests fail when the fix is reverted or broken, the only behaviour change (a value change in Version.bump) was labelled intended, and Break My Fix found no breaking inputs. The most useful next step is a reviewer check that the reset of lower fields in Version.bump also matches what you expect for major and patch bumps, since the issue only described the minor case.\",\"flag_notes\":[]}"
+ },
+ "role": "judge"
+}

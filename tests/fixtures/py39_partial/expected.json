@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "case": "py39_partial",
+  "python": "3.9",
+  "summary": "A Python 3.9 project (its package can't be imported on 3.10+). The fix hard-codes 11, 12 and 13 to \"th\" instead of checking the last two digits, so 111, 112, 211 and every other number ending in 11-13 still get \"st\", \"nd\" or \"rd\".",
+  "receipt": {
+    "status": "ok",
+    "level": {
+      "exactly": "COUNTEREXAMPLE"
+    },
+    "stages": {
+      "reproduce": "reproduced"
+    },
+    "must_find": [
+      {
+        "stage": "break_my_fix",
+        "function": "standings.ordinal.ordinal",
+        "input": {
+          "n": 111
+        },
+        "outcome": "returns '111st'"
+      }
+    ],
+    "must_not_find": [
+      "integrity_flag"
+    ]
+  },
+  "checks": [
+    {"tests": "suite", "ref": "base", "expect": "pass"},
+    {"tests": "suite", "ref": "head", "expect": "pass"},
+    {"tests": "oracle/test_repro.py", "ref": "base", "expect": "fail", "match": "At index 1 diff: '11st' != '11th'"},
+    {"tests": "oracle/test_repro.py", "ref": "head", "expect": "pass"},
+    {"tests": "oracle/test_general.py", "ref": "base", "expect": "fail", "match": "assert '111st' == '111th'"},
+    {"tests": "oracle/test_general.py", "ref": "head", "expect": "fail", "match": "assert '111st' == '111th'"},
+    {"tests": "oracle/test_contract.py", "ref": "base", "expect": "fail", "match": "Left contains 30 more items, first extra item: 11"},
+    {"tests": "oracle/test_contract.py", "ref": "head", "expect": "fail", "match": "Left contains 27 more items, first extra item: 111"}
+  ]
+}

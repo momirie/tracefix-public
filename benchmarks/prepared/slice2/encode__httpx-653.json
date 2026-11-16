@@ -1,0 +1,65 @@
+{
+ "instance_id": "encode__httpx-653",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "pytest_asyncio.plugin",
+  "pytest_trio.plugin",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 7.83,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 23442,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "httpx/models.py",
+     "function": "URL.__init__"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_params_merge"
+    }
+   ],
+   "differs": [
+    {
+     "path": "httpx/models.py",
+     "function": "URL.__init__"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_params_merge"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "5ee512d803d1d6b49dc171e1114f0075618de78e",
+  "gold": "fe21c61a029d477bc71fb29ef29b22cc63519c1c",
+  "agent_ok": "84b75b6129aa8f55b831b64a604410753e1665fc"
+ },
+ "seconds": 34.985
+}

@@ -1,0 +1,133 @@
+name: Release
+
+# Uploads Tracefix to PyPI when the developer publishes a GitHub release (not a pre-release).
+# No password or token is stored anywhere: PyPI trusts this workflow's identity ("trusted
+# publishing", OIDC). Only the upload job may ask for that identity, and it runs no project code.
+#
+# One-time setup, by hand, in this order:
+# 1. Once the repository is public (GitHub offers required reviewers on a private repository
+#    only on its Enterprise plan): Settings, Environments, a new environment named `pypi` with
+#    yourself as a required reviewer and "Deployment branches and tags" limited to tags `v*`.
+#    Do this first. If the environment does not exist, GitHub creates it on first use with no
+#    rules, and the upload would not wait for your approval.
+# 2. pypi.org, Publishing, "Add a pending publisher": project `tracefix`, owner `momirie`,
+#    repository `tracefix`, workflow `release.yml`, environment `pypi`. PyPI refuses every
+#    upload until this exists. It does not reserve the name: the first upload does.
+#
+# Each release: set `version` in pyproject.toml, merge to main, then publish a GitHub release
+# whose tag is "v" + that version (v0.1.0), on a commit of main.
+#
+# A rehearsal: run this workflow by hand (Actions tab, "Run workflow"). It builds the package
+# and runs the checks on it, and uploads nothing.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    # A pre-release is never uploaded: PyPI has no "undo", and a version number is used up.
+    if: ${{ !github.event.release.prerelease }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Full history: the release must be a commit of main (checked below).
+          fetch-depth: 0
+          persist-credentials: false
+      # No cache: a release is built from the tagged commit and nothing an earlier job left.
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          enable-cache: false
+      - name: The tag is the version in pyproject.toml
+        if: github.event_name == 'release'
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+          version=$(uv version --short)
+          if [ -z "$version" ] || [ "$TAG" != "v$version" ]; then
+            echo "::error::The release tag is '$TAG' but pyproject.toml says '$version' (expected v$version)."
+            exit 1
+          fi
+      # A tag can sit on any commit. Only main has been through review and CI.
+      - name: The released commit is on main
+        if: github.event_name == 'release'
+        run: |
+          set -euo pipefail
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "::error::The released commit $GITHUB_SHA is not on main."
+            exit 1
+          fi
+      - run: uv build
+      # What is uploaded is public for good. The source package may hold only the code, the
+      # README, the licence and the build files (pyproject.toml, [tool.hatch.build.targets.sdist]);
+      # the wheel only the package. Anything that cannot be read or listed stops the release.
+      - name: The packages hold only the package
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          sdists=(dist/*.tar.gz)
+          wheels=(dist/*.whl)
+          all=(dist/*)  # what `uv publish` uploads; uv's own dist/.gitignore is not matched
+          if [ "${#sdists[@]}" -ne 1 ] || [ "${#wheels[@]}" -ne 1 ] || [ "${#all[@]}" -ne 2 ]; then
+            echo "::error::Expected exactly one source package and one wheel in dist/, found:"
+            printf '%s\n' "${all[@]}"
+            exit 1
+          fi
+          check() {  # check <what> <listing> <pattern every line must match>
+            if [ -z "$2" ]; then
+              echo "::error::The $1 lists no files."
+              exit 1
+            fi
+            if extra=$(grep -vE "$3" <<< "$2"); then
+              printf '::error::Unexpected files in the %s:\n%s\n' "$1" "$extra"
+              exit 1
+            elif [ "$?" -ne 1 ]; then
+              echo "::error::Could not check the $1."
+              exit 1
+            fi
+            if grep -qE '(^|/)\.\.(/|$)' <<< "$2"; then
+              echo "::error::A path in the $1 leaves its folder."
+              exit 1
+            fi
+          }
+          listing=$(tar -tzf "${sdists[0]}")
+          check "source package" "$listing" \
+            '^tracefix-[^/]+/(src/tracefix/.+|README\.md|LICENSE|pyproject\.toml|PKG-INFO|\.gitignore)$'
+          listing=$(unzip -Z1 "${wheels[0]}")
+          check "wheel" "$listing" '^(tracefix/.+|tracefix-[^/]+\.dist-info/.+)$'
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    if: github.event_name == 'release'
+    runs-on: ubuntu-24.04
+    environment: pypi
+    permissions:
+      id-token: write # the identity PyPI trusts; this job has no other permission
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: dist
+          path: dist/
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          enable-cache: false
+      - run: uv publish --trusted-publishing always

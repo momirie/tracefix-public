@@ -1,0 +1,26 @@
+{
+ "instance_id": "tobgu__pyrsistent-107",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; TypeError",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis 2.0.0 -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 16.578
+}

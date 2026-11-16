@@ -1,0 +1,495 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T21:55:16+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 4 of 7 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "9c49d0cd964dd4ac1fcad7b576779e5ad0e533fd"
+  },
+  "head": {
+    "ref": "tf-agent_wrong",
+    "sha": "daafe8e9c9fffebf6d5d2bf6bd527bb1d101a90e"
+  },
+  "issue": {
+    "title": "Enhancement default behavior of color",
+    "sha256": "47faabc65371cda048b99e27d3b3837cbc6c01d4d449f04bc2f343469907136a"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.20"
+  },
+  "summary": {
+    "text": "A test reproducing the issue fails before the fix and passes after it, no regressions were found, and the changed lines are covered, so the evidence stands at L1. The tests did not kill enough mutants to reach L2 and the behaviour diff was inconclusive, so the next thing to check is whether the tests pin down each color case (default autodetection, --color, and --no-color, for both pager and non-…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 2.59,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "3 changed module(s) imported from the copies (5 imports in all)",
+      "duration_s": 4.14,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 3,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 18.46,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 4 of 7 mutants; 80% is needed",
+      "duration_s": 96.15,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.571,
+        "repro_kill_rate": 0.286,
+        "pr_kill_rate": null,
+        "mutants": 7,
+        "killed": 4,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-da4166aa4e5d",
+          "m-d8ac42df4ac5",
+          "m-0ae79dad46f8",
+          "m-1f7ba353e8a2"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.3,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 4 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 104 untouched tests that passed before the fix fails after it",
+      "duration_s": 2.5,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 104,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.23,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 76
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: ReportseffParameters.__init__: not compared (a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 13.12,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call (demonstrate_click_behavior: it takes no parameters to vary; test_color_parameter_default: it takes no parameters to vary; test_proposed_solution_logic: it takes no parameters to vary)",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-67e553ba7e06",
+      "origin": "model",
+      "file": "src/reportseff/console.py",
+      "line": 128,
+      "original": "        if args.color is True:\n            click.echo_via_pager(output, color=True)",
+      "replacement": "        if args.color is True:\n            click.echo_via_pager(output, color=False)",
+      "description": "Pager with explicit --color passes color=False.",
+      "diff": "--- a/src/reportseff/console.py\n+++ b/src/reportseff/console.py\n@@ -128,3 +128,3 @@\n         if args.color is True:\n-            click.echo_via_pager(output, color=True)\n+            click.echo_via_pager(output, color=False)\n         elif args.color is False:\n",
+      "words": "src/reportseff/console.py:128: changing `        if args.color is True:\n            click.echo_via_pa...` to `        if args.color is True:\n            click.echo_via_pa...` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-85fbdede9e9f",
+      "origin": "model",
+      "file": "src/reportseff/console.py",
+      "line": 136,
+      "original": "            click.echo(output, color=True)",
+      "replacement": "            click.echo(output, color=False)",
+      "description": "Short output with --color disables color.",
+      "diff": "--- a/src/reportseff/console.py\n+++ b/src/reportseff/console.py\n@@ -135,3 +135,3 @@\n         if args.color is True:\n-            click.echo(output, color=True)\n+            click.echo(output, color=False)\n         elif args.color is False:\n",
+      "words": "src/reportseff/console.py:136: changing `            click.echo(output, color=True)` to `            click.echo(output, color=False)` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-0429d54f442e",
+      "origin": "model",
+      "file": "src/reportseff/console.py",
+      "line": 133,
+      "original": "            click.echo_via_pager(output)",
+      "replacement": "            click.echo_via_pager(output, color=True)",
+      "description": "Unspecified color forces color in pager instead of auto-detect.",
+      "diff": "--- a/src/reportseff/console.py\n+++ b/src/reportseff/console.py\n@@ -132,3 +132,3 @@\n         else:  # args.color is None\n-            click.echo_via_pager(output)\n+            click.echo_via_pager(output, color=True)\n     else:\n",
+      "words": "src/reportseff/console.py:133: changing `            click.echo_via_pager(output)` to `            click.echo_via_pager(output, color=True)` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-1c18049986ba",
+      "origin": "rule",
+      "file": "simple_reproduction.py",
+      "line": 18,
+      "original": "    print(\"=== Testing Color Parameter Default Value ===\")\n    \n    # Test 1: Check the click option default\n    print(\"1. Click option default from console.py line 24:\")\n    # Looking at @click.optio...",
+      "replacement": "    return None",
+      "description": "rule: body of `test_color_parameter_default` -> `return None`",
+      "diff": "--- a/simple_reproduction.py\n+++ b/simple_reproduction.py\n@@ -17,18 +17,3 @@\n     \"\"\"Test what the default value of args.color is.\"\"\"\n-    print(\"=== Testing Color Parameter Default Value ===\")\n-    \n-    # Test 1: Check the click option default\n-    print(\"1. Click option default from console.py line 24:\")\n-    # Looking at @click.option(\"--color/--no-color\", default=True, ...)\n-    print(\"   Click option default = True\")\n-    \n-    # Test 2: Check ReportseffParameters default\n-    print(\"2. ReportseffParameters class default:\")\n-    from reportseff.parameters import ReportseffParameters\n-    params = ReportseffParameters(jobs=(\"test\",))\n-    print(f\"   params.color = {params.color}\")\n-    \n-    # Test 3: Simulate what happens when we don't specify --color/--no-color\n-    print(\"3. When user doesn't specify --color/--no-color:\")\n-    print(\"   args.color will be True (the default)\")\n+    return None\n \n",
+      "words": "simple_reproduction.py:18: changing `    print(\"=== Testing Color Parameter Default Value ===\")\n ...` to `    return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-02920264403f",
+      "origin": "rule",
+      "file": "simple_reproduction.py",
+      "line": 38,
+      "original": "    print(\"\\n=== Testing Proposed Solution Logic ===\")\n    \n    # Current behavior (simplified)\n    print(\"CURRENT BEHAVIOR:\")\n    print(\"  if entries > 20:\")\n    print(\"    click.echo_via_pager(outpu...",
+      "replacement": "    return None",
+      "description": "rule: body of `test_proposed_solution_logic` -> `return None`",
+      "diff": "--- a/simple_reproduction.py\n+++ b/simple_reproduction.py\n@@ -37,25 +37,3 @@\n     \"\"\"Test the proposed solution logic.\"\"\"\n-    print(\"\\n=== Testing Proposed Solution Logic ===\")\n-    \n-    # Current behavior (simplified)\n-    print(\"CURRENT BEHAVIOR:\")\n-    print(\"  if entries > 20:\")\n-    print(\"    click.echo_via_pager(output, color=args.color)  # color=True\")\n-    print(\"  else:\")\n-    print(\"    click.echo(output, color=args.color)  # color=True\")\n-    print(\"  ISSUE: color=True forces ANSI codes even when redirected\")\n-    \n-    print(\"\\nPROPOSED BEHAVIOR:\")\n-    print(\"  if entries > 20:\")\n-    print(\"    if args.color is True:  # User explicitly requested --color\")\n-    print(\"      click.echo_via_pager(output, color=True)\")\n-    print(\"    elif args.color is False:  # User explicitly requested --no-color\") \n-    print(\"      click.echo_via_pager(output, color=False)\")\n-    print(\"    else:  # args.color is None, user didn't specify\")\n-    print(\"      click.echo_via_pager(output)  # No color param = auto-detect\")\n-    print(\"  else:\")\n-    print(\"    if args.color is True:\")\n-    print(\"      click.echo(output, color=True)\")  \n-    print(\"    else:\")  # False or None\n-    print(\"      click.echo(output, color=args.color)\")\n+    return None\n     \n",
+      "words": "simple_reproduction.py:38: changing `    print(\"\\n=== Testing Proposed Solution Logic ===\")\n    \n...` to `    return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-24e6a03b59e3",
+      "origin": "rule",
+      "file": "simple_reproduction.py",
+      "line": 65,
+      "original": "    print(\"\\n=== Demonstrating Click Behavior Difference ===\")\n    \n    import click\n    \n    # Create a sample output with color codes\n    sample_output = click.style(\"JobID    State      Elapsed\", f...",
+      "replacement": "    return None",
+      "description": "rule: body of `demonstrate_click_behavior` -> `return None`",
+      "diff": "--- a/simple_reproduction.py\n+++ b/simple_reproduction.py\n@@ -64,24 +64,3 @@\n     \"\"\"Demonstrate the difference in click behavior.\"\"\"\n-    print(\"\\n=== Demonstrating Click Behavior Difference ===\")\n-    \n-    import click\n-    \n-    # Create a sample output with color codes\n-    sample_output = click.style(\"JobID    State      Elapsed\", fg=\"green\")\n-    \n-    print(\"Sample colored output repr:\", repr(sample_output))\n-    print()\n-    \n-    print(\"BEHAVIOR WHEN REDIRECTED TO FILE:\")\n-    print(\"1. click.echo(output, color=True)\")\n-    print(\"   Result: ANSI codes preserved in file\") \n-    print(\"   File content: \\\\x1b[32mJobID    State      Elapsed\\\\x1b[0m\")\n-    print(\"   Issue: Garbled output when viewing file\")\n-    print()\n-    \n-    print(\"2. click.echo(output, color=None) [AUTO-DETECT]\")  \n-    print(\"   Result: ANSI codes stripped when redirected\")\n-    print(\"   File content: JobID    State      Elapsed\")\n-    print(\"   Benefit: Clean output in files, colored in terminals\")\n-    print()\n+    return None\n \n",
+      "words": "simple_reproduction.py:65: changing `    print(\"\\n=== Demonstrating Click Behavior Difference ===...` to `    return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-fe247d97f963",
+      "origin": "rule",
+      "file": "simple_reproduction.py",
+      "line": 8,
+      "original": "sys.path.insert(0, '/workspace/troycomi__reportseff__2.7/src')",
+      "replacement": "sys.path.insert((-1), '/workspace/troycomi__reportseff__2.7/src')",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/simple_reproduction.py\n+++ b/simple_reproduction.py\n@@ -7,3 +7,3 @@\n # Add the src directory to the path\n-sys.path.insert(0, '/workspace/troycomi__reportseff__2.7/src')\n+sys.path.insert((-1), '/workspace/troycomi__reportseff__2.7/src')\n \n",
+      "words": "simple_reproduction.py:8: changing `sys.path.insert(0, '/workspace/troycomi__reportseff__2.7/src...` to `sys.path.insert((-1), '/workspace/troycomi__reportseff__2.7/...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-38ff6430365a",
+      "origin": "rule",
+      "file": "simple_reproduction.py",
+      "line": 8,
+      "original": "sys.path.insert(0, '/workspace/troycomi__reportseff__2.7/src')",
+      "replacement": "sys.path.insert(1, '/workspace/troycomi__reportseff__2.7/src')",
+      "description": "rule: `0` -> `1`",
+      "diff": "--- a/simple_reproduction.py\n+++ b/simple_reproduction.py\n@@ -7,3 +7,3 @@\n # Add the src directory to the path\n-sys.path.insert(0, '/workspace/troycomi__reportseff__2.7/src')\n+sys.path.insert(1, '/workspace/troycomi__reportseff__2.7/src')\n \n",
+      "words": "simple_reproduction.py:8: changing `sys.path.insert(0, '/workspace/troycomi__reportseff__2.7/src...` to `sys.path.insert(1, '/workspace/troycomi__reportseff__2.7/src...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-a0d732ea493b",
+      "origin": "rule",
+      "file": "simple_reproduction.py",
+      "line": 89,
+      "original": "if __name__ == \"__main__\":",
+      "replacement": "if __name__ != \"__main__\":",
+      "description": "rule: `==` -> `!=`",
+      "diff": "--- a/simple_reproduction.py\n+++ b/simple_reproduction.py\n@@ -88,3 +88,3 @@\n \n-if __name__ == \"__main__\":\n+if __name__ != \"__main__\":\n     test_color_parameter_default()\n",
+      "words": "simple_reproduction.py:89: changing `if __name__ == \"__main__\":` to `if __name__ != \"__main__\":` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-2786a865f509",
+      "origin": "rule",
+      "file": "src/reportseff/console.py",
+      "line": 129,
+      "original": "            click.echo_via_pager(output, color=True)",
+      "replacement": "            click.echo_via_pager(output, color=False)",
+      "description": "rule: `True` -> `False`",
+      "diff": "--- a/src/reportseff/console.py\n+++ b/src/reportseff/console.py\n@@ -128,3 +128,3 @@\n         if args.color is True:\n-            click.echo_via_pager(output, color=True)\n+            click.echo_via_pager(output, color=False)\n         elif args.color is False:\n",
+      "words": "src/reportseff/console.py:129: changing `            click.echo_via_pager(output, color=True)` to `            click.echo_via_pager(output, color=False)` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "simple_reproduction.py": [
+        2,
+        4,
+        5,
+        8,
+        10,
+        11,
+        12,
+        13,
+        16,
+        18,
+        21,
+        23,
+        26,
+        27,
+        28,
+        29,
+        32,
+        33,
+        36,
+        38,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        63,
+        65,
+        67,
+        70,
+        72,
+        73,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        86,
+        89,
+        90,
+        91,
+        92,
+        94,
+        95,
+        96,
+        97
+      ],
+      "src/reportseff/console.py": [
+        24,
+        128,
+        129,
+        130,
+        131,
+        133,
+        135,
+        136,
+        137,
+        138,
+        140
+      ],
+      "src/reportseff/parameters.py": [
+        31
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 5,
+        "total": 76
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call (demonstrate_click_behavior: it takes no parameters to vary; test_color_parameter_default: it takes no parameters to vary; test_proposed_solution_logic: it takes no parameters to vary))",
+    "Break My Fix could not attack demonstrate_click_behavior: it takes no parameters to vary",
+    "Break My Fix could not attack test_color_parameter_default: it takes no parameters to vary",
+    "Break My Fix could not attack test_proposed_solution_logic: it takes no parameters to vary",
+    "Break My Fix could not attack main: it takes no parameters to vary",
+    "Break My Fix could not attack ReportseffParameters.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare ReportseffParameters.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare test_color_parameter_default: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_proposed_solution_logic: new with the fix: nothing to compare",
+    "the behaviour diff could not compare demonstrate_click_behavior: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 3,
+    "input_tokens": 19880,
+    "output_tokens": 1179,
+    "cost_estimate": {
+      "usd": 0.0577,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: style example tests/test_db_inquirer.py truncated to 6000 characters for the prompt",
+    "guard: only the first 10 of 20 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.20: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": []
+}

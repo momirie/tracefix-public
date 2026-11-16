@@ -1,0 +1,56 @@
+{
+ "instance_id": "package-url__packageurl-python-29",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.20",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis 6.119.3 -> 6.141.1"
+ ],
+ "setup_files": [],
+ "changed_files": [
+  "issue.md"
+ ],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "pytest_asyncio.plugin",
+  "pytest_bdd.plugin",
+  "pytest_benchmark.plugin",
+  "pytest_mock",
+  "requests_mock.contrib._pytest_plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 3.223,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 57129,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "src/packageurl/__init__.py",
+     "function": "PackageURL.__hash__"
+    }
+   ],
+   "differs": [
+    {
+     "path": "src/packageurl/__init__.py",
+     "function": "PackageURL.__hash__"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "847e1741193139d110d46ac09c3c7471e2bd79fa",
+  "gold": "da6f6707e38b72ad2e35ab9ab05632e0bc106b84",
+  "agent_ok": "5458af332f461b6151d944fe76473300007831fd"
+ },
+ "seconds": 40.312
+}

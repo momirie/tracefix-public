@@ -1,0 +1,11 @@
+{
+ "key": "8b5d8557f66c77787c124e6b7ba091076aaaa79ae80381e5261180e0875a478b",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1903,
+  "output_tokens": 702,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"This is the issue's exact example: 'Hello World!' should no longer end in a trailing dash.\"},{\"change\":\"c2\",\"label\":\"intended\",\"reason\":\"Same rule as the issue (no stray edge dash from non-word characters) applied to a whitespace-only title; the old '-' was the same broken-dash artifact.\"},{\"change\":\"c3\",\"label\":\"suspicious\",\"reason\":\"Punctuation is now deleted instead of acting as a separator, which produces a double dash and still leaves a trailing dash; the issue only asks to drop edge dashes, and the docstring promises a dash-separated slug.\"},{\"change\":\"c4\",\"label\":\"suspicious\",\"reason\":\"The '/' separators are now deleted, so words merge into 'postshello', and the trailing dash remains; the issue asks for neither change, and the docstring's 'dash-separated' contract is broken.\"},{\"change\":\"c5\",\"label\":\"intended\",\"reason\":\"Leading punctuation no longer yields an edge dash, which is the issue's stray-dash rule applied to the start of the slug.\"}]}"
+ },
+ "role": "judge"
+}

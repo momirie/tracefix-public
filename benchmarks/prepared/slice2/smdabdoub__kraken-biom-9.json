@@ -1,0 +1,97 @@
+{
+ "instance_id": "smdabdoub__kraken-biom-9",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [
+  "=1.0.0",
+  "=1.16.0"
+ ],
+ "plugins": [],
+ "suite_seconds": 2.018,
+ "suite_timeout": 120,
+ "source_hunks": 7,
+ "variants": [
+  {
+   "index": 0,
+   "path": "kraken_biom.py",
+   "old_start": 6,
+   "old_len": 13,
+   "label": "no_effect",
+   "failing": 6,
+   "functions": [
+    {
+     "path": "kraken_biom.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "kraken_biom.py",
+   "old_start": 33,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "kraken_biom.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "kraken_biom.py",
+   "old_start": 81,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 6,
+   "functions": [
+    {
+     "path": "kraken_biom.py",
+     "function": "parse_tax_lvl"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "kraken_biom.py",
+   "old_start": 95,
+   "old_len": 8,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "kraken_biom.py",
+     "function": "parse_kraken_report"
+    }
+   ]
+  }
+ ],
+ "kept": 0,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 22904,
+   "label": "does_not_apply",
+   "failing": 6,
+   "kept": false,
+   "functions": null,
+   "differs": null
+  }
+ ],
+ "commits": {
+  "base": "e8e9d458139715e247d84cdc0baa728d643f7c3d",
+  "gold": "425f423d30fe208fd60f5781e099f5e7fd574af1",
+  "v0": "f281fbbd7aeae6ae04baeb980ac0ab7eca47bc79"
+ },
+ "seconds": 47.985
+}

@@ -1,0 +1,11 @@
+{
+ "key": "ac4f21bd6d73f5940fa2a94a013687df7cb04012105214bc01df72844dd44796",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1832,
+  "output_tokens": 523,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"This is the exact input from the issue: 'Hello World!' should no longer end with a trailing dash.\"},{\"change\":\"c2\",\"label\":\"intended\",\"reason\":\"A slug made of only a dash is the same stray-edge-dash problem the issue reports, so an empty result follows the same rule.\"},{\"change\":\"c3\",\"label\":\"suspicious\",\"reason\":\"The output now ends in a double dash 'a-z0-9--', which reintroduces the trailing dash the issue complains about and breaks the docstring's 'dash-separated' contract.\"},{\"change\":\"c4\",\"label\":\"suspicious\",\"reason\":\"The slashes are now deleted rather than turned into separators, merging words into 'postshello', and the trailing dash remains; the issue asks for neither and the docstring calls for dash-separated words.\"},{\"change\":\"c5\",\"label\":\"intended\",\"reason\":\"Dropping the leading dash left by punctuation is the same edge-dash rule from the issue, applied to the start of the slug.\"}]}"
+ },
+ "role": "judge"
+}

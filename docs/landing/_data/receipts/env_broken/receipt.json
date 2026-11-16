@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T14:07:16+00:00",
+  "status": "ENVIRONMENT_ERROR",
+  "status_reason": "the base test suite cannot import 'acme_metrics' (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks 'acme_metrics' (install the project's dependencies and run Tracefix from that environment)",
+  "level": "L0",
+  "level_reasons": [
+    "the run stopped: the base test suite cannot import 'acme_metrics' (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks 'acme_metrics' (install the project's dependencies and run Tracefix from that environment)"
+  ],
+  "repo": {
+    "name": "env_broken"
+  },
+  "base": {
+    "ref": "base",
+    "sha": "db9d6ce88f92030252a7a9081c3ce24ff4e48edb"
+  },
+  "head": {
+    "ref": "head",
+    "sha": "78b206d8c3b0d162ea2959b5dbf4c93c211e29f5"
+  },
+  "issue": {
+    "title": "weekly_report() week number off by one on Mondays",
+    "sha256": "3bbde04962bcafbc320882956cc6adfd29d492d89372c7d0a84c539a5ee7201a"
+  },
+  "isolation": {
+    "level": "basic",
+    "why": "bubblewrap (bwrap) is not installed",
+    "warning": "Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.",
+    "python": null
+  },
+  "summary": {
+    "text": "L0: the run stopped: the base test suite cannot import 'acme_metrics' (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks 'acme_metrics' (install the project's dependencies and run Tracefix from that environment).",
+    "by": "tracefix"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ENVIRONMENT_ERROR",
+      "reason": "the base test suite cannot import 'acme_metrics' (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks 'acme_metrics' (install the project's dependencies and run Tracefix from that environment)",
+      "duration_s": 1.99,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "error",
+        "error": "ModuleNotFoundError",
+        "module": "acme_metrics"
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": null,
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "import_check: did not run",
+    "reproduce: did not run",
+    "guard: did not run",
+    "regressions: did not run",
+    "fix_line_coverage: did not run",
+    "behaviour_diff: did not run",
+    "break_my_fix: did not run",
+    "integrity: did not run"
+  ],
+  "llm": {
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost_estimate": {
+      "usd": 0.0,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": null
+}

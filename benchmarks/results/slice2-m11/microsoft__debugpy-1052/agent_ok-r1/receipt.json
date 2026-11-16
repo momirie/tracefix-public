@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T22:22:42+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L0",
+  "level_reasons": [
+    "not L1: no attempt reproduced the bug; last: the test uses names it must not use: __import__"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "ea8c0817e40193cbc0b9f8e0e568a85555067653"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "48d786462b176feb8deae9cba7763726a4cef7d0"
+  },
+  "issue": {
+    "title": "Debugger Does Not Enumerate ctypes Arrays",
+    "sha256": "cf7a7b725dddfe7ff09ae896ea3cc7e9acd3cba00091fb5b9dde4b0e03f7afc6"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The evidence level is L0: no reproduction attempt showed the bug, the last attempt was rejected because its test used the forbidden name __import__, and the behaviour diff was inconclusive, so this run demonstrates nothing about whether the fix changes how ctypes arrays are enumerated in the debugger. The next step is a reproduction test that avoids forbidden names and shows the debugger listing…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 105.95,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (3 imports in all)",
+      "duration_s": 5.71,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "not_reproduced",
+      "reason": "no attempt reproduced the bug; last: the test uses names it must not use: __import__",
+      "duration_s": 1.99,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 3,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "skipped",
+      "reason": "there is no reproduction test to judge the tests with (not_reproduced)",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": null,
+        "repro_kill_rate": null,
+        "pr_kill_rate": null,
+        "mutants": 0,
+        "killed": 0,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 0,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 0,
+        "rule_kill_rate": null,
+        "rule_kinds": [],
+        "rule_kinds_absent": [],
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 66 untouched tests that passed before the fix fails after it",
+      "duration_s": 450.86,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 66,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.63,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no src/debugpy/_vendored/pydevd/tests_python/test_resolvers.py test_comprehensive_ctypes.py test_ctypes_unavailable.py test_error_handling.py test_final_simple.py test_final_verification.py test_resolver_selection.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 37
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: reproduce_ctypes_issue.py: module-level code that computes a value changed (line 48, 49, 52, 53); what uses it is not compared",
+      "duration_s": 4.62,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 877 inputs against 6 properties",
+      "duration_s": 19.55,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 877,
+        "properties_counted": 6,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (1 reported)",
+      "duration_s": 0.11,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 1
+      }
+    },
+    {
+      "name": "blind",
+      "status": "not_run",
+      "reason": "the main test did not reproduce the bug",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 0,
+        "test_file": null,
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "reproduce_ctypes_issue.py": [
+        2,
+        6,
+        8,
+        10,
+        13,
+        15,
+        16,
+        17,
+        20,
+        21,
+        24,
+        25,
+        28,
+        29,
+        30,
+        31,
+        32,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        46,
+        48,
+        49,
+        52,
+        53
+      ],
+      "src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py": [
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        191
+      ]
+    },
+    "sets": [
+      {
+        "name": "pr_test",
+        "ran": 8,
+        "total": 37
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "guard: skipped (there is no reproduction test to judge the tests with (not_reproduced))",
+    "Break My Fix could not attack test_ctypes_arrays: it takes no parameters to vary",
+    "the behaviour diff could not compare test_ctypes_arrays: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 54441,
+    "output_tokens": 6150,
+    "cost_estimate": {
+      "usd": 0.2834,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: style example src/debugpy/_vendored/pydevd/tests_python/test_resolvers.py truncated to 6000 characters for the prompt",
+    "behaviour_diff: src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py: TypeResolveHandler._get_type is defined 2 times in its class; the attack calls the one the class exposes (the last)",
+    "break_my_fix: src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py: TypeResolveHandler._get_type is defined 2 times in its class; the attack calls the one the class exposes (the last)"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "_pydevd_bundle.pydevd_xml.TypeResolveHandler._get_type",
+      "path": "src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no strategy for o, type_object, type_name"
+    },
+    {
+      "function": "_pydevd_bundle.pydevd_xml.TypeResolveHandler.get_type",
+      "path": "src/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_xml.py",
+      "via": "a public caller of the changed TypeResolveHandler._get_type",
+      "attacked": true,
+      "inputs_tried": 877,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[    0.0] tracefix: verifying 3c7e67a..458c063 (isolation: basic)
+[    1.4] [1/9] environment: ok (1.3s)
+[    4.2] [2/9] import_check: ok (2.9s)
+[   24.3] [3/9] reproduce: reproduced (20.1s)
+[   59.5] [4/9] guard: guarded (35.1s)
+[   60.5] [5/9] regressions: none_found (1.0s)
+[   63.4] [6/9] fix_line_coverage: ok (2.9s)
+[   68.8] [7/9] behaviour_diff: compared (5.4s)
+[   83.8] [8/9] break_my_fix: found (15.0s)
+[   83.8] [9/9] integrity: clean (0.0s)
+[   83.8] summary: by judge
+[   83.8] level: COUNTEREXAMPLE
+[   83.9] Fix Receipt: COUNTEREXAMPLE (run status: ok)
+[   83.9] Summary by the Judge (advisory): The original bug was reproduced and the fix guards it with no regressions found, but Break My Fix found inputs that break the fixed bucket_of: negative values such as bucket_of(-5, 10) returning -10 and bucket_of(-15, 10) returning -20. Next, check how bucket_of should handle negative values (floor versus truncation toward zero) and review the behaviour changes the Judge labeled suspicious.
+[   83.9] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json

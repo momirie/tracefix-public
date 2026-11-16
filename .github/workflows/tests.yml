@@ -1,0 +1,144 @@
+name: Tests
+
+# The one copy of CI's steps: lint, types, workflow checks and this job's share of the test suite.
+# ci.yml (Linux, every PR) and ci-windows.yml (Windows, on demand) both call it, once per matrix
+# entry, so the two can't drift apart.
+on:
+  workflow_call:
+    inputs:
+      os:
+        type: string
+        required: true
+      python:
+        type: string
+        required: true
+      # This job's share of the tests: group `group` of `splits` (pytest-split, balanced by
+      # .test_durations). The caller's matrix must list every group from 1 to `splits`.
+      group:
+        type: number
+        required: true
+      splits:
+        type: number
+        required: true
+      # A guard against hangs, not GitHub's limit (6 hours). Windows' 2-core runners take ~3x
+      # Linux's time, so ci-windows.yml gives them more.
+      timeout:
+        type: number
+        default: 40
+      # Workers for the end-to-end acceptance cases, which are load-sensitive (docs/NOTES.md).
+      acceptance-workers:
+        type: number
+        default: 2
+      # The test times the split is balanced by. Windows has its own, measured on its runners.
+      durations:
+        type: string
+        default: .test_durations
+      # Upload the test times this job recorded into `durations` as an artifact
+      # (ci-windows.yml merges the jobs' files into one: scripts/merge_durations.py).
+      store-durations:
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ${{ inputs.os }}
+    timeout-minutes: ${{ inputs.timeout }}
+    env:
+      # Linux must run generated code under bubblewrap; fail if it silently falls back.
+      TRACEFIX_REQUIRE_STRICT: ${{ startsWith(inputs.os, 'ubuntu') && '1' || '' }}
+      # The project Pythons 3.9/3.10 (scripts/old_pythons.py) must be there: their tests fail
+      # instead of skipping.
+      TRACEFIX_OLD_PYTHONS: required
+    steps:
+      # Actions are pinned to exact commits (supply-chain safety); Dependabot proposes updates.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Don't leave a GitHub token on the runner: tests run model-written code here.
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: ${{ inputs.python }}
+          enable-cache: true
+      - name: Install bubblewrap (strict isolation, Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q bubblewrap
+          # Ubuntu 24.04 restricts unprivileged user namespaces, which bubblewrap needs.
+          if ! bwrap --ro-bind / / --unshare-all true; then
+            sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          fi
+          bwrap --ro-bind / / --unshare-all true
+      - run: uv sync --locked
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy
+      # Tracefix's in-run code runs inside the project's Python, 3.9+ (the same as scripts/check.py).
+      - run: >-
+          uv run mypy --strict --python-version 3.10
+          src/tracefix/attack_runtime.py src/tracefix/runtime_state.py
+      # bash on every OS: Windows' default shell (PowerShell) mangles `-t=3.9-`, and vermin then
+      # checks against 3.0 and fails.
+      - shell: bash
+        run: >-
+          uv run vermin -t=3.9- --no-tips --violations
+          src/tracefix/attack_runtime.py src/tracefix/runtime_state.py
+      - run: uv run vulture
+      # Workflow files: correctness (actionlint) and security, e.g. injection (zizmor). Also the
+      # Action's own files and the example workflows (the same lists as scripts/check.py).
+      - run: uv run actionlint
+      - run: uv run actionlint docs/examples/tracefix.yml docs/examples/tracefix-fork.yml
+      - run: >-
+          uv run zizmor --offline .github action.yml report/action.yml
+          docs/examples/tracefix.yml docs/examples/tracefix-fork.yml
+      - run: uv run tracefix --help
+      - name: Set up the project Pythons 3.9 and 3.10 for the old-Python tests
+        run: uv run python scripts/old_pythons.py
+      - name: Show the isolation level (strict expected on Linux)
+        run: uv run python -c "from tracefix.sandbox import probe; print(probe())"
+      # In parallel (pytest-xdist), then this group's end-to-end acceptance cases with few
+      # workers, then the tests marked `serial` alone (see scripts/check.py). The acceptance cases
+      # are load-sensitive (docs/NOTES.md), so they don't compete with the rest of the suite.
+      # `least_duration` deals the tests out by recorded time (the default cuts the list into
+      # contiguous chunks, which put most slow acceptance tests in one group); `worksteal` lets an
+      # idle worker take queued tests while the other runs a long one. The 25 slowest are listed
+      # to show where the time goes. Values come in as environment variables, never pasted into
+      # the command (zizmor). Every job records its test times into the durations file (harmless on
+      # a throwaway runner); only `store-durations` uploads them.
+      - shell: bash
+        env:
+          GROUP: ${{ inputs.group }}
+          SPLITS: ${{ inputs.splits }}
+          DURATIONS: ${{ inputs.durations }}
+        run: >-
+          uv run pytest -q -n auto --dist worksteal -m "not serial and not acceptance"
+          --splits "$SPLITS" --group "$GROUP" --splitting-algorithm least_duration
+          --durations-path "$DURATIONS" --store-durations --durations=25
+      - shell: bash
+        env:
+          GROUP: ${{ inputs.group }}
+          SPLITS: ${{ inputs.splits }}
+          WORKERS: ${{ inputs.acceptance-workers }}
+          DURATIONS: ${{ inputs.durations }}
+        run: >-
+          uv run pytest -q -n "$WORKERS" --dist worksteal -m acceptance
+          --splits "$SPLITS" --group "$GROUP" --splitting-algorithm least_duration
+          --durations-path "$DURATIONS" --store-durations --durations=10
+      - if: inputs.group == 1
+        shell: bash
+        env:
+          DURATIONS: ${{ inputs.durations }}
+        run: uv run pytest -q -m serial --durations-path "$DURATIONS" --store-durations
+      # Even when a test failed: the times still count. A job cut off by its timeout has no new
+      # times to give (pytest never wrote the file), so its tests keep their old ones in the merge.
+      - if: always() && inputs.store-durations
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: durations-${{ inputs.os }}-${{ inputs.python }}-${{ inputs.group }}
+          path: ${{ inputs.durations }}
+          include-hidden-files: true # the file's name starts with a dot
+          if-no-files-found: error
+          retention-days: 7

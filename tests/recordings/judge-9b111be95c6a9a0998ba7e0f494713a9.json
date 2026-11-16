@@ -1,0 +1,11 @@
+{
+ "key": "9b111be95c6a9a0998ba7e0f494713a96d9a832100336cb85c26d338698b01b8",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1850,
+  "output_tokens": 308,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"Issue: 10 orders at 3 per page must show order #10, so 4 pages are needed; this is the reported case.\"},{\"change\":\"c2\",\"label\":\"intended\",\"reason\":\"Same rule as the issue: a partial last page counts, so 1 item at 3 per page needs 1 page and should not get 0 pages that hide it.\"},{\"change\":\"c3\",\"label\":\"intended\",\"reason\":\"Same rule as the issue: the remainder of 1 item needs an extra page, matching the docstring 'pages needed to show n_items'.\"},{\"change\":\"c4\",\"label\":\"intended\",\"reason\":\"Same rule as the issue: 9 items fit on one page, and the docstring says pages needed to show them, so 1, not 0.\"},{\"change\":\"c5\",\"label\":\"intended\",\"reason\":\"Same rule as the issue: fewer items than per_page still need one page to be shown, per the docstring.\"}]}"
+ },
+ "role": "judge"
+}

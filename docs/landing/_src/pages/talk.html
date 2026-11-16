@@ -1,0 +1,85 @@
+<main id="main" tabindex="-1" class="page">
+<!-- TALK: a conversation only, no runs on a visitor's code (the developer, 2026-11-07). The address,
+     the mailto links and the gate's numbers fill holes from scripts/site_talk.py;
+     tests/test_site_talk.py fails if this file's text holds a digit. Notes from the conversations
+     stay outside the site (docs/plans/website-pages.md S6). -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow">Talk</p>
+    <h1 data-words>Tell me how you review a fix. <span class="soft">A conversation, before anything ships.</span></h1>
+    <p class="lede" data-reveal style="--d:3">Tracefix is for people who review bug fixes that a coding agent wrote. Before it is released, I want to learn how you review them today: what you check, what you trust, and what has slipped past. It takes about {{call}}, on a call or by email, whichever suits you.</p>
+    <div class="talk-ctas" data-reveal style="--d:4">
+      <a class="btn" href="{{mailto_talk}}">Email {{email}}</a>
+      <a class="btn-ghost" href="#ask">What I would ask</a>
+    </div>
+    <p class="mute small" data-reveal style="--d:5">Private preview: Tracefix is not released yet, so there is nothing to install and its GitHub links open only for collaborators.</p>
+  </div>
+</section>
+
+<section id="ask" class="band" aria-labelledby="ask-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="ask-h" class="h2" data-words>What I would ask. <span class="soft">No pitch, and a demo only if you want one.</span></h2>
+    </div>
+    <div class="mt-split">
+      <div class="mt-side" data-reveal>
+        <h3 class="h3">About your reviews</h3>
+        <ul class="mt-list">
+          <li>How you decide that a fix from an agent is right before you merge it.</li>
+          <li>The last fix that looked right and was not: what caught it, or what would have.</li>
+          <li>What you run beyond the pull request’s own tests, if anything.</li>
+        </ul>
+      </div>
+      <div class="mt-side" data-reveal style="--d:1">
+        <h3 class="h3">About a receipt</h3>
+        <ul class="mt-list">
+          <li>What a receipt would have to show before you trusted it, and what would make you ignore it.</li>
+          <li>Whether a false alarm costs you more than a missed bug.</li>
+          <li>Where it would run: in CI on every pull request, by hand, or nowhere.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="expect" class="band wash" aria-labelledby="expect-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="expect-h" class="h2" data-words>What to expect. <span class="soft">Your time, not your code.</span></h2>
+    </div>
+    <ul class="mt-list talk-terms" data-reveal>
+      <li>A conversation only. I will not ask for your code or run anything on it.</li>
+      <li>What you tell me stays in my notes. Nothing you say goes on this site, or anywhere public, unless you agree first.</li>
+      <li>If you want, you hear when Tracefix is released. Nothing else lands in your inbox.</li>
+    </ul>
+    <div class="standing talk-gate" data-reveal style="--d:1">
+      <p class="eyebrow">Why it matters</p>
+      <p>Release gate {{talk_gate}}, “{{talk_gate_title}}”, counts these conversations: {{talk_gate_count}} so far, against a target of {{talk_gate_target}}. Tracefix is released only when all {{gates_total}} gates hold; today {{gates_holding}} do.</p>
+      <a class="more" href="../benchmark/#gates">The release gates</a>
+    </div>
+  </div>
+</section>
+
+<section id="feedback" class="band" aria-labelledby="feedback-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="feedback-h" class="h2" data-words>Something else? <span class="soft">The same address.</span></h2>
+      <p class="mute" data-reveal style="--d:2">Each link opens your mail app with a short template. Without one, write to <span class="talk-addr">{{email}}</span>.</p>
+    </div>
+    <div class="mt-split talk-links">
+      <a class="mt-side" href="{{mailto_receipt}}" data-reveal>
+        <span class="h3">A receipt is wrong</span>
+        <span class="mute">Say which receipt, what it says and what is true instead. A wrong receipt is a bug in Tracefix.</span>
+      </a>
+      <a class="mt-side" href="{{mailto_fixture}}" data-reveal style="--d:1">
+        <span class="h3">A fixture idea</span>
+        <span class="mute">A bug, and a fix that looks right but is not: it could become one of the known-answer cases.</span>
+      </a>
+      <a class="mt-side" href="{{mailto_feedback}}" data-reveal style="--d:2">
+        <span class="h3">Feedback</span>
+        <span class="mute">On the site, the method or the numbers.</span>
+      </a>
+    </div>
+  </div>
+</section>
+</main>

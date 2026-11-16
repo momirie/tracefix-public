@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "case": "good_fix",
+  "summary": "Rounds the page count up so a partial last page exists; correct for all inputs and guarded by a new test.",
+  "receipt": {
+    "status": "ok",
+    "level": {
+      "at_least": "L2"
+    },
+    "stages": {
+      "reproduce": "reproduced",
+      "guard": "guarded"
+    },
+    "must_find": [],
+    "must_not_find": [
+      "break_my_fix_finding",
+      "integrity_flag",
+      "suspicious_behaviour_change"
+    ]
+  },
+  "checks": [
+    {
+      "tests": "suite",
+      "ref": "base",
+      "expect": "pass"
+    },
+    {
+      "tests": "suite",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "base",
+      "expect": "fail",
+      "match": "where 3 = total_pages(10, 3)"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_no_counterexample.py",
+      "ref": "base",
+      "expect": "fail",
+      "match": "where 0 = total_pages(1, 2)"
+    },
+    {
+      "tests": "oracle/test_no_counterexample.py",
+      "ref": "head",
+      "expect": "pass"
+    }
+  ]
+}

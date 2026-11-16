@@ -1,0 +1,30 @@
+{
+ "instance_id": "nilearn__nilearn-4802",
+ "excluded": "base_suite_cannot_run",
+ "detail": "tampering detected in the base suite's run",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [
+  "nilearn/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "pytest_reporter.plugin",
+  "pytest_reporter_html1.plugin",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 21,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 119.469
+}

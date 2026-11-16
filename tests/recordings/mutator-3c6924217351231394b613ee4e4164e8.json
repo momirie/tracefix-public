@@ -1,0 +1,11 @@
+{
+ "key": "3c6924217351231394b613ee4e4164e865d3bea37b1a033e7b76c0fdded7c726",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1241,
+  "output_tokens": 604,
+  "stop_reason": "end_turn",
+  "text": "{\"mutants\":[{\"path\":\"src/gateway/listener.py\",\"line\":19,\"original\":\"        if raw is None:\",\"replacement\":\"        if raw is not None:\",\"description\":\"Inverts the None check so set values return the default and None crashes.\"},{\"path\":\"src/gateway/listener.py\",\"line\":20,\"original\":\"            return 8080\",\"replacement\":\"            return 0\",\"description\":\"Returns an invalid port 0 for unset value instead of the default.\"},{\"path\":\"src/gateway/listener.py\",\"line\":20,\"original\":\"            return 8080\",\"replacement\":\"            return 8000\",\"description\":\"Uses the wrong default port constant.\"},{\"path\":\"src/gateway/listener.py\",\"line\":19,\"original\":\"        if raw is None:\",\"replacement\":\"        if raw is None or raw == \\\"\\\":\",\"description\":\"Handles only exactly-empty strings as unset; this changes nothing for None but leaves whitespace-only strings to crash. Treats empty string as default but not blank.\"},{\"path\":\"src/gateway/listener.py\",\"line\":19,\"original\":\"        if raw is None:\",\"replacement\":\"        if not raw:\",\"description\":\"Treats empty string as unset but not whitespace-only blank values, which still raise.\"},{\"path\":\"src/gateway/listener.py\",\"line\":20,\"original\":\"            return 8080\",\"replacement\":\"            return MIN_PORT\",\"description\":\"Returns the minimum port instead of the default for unset values.\"},{\"path\":\"src/gateway/listener.py\",\"line\":20,\"original\":\"            return 8080\",\"replacement\":\"            return MAX_PORT\",\"description\":\"Returns the maximum port instead of the default for unset values.\"},{\"path\":\"src/gateway/listener.py\",\"line\":19,\"original\":\"        if raw is None:\",\"replacement\":\"        if raw is None or raw.strip() == \\\"0\\\":\",\"description\":\"Treats the value \\\"0\\\" as unset and returns the default instead of raising.\"}]}"
+ },
+ "role": "mutator"
+}

@@ -1,0 +1,246 @@
+{
+ "instance_id": "streamlink__streamlink-5565",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "pytest_asyncio.plugin",
+  "pytest_trio.plugin",
+  "requests_mock.contrib._pytest_plugin",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 23.512,
+ "suite_timeout": 120,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "src/streamlink/plugins/nos.py",
+   "old_start": 2,
+   "old_len": 6,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/streamlink/plugins/nos.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "src/streamlink/plugins/nos.py",
+   "old_start": 9,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/streamlink/plugins/nos.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "src/streamlink/plugins/nos.py",
+   "old_start": 18,
+   "old_len": 86,
+   "label": "no_effect",
+   "failing": 3,
+   "functions": [
+    {
+     "path": "src/streamlink/plugins/nos.py",
+     "function": null
+    },
+    {
+     "path": "src/streamlink/plugins/nos.py",
+     "function": "NOS._get_streams"
+    }
+   ]
+  }
+ ],
+ "kept": 2,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 46374,
+   "label": "no_effect",
+   "failing": 3,
+   "kept": true,
+   "functions": [
+    {
+     "path": "debug_nos.py",
+     "function": null
+    },
+    {
+     "path": "debug_nos.py",
+     "function": "debug_nos_plugin"
+    },
+    {
+     "path": "debug_nos_analysis.py",
+     "function": null
+    },
+    {
+     "path": "debug_nos_analysis.py",
+     "function": "analyze_nos_html"
+    },
+    {
+     "path": "debug_nos_deep.py",
+     "function": null
+    },
+    {
+     "path": "debug_nos_deep.py",
+     "function": "deep_analyze_nos_data"
+    },
+    {
+     "path": "debug_nos_deep.py",
+     "function": "deep_analyze_nos_data.search_dict"
+    },
+    {
+     "path": "debug_nos_detailed.py",
+     "function": null
+    },
+    {
+     "path": "debug_nos_detailed.py",
+     "function": "debug_nos_plugin_detailed"
+    },
+    {
+     "path": "debug_script40.py",
+     "function": null
+    },
+    {
+     "path": "debug_script40.py",
+     "function": "debug_script40"
+    },
+    {
+     "path": "debug_xpath.py",
+     "function": null
+    },
+    {
+     "path": "debug_xpath.py",
+     "function": "debug_xpath"
+    },
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_original_issue"
+    },
+    {
+     "path": "final_verification_fixed.py",
+     "function": null
+    },
+    {
+     "path": "final_verification_fixed.py",
+     "function": "test_original_issue"
+    },
+    {
+     "path": "src/streamlink/plugins/nos.py",
+     "function": "NOS._get_streams"
+    },
+    {
+     "path": "src/streamlink/plugins/nos.py",
+     "function": "NOS._parse_next_data"
+    }
+   ],
+   "differs": [
+    {
+     "path": "debug_nos.py",
+     "function": null
+    },
+    {
+     "path": "debug_nos.py",
+     "function": "debug_nos_plugin"
+    },
+    {
+     "path": "debug_nos_analysis.py",
+     "function": null
+    },
+    {
+     "path": "debug_nos_analysis.py",
+     "function": "analyze_nos_html"
+    },
+    {
+     "path": "debug_nos_deep.py",
+     "function": null
+    },
+    {
+     "path": "debug_nos_deep.py",
+     "function": "deep_analyze_nos_data"
+    },
+    {
+     "path": "debug_nos_deep.py",
+     "function": "deep_analyze_nos_data.search_dict"
+    },
+    {
+     "path": "debug_nos_detailed.py",
+     "function": null
+    },
+    {
+     "path": "debug_nos_detailed.py",
+     "function": "debug_nos_plugin_detailed"
+    },
+    {
+     "path": "debug_script40.py",
+     "function": null
+    },
+    {
+     "path": "debug_script40.py",
+     "function": "debug_script40"
+    },
+    {
+     "path": "debug_xpath.py",
+     "function": null
+    },
+    {
+     "path": "debug_xpath.py",
+     "function": "debug_xpath"
+    },
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_original_issue"
+    },
+    {
+     "path": "final_verification_fixed.py",
+     "function": null
+    },
+    {
+     "path": "final_verification_fixed.py",
+     "function": "test_original_issue"
+    },
+    {
+     "path": "src/streamlink/plugins/nos.py",
+     "function": null
+    },
+    {
+     "path": "src/streamlink/plugins/nos.py",
+     "function": "NOS._get_streams"
+    },
+    {
+     "path": "src/streamlink/plugins/nos.py",
+     "function": "NOS._parse_next_data"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "22f191705ef6ae1ab61081034a2921fa3d2de976",
+  "gold": "a495227e58818fc88355aa2cc9bb0ce0ae60fcd0",
+  "v2": "ecbf779d4cddc32315d09bc93059fe732d1cd035",
+  "agent_wrong": "9a1b7d94dcff083b96fa79039586080ad746f376"
+ },
+ "seconds": 66.031
+}

@@ -1,0 +1,367 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T18:26:11+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 4 of 6 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "af723faccff4d4778dd21cafc71de78b015b91c3"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "c7255508a64018636cee85d6a2b56312d6feca41"
+  },
+  "issue": {
+    "title": "Context redefinitions can't be overlayed",
+    "sha256": "1d339d791f5547c6886a5bfd805f6e5ec345d248f31d41f3eb8e9a83b271961e"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the bug: a test fails before the fix and passes after it. The fix still reached only L1, because the tests did not kill enough mutants for L2 and the behaviour-diff and break-my-fix stages were inconclusive, so the next step is to strengthen the tests around overlaying multiple context redefinitions of the same unit.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 13.59,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 2.6,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 8.75,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no pint/testsuite/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 4 of 6 mutants; 80% is needed",
+      "duration_s": 74.69,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no pint/testsuite/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.667,
+        "repro_kill_rate": 0.667,
+        "pr_kill_rate": null,
+        "mutants": 6,
+        "killed": 4,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 4,
+        "not_run": 2,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-96a4edaff64f",
+          "m-ce4be24be3fb",
+          "m-5a4c53fec101",
+          "m-469e14e92255"
+        ],
+        "rule_mutants": 1,
+        "rule_kill_rate": 1.0,
+        "rule_kinds": [
+          "body: 1 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "negate_if",
+          "constant",
+          "arithmetic",
+          "membership",
+          "loop",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 4 of 6 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 283 untouched tests that passed before the fix fails after it",
+      "duration_s": 13.78,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 283,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.45,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no pint/testsuite/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 1
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: no input could be compared",
+      "duration_s": 40.25,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "finished": 3,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack on ContextRegistry.disable_contexts did not finish",
+      "duration_s": 247.75,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "inputs_tried": 2,
+        "properties_counted": 4,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.03,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 12.42,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no pint/testsuite/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-45f420445498",
+      "origin": "model",
+      "file": "pint/registry.py",
+      "line": 1549,
+      "original": "            for ctx in reversed(self._active_ctx.contexts):",
+      "replacement": "            for ctx in reversed(self._active_ctx.contexts[:1]):",
+      "description": "Only the first active context's redefinitions are applied.",
+      "diff": "--- a/pint/registry.py\n+++ b/pint/registry.py\n@@ -1548,3 +1548,3 @@\n         try:\n-            for ctx in reversed(self._active_ctx.contexts):\n+            for ctx in reversed(self._active_ctx.contexts[:1]):\n                 for definition in ctx.redefinitions:\n",
+      "words": "pint/registry.py:1549: changing `            for ctx in reversed(self._active_ctx.contexts):` to `            for ctx in reversed(self._active_ctx.contexts[:1...` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-4a8566e2a78c",
+      "origin": "model",
+      "file": "pint/registry.py",
+      "line": 1549,
+      "original": "            for ctx in reversed(self._active_ctx.contexts):",
+      "replacement": "            for ctx in reversed(self._active_ctx.contexts[::2]):",
+      "description": "Applies only every other active context.",
+      "diff": "--- a/pint/registry.py\n+++ b/pint/registry.py\n@@ -1548,3 +1548,3 @@\n         try:\n-            for ctx in reversed(self._active_ctx.contexts):\n+            for ctx in reversed(self._active_ctx.contexts[::2]):\n                 for definition in ctx.redefinitions:\n",
+      "words": "pint/registry.py:1549: changing `            for ctx in reversed(self._active_ctx.contexts):` to `            for ctx in reversed(self._active_ctx.contexts[::...` made no test fail; not compared with the fix: no input could be compared",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "pint/registry.py": [
+        1549
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 1,
+        "total": 1
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 49569,
+    "output_tokens": 7407,
+    "cost_estimate": {
+      "usd": 0.2934,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: style example pint/testsuite/test_application_registry.py truncated to 6000 characters for the prompt",
+    "guard: 2 of the 8 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "blind: style example pint/testsuite/test_application_registry.py truncated to 6000 characters for the prompt"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "pint.registry.ContextRegistry._switch_context_cache_and_units",
+      "path": "pint/registry.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 1,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "pint.registry.ContextRegistry.enable_contexts",
+      "path": "pint/registry.py",
+      "via": "a public caller of the changed ContextRegistry._switch_context_cache_and_units",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    },
+    {
+      "function": "pint.registry.ContextRegistry.disable_contexts",
+      "path": "pint/registry.py",
+      "via": "a public caller of the changed ContextRegistry._switch_context_cache_and_units",
+      "attacked": true,
+      "inputs_tried": 1,
+      "finished": false,
+      "reason": ""
+    }
+  ]
+}

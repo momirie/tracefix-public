@@ -1,0 +1,435 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T17:53:36+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 3 of 6 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "e03ab6f99f85fb54bc5f1ed2d9222af8f5bd66e0"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "d4a576fa329b67a796c5b00967655bddf372e871"
+  },
+  "issue": {
+    "title": "[ENH] Enhance implementation of 5ttgen",
+    "sha256": "7b35bf59a6794ddaae6c84c7c52d1688c89340fa5a23d7318626b39b1e4e041d"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "At L1, the verifier reproduced the issue: a test fails before the fix and passes after it, and the changed lines were covered, but the guard stage reported the fix as not guarded and the regression, behaviour-diff and break-my-fix stages were skipped. Next, check whether the tests actually pin down the new 5ttgen inputs well enough to catch mutants, since the mutation threshold for L2 was not met.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 141.03,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 5.45,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 17.58,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no nipype/algorithms/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 3 of 6 mutants; 80% is needed",
+      "duration_s": 2304.34,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no nipype/algorithms/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.5,
+        "repro_kill_rate": 0.5,
+        "pr_kill_rate": null,
+        "mutants": 6,
+        "killed": 3,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 4,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-bbd20dda6066",
+          "m-1d2235c56243",
+          "m-a34b78fbda61"
+        ],
+        "rule_mutants": 4,
+        "rule_kill_rate": 0.0,
+        "rule_kinds": [
+          "constant: 0 of 4 killed"
+        ],
+        "rule_kinds_absent": [
+          "body",
+          "compare",
+          "logic",
+          "negate_if",
+          "arithmetic",
+          "membership",
+          "loop",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 3 of 6 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "skipped",
+      "reason": "no test the fix left untouched passed before it",
+      "duration_s": 3.18,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 0,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.61,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no nipype/algorithms/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 34
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call",
+      "duration_s": 3.04,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 21.96,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no nipype/algorithms/tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-dc269ddf662e",
+      "origin": "model",
+      "file": "nipype/interfaces/mrtrix3/utils.py",
+      "line": 246,
+      "original": "        argstr=\"-t2 %s\",",
+      "replacement": "        argstr=\"-t1 %s\",",
+      "description": "Wrong flag for T2 image.",
+      "diff": "--- a/nipype/interfaces/mrtrix3/utils.py\n+++ b/nipype/interfaces/mrtrix3/utils.py\n@@ -245,3 +245,3 @@\n         exists=True,\n-        argstr=\"-t2 %s\",\n+        argstr=\"-t1 %s\",\n         desc=\"Provide a T2-weighted image in addition to the default T1-weighted image. (Only for 'fsl' algorithm)\",\n",
+      "words": "nipype/interfaces/mrtrix3/utils.py:246: changing `        argstr=\"-t2 %s\",` to `        argstr=\"-t1 %s\",` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-1f0f0ba402f4",
+      "origin": "model",
+      "file": "nipype/interfaces/mrtrix3/utils.py",
+      "line": 263,
+      "original": "        argstr=\"-sgm_amyg_hipp\",",
+      "replacement": "        argstr=\"-sgm_amyg\",",
+      "description": "Truncated sgm_amyg_hipp flag.",
+      "diff": "--- a/nipype/interfaces/mrtrix3/utils.py\n+++ b/nipype/interfaces/mrtrix3/utils.py\n@@ -262,3 +262,3 @@\n     sgm_amyg_hipp = traits.Bool(\n-        argstr=\"-sgm_amyg_hipp\",\n+        argstr=\"-sgm_amyg\",\n         desc=\"Include the amygdala and hippocampus in the subcortical grey matter segment.\",\n",
+      "words": "nipype/interfaces/mrtrix3/utils.py:263: changing `        argstr=\"-sgm_amyg_hipp\",` to `        argstr=\"-sgm_amyg\",` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-86f9ef0f47d2",
+      "origin": "model",
+      "file": "nipype/interfaces/mrtrix3/utils.py",
+      "line": 268,
+      "original": "        argstr=\"-template %s\",",
+      "replacement": "        argstr=\"-templ %s\",",
+      "description": "Wrong flag for template.",
+      "diff": "--- a/nipype/interfaces/mrtrix3/utils.py\n+++ b/nipype/interfaces/mrtrix3/utils.py\n@@ -267,3 +267,3 @@\n         exists=True,\n-        argstr=\"-template %s\",\n+        argstr=\"-templ %s\",\n         desc=\"Provide an image that will form the template for the generated 5TT image. (Only for 'hsvs' algorithm)\",\n",
+      "words": "nipype/interfaces/mrtrix3/utils.py:268: changing `        argstr=\"-template %s\",` to `        argstr=\"-templ %s\",` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-882eb7eff1b8",
+      "origin": "rule",
+      "file": "nipype/interfaces/mrtrix3/utils.py",
+      "line": 245,
+      "original": "        exists=True,",
+      "replacement": "        exists=False,",
+      "description": "rule: `True` -> `False`",
+      "diff": "--- a/nipype/interfaces/mrtrix3/utils.py\n+++ b/nipype/interfaces/mrtrix3/utils.py\n@@ -244,3 +244,3 @@\n     t2_image = File(\n-        exists=True,\n+        exists=False,\n         argstr=\"-t2 %s\",\n",
+      "words": "nipype/interfaces/mrtrix3/utils.py:245: changing `        exists=True,` to `        exists=False,` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-0e82ae213ca1",
+      "origin": "rule",
+      "file": "nipype/interfaces/mrtrix3/utils.py",
+      "line": 250,
+      "original": "        exists=True,",
+      "replacement": "        exists=False,",
+      "description": "rule: `True` -> `False`",
+      "diff": "--- a/nipype/interfaces/mrtrix3/utils.py\n+++ b/nipype/interfaces/mrtrix3/utils.py\n@@ -249,3 +249,3 @@\n     mask_file = File(\n-        exists=True,\n+        exists=False,\n         argstr=\"-mask %s\",\n",
+      "words": "nipype/interfaces/mrtrix3/utils.py:250: changing `        exists=True,` to `        exists=False,` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-fc04b983e9c1",
+      "origin": "rule",
+      "file": "nipype/interfaces/mrtrix3/utils.py",
+      "line": 267,
+      "original": "        exists=True,",
+      "replacement": "        exists=False,",
+      "description": "rule: `True` -> `False`",
+      "diff": "--- a/nipype/interfaces/mrtrix3/utils.py\n+++ b/nipype/interfaces/mrtrix3/utils.py\n@@ -266,3 +266,3 @@\n     template = File(\n-        exists=True,\n+        exists=False,\n         argstr=\"-template %s\",\n",
+      "words": "nipype/interfaces/mrtrix3/utils.py:267: changing `        exists=True,` to `        exists=False,` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-f33b85f2f9e9",
+      "origin": "rule",
+      "file": "nipype/interfaces/mrtrix3/utils.py",
+      "line": 283,
+      "original": "        exists=True,",
+      "replacement": "        exists=False,",
+      "description": "rule: `True` -> `False`",
+      "diff": "--- a/nipype/interfaces/mrtrix3/utils.py\n+++ b/nipype/interfaces/mrtrix3/utils.py\n@@ -282,3 +282,3 @@\n     lut_file = File(\n-        exists=True,\n+        exists=False,\n         argstr=\"-lut %s\",\n",
+      "words": "nipype/interfaces/mrtrix3/utils.py:283: changing `        exists=True,` to `        exists=False,` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "nipype/interfaces/mrtrix3/utils.py": [
+        244,
+        245,
+        246,
+        247,
+        249,
+        250,
+        251,
+        252,
+        254,
+        255,
+        256,
+        258,
+        259,
+        260,
+        262,
+        263,
+        264,
+        266,
+        267,
+        268,
+        269,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        278,
+        279,
+        280,
+        282,
+        283,
+        284,
+        285
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 34,
+        "total": 34
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "regressions: skipped (no test the fix left untouched passed before it)",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call)",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call)"
+  ],
+  "llm": {
+    "calls": 4,
+    "input_tokens": 7267,
+    "output_tokens": 1697,
+    "cost_estimate": {
+      "usd": 0.0359,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 4 of the 10 mutants were not run: the tests could no longer reach 80% even if they killed them all"
+  ],
+  "previous": null,
+  "attack_targets": []
+}

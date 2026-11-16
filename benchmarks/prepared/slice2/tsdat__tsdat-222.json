@@ -1,0 +1,23 @@
+{
+ "instance_id": "tsdat__tsdat-222",
+ "excluded": "base_suite_cannot_run",
+ "detail": "pytest outcome error; no error named",
+ "python": "3.10.17",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.168.5"
+ ],
+ "setup_files": [
+  "tsdat/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": null,
+ "suite_timeout": null,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [],
+ "commits": {},
+ "seconds": 29.078
+}

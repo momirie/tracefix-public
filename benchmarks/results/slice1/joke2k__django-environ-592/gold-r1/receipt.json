@@ -1,0 +1,441 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-16T18:07:01+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks environ.environ.Env.db_url",
+    "Break My Fix finding 2: an input that breaks environ.environ.Env.db_url",
+    "Break My Fix finding 3: an input that breaks environ.environ.Env.db_url_config",
+    "Break My Fix finding 4: an input that breaks environ.environ.Env.db_url_config"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "e2e50deaa5ffcb06ad39c352a99c226a19968e43"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "20774f95d098dca8c1e781361b04724753ea6ca2"
+  },
+  "issue": {
+    "title": "Add support for Django 5.1 PostgreSQL connection pools to env.db_url",
+    "sha256": "2cbb4f257490d858bb2ff6821a4c4810dd9f62f62b58304f1b7aaf5343af936e"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "The fix reproduced and guarded the reported issue with no regressions found, but Break My Fix found that extra_options is silently dropped for in-memory SQLite URLs: db_url and db_url_config with 'sqlite://:memory:' and extra_options={'timeout': 20} return only ENGINE and NAME, with no OPTIONS. Check the early-return path for ':memory:' SQLite URLs in db_url_config and make sure extra_options is…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 5.3,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 8.53,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 75.47,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 4 of 5 mutants",
+      "duration_s": 75.75,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.8,
+        "repro_kill_rate": 0.6,
+        "pr_kill_rate": null,
+        "mutants": 5,
+        "killed": 4,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-8fdbf272ef1b",
+          "m-44f1d45c3f13",
+          "m-b4f208355201",
+          "m-979640de7657"
+        ],
+        "rule_mutants": 3,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 276 untouched tests that passed before the fix fails after it",
+      "duration_s": 5.81,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 276,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 5.25,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 9
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "2 input(s) compared on 2 function(s): 0 changed with the fix",
+      "duration_s": 21.36,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "finished": 2,
+        "inputs_compared": 2,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "4 finding(s), each proven by a failing repro file",
+      "duration_s": 159.62,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_2.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_3.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_4.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_db.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 405,
+        "properties_counted": 10,
+        "findings": 4,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.04,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "environ.environ.Env.db_url",
+      "call": "db_url(self='Env()', var='DJANGO_ENVIRON_SURELY_UNSET_VAR', default='sqlite://:memory:', extra_options={'timeout': 20})",
+      "input": {
+        "self": "'Env()'",
+        "var": "'DJANGO_ENVIRON_SURELY_UNSET_VAR'",
+        "default": "'sqlite://:memory:'",
+        "extra_options": "{'timeout': 20}"
+      },
+      "outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+      "base_outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+      "expected": null,
+      "property": {
+        "id": "t1.p1",
+        "name": "db_url_passes_extra_options",
+        "kind": "returns",
+        "claim": "env.db_url with extra_options returns a config whose OPTIONS contain the extra_options entries.",
+        "source": "issue",
+        "quote": "Perhaps they can be passed in a new `extra_options` argument?",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 1,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 352, 353: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "environ/environ.py",
+      "line": 352,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    },
+    {
+      "number": 2,
+      "function": "environ.environ.Env.db_url",
+      "call": "db_url(self='Env()', var='DJANGO_ENVIRON_TEST_UNSET_DB_URL_XYZ', default='sqlite://:memory:', engine=None, options_cast=None, extra_options={'timeout': 20})",
+      "input": {
+        "self": "'Env()'",
+        "var": "'DJANGO_ENVIRON_TEST_UNSET_DB_URL_XYZ'",
+        "default": "'sqlite://:memory:'",
+        "engine": "None",
+        "options_cast": "None",
+        "extra_options": "{'timeout': 20}"
+      },
+      "outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+      "base_outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+      "expected": null,
+      "property": {
+        "id": "t1.p2",
+        "name": "db_url_merges_extra_options",
+        "kind": "returns",
+        "claim": "env.db_url passes extra_options through so they appear in OPTIONS of the returned config",
+        "source": "issue",
+        "quote": "Perhaps they can be passed in a new `extra_options` argument?",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 0,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 352, 353: the fix touched this path and left it broken",
+      "file": "findings/finding_2.py",
+      "path": "environ/environ.py",
+      "line": 352,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    },
+    {
+      "number": 3,
+      "function": "environ.environ.Env.db_url_config",
+      "call": "db_url_config(url='sqlite://:memory:', extra_options={'timeout': 20})",
+      "input": {
+        "url": "'sqlite://:memory:'",
+        "extra_options": "{'timeout': 20}"
+      },
+      "outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+      "base_outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+      "expected": null,
+      "property": {
+        "id": "t2.p1",
+        "name": "extra_options_merged_into_OPTIONS",
+        "kind": "returns",
+        "claim": "Every entry of a non-empty extra_options dict appears in the result's OPTIONS with the same value, for every recognised database URL, including sqlite in-memory URLs.",
+        "source": "docstring",
+        "quote": "Optional dictionary merged into ``OPTIONS`` after URL parsing.",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 0,
+      "relation": "the same before the fix, but the fix changed module-level code that runs when the module is imported (environ/environ.py 341, 342, 586, 587), so it can't be shown untouched",
+      "file": "findings/finding_3.py",
+      "path": "environ/environ.py",
+      "line": 584,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    },
+    {
+      "number": 4,
+      "function": "environ.environ.Env.db_url_config",
+      "call": "db_url_config(url='sqlite://:memory:', engine=None, options_cast=None, extra_options={'timeout': 20})",
+      "input": {
+        "url": "'sqlite://:memory:'",
+        "engine": "None",
+        "options_cast": "None",
+        "extra_options": "{'timeout': 20}"
+      },
+      "outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+      "base_outcome": "returns {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}",
+      "expected": null,
+      "property": {
+        "id": "t2.p5",
+        "name": "extra_options_merged_into_OPTIONS",
+        "kind": "returns",
+        "claim": "Every key/value of a non-empty extra_options dict appears in result['OPTIONS'] for any URL with a known scheme, including the special sqlite in-memory URL",
+        "source": "docstring",
+        "quote": "Optional dictionary merged into ``OPTIONS`` after URL parsing.",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 1,
+      "relation": "the same before the fix, but the fix changed module-level code that runs when the module is imported (environ/environ.py 341, 342, 586, 587), so it can't be shown untouched",
+      "file": "findings/finding_4.py",
+      "path": "environ/environ.py",
+      "line": 584,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-a8c3a3614a0c",
+      "origin": "model",
+      "file": "environ/environ.py",
+      "line": 725,
+      "original": "            config['OPTIONS'].update(extra_options)",
+      "replacement": "            config['OPTIONS'] = {**extra_options, **config['OPTIONS']}",
+      "description": "Query-string options override extra_options instead of the reverse.",
+      "diff": "--- a/environ/environ.py\n+++ b/environ/environ.py\n@@ -724,3 +724,3 @@\n             config.setdefault('OPTIONS', {})\n-            config['OPTIONS'].update(extra_options)\n+            config['OPTIONS'] = {**extra_options, **config['OPTIONS']}\n \n",
+      "words": "environ/environ.py:725: changing `            config['OPTIONS'].update(extra_options)` to `            config['OPTIONS'] = {**extra_options, **config['...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "environ/environ.py": [
+        341,
+        342,
+        352,
+        353,
+        586,
+        587,
+        723,
+        724,
+        725
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 9,
+        "total": 9
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 65968,
+    "output_tokens": 11618,
+    "cost_estimate": {
+      "usd": 0.4486,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null
+}

@@ -1,0 +1,379 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T20:34:02+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 4 of 7 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "b7aaa795fbbea7ca88458279cf8302533d249101"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "3ab4dc3e683f223324602b9c20c3dfa73fd67165"
+  },
+  "issue": {
+    "title": "`AsyncToSync` incorrectly passes arguments when called function arguments to internal wrapper",
+    "sha256": "0a523d38f87cafeb2c9a0dacffc1e962eece77d2bd673710d01ddb071435644a"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "A test failed before this fix and passed after it, so the reported `got multiple values for argument 'context'` error was reproduced and no longer occurs, with no regressions found and the fixed lines covered. The fix did not reach L2 because the tests did not catch enough mutants, and the behaviour-diff and break-my-fix stages were inconclusive, so the next step is to add tests that would fail i…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 14.77,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 4.16,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 16.69,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 4 of 7 mutants; 80% is needed",
+      "duration_s": 554.24,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.571,
+        "repro_kill_rate": 0.286,
+        "pr_kill_rate": null,
+        "mutants": 7,
+        "killed": 4,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-993337e924f6",
+          "m-b81359f41f33",
+          "m-9f962b74354a",
+          "m-8e1ecf5d3e3e"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.8,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 4 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 71 untouched tests that passed before the fix fails after it",
+      "duration_s": 14.6,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 71,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.43,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 25
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: AsyncToSync.__call__: not compared (a special method (such as __init__ or __eq__): not called yet)",
+      "duration_s": 2.71,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "no target could be attacked: TypeError: unhashable type: 'list'",
+      "duration_s": 32.41,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 0,
+        "properties_counted": 2,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-64f0ebc416f9",
+      "origin": "model",
+      "file": "asgiref/sync.py",
+      "line": 217,
+      "original": "                _exc_info=sys.exc_info(),",
+      "replacement": "                _exc_info=(None, None, None),",
+      "description": "Never propagates the current exception info into the async function.",
+      "diff": "--- a/asgiref/sync.py\n+++ b/asgiref/sync.py\n@@ -216,3 +216,3 @@\n                 _call_result=call_result,\n-                _exc_info=sys.exc_info(),\n+                _exc_info=(None, None, None),\n                 _task_context=task_context,\n",
+      "words": "asgiref/sync.py:217: changing `                _exc_info=sys.exc_info(),` to `                _exc_info=(None, None, None),` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-70396078c964",
+      "origin": "model",
+      "file": "asgiref/sync.py",
+      "line": 325,
+      "original": "            if _exc_info[1]:",
+      "replacement": "            if not _exc_info[1]:",
+      "description": "Inverts the check so the exception is raised only when none exists.",
+      "diff": "--- a/asgiref/sync.py\n+++ b/asgiref/sync.py\n@@ -324,3 +324,3 @@\n             # after raising it so exc_info is correctly populated.\n-            if _exc_info[1]:\n+            if not _exc_info[1]:\n                 try:\n",
+      "words": "asgiref/sync.py:325: changing `            if _exc_info[1]:` to `            if not _exc_info[1]:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-711e7613987b",
+      "origin": "model",
+      "file": "asgiref/sync.py",
+      "line": 329,
+      "original": "                    result = await self.awaitable(*_args, **_kwargs)",
+      "replacement": "                    result = await self.awaitable(**_kwargs)",
+      "description": "Drops positional args when running inside the except block.",
+      "diff": "--- a/asgiref/sync.py\n+++ b/asgiref/sync.py\n@@ -328,3 +328,3 @@\n                 except BaseException:\n-                    result = await self.awaitable(*_args, **_kwargs)\n+                    result = await self.awaitable(**_kwargs)\n             else:\n",
+      "words": "asgiref/sync.py:329: changing `                    result = await self.awaitable(*_args, **...` to `                    result = await self.awaitable(**_kwargs)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-91cdcd3324c5",
+      "origin": "rule",
+      "file": "asgiref/sync.py",
+      "line": 316,
+      "original": "            _restore_context(_context[0])",
+      "replacement": "            _restore_context(_context[(-1)])",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/asgiref/sync.py\n+++ b/asgiref/sync.py\n@@ -315,3 +315,3 @@\n         if _context is not None:\n-            _restore_context(_context[0])\n+            _restore_context(_context[(-1)])\n \n",
+      "words": "asgiref/sync.py:316: changing `            _restore_context(_context[0])` to `            _restore_context(_context[(-1)])` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-babac04390a5",
+      "origin": "rule",
+      "file": "asgiref/sync.py",
+      "line": 325,
+      "original": "            if _exc_info[1]:",
+      "replacement": "            if not (_exc_info[1]):",
+      "description": "rule: `_exc_info[1]` -> `not (_exc_info[1])`",
+      "diff": "--- a/asgiref/sync.py\n+++ b/asgiref/sync.py\n@@ -324,3 +324,3 @@\n             # after raising it so exc_info is correctly populated.\n-            if _exc_info[1]:\n+            if not (_exc_info[1]):\n                 try:\n",
+      "words": "asgiref/sync.py:325: changing `            if _exc_info[1]:` to `            if not (_exc_info[1]):` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "asgiref/sync.py": [
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        315,
+        316,
+        319,
+        320,
+        325,
+        327,
+        329,
+        331,
+        333,
+        335,
+        337,
+        338,
+        339
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 12,
+        "total": 25
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack AsyncToSync.__call__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare AsyncToSync.__call__: a special method (such as __init__ or __eq__): not called yet"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 36140,
+    "output_tokens": 3852,
+    "cost_estimate": {
+      "usd": 0.1956,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: only the first 10 of 20 rule mutants were run",
+    "guard: 1 of the rule mutant kills were crashes on the mutated line",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "asgiref.sync.AsyncToSync.main_wrap",
+      "path": "asgiref/sync.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "TypeError: unhashable type: 'list'"
+    }
+  ]
+}

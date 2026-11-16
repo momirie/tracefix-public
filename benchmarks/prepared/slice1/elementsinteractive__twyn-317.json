@@ -1,0 +1,77 @@
+{
+ "instance_id": "elementsinteractive__twyn-317",
+ "excluded": null,
+ "detail": "",
+ "python": "3.13.13",
+ "isolation": "strict",
+ "pip_changes": [
+  "anthropic - -> 1.15.0",
+  "anyio - -> 4.15.1",
+  "defusedxml - -> 0.7.1",
+  "docstring-parser - -> 0.18.0",
+  "h11 - -> 0.16.0",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis - -> 6.170.0",
+  "idna 3.11 -> 3.20",
+  "jiter - -> 0.17.0",
+  "opentelemetry-api - -> 1.45.1",
+  "pydantic 2.13.2 -> 2.14.1",
+  "pydantic-core 2.46.2 -> 2.50.1",
+  "sniffio - -> 1.3.1",
+  "sortedcontainers - -> 2.4.0",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.15.0 -> 4.16.0",
+  "typing-inspection 0.4.2 -> 0.4.4"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 1.767,
+ "suite_timeout": 120,
+ "source_hunks": 7,
+ "variants": [
+  {
+   "index": 0,
+   "path": "src/twyn/trusted_packages/references/base.py",
+   "old_start": 7,
+   "old_len": 6,
+   "label": "partial",
+   "failing": 1
+  },
+  {
+   "index": 1,
+   "path": "src/twyn/trusted_packages/references/base.py",
+   "old_start": 28,
+   "old_len": 26,
+   "label": "hidden_tests_pass",
+   "failing": 0
+  },
+  {
+   "index": 2,
+   "path": "src/twyn/trusted_packages/references/base.py",
+   "old_start": 69,
+   "old_len": 18,
+   "label": "no_effect",
+   "failing": 13
+  },
+  {
+   "index": 3,
+   "path": "src/twyn/trusted_packages/references/top_npm_reference.py",
+   "old_start": 1,
+   "old_len": 12,
+   "label": "hidden_tests_pass",
+   "failing": 0
+  }
+ ],
+ "kept": 0,
+ "commits": {
+  "base": "640e122012020a269f3793743c2a812ff89af259",
+  "gold": "0620f037ffc2efc9b535e93c582c1a9d4a0c38a0",
+  "v0": "391c5848b8a0bf0c7d6c0d8dc9bd3860d711cbd7"
+ },
+ "seconds": 40.484
+}

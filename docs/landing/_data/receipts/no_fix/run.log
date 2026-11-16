@@ -1,0 +1,15 @@
+[    0.0] tracefix: verifying b82706e..242a3d9 (isolation: basic)
+[    1.0] [1/9] environment: ok (1.0s)
+[    3.1] [2/9] import_check: ok (2.0s)
+[    9.2] [3/9] reproduce: fix_does_not_fix (6.1s)
+[    9.2] [4/9] guard: skipped (0.0s)
+[   10.1] [5/9] regressions: none_found (0.9s)
+[   11.6] [6/9] fix_line_coverage: ok (1.5s)
+[   15.8] [7/9] behaviour_diff: compared (4.2s)
+[   33.2] [8/9] break_my_fix: found (17.4s)
+[   33.2] [9/9] integrity: clean (0.0s)
+[   33.2] summary: by judge
+[   33.2] level: COUNTEREXAMPLE
+[   33.2] Fix Receipt: COUNTEREXAMPLE (run status: ok)
+[   33.2] Summary by the Judge (advisory): The reproduction test fails the same way before and after this fix, and Break My Fix found that dedupe_emails(['Bob@Example.com', 'bob@example.com']) still returns both addresses, so the capitalisation duplicate from the issue remains. Look next at how crm.contacts.dedupe_emails compares emails (for example, whether it normalises case before deduplicating) and at its behaviour change, which the J\u2026
+[   33.2] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json

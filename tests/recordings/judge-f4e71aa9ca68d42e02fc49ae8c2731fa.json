@@ -1,0 +1,11 @@
+{
+ "key": "f4e71aa9ca68d42e02fc49ae8c2731fa4bf795401c9a3722fe39dc3a1ec1237d",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1903,
+  "output_tokens": 749,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"This is the issue's exact example: 'Hello World!' should no longer give the trailing-dash slug 'hello-world-'.\"},{\"change\":\"c2\",\"label\":\"intended\",\"reason\":\"A whitespace-only title used to give the lone dash '-'; dropping that stray dash applies the issue's rule against broken-looking dashes, though the empty slug is worth a glance.\"},{\"change\":\"c3\",\"label\":\"suspicious\",\"reason\":\"The result 'a-z0-9--' now ends in a double trailing dash, the very defect the issue reports, and punctuation is deleted instead of turned into a separator as the 'dash-separated' docstring implies.\"},{\"change\":\"c4\",\"label\":\"suspicious\",\"reason\":\"The '/' is removed rather than replaced by a dash, gluing words into 'postshello', and the trailing dash is still there; nothing in the issue asks for words to be merged.\"},{\"change\":\"c5\",\"label\":\"intended\",\"reason\":\"Leading punctuation no longer leaves a stray dash ('-a' becomes 'a'), the same rule as the issue's trailing-dash complaint applied to the other end.\"}]}"
+ },
+ "role": "judge"
+}

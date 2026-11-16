@@ -1,0 +1,11 @@
+{
+ "key": "e4e0e49b0cd6a2dbd46972a0f448f2aa0ea844f15b2c71c70edaffc42c0815b4",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1389,
+  "output_tokens": 138,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from gateway.listener import Listener\\n\\n\\ndef test_port_none_uses_default() -> None:\\n    listener = Listener(default_port=9000)\\n    assert listener.port(None) == listener.default_port\\n    assert listener.port(None) == 9000\\n\",\"rationale\":\"Calls Listener.port(None) and asserts it returns the configured default port instead of raising AttributeError.\"}"
+ },
+ "role": "reproducer"
+}

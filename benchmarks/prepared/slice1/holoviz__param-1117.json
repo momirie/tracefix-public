@@ -1,0 +1,81 @@
+{
+ "instance_id": "holoviz__param-1117",
+ "excluded": null,
+ "detail": "",
+ "python": "3.13.13",
+ "isolation": "strict",
+ "pip_changes": [
+  "annotated-types - -> 0.8.0",
+  "anthropic - -> 1.14.0",
+  "anyio - -> 4.15.1",
+  "defusedxml - -> 0.7.1",
+  "docstring-parser - -> 0.18.0",
+  "h11 - -> 0.16.0",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis - -> 6.169.4",
+  "idna - -> 3.20",
+  "jiter - -> 0.17.0",
+  "opentelemetry-api - -> 1.45.1",
+  "pydantic - -> 2.14.1",
+  "pydantic-core - -> 2.50.1",
+  "pyyaml - -> 6.0.3",
+  "sniffio - -> 1.3.1",
+  "sortedcontainers - -> 2.4.0",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions - -> 4.16.0",
+  "typing-inspection - -> 0.4.4"
+ ],
+ "setup_files": [
+  "param/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "pytest_asyncio.plugin"
+ ],
+ "suite_seconds": 7.179,
+ "suite_timeout": 120,
+ "source_hunks": 7,
+ "variants": [
+  {
+   "index": 0,
+   "path": "param/reactive.py",
+   "old_start": 1436,
+   "old_len": 7,
+   "label": "no_effect",
+   "failing": 94
+  },
+  {
+   "index": 1,
+   "path": "param/reactive.py",
+   "old_start": 1458,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 91
+  },
+  {
+   "index": 2,
+   "path": "param/reactive.py",
+   "old_start": 1529,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 70
+  },
+  {
+   "index": 3,
+   "path": "param/reactive.py",
+   "old_start": 1632,
+   "old_len": 10,
+   "label": "partial",
+   "failing": 1
+  }
+ ],
+ "kept": 3,
+ "commits": {
+  "base": "1ab8c9069b1de8d08663ce679292fc5aa198f20d",
+  "gold": "cac87846754b9fe929095a3e277ba86d385b8c04",
+  "v3": "b4e8b23b482b47a29bf30b35e1f8b353abd11294"
+ },
+ "seconds": 137.312
+}

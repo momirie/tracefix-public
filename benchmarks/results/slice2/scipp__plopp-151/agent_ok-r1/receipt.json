@@ -1,0 +1,589 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T16:30:54+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 3 of 7 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "df3a5f224ede8bd257882417f8e4a8c90d0a8be2"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "3ca2da0d1d04f65b64a7b41f9e7ac00f9f1bacc2"
+  },
+  "issue": {
+    "title": "Cannot make 1d plot for data with datetime coord and variances",
+    "sha256": "30ebb317fbea9c21e2d8795faba583da1f6a9baba1dfd044727e8e15e540c900"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "A test reproducing the datetime bin-edge error-bar failure fails before the fix and passes after it, with no regressions found and the fix lines covered, but the guard stage reported the bug as not guarded and the behaviour-diff and break-my-fix stages were inconclusive. Next, check that the fix and a guarding test cover both the matplotlib and plotly backends, as the issue requires, and that the…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 24.18,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "4 changed module(s) imported from the copies (6 imports in all)",
+      "duration_s": 6.46,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 5,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 23.47,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/backends/matplotlib/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 3 of 7 mutants; 80% is needed",
+      "duration_s": 829.91,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/backends/matplotlib/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no simple_test.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_datetime_fix.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no exact_issue_test.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.429,
+        "repro_kill_rate": 0.286,
+        "pr_kill_rate": 0.286,
+        "mutants": 7,
+        "killed": 3,
+        "survived": 4,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-59dc2f9aed2d",
+          "m-e681c2ab7861",
+          "m-f40f2cc1f86f"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.1,
+        "pr_test_files": [
+          "comprehensive_test.py",
+          "simple_test.py",
+          "test_datetime_fix.py"
+        ],
+        "findings": [
+          "low_kill_rate: the tests killed 3 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 245 untouched tests that passed before the fix fails after it",
+      "duration_s": 35.04,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 245,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 11.9,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/backends/matplotlib/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py exact_issue_test.py simple_test.py test_datetime_fix.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 98
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: final_verification.py: module-level code that computes a value changed (line 11, 14, 15, 16, 17); what uses it is not compared",
+      "duration_s": 4.73,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 50.54,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 2,
+        "inputs_tried": 0,
+        "properties_counted": 8,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.05,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-4ededce56d37",
+      "origin": "model",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 181,
+      "original": "                data[\"variances\"][\"x\"] = sc.midpoints(coord).values",
+      "replacement": "                data[\"variances\"][\"x\"] = coord.values[:-1]",
+      "description": "Uses left bin edges instead of midpoints for variance x positions.",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -180,3 +180,3 @@\n                 coord = self._data.meta[self._dim]\n-                data[\"variances\"][\"x\"] = sc.midpoints(coord).values\n+                data[\"variances\"][\"x\"] = coord.values[:-1]\n             else:\n",
+      "words": "src/plopp/backends/matplotlib/line.py:181: changing `                data[\"variances\"][\"x\"] = sc.midpoints(coord)...` to `                data[\"variances\"][\"x\"] = coord.values[:-1]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-9dce87d34f53",
+      "origin": "model",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 192,
+      "original": "            if hist:",
+      "replacement": "            if not hist:",
+      "description": "Inverts the hist check so midpoints are used for non-histogram data.",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -191,3 +191,3 @@\n         if self._data.variances is not None:\n-            if hist:\n+            if not hist:\n                 # Use scipp's midpoints function which handles datetime coordinates properly\n",
+      "words": "src/plopp/backends/plotly/line.py:192: changing `            if hist:` to `            if not hist:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-e14b796b1859",
+      "origin": "model",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 195,
+      "original": "                data[\"variances\"][\"x\"] = sc.midpoints(coord).values",
+      "replacement": "                data[\"variances\"][\"x\"] = coord.values[1:]",
+      "description": "Uses right bin edges instead of midpoints for variance x positions.",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -194,3 +194,3 @@\n                 coord = self._data.meta[self._dim]\n-                data[\"variances\"][\"x\"] = sc.midpoints(coord).values\n+                data[\"variances\"][\"x\"] = coord.values[1:]\n             else:\n",
+      "words": "src/plopp/backends/plotly/line.py:195: changing `                data[\"variances\"][\"x\"] = sc.midpoints(coord)...` to `                data[\"variances\"][\"x\"] = coord.values[1:]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-9c30546ac7c5",
+      "origin": "model",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 197,
+      "original": "                data[\"variances\"][\"x\"] = x",
+      "replacement": "                data[\"variances\"][\"x\"] = x[1:]",
+      "description": "Drops the first x value for non-histogram variances, causing a length mismatch.",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -196,3 +196,3 @@\n             else:\n-                data[\"variances\"][\"x\"] = x\n+                data[\"variances\"][\"x\"] = x[1:]\n         data[\"variances\"][\"y\"] = y\n",
+      "words": "src/plopp/backends/plotly/line.py:197: changing `                data[\"variances\"][\"x\"] = x` to `                data[\"variances\"][\"x\"] = x[1:]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-50a88c435d4c",
+      "origin": "rule",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 183,
+      "original": "        x = data[\"values\"][\"x\"]\n        y = data[\"values\"][\"y\"]\n        hist = len(x) != len(y)\n        if hist:\n            data[\"values\"][\"y\"] = np.concatenate((y[0:1], y))\n            if data[\"mask...",
+      "replacement": "        return {}",
+      "description": "rule: body of `_preprocess_hist` -> `return {}`",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -182,20 +182,3 @@\n         \"\"\"\n-        x = data[\"values\"][\"x\"]\n-        y = data[\"values\"][\"y\"]\n-        hist = len(x) != len(y)\n-        if hist:\n-            data[\"values\"][\"y\"] = np.concatenate((y[0:1], y))\n-            if data[\"mask\"] is not None:\n-                data[\"mask\"][\"y\"] = np.concatenate(\n-                    (data[\"mask\"][\"y\"][0:1], data[\"mask\"][\"y\"]))\n-        if self._data.variances is not None:\n-            if hist:\n-                # Use scipp's midpoints function which handles datetime coordinates properly\n-                coord = self._data.meta[self._dim]\n-                data[\"variances\"][\"x\"] = sc.midpoints(coord).values\n-            else:\n-                data[\"variances\"][\"x\"] = x\n-        data[\"variances\"][\"y\"] = y\n-        data[\"hist\"] = hist\n-        return data\n+        return {}\n \n",
+      "words": "src/plopp/backends/plotly/line.py:183: changing `        x = data[\"values\"][\"x\"]\n        y = data[\"values\"][\"...` to `        return {}` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-049f7110706b",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 16,
+      "original": "                                                np.datetime64('2017-03-16T21:15:17'), 10))",
+      "replacement": "                                                np.datetime64('2017-03-16T21:15:17'), 11))",
+      "description": "rule: `10` -> `11`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -15,3 +15,3 @@\n time = sc.array(dims=['time'], values=np.arange(np.datetime64('2017-03-16T20:58:17'),\n-                                                np.datetime64('2017-03-16T21:15:17'), 10))\n+                                                np.datetime64('2017-03-16T21:15:17'), 11))\n v = np.random.rand(time.sizes['time']-1)\n",
+      "words": "final_verification.py:16: changing `                                                np.datetime6...` to `                                                np.datetime6...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-919703f5517a",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 16,
+      "original": "                                                np.datetime64('2017-03-16T21:15:17'), 10))",
+      "replacement": "                                                np.datetime64('2017-03-16T21:15:17'), 9))",
+      "description": "rule: `10` -> `9`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -15,3 +15,3 @@\n time = sc.array(dims=['time'], values=np.arange(np.datetime64('2017-03-16T20:58:17'),\n-                                                np.datetime64('2017-03-16T21:15:17'), 10))\n+                                                np.datetime64('2017-03-16T21:15:17'), 9))\n v = np.random.rand(time.sizes['time']-1)\n",
+      "words": "final_verification.py:16: changing `                                                np.datetime6...` to `                                                np.datetime6...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-4a030c50a6f8",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 17,
+      "original": "v = np.random.rand(time.sizes['time']-1)",
+      "replacement": "v = np.random.rand(time.sizes['time']+1)",
+      "description": "rule: `-` -> `+`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -16,3 +16,3 @@\n                                                 np.datetime64('2017-03-16T21:15:17'), 10))\n-v = np.random.rand(time.sizes['time']-1)\n+v = np.random.rand(time.sizes['time']+1)\n da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v, variances=v),\n",
+      "words": "final_verification.py:17: changing `v = np.random.rand(time.sizes['time']-1)` to `v = np.random.rand(time.sizes['time']+1)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-55729db8ac4f",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 17,
+      "original": "v = np.random.rand(time.sizes['time']-1)",
+      "replacement": "v = np.random.rand(time.sizes['time']-0)",
+      "description": "rule: `1` -> `0`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -16,3 +16,3 @@\n                                                 np.datetime64('2017-03-16T21:15:17'), 10))\n-v = np.random.rand(time.sizes['time']-1)\n+v = np.random.rand(time.sizes['time']-0)\n da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v, variances=v),\n",
+      "words": "final_verification.py:17: changing `v = np.random.rand(time.sizes['time']-1)` to `v = np.random.rand(time.sizes['time']-0)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-04793d926df0",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 17,
+      "original": "v = np.random.rand(time.sizes['time']-1)",
+      "replacement": "v = np.random.rand(time.sizes['time']-2)",
+      "description": "rule: `1` -> `2`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -16,3 +16,3 @@\n                                                 np.datetime64('2017-03-16T21:15:17'), 10))\n-v = np.random.rand(time.sizes['time']-1)\n+v = np.random.rand(time.sizes['time']-2)\n da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v, variances=v),\n",
+      "words": "final_verification.py:17: changing `v = np.random.rand(time.sizes['time']-1)` to `v = np.random.rand(time.sizes['time']-2)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-31813d150e0e",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 18,
+      "original": "da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v, variances=v),",
+      "replacement": "da = sc.DataArray(data=sc.array(dims=['time'], values=11 * v, variances=v),",
+      "description": "rule: `10` -> `11`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -17,3 +17,3 @@\n v = np.random.rand(time.sizes['time']-1)\n-da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v, variances=v),\n+da = sc.DataArray(data=sc.array(dims=['time'], values=11 * v, variances=v),\n                   coords={'time': time})\n",
+      "words": "final_verification.py:18: changing `da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v...` to `da = sc.DataArray(data=sc.array(dims=['time'], values=11 * v...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-d463a624a1ad",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 18,
+      "original": "da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v, variances=v),",
+      "replacement": "da = sc.DataArray(data=sc.array(dims=['time'], values=9 * v, variances=v),",
+      "description": "rule: `10` -> `9`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -17,3 +17,3 @@\n v = np.random.rand(time.sizes['time']-1)\n-da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v, variances=v),\n+da = sc.DataArray(data=sc.array(dims=['time'], values=9 * v, variances=v),\n                   coords={'time': time})\n",
+      "words": "final_verification.py:18: changing `da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v...` to `da = sc.DataArray(data=sc.array(dims=['time'], values=9 * v,...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-649e1b0e7d42",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 18,
+      "original": "da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v, variances=v),",
+      "replacement": "da = sc.DataArray(data=sc.array(dims=['time'], values=10 / v, variances=v),",
+      "description": "rule: `*` -> `/`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -17,3 +17,3 @@\n v = np.random.rand(time.sizes['time']-1)\n-da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v, variances=v),\n+da = sc.DataArray(data=sc.array(dims=['time'], values=10 / v, variances=v),\n                   coords={'time': time})\n",
+      "words": "final_verification.py:18: changing `da = sc.DataArray(data=sc.array(dims=['time'], values=10 * v...` to `da = sc.DataArray(data=sc.array(dims=['time'], values=10 / v...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "final_verification.py": [
+        3,
+        7,
+        8,
+        9,
+        11,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        30,
+        31,
+        32,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        57,
+        58,
+        59,
+        60
+      ],
+      "reproduce_issue_fixed.py": [
+        3,
+        9,
+        10,
+        11,
+        13,
+        16,
+        17,
+        19,
+        20,
+        23,
+        24,
+        25,
+        27,
+        28,
+        30,
+        32,
+        33,
+        35,
+        36,
+        37,
+        38,
+        39,
+        41,
+        43,
+        44,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        56,
+        57,
+        58,
+        59,
+        61,
+        62,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70
+      ],
+      "src/plopp/backends/matplotlib/line.py": [
+        178,
+        180,
+        181,
+        183
+      ],
+      "src/plopp/backends/plotly/line.py": [
+        192,
+        194,
+        195,
+        197
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 3,
+        "total": 98
+      },
+      {
+        "name": "pr_test",
+        "ran": 4,
+        "total": 98
+      }
+    ],
+    "notes": [
+      "reproduce_issue.py is not UTF-8 Python that parses, so it is not mutated"
+    ]
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 35684,
+    "output_tokens": 4232,
+    "cost_estimate": {
+      "usd": 0.1897,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: exact_issue_test.py has no tests, so it is not counted as a PR test",
+    "guard: reproduce_issue.py is not UTF-8 Python that parses, so it is not mutated",
+    "guard: only the first 10 of 48 rule mutants were run",
+    "fix_line_coverage: reproduce_issue.py is not UTF-8 Python that parses, so it is not mutated",
+    "behaviour_diff: reproduce_issue.py is not UTF-8 Python that parses, so it is not mutated",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared",
+    "break_my_fix: reproduce_issue.py is not UTF-8 Python that parses, so it is not mutated",
+    "integrity: reproduce_issue.py is not UTF-8 Python that parses, so it is not mutated"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "plopp.backends.matplotlib.line.Line._preprocess_hist",
+      "path": "src/plopp/backends/matplotlib/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "plopp.backends.plotly.line.Line._preprocess_hist",
+      "path": "src/plopp/backends/plotly/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

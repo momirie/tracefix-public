@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T20:17:30+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L2",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "the tests guard the fix: they fail when it is reverted or broken",
+    "not L3: proxy/common/version.py: module-level code that computes a value changed (line 11); what uses it is not compared",
+    "not L3: setup.py: module-level code that computes a value changed (line 13); what uses it is not compared"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "f75e21c4b159f2ef7ecb421768fbf3a15bf2bee3"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "3fb6eaba9192e8b61894b8d6b45ed6399a7afe15"
+  },
+  "issue": {
+    "title": "Broken tests on Python 3.7+ (urllib.parse behavior has changed)",
+    "sha256": "1a9973633c6b722591405c3e874223aa2c0300c03ed7877ea166a2dfe4ae851c"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "A test failed before the fix and passed after it, and the tests fail again when the fix is reverted or broken; no regressions or breaking inputs were found. Behaviour comparison was only partial: the changed module-level values in proxy/common/version.py and setup.py were not compared against what uses them, so review those changes and their consumers next.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 7.7,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 3.27,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 27.94,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no proxy/testing/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 4 of 5 mutants",
+      "duration_s": 110.96,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no proxy/testing/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.8,
+        "repro_kill_rate": 0.8,
+        "pr_kill_rate": null,
+        "mutants": 5,
+        "killed": 4,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-d6fa47ffd1a3",
+          "m-e98502699fc9",
+          "m-c74ac1e5b6e3",
+          "m-25fbe723f7ba"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.2,
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 114 untouched tests that passed before the fix fails after it",
+      "duration_s": 7.09,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 114,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.13,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no proxy/testing/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 5
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "194 input(s) compared on 1 function(s): 0 changed with the fix; not complete: proxy/common/version.py: module-level code that computes a value changed (line 11); what uses it is not compared",
+      "duration_s": 15.42,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 194,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 13 inputs against 4 properties",
+      "duration_s": 88.98,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 13,
+        "properties_counted": 4,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 3
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-ffef36f1c944",
+      "origin": "model",
+      "file": "proxy/http/parser.py",
+      "line": 115,
+      "original": "                self.port = 443 if self.url.path == b'' else \\",
+      "replacement": "                self.port = 80 if self.url.path == b'' else \\",
+      "description": "Wrong default port for CONNECT requests without an explicit port.",
+      "diff": "--- a/proxy/http/parser.py\n+++ b/proxy/http/parser.py\n@@ -114,3 +114,3 @@\n                 self.host = self.url.scheme\n-                self.port = 443 if self.url.path == b'' else \\\n+                self.port = 80 if self.url.path == b'' else \\\n                     int(self.url.path)\n",
+      "words": "proxy/http/parser.py:115: changing `                self.port = 443 if self.url.path == b'' else...` to `                self.port = 80 if self.url.path == b'' else ...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-9cdf9393d44c",
+      "origin": "rule",
+      "file": "proxy/common/version.py",
+      "line": 11,
+      "original": "VERSION = (2, 1, 1)",
+      "replacement": "VERSION = (1, 1, 1)",
+      "description": "rule: `2` -> `1`",
+      "diff": "--- a/proxy/common/version.py\n+++ b/proxy/common/version.py\n@@ -10,3 +10,3 @@\n \"\"\"\n-VERSION = (2, 1, 1)\n+VERSION = (1, 1, 1)\n __version__ = '.'.join(map(str, VERSION[0:3]))\n",
+      "words": "proxy/common/version.py:11: changing `VERSION = (2, 1, 1)` to `VERSION = (1, 1, 1)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-a492beefbb07",
+      "origin": "rule",
+      "file": "proxy/common/version.py",
+      "line": 11,
+      "original": "VERSION = (2, 1, 1)",
+      "replacement": "VERSION = (3, 1, 1)",
+      "description": "rule: `2` -> `3`",
+      "diff": "--- a/proxy/common/version.py\n+++ b/proxy/common/version.py\n@@ -10,3 +10,3 @@\n \"\"\"\n-VERSION = (2, 1, 1)\n+VERSION = (3, 1, 1)\n __version__ = '.'.join(map(str, VERSION[0:3]))\n",
+      "words": "proxy/common/version.py:11: changing `VERSION = (2, 1, 1)` to `VERSION = (3, 1, 1)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-af2058390ef4",
+      "origin": "rule",
+      "file": "proxy/common/version.py",
+      "line": 11,
+      "original": "VERSION = (2, 1, 1)",
+      "replacement": "VERSION = (2, 0, 1)",
+      "description": "rule: `1` -> `0`",
+      "diff": "--- a/proxy/common/version.py\n+++ b/proxy/common/version.py\n@@ -10,3 +10,3 @@\n \"\"\"\n-VERSION = (2, 1, 1)\n+VERSION = (2, 0, 1)\n __version__ = '.'.join(map(str, VERSION[0:3]))\n",
+      "words": "proxy/common/version.py:11: changing `VERSION = (2, 1, 1)` to `VERSION = (2, 0, 1)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-f8eb791aec8a",
+      "origin": "rule",
+      "file": "proxy/common/version.py",
+      "line": 11,
+      "original": "VERSION = (2, 1, 1)",
+      "replacement": "VERSION = (2, 2, 1)",
+      "description": "rule: `1` -> `2`",
+      "diff": "--- a/proxy/common/version.py\n+++ b/proxy/common/version.py\n@@ -10,3 +10,3 @@\n \"\"\"\n-VERSION = (2, 1, 1)\n+VERSION = (2, 2, 1)\n __version__ = '.'.join(map(str, VERSION[0:3]))\n",
+      "words": "proxy/common/version.py:11: changing `VERSION = (2, 1, 1)` to `VERSION = (2, 2, 1)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-fe9164575dee",
+      "origin": "rule",
+      "file": "proxy/common/version.py",
+      "line": 11,
+      "original": "VERSION = (2, 1, 1)",
+      "replacement": "VERSION = (2, 1, 2)",
+      "description": "rule: `1` -> `2`",
+      "diff": "--- a/proxy/common/version.py\n+++ b/proxy/common/version.py\n@@ -10,3 +10,3 @@\n \"\"\"\n-VERSION = (2, 1, 1)\n+VERSION = (2, 1, 2)\n __version__ = '.'.join(map(str, VERSION[0:3]))\n",
+      "words": "proxy/common/version.py:11: changing `VERSION = (2, 1, 1)` to `VERSION = (2, 1, 2)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-6ae23836ed86",
+      "origin": "rule",
+      "file": "proxy/http/parser.py",
+      "line": 115,
+      "original": "                self.port = 443 if self.url.path == b'' else \\",
+      "replacement": "                self.port = 442 if self.url.path == b'' else \\",
+      "description": "rule: `443` -> `442`",
+      "diff": "--- a/proxy/http/parser.py\n+++ b/proxy/http/parser.py\n@@ -114,3 +114,3 @@\n                 self.host = self.url.scheme\n-                self.port = 443 if self.url.path == b'' else \\\n+                self.port = 442 if self.url.path == b'' else \\\n                     int(self.url.path)\n",
+      "words": "proxy/http/parser.py:115: changing `                self.port = 443 if self.url.path == b'' else...` to `                self.port = 442 if self.url.path == b'' else...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-478d79617c6b",
+      "origin": "rule",
+      "file": "proxy/http/parser.py",
+      "line": 115,
+      "original": "                self.port = 443 if self.url.path == b'' else \\",
+      "replacement": "                self.port = 444 if self.url.path == b'' else \\",
+      "description": "rule: `443` -> `444`",
+      "diff": "--- a/proxy/http/parser.py\n+++ b/proxy/http/parser.py\n@@ -114,3 +114,3 @@\n                 self.host = self.url.scheme\n-                self.port = 443 if self.url.path == b'' else \\\n+                self.port = 444 if self.url.path == b'' else \\\n                     int(self.url.path)\n",
+      "words": "proxy/http/parser.py:115: changing `                self.port = 443 if self.url.path == b'' else...` to `                self.port = 444 if self.url.path == b'' else...` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-fecb4f9fe5a0",
+      "origin": "rule",
+      "file": "setup.py",
+      "line": 13,
+      "original": "VERSION = (2, 1, 1)",
+      "replacement": "VERSION = (1, 1, 1)",
+      "description": "rule: `2` -> `1`",
+      "diff": "--- a/setup.py\n+++ b/setup.py\n@@ -12,3 +12,3 @@\n \n-VERSION = (2, 1, 1)\n+VERSION = (1, 1, 1)\n __version__ = '.'.join(map(str, VERSION[0:3]))\n",
+      "words": "setup.py:13: changing `VERSION = (2, 1, 1)` to `VERSION = (1, 1, 1)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "proxy/common/version.py": [
+        11
+      ],
+      "proxy/http/parser.py": [
+        114,
+        115,
+        116
+      ],
+      "setup.py": [
+        13
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 4,
+        "total": 5
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 96463,
+    "output_tokens": 8361,
+    "cost_estimate": {
+      "usd": 0.5093,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: only the first 10 of 14 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "proxy.http.parser.HttpParser.set_line_attributes",
+      "path": "proxy/http/parser.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 13,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

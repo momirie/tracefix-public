@@ -1,0 +1,591 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T17:18:31+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 0 of 3 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "e045328a410deadd0c78e61bbb7674b5be28014a"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "4cddf2d7a72f27de7d0e3393c7e1423f624a3e09"
+  },
+  "issue": {
+    "title": "interpretation of TOP property",
+    "sha256": "e4406d58dca2359f4a498c2ed346d366242aa580c0b28eae3d74ccf67985e987"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.20"
+  },
+  "summary": {
+    "text": "A test reproducing the TOP-property issue (TOP only counted correct when node labels also match) fails before the fix and passes after it, and no breaking inputs or integrity problems were found, but the evidence stays at L1 because the tests did not kill enough mutants of the fix. The most important next step is to strengthen the tests so they catch mutated versions of the changed lines, and to…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite no_tests",
+      "duration_s": 2.2,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "no_tests",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "4 changed module(s) imported from the copies (5 imports in all)",
+      "duration_s": 4.48,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 4,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 13.65,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 0 of 3 mutants; 80% is needed",
+      "duration_s": 125.58,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_top_issue.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_top_issue_detailed.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py test_top_issue.py test_top_issue_detailed.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": 0.0,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 2,
+        "not_run": 3,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.2,
+        "rule_kinds": [
+          "body: 1 of 2 killed",
+          "compare: 0 of 2 killed",
+          "constant: 0 of 2 killed",
+          "arithmetic: 0 of 2 killed",
+          "drop_call: 1 of 1 killed",
+          "reraise: 0 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "logic",
+          "negate_if",
+          "membership",
+          "loop"
+        ],
+        "pr_test_files": [
+          "comprehensive_test.py",
+          "test_top_issue.py",
+          "test_top_issue_detailed.py"
+        ],
+        "findings": [
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "skipped",
+      "reason": "no test the fix left untouched passed before it",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 0,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 4.88,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py test_top_issue.py test_top_issue_detailed.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 98
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: debug_matching.py: module-level code that computes a value changed (line 37, 38); what uses it is not compared",
+      "duration_s": 2.44,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 17 inputs against 8 properties",
+      "duration_s": 6.98,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 17,
+        "properties_counted": 8,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (3 reported)",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 3
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 13.93,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-815a0808c232",
+      "origin": "model",
+      "file": "amr.py",
+      "line": 424,
+      "original": "        attribute_list[0].append([\"TOP\", \"TOP\"])",
+      "replacement": "        attribute_list[0].append([\"TOP\", \"\"])",
+      "description": "TOP attribute value is empty, so it no longer matches the intended constant.",
+      "diff": "--- a/amr.py\n+++ b/amr.py\n@@ -423,3 +423,3 @@\n         # add TOP as an attribute. The attribute value is a constant to avoid double-penalizing for label mismatches\n-        attribute_list[0].append([\"TOP\", \"TOP\"])\n+        attribute_list[0].append([\"TOP\", \"\"])\n         result_amr = AMR(node_name_list, node_value_list, relation_list, attribute_list)\n",
+      "words": "amr.py:424: changing `        attribute_list[0].append([\"TOP\", \"TOP\"])` to `        attribute_list[0].append([\"TOP\", \"\"])` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-26f0f255cd48",
+      "origin": "model",
+      "file": "amr.py",
+      "line": 424,
+      "original": "        attribute_list[0].append([\"TOP\", \"TOP\"])",
+      "replacement": "        attribute_list[-1].append([\"TOP\", \"TOP\"])",
+      "description": "TOP is attached to the last node instead of the root.",
+      "diff": "--- a/amr.py\n+++ b/amr.py\n@@ -423,3 +423,3 @@\n         # add TOP as an attribute. The attribute value is a constant to avoid double-penalizing for label mismatches\n-        attribute_list[0].append([\"TOP\", \"TOP\"])\n+        attribute_list[-1].append([\"TOP\", \"TOP\"])\n         result_amr = AMR(node_name_list, node_value_list, relation_list, attribute_list)\n",
+      "words": "amr.py:424: changing `        attribute_list[0].append([\"TOP\", \"TOP\"])` to `        attribute_list[-1].append([\"TOP\", \"TOP\"])` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-1bd0a75dc1c5",
+      "origin": "model",
+      "file": "amr.py",
+      "line": 424,
+      "original": "        attribute_list[0].append([\"TOP\", \"TOP\"])",
+      "replacement": "        attribute_list[0].append([\"top\", \"TOP\"])",
+      "description": "TOP attribute name is lowercased, changing the attribute key.",
+      "diff": "--- a/amr.py\n+++ b/amr.py\n@@ -423,3 +423,3 @@\n         # add TOP as an attribute. The attribute value is a constant to avoid double-penalizing for label mismatches\n-        attribute_list[0].append([\"TOP\", \"TOP\"])\n+        attribute_list[0].append([\"top\", \"TOP\"])\n         result_amr = AMR(node_name_list, node_value_list, relation_list, attribute_list)\n",
+      "words": "amr.py:424: changing `        attribute_list[0].append([\"TOP\", \"TOP\"])` to `        attribute_list[0].append([\"top\", \"TOP\"])` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-8b2c6bc624b5",
+      "origin": "rule",
+      "file": "debug_matching.py",
+      "line": 37,
+      "original": "if __name__ == \"__main__\":",
+      "replacement": "if __name__ != \"__main__\":",
+      "description": "rule: `==` -> `!=`",
+      "diff": "--- a/debug_matching.py\n+++ b/debug_matching.py\n@@ -36,3 +36,3 @@\n \n-if __name__ == \"__main__\":\n+if __name__ != \"__main__\":\n     debug_matching()",
+      "words": "debug_matching.py:37: changing `if __name__ == \"__main__\":` to `if __name__ != \"__main__\":` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-780104b1065c",
+      "origin": "rule",
+      "file": "amr.py",
+      "line": 424,
+      "original": "        attribute_list[0].append([\"TOP\", \"TOP\"])",
+      "replacement": "        attribute_list[(-1)].append([\"TOP\", \"TOP\"])",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/amr.py\n+++ b/amr.py\n@@ -423,3 +423,3 @@\n         # add TOP as an attribute. The attribute value is a constant to avoid double-penalizing for label mismatches\n-        attribute_list[0].append([\"TOP\", \"TOP\"])\n+        attribute_list[(-1)].append([\"TOP\", \"TOP\"])\n         result_amr = AMR(node_name_list, node_value_list, relation_list, attribute_list)\n",
+      "words": "amr.py:424: changing `        attribute_list[0].append([\"TOP\", \"TOP\"])` to `        attribute_list[(-1)].append([\"TOP\", \"TOP\"])` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-ad3a33a09579",
+      "origin": "rule",
+      "file": "final_demo.py",
+      "line": 14,
+      "original": "    print(\"=\" * 50)",
+      "replacement": "    print(\"=\" / 50)",
+      "description": "rule: `*` -> `/`",
+      "diff": "--- a/final_demo.py\n+++ b/final_demo.py\n@@ -13,3 +13,3 @@\n     print(\"🔧 SMATCH TOP Property Fix Demonstration\")\n-    print(\"=\" * 50)\n+    print(\"=\" / 50)\n     print()\n",
+      "words": "final_demo.py:14: changing `    print(\"=\" * 50)` to `    print(\"=\" / 50)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "arithmetic"
+    },
+    {
+      "id": "m-9b6f174d255d",
+      "origin": "rule",
+      "file": "debug_matching.py",
+      "line": 32,
+      "original": "        print(f\"Error: {e}\")",
+      "replacement": "        raise\n        print(f\"Error: {e}\")",
+      "description": "rule: re-raise at the start of the `except` body",
+      "diff": "--- a/debug_matching.py\n+++ b/debug_matching.py\n@@ -31,2 +31,3 @@\n     except Exception as e:\n+        raise\n         print(f\"Error: {e}\")\n",
+      "words": "debug_matching.py:32: changing `        print(f\"Error: {e}\")` to `        raise\n        print(f\"Error: {e}\")` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "reraise"
+    },
+    {
+      "id": "m-8363d2d4e95d",
+      "origin": "rule",
+      "file": "debug_matching.py",
+      "line": 13,
+      "original": "    print(\"=== Debug Matching Process ===\\n\")\n    \n    amr1 = \"(w / want-01 :ARG0 (b / boy))\"\n    amr2 = \"(d / desire-01 :ARG0 (b / boy))\"\n    \n    print(f\"AMR1: {amr1}\")\n    print(f\"AMR2: {amr2}\")\n  ...",
+      "replacement": "    return None",
+      "description": "rule: body of `debug_matching` -> `return None`",
+      "diff": "--- a/debug_matching.py\n+++ b/debug_matching.py\n@@ -12,25 +12,3 @@\n     \n-    print(\"=== Debug Matching Process ===\\n\")\n-    \n-    amr1 = \"(w / want-01 :ARG0 (b / boy))\"\n-    amr2 = \"(d / desire-01 :ARG0 (b / boy))\"\n-    \n-    print(f\"AMR1: {amr1}\")\n-    print(f\"AMR2: {amr2}\")\n-    print()\n-    \n-    # Enable verbose output\n-    smatch.verbose = True\n-    smatch.veryVerbose = True\n-    \n-    try:\n-        match_num, test_num, gold_num = smatch.get_amr_match(amr1, amr2)\n-        print(f\"\\nFinal result: {match_num} matches\")\n-        print(f\"Test triples: {test_num}\")  \n-        print(f\"Gold triples: {gold_num}\")\n-    except Exception as e:\n-        print(f\"Error: {e}\")\n-    finally:\n-        smatch.verbose = False\n-        smatch.veryVerbose = False\n+    return None\n \n",
+      "words": "debug_matching.py:13: changing `    print(\"=== Debug Matching Process ===\\n\")\n    \n    amr1 ...` to `    return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    },
+    {
+      "id": "m-78e09af80f82",
+      "origin": "rule",
+      "file": "edge_case_tests.py",
+      "line": 54,
+      "original": "if __name__ == \"__main__\":",
+      "replacement": "if __name__ != \"__main__\":",
+      "description": "rule: `==` -> `!=`",
+      "diff": "--- a/edge_case_tests.py\n+++ b/edge_case_tests.py\n@@ -53,3 +53,3 @@\n \n-if __name__ == \"__main__\":\n+if __name__ != \"__main__\":\n     test_edge_cases()",
+      "words": "edge_case_tests.py:54: changing `if __name__ == \"__main__\":` to `if __name__ != \"__main__\":` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-2bd6f18739b9",
+      "origin": "rule",
+      "file": "amr.py",
+      "line": 424,
+      "original": "        attribute_list[0].append([\"TOP\", \"TOP\"])",
+      "replacement": "        attribute_list[1].append([\"TOP\", \"TOP\"])",
+      "description": "rule: `0` -> `1`",
+      "diff": "--- a/amr.py\n+++ b/amr.py\n@@ -423,3 +423,3 @@\n         # add TOP as an attribute. The attribute value is a constant to avoid double-penalizing for label mismatches\n-        attribute_list[0].append([\"TOP\", \"TOP\"])\n+        attribute_list[1].append([\"TOP\", \"TOP\"])\n         result_amr = AMR(node_name_list, node_value_list, relation_list, attribute_list)\n",
+      "words": "amr.py:424: changing `        attribute_list[0].append([\"TOP\", \"TOP\"])` to `        attribute_list[1].append([\"TOP\", \"TOP\"])` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-49aa63587f7a",
+      "origin": "rule",
+      "file": "final_demo.py",
+      "line": 38,
+      "original": "    precision = match_num / test_num if test_num > 0 else 0",
+      "replacement": "    precision = match_num * test_num if test_num > 0 else 0",
+      "description": "rule: `/` -> `*`",
+      "diff": "--- a/final_demo.py\n+++ b/final_demo.py\n@@ -37,3 +37,3 @@\n     match_num, test_num, gold_num = smatch.get_amr_match(amr1, amr2)\n-    precision = match_num / test_num if test_num > 0 else 0\n+    precision = match_num * test_num if test_num > 0 else 0\n     recall = match_num / gold_num if gold_num > 0 else 0\n",
+      "words": "final_demo.py:38: changing `    precision = match_num / test_num if test_num > 0 else 0` to `    precision = match_num * test_num if test_num > 0 else 0` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "arithmetic"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "amr.py": [
+        424
+      ],
+      "debug_matching.py": [
+        4,
+        8,
+        10,
+        13,
+        15,
+        16,
+        18,
+        19,
+        20,
+        23,
+        24,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        34,
+        35,
+        37,
+        38
+      ],
+      "edge_case_tests.py": [
+        4,
+        8,
+        10,
+        13,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        48,
+        49,
+        50,
+        52,
+        54,
+        55
+      ],
+      "final_demo.py": [
+        4,
+        8,
+        10,
+        13,
+        14,
+        15,
+        18,
+        19,
+        21,
+        22,
+        23,
+        24,
+        27,
+        28,
+        29,
+        31,
+        32,
+        33,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        56,
+        57,
+        59,
+        60
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 1,
+        "total": 98
+      },
+      {
+        "name": "pr_test",
+        "ran": 1,
+        "total": 98
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "regressions: skipped (no test the fix left untouched passed before it)",
+    "Break My Fix could not attack debug_matching: it takes no parameters to vary",
+    "Break My Fix could not attack test_edge_cases: it takes no parameters to vary",
+    "Break My Fix could not attack demonstrate_fix: it takes no parameters to vary",
+    "the behaviour diff could not compare debug_matching: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_edge_cases: new with the fix: nothing to compare",
+    "the behaviour diff could not compare demonstrate_fix: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 63959,
+    "output_tokens": 7494,
+    "cost_estimate": {
+      "usd": 0.3333,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 3 of the 6 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 97 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.20: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "amr.AMR.parse_AMR_line",
+      "path": "amr.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 17,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

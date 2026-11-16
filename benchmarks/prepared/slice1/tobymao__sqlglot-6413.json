@@ -1,0 +1,70 @@
+{
+ "instance_id": "tobymao__sqlglot-6413",
+ "excluded": null,
+ "detail": "",
+ "python": "3.11.14",
+ "isolation": "strict",
+ "pip_changes": [
+  "annotated-types - -> 0.8.0",
+  "anthropic - -> 1.14.0",
+  "anyio - -> 4.15.1",
+  "defusedxml - -> 0.7.1",
+  "docstring-parser - -> 0.18.0",
+  "h11 - -> 0.16.0",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis - -> 6.169.4",
+  "idna - -> 3.20",
+  "jiter - -> 0.17.0",
+  "opentelemetry-api - -> 1.45.1",
+  "pydantic - -> 2.14.1",
+  "pydantic-core - -> 2.50.1",
+  "sniffio - -> 1.3.1",
+  "sortedcontainers - -> 2.4.0",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.15.0 -> 4.16.0",
+  "typing-inspection - -> 0.4.4"
+ ],
+ "setup_files": [
+  "sqlglot/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [],
+ "suite_seconds": 46.602,
+ "suite_timeout": 140,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "sqlglot/expressions.py",
+   "old_start": 4543,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 1
+  },
+  {
+   "index": 1,
+   "path": "sqlglot/generator.py",
+   "old_start": 2176,
+   "old_len": 14,
+   "label": "no_effect",
+   "failing": 1
+  },
+  {
+   "index": 2,
+   "path": "sqlglot/generator.py",
+   "old_start": 2206,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0
+  }
+ ],
+ "kept": 0,
+ "commits": {
+  "base": "b796783b6cbd23da4799e27414bc7605bd2b3ce6",
+  "gold": "a50a98863a6b44491ace6e1ca4a23a3499da165e",
+  "v0": "51a2bb39ca5eda4e702cc392c038f8f5b6edbef4"
+ },
+ "seconds": 82.985
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://tracefix.dev/</loc></url>
+<url><loc>https://tracefix.dev/benchmark/</loc></url>
+<url><loc>https://tracefix.dev/receipts/</loc></url>
+<url><loc>https://tracefix.dev/method/</loc></url>
+<url><loc>https://tracefix.dev/talk/</loc></url>
+<url><loc>https://tracefix.dev/receipts/good_fix/</loc></url>
+<url><loc>https://tracefix.dev/receipts/partial_fix/</loc></url>
+<url><loc>https://tracefix.dev/receipts/wrong_but_green/</loc></url>
+<url><loc>https://tracefix.dev/receipts/test_weakened/</loc></url>
+<url><loc>https://tracefix.dev/receipts/special_cased/</loc></url>
+<url><loc>https://tracefix.dev/receipts/unguarded_test/</loc></url>
+<url><loc>https://tracefix.dev/receipts/no_fix/</loc></url>
+<url><loc>https://tracefix.dev/receipts/env_broken/</loc></url>
+<url><loc>https://tracefix.dev/receipts/method_partial/</loc></url>
+<url><loc>https://tracefix.dev/receipts/method_good/</loc></url>
+<url><loc>https://tracefix.dev/receipts/py39_partial/</loc></url>
+</urlset>

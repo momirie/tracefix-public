@@ -1,0 +1,100 @@
+{
+ "decision": {
+  "constant_reads": {
+   "build": true,
+   "fires": "6/162"
+  },
+  "replaced_code": {
+   "build": false,
+   "correct": "15/103",
+   "wrong": "8/61"
+  },
+  "same_name": {
+   "build": false,
+   "correct": "23/103",
+   "wrong": "15/61"
+  }
+ },
+ "summary": {
+  "excluded_tasks": 2,
+  "groups": {
+   "agent_ok": {
+    "constant_reads": {
+     "n": 4,
+     "of": 37
+    },
+    "fixes": 37,
+    "replaced_code": {
+     "n": 4,
+     "of": 37
+    },
+    "replaced_line": {
+     "n": 3,
+     "of": 37
+    },
+    "same_name": {
+     "n": 9,
+     "of": 37
+    }
+   },
+   "agent_wrong": {
+    "constant_reads": {
+     "n": 0,
+     "of": 21
+    },
+    "fixes": 21,
+    "replaced_code": {
+     "n": 1,
+     "of": 21
+    },
+    "replaced_line": {
+     "n": 0,
+     "of": 21
+    },
+    "same_name": {
+     "n": 7,
+     "of": 21
+    }
+   },
+   "gold": {
+    "constant_reads": {
+     "n": 1,
+     "of": 65
+    },
+    "fixes": 66,
+    "replaced_code": {
+     "n": 11,
+     "of": 66
+    },
+    "replaced_line": {
+     "n": 15,
+     "of": 66
+    },
+    "same_name": {
+     "n": 14,
+     "of": 66
+    }
+   },
+   "partial": {
+    "constant_reads": {
+     "n": 1,
+     "of": 39
+    },
+    "fixes": 40,
+    "in_dropped_hunk": 1,
+    "replaced_code": {
+     "n": 7,
+     "of": 40
+    },
+    "replaced_line": {
+     "n": 10,
+     "of": 40
+    },
+    "same_name": {
+     "n": 8,
+     "of": 40
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "instance_id": "zarr-developers__zarr-python-2996",
+ "excluded": null,
+ "detail": "",
+ "python": "3.11.11",
+ "isolation": "strict",
+ "pip_changes": [
+  "annotated-types - -> 0.8.0",
+  "anthropic - -> 1.15.0",
+  "anyio - -> 4.15.1",
+  "defusedxml - -> 0.7.1",
+  "docstring-parser - -> 0.18.0",
+  "h11 - -> 0.16.0",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis 6.131.15 -> 6.170.0",
+  "idna 3.10 -> 3.20",
+  "jiter - -> 0.17.0",
+  "opentelemetry-api - -> 1.45.1",
+  "pydantic - -> 2.14.1",
+  "pydantic-core - -> 2.50.1",
+  "sniffio - -> 1.3.1",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.13.2 -> 4.16.0",
+  "typing-inspection - -> 0.4.4"
+ ],
+ "setup_files": [
+  "src/zarr/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "pytest_asyncio.plugin",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 70.006,
+ "suite_timeout": 211,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "src/zarr/core/group.py",
+   "old_start": 49,
+   "old_len": 7,
+   "label": "no_effect",
+   "failing": 14
+  },
+  {
+   "index": 1,
+   "path": "src/zarr/core/group.py",
+   "old_start": 334,
+   "old_len": 7,
+   "label": "partial",
+   "failing": 3
+  },
+  {
+   "index": 2,
+   "path": "src/zarr/core/group.py",
+   "old_start": 355,
+   "old_len": 10,
+   "label": "partial",
+   "failing": 3
+  }
+ ],
+ "kept": 1,
+ "commits": {
+  "base": "e23fdb071a68373572e5d84f4eedc31dc1fdf1db",
+  "gold": "7ddc5d52b25419690499a7a944168de255d31578",
+  "v1": "04f5fc68c2eb8c9a933a62495be0aaf4ba969a1d"
+ },
+ "seconds": 106.187
+}

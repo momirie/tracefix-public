@@ -1,0 +1,622 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T17:43:06+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 2 of 4 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "55a21cdb4fdc235433a0cedf93a907f5a70e6d23"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "1167bc02b6d715180716b2e214022e8567ea86bc"
+  },
+  "issue": {
+    "title": "[spark dialect] Parser doesn't handle default value for unix_timestamp function",
+    "sha256": "78572076463d346efbb9d7a362437c66dec3bf95a2a7b05304017b392411c53e"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "A test reproducing the unix_timestamp() parse failure in the Spark dialect failed before the fix and passes after it, with no regressions found, but the mutation check did not reach the required kill rate and the break-my-fix stage was inconclusive. Next, strengthen the tests so they distinguish the fix from mutants, for example by asserting that unix_timestamp() defaults to the current timestamp…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 15.66,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "3 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 3.83,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 3,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 11.02,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 4 mutants; 80% is needed",
+      "duration_s": 437.3,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_hive_compatibility.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py test_hive_compatibility.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.5,
+        "repro_kill_rate": 0.25,
+        "pr_kill_rate": 0.25,
+        "mutants": 4,
+        "killed": 2,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 1,
+        "not_run": 4,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-879fc39fa7c1",
+          "m-fa56bd3d59f8"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.0,
+        "rule_kinds": [
+          "body: 0 of 2 killed",
+          "compare: 0 of 1 killed",
+          "logic: 0 of 1 killed",
+          "negate_if: 0 of 1 killed",
+          "constant: 0 of 1 killed",
+          "arithmetic: 0 of 1 killed",
+          "membership: 0 of 1 killed",
+          "drop_call: 0 of 1 killed",
+          "reraise: 0 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "loop"
+        ],
+        "pr_test_files": [
+          "comprehensive_test.py",
+          "test_hive_compatibility.py"
+        ],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 4 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 608 untouched tests that passed before the fix fails after it",
+      "duration_s": 50.98,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 608,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 4.25,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py test_hive_compatibility.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 112
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call (Spark.Parser._parse_unix_timestamp: a method of a nested class: not called yet; test_original_issue: new with the fix: nothing to compare; test_spark_behavior: new with the fix: nothing to compare)",
+      "duration_s": 0.28,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 2.27,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 0,
+        "properties_counted": 1,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (2 reported)",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 2
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 13.25,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-c75ee4267173",
+      "origin": "model",
+      "file": "sqlglot/dialects/spark.py",
+      "line": 127,
+      "original": "                    format=exp.Literal.string('%Y-%m-%d %H:%M:%S')",
+      "replacement": "                    format=exp.Literal.string('%Y-%m-%d')",
+      "description": "Default format drops the time portion.",
+      "diff": "--- a/sqlglot/dialects/spark.py\n+++ b/sqlglot/dialects/spark.py\n@@ -126,3 +126,3 @@\n                     this=exp.CurrentTimestamp(),\n-                    format=exp.Literal.string('%Y-%m-%d %H:%M:%S')\n+                    format=exp.Literal.string('%Y-%m-%d')\n                 )\n",
+      "words": "sqlglot/dialects/spark.py:127: changing `                    format=exp.Literal.string('%Y-%m-%d %H:%...` to `                    format=exp.Literal.string('%Y-%m-%d')` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-93133cd1f4fd",
+      "origin": "model",
+      "file": "sqlglot/dialects/spark.py",
+      "line": 53,
+      "original": "        format_expr.this == '%Y-%m-%d %H:%M:%S'):",
+      "replacement": "        format_expr.this != '%Y-%m-%d %H:%M:%S'):",
+      "description": "Flips the format comparison so the default case is not recognized.",
+      "diff": "--- a/sqlglot/dialects/spark.py\n+++ b/sqlglot/dialects/spark.py\n@@ -52,3 +52,3 @@\n         isinstance(format_expr, exp.Literal) and \n-        format_expr.this == '%Y-%m-%d %H:%M:%S'):\n+        format_expr.this != '%Y-%m-%d %H:%M:%S'):\n         # This represents UNIX_TIMESTAMP() with defaults, render as UNIX_TIMESTAMP()\n",
+      "words": "sqlglot/dialects/spark.py:53: changing `        format_expr.this == '%Y-%m-%d %H:%M:%S'):` to `        format_expr.this != '%Y-%m-%d %H:%M:%S'):` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-8d7d9587e188",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 10,
+      "original": "    print(\"=== Testing Original Issue ===\")\n    \n    # Exact reproduction from issue description\n    try:\n        sql = \"select unix_timestamp()\"\n        result = parse_one(sql, read='spark')\n        ...",
+      "replacement": "    return None",
+      "description": "rule: body of `test_original_issue` -> `return None`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -9,21 +9,3 @@\n     \"\"\"Test the exact case from the original issue.\"\"\"\n-    print(\"=== Testing Original Issue ===\")\n-    \n-    # Exact reproduction from issue description\n-    try:\n-        sql = \"select unix_timestamp()\"\n-        result = parse_one(sql, read='spark')\n-        print(f\"✅ SUCCESS: {sql}\")\n-        print(f\"   Parsed as: {result}\")\n-        print(f\"   Generated SQL: {result.sql(dialect='spark')}\")\n-        \n-        # Verify it matches Spark's behavior\n-        # According to issue: unix_timestamp() should be equivalent to \n-        # unix_timestamp(current_timestamp(), yyyy-MM-dd HH:mm:ss)\n-        return True\n-        \n-    except Exception as e:\n-        print(f\"❌ FAILED: {sql}\")\n-        print(f\"   Error: {e}\")\n-        return False\n+    return None\n \n",
+      "words": "final_verification.py:10: changing `    print(\"=== Testing Original Issue ===\")\n    \n    # Exact...` to `    return None` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    },
+    {
+      "id": "m-24afe7396fe5",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 44,
+      "original": "    has_correct_format = 'format' in expr.args and expr.args['format'].this == '%Y-%m-%d %H:%M:%S'",
+      "replacement": "    has_correct_format = 'format' in expr.args and expr.args['format'].this != '%Y-%m-%d %H:%M:%S'",
+      "description": "rule: `==` -> `!=`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -43,3 +43,3 @@\n     has_current_timestamp = hasattr(expr, 'this') and expr.this is not None\n-    has_correct_format = 'format' in expr.args and expr.args['format'].this == '%Y-%m-%d %H:%M:%S'\n+    has_correct_format = 'format' in expr.args and expr.args['format'].this != '%Y-%m-%d %H:%M:%S'\n     \n",
+      "words": "final_verification.py:44: changing `    has_correct_format = 'format' in expr.args and expr.args...` to `    has_correct_format = 'format' in expr.args and expr.args...` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-d97627c1a1f5",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 43,
+      "original": "    has_current_timestamp = hasattr(expr, 'this') and expr.this is not None",
+      "replacement": "    has_current_timestamp = hasattr(expr, 'this') or expr.this is not None",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -42,3 +42,3 @@\n     # Should have CurrentTimestamp as 'this' and proper format\n-    has_current_timestamp = hasattr(expr, 'this') and expr.this is not None\n+    has_current_timestamp = hasattr(expr, 'this') or expr.this is not None\n     has_correct_format = 'format' in expr.args and expr.args['format'].this == '%Y-%m-%d %H:%M:%S'\n",
+      "words": "final_verification.py:43: changing `    has_current_timestamp = hasattr(expr, 'this') and expr.t...` to `    has_current_timestamp = hasattr(expr, 'this') or expr.th...` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    },
+    {
+      "id": "m-6bf38b3907b7",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 84,
+      "original": "    if test1 and test2 and test3:",
+      "replacement": "    if not (test1 and test2 and test3):",
+      "description": "rule: `test1 and test2 and test3` -> `not (test1 and test2 and test3)`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -83,3 +83,3 @@\n     print(\"\\n\" + \"=\" * 50)\n-    if test1 and test2 and test3:\n+    if not (test1 and test2 and test3):\n         print(\"🎉 ALL TESTS PASSED - Issue fully resolved!\")\n",
+      "words": "final_verification.py:84: changing `    if test1 and test2 and test3:` to `    if not (test1 and test2 and test3):` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "negate_if"
+    },
+    {
+      "id": "m-dccbed95a5d3",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 23,
+      "original": "        return True",
+      "replacement": "        return False",
+      "description": "rule: `True` -> `False`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -22,3 +22,3 @@\n         # unix_timestamp(current_timestamp(), yyyy-MM-dd HH:mm:ss)\n-        return True\n+        return False\n         \n",
+      "words": "final_verification.py:23: changing `        return True` to `        return False` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-ede4bcd93895",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 77,
+      "original": "    print(\"=\" * 50)",
+      "replacement": "    print(\"=\" / 50)",
+      "description": "rule: `*` -> `/`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -76,3 +76,3 @@\n     print(\"Final Verification of unix_timestamp() Fix\")\n-    print(\"=\" * 50)\n+    print(\"=\" / 50)\n     \n",
+      "words": "final_verification.py:77: changing `    print(\"=\" * 50)` to `    print(\"=\" / 50)` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "arithmetic"
+    },
+    {
+      "id": "m-1e32800677f3",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 43,
+      "original": "    has_current_timestamp = hasattr(expr, 'this') and expr.this is not None",
+      "replacement": "    has_current_timestamp = hasattr(expr, 'this') and expr.this is None",
+      "description": "rule: `is not` -> `is`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -42,3 +42,3 @@\n     # Should have CurrentTimestamp as 'this' and proper format\n-    has_current_timestamp = hasattr(expr, 'this') and expr.this is not None\n+    has_current_timestamp = hasattr(expr, 'this') and expr.this is None\n     has_correct_format = 'format' in expr.args and expr.args['format'].this == '%Y-%m-%d %H:%M:%S'\n",
+      "words": "final_verification.py:43: changing `    has_current_timestamp = hasattr(expr, 'this') and expr.t...` to `    has_current_timestamp = hasattr(expr, 'this') and expr.t...` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "membership"
+    },
+    {
+      "id": "m-d9123ad1cbf4",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 10,
+      "original": "    print(\"=== Testing Original Issue ===\")",
+      "replacement": "    pass",
+      "description": "rule: `print(\"=== Testing Original Issue ===\")` -> `pass`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -9,3 +9,3 @@\n     \"\"\"Test the exact case from the original issue.\"\"\"\n-    print(\"=== Testing Original Issue ===\")\n+    pass\n     \n",
+      "words": "final_verification.py:10: changing `    print(\"=== Testing Original Issue ===\")` to `    pass` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "drop_call"
+    },
+    {
+      "id": "m-dd1c4694d920",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 26,
+      "original": "        print(f\"❌ FAILED: {sql}\")",
+      "replacement": "        raise\n        print(f\"❌ FAILED: {sql}\")",
+      "description": "rule: re-raise at the start of the `except` body",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -25,2 +25,3 @@\n     except Exception as e:\n+        raise\n         print(f\"❌ FAILED: {sql}\")\n",
+      "words": "final_verification.py:26: changing `        print(f\"❌ FAILED: {sql}\")` to `        raise\n        print(f\"❌ FAILED: {sql}\")` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "reraise"
+    },
+    {
+      "id": "m-e1f9e131d56d",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 32,
+      "original": "    print(\"\\n=== Verifying Spark Behavior ===\")\n    \n    # Test that our internal representation is correct\n    result = parse_one(\"select unix_timestamp()\", read='spark')\n    expr = result.expression...",
+      "replacement": "    return None",
+      "description": "rule: body of `test_spark_behavior` -> `return None`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -31,20 +31,3 @@\n     \"\"\"Verify our implementation matches Spark's documented behavior.\"\"\" \n-    print(\"\\n=== Verifying Spark Behavior ===\")\n-    \n-    # Test that our internal representation is correct\n-    result = parse_one(\"select unix_timestamp()\", read='spark')\n-    expr = result.expressions[0]  # Get the function expression\n-    \n-    print(f\"Internal representation: {expr}\")\n-    print(f\"Expression type: {type(expr)}\")\n-    print(f\"Expression args: {expr.args}\")\n-    \n-    # Should have CurrentTimestamp as 'this' and proper format\n-    has_current_timestamp = hasattr(expr, 'this') and expr.this is not None\n-    has_correct_format = 'format' in expr.args and expr.args['format'].this == '%Y-%m-%d %H:%M:%S'\n-    \n-    print(f\"Has current timestamp: {has_current_timestamp}\")\n-    print(f\"Has correct format: {has_correct_format}\")\n-    \n-    return has_current_timestamp and has_correct_format\n+    return None\n \n",
+      "words": "final_verification.py:32: changing `    print(\"\\n=== Verifying Spark Behavior ===\")\n    \n    # T...` to `    return None` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "final_verification.py": [
+        2,
+        6,
+        8,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        23,
+        25,
+        26,
+        27,
+        28,
+        30,
+        32,
+        35,
+        36,
+        38,
+        39,
+        40,
+        43,
+        44,
+        46,
+        47,
+        49,
+        51,
+        53,
+        55,
+        62,
+        63,
+        64,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        73,
+        75,
+        76,
+        77,
+        79,
+        80,
+        81,
+        83,
+        84,
+        85,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93
+      ],
+      "reproduce_issue.py": [
+        2,
+        6,
+        8,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46
+      ],
+      "sqlglot/dialects/spark.py": [
+        47,
+        50,
+        51,
+        52,
+        53,
+        55,
+        58,
+        59,
+        103,
+        116,
+        119,
+        122,
+        124,
+        125,
+        126,
+        127,
+        131,
+        132,
+        133,
+        134,
+        135,
+        138,
+        159
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 15,
+        "total": 112
+      },
+      {
+        "name": "pr_test",
+        "ran": 22,
+        "total": 112
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call (Spark.Parser._parse_unix_timestamp: a method of a nested class: not called yet; test_original_issue: new with the fix: nothing to compare; test_spark_behavior: new with the fix: nothing to compare))",
+    "Break My Fix could not attack test_edge_cases: it takes no parameters to vary",
+    "Break My Fix could not attack test_original_issue: it takes no parameters to vary",
+    "Break My Fix could not attack test_spark_behavior: it takes no parameters to vary",
+    "Break My Fix could not attack test_unix_timestamp_issue: it takes no parameters to vary",
+    "Break My Fix could not attack Spark.Parser._parse_unix_timestamp: a method of a nested class: not called yet",
+    "the behaviour diff could not compare Spark.Parser._parse_unix_timestamp: a method of a nested class: not called yet",
+    "the behaviour diff could not compare test_original_issue: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_spark_behavior: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_edge_cases: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_unix_timestamp_issue: new with the fix: nothing to compare",
+    "the behaviour diff could not compare _str_to_unix: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 58305,
+    "output_tokens": 4178,
+    "cost_estimate": {
+      "usd": 0.2666,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 4 of the 8 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 84 rule mutants were run"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "sqlglot.dialects.spark._str_to_unix",
+      "path": "sqlglot/dialects/spark.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no object of  was built: none was given, and no type hints make one"
+    }
+  ]
+}

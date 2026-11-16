@@ -1,0 +1,160 @@
+<!doctype html>
+<!-- Built by scripts/build_site.py from docs/landing/_src/. Edit the source, then run the script. -->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Receipts: what Tracefix hands back, for every fixture</title>
+<meta name="description" content="Every regression fixture's Fix Receipt: the issue, the fix, the receipt as it reads in a PR comment, the tests Tracefix wrote and the run in the terminal.">
+<!-- Search engines: SEARCHABLE in scripts/build_site.py, off while the site is a private preview
+     (until the release gates hold, DECISIONS 2026-11-06). -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0b" id="theme-color">
+<link rel="canonical" href="https://tracefix.dev/receipts/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tracefix.dev/receipts/">
+<meta property="og:title" content="Tracefix receipts: every fixture, every finding">
+<meta property="og:description" content="Small buggy repos with known answers, and the receipt Tracefix wrote for each: counterexamples, levels and the tests behind them.">
+<meta property="og:image" content="https://tracefix.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preload" href="../assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  // Before first paint: mark JS, and apply the theme: Dark unless the visitor saved Light or System.
+  (function () {
+    var d = document.documentElement, t = 'dark'; d.className = 'js';
+    try { var saved = localStorage.getItem('tracefix-theme'); if (saved === 'light' || saved === 'system') t = saved; } catch (e) {}
+    d.setAttribute('data-theme', t);
+    // Fail-safe: site.css hides the reveal blocks until site.js shows them. If site.js fails to load
+    // (its onerror) or has not started the reveals in 2.5 s, show every block as it is.
+    function showAll() {
+      if (d.classList.contains('reveals-on')) return;
+      var all = document.querySelectorAll('[data-reveal],[data-words],[data-reveal-group],.hero');
+      for (var i = 0; i < all.length; i++) all[i].classList.add('is-in');
+    }
+    window.tracefixShowAll = showAll;
+    setTimeout(showAll, 2500);
+  })();
+</script>
+<link rel="stylesheet" href="../assets/site.css">
+<!-- Fetch a page of this site when a link to it is hovered or pressed, so the next page is ready. -->
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="preview-note" aria-label="Private preview"><p>Private preview: Tracefix is not released yet, so its GitHub links open only for collaborators. <a href="../talk/">Talk to me</a></p></aside>
+
+<header class="site-head" id="head">
+  <div class="frame">
+    <a class="logo" href="../#top" aria-label="Tracefix home"><img class="lt" src="../assets/logo.svg" alt="" width="100" height="36"><img class="dk" src="../assets/logo-reversed.svg" alt="" width="100" height="36"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="../benchmark/">Benchmark<i class="nm" aria-hidden="true"></i></a>
+      <a href="../receipts/" aria-current="page">Receipts<i class="nm" aria-hidden="true"></i></a>
+      <a href="../method/">Method<i class="nm" aria-hidden="true"></i></a>
+      <a href="../#install">Install</a>
+      <button type="button" class="pal-open" data-palette-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><span class="pal-open-label">Search</span><kbd data-palette-key>Ctrl K</kbd></button>
+      <div class="theme" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+        <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+        <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+      </div>
+      <a class="btn btn-sm" href="../talk/">Talk to me</a>
+    </nav>
+    <details class="menu">
+      <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span class="menu-label">Menu</span></summary>
+      <nav aria-label="Menu">
+        <a href="../benchmark/">Benchmark</a>
+        <a href="../receipts/" aria-current="page">Receipts</a>
+        <a href="../method/">Method</a>
+        <a href="../talk/">Talk to me</a>
+        <a href="../#install">Install</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main" tabindex="-1" class="page">
+<!-- RECEIPTS. No number is typed here: every count fills a hole from scripts/site_receipts.py, which reads
+     the fixtures' receipts (docs/landing/_data/receipts/) and the fixtures (tests/fixtures/). -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow">Receipts</p>
+    <h1 data-words>Every fixture’s receipt. <span class="soft">Read what Tracefix hands back.</span></h1>
+    <p class="lede" data-reveal style="--d:3">The regression fixtures are 11 small buggy repos with a known answer: a bug, a fix that is right or wrong in a known way, and the level its receipt must reach. Each page below shows the issue, the fix, the receipt as it reads in a PR comment, the tests Tracefix wrote and the run in the terminal.</p>
+    <p class="standing-line" data-reveal style="--d:4">11 of 11 receipts meet their known answer; 7 come with a counterexample.</p>
+    <p class="mute small" data-reveal style="--d:5">Made by the real pipeline on the real fixture repos, with the test suite’s recorded model answers, so a run costs nothing and comes out the same each time. A receipt that misses its known answer fails the test suite. <a href="https://github.com/momirie/tracefix/tree/main/tests/fixtures">The fixtures on GitHub</a>.</p>
+  </div>
+</section>
+
+<section class="band" aria-label="The receipts">
+  <div class="frame pad">
+    <div class="filters" role="group" aria-label="Show receipts by level" data-filters hidden><button type="button" class="chip" data-filter="all" aria-pressed="true">All <span>11</span></button><button type="button" class="chip" data-filter="L4" aria-pressed="false">L4 <span>2</span></button><button type="button" class="chip" data-filter="L1" aria-pressed="false">L1 <span>1</span></button><button type="button" class="chip" data-filter="L0" aria-pressed="false">L0 <span>1</span></button><button type="button" class="chip" data-filter="COUNTEREXAMPLE" aria-pressed="false">COUNTEREXAMPLE <span>7</span></button><span id="filter-shown" class="label" aria-live="polite"></span></div>
+    <ul class="rcards">
+<li class="rc" data-level="L4" data-reveal style="--d:0;view-transition-name:card-good_fix;view-transition-class:rc-card"><p class="rc-top"><span class="rc-name">good_fix</span><span class="lvl" style="view-transition-name:lvl-good_fix;view-transition-class:rc-lvl">L4</span></p><h2 class="rc-title" style="view-transition-name:title-good_fix;view-transition-class:rc-title"><a href="good_fix/">Orders list is missing the last order</a></h2><p class="rc-fix">Rounds the page count up so a partial last page exists; guarded by a new test.</p><p class="rc-diff">2 files changed, +6 −1</p><ul class="rc-files"><li>src/pager/pagination.py</li><li>tests/test_pagination.py</li></ul><p class="rc-head"><span class="label">Receipt</span>Break My Fix attacked every changed function to the end and found nothing</p><p class="rc-want">Known answer: at least L2 · meets it</p></li>
+<li class="rc rc-cx" data-level="COUNTEREXAMPLE" data-reveal style="--d:1;view-transition-name:card-partial_fix;view-transition-class:rc-card"><p class="rc-top"><span class="rc-name">partial_fix</span><span class="lvl red" style="view-transition-name:lvl-partial_fix;view-transition-class:rc-lvl">COUNTEREXAMPLE</span></p><h2 class="rc-title" style="view-transition-name:title-partial_fix;view-transition-class:rc-title"><a href="partial_fix/">Service crashes at startup when PORT is not set</a></h2><p class="rc-fix">Handles an unset PORT but not a blank one, which the docstring also promises falls back to 8080; parse_port(&#x27;&#x27;) still raises ValueError.</p><p class="rc-diff">2 files changed, +7 −0</p><ul class="rc-files"><li>src/svc/config.py</li><li>tests/test_config.py</li></ul><p class="rc-head"><span class="label">Receipt</span>parse_port(raw=&#x27;&#x27;) → raises ValueError: invalid literal for int() with base 10: &#x27;&#x27;</p><p class="rc-want">Known answer: exactly COUNTEREXAMPLE · meets it</p></li>
+<li class="rc rc-cx" data-level="COUNTEREXAMPLE" data-reveal style="--d:2;view-transition-name:card-wrong_but_green;view-transition-class:rc-card"><p class="rc-top"><span class="rc-name">wrong_but_green</span><span class="lvl red" style="view-transition-name:lvl-wrong_but_green;view-transition-class:rc-lvl">COUNTEREXAMPLE</span></p><h2 class="rc-title" style="view-transition-name:title-wrong_but_green;view-transition-class:rc-title"><a href="wrong_but_green/">Histogram buckets are wrong for large values</a></h2><p class="rc-fix">Switches to floor division, which fixes large values but floors negatives (-5 -&gt; -10) against the documented truncate-toward-zero contract; the suite stays green because it has no negative cases.</p><p class="rc-diff">2 files changed, +5 −1</p><ul class="rc-files"><li>src/stats/buckets.py</li><li>tests/test_buckets.py</li></ul><p class="rc-head"><span class="label">Receipt</span>bucket_of(value=-5, width=10) → returns -10</p><p class="rc-want">Known answer: at most L2 · meets it</p></li>
+<li class="rc rc-cx" data-level="COUNTEREXAMPLE" data-reveal style="--d:0;view-transition-name:card-test_weakened;view-transition-class:rc-card"><p class="rc-top"><span class="rc-name">test_weakened</span><span class="lvl red" style="view-transition-name:lvl-test_weakened;view-transition-class:rc-lvl">COUNTEREXAMPLE</span></p><h2 class="rc-title" style="view-transition-name:title-test_weakened;view-transition-class:rc-title"><a href="test_weakened/">Trailing dash in slugs for titles ending in punctuation</a></h2><p class="rc-fix">Rewrites slugify so trailing punctuation no longer leaves a dash, but now produces double dashes (&#x27;Rock &amp; Roll&#x27; -&gt; &#x27;rock--roll&#x27;) and deletes the existing assert that caught it.</p><p class="rc-diff">2 files changed, +3 −3</p><ul class="rc-files"><li>src/blog/slug.py</li><li>tests/test_slug.py</li></ul><p class="rc-head"><span class="label">Receipt</span>slugify(title=&#x27;-&#x27;) → returns &#x27;-&#x27;</p><p class="rc-want">Known answer: exactly COUNTEREXAMPLE · meets it</p></li>
+<li class="rc rc-cx" data-level="COUNTEREXAMPLE" data-reveal style="--d:1;view-transition-name:card-special_cased;view-transition-class:rc-card"><p class="rc-top"><span class="rc-name">special_cased</span><span class="lvl red" style="view-transition-name:lvl-special_cased;view-transition-class:rc-lvl">COUNTEREXAMPLE</span></p><h2 class="rc-title" style="view-transition-name:title-special_cased;view-transition-class:rc-title"><a href="special_cased/">Lease schedule contains a payment on 29 Feb 2100</a></h2><p class="rc-fix">Hard-codes February 2100 to 28 days instead of fixing the leap-year rule, so 1900, 2200 and every other century year are still wrong.</p><p class="rc-diff">1 file changed, +2 −0</p><ul class="rc-files"><li>src/billing/calendar.py</li></ul><p class="rc-head"><span class="label">Receipt</span>days_in_month(year=2200, month=2) → returns 29</p><p class="rc-want">Known answer: exactly COUNTEREXAMPLE · meets it</p></li>
+<li class="rc" data-level="L1" data-reveal style="--d:2;view-transition-name:card-unguarded_test;view-transition-class:rc-card"><p class="rc-top"><span class="rc-name">unguarded_test</span><span class="lvl" style="view-transition-name:lvl-unguarded_test;view-transition-class:rc-lvl">L1</span></p><h2 class="rc-title" style="view-transition-name:title-unguarded_test;view-transition-class:rc-title"><a href="unguarded_test/">truncate() returns strings longer than max_len</a></h2><p class="rc-fix">Correctly reserves room for the ellipsis so results never exceed max_len, but the only added test also passes on the buggy code, so nothing guards the fix.</p><p class="rc-diff">2 files changed, +9 −2</p><ul class="rc-files"><li>src/textutil/trunc.py</li><li>tests/test_trunc.py</li></ul><p class="rc-head"><span class="label">Receipt</span>the bug was reproduced: a test fails before the fix and passes after it</p><p class="rc-want">Known answer: exactly L1 · meets it</p></li>
+<li class="rc rc-cx" data-level="COUNTEREXAMPLE" data-reveal style="--d:0;view-transition-name:card-no_fix;view-transition-class:rc-card"><p class="rc-top"><span class="rc-name">no_fix</span><span class="lvl red" style="view-transition-name:lvl-no_fix;view-transition-class:rc-lvl">COUNTEREXAMPLE</span></p><h2 class="rc-title" style="view-transition-name:title-no_fix;view-transition-class:rc-title"><a href="no_fix/">Contact import creates duplicates for differently-capitalised emails</a></h2><p class="rc-fix">Strips whitespace before comparing addresses but still compares case-sensitively, so the reported duplicates are still created.</p><p class="rc-diff">2 files changed, +6 −1</p><ul class="rc-files"><li>src/crm/contacts.py</li><li>tests/test_contacts.py</li></ul><p class="rc-head"><span class="label">Receipt</span>dedupe_emails(emails=[&#x27;Bob@Example.com&#x27;, &#x27;bob@example.com&#x27;]) → returns [&#x27;Bob@Example.com&#x27;, &#x27;bob@example.com&#x27;]</p><p class="rc-want">Known answer: exactly COUNTEREXAMPLE · meets it</p></li>
+<li class="rc" data-level="L0" data-reveal style="--d:1;view-transition-name:card-env_broken;view-transition-class:rc-card"><p class="rc-top"><span class="rc-name">env_broken</span><span class="lvl" style="view-transition-name:lvl-env_broken;view-transition-class:rc-lvl">L0</span></p><h2 class="rc-title" style="view-transition-name:title-env_broken;view-transition-class:rc-title"><a href="env_broken/">weekly_report() week number off by one on Mondays</a></h2><p class="rc-fix">The fix itself is correct, but the project imports an internal package (acme_metrics) that cannot be installed, so no test can run on either ref.</p><p class="rc-diff">1 file changed, +2 −5</p><ul class="rc-files"><li>src/metrics/report.py</li></ul><p class="rc-head"><span class="label">Receipt</span>the run stopped: the base test suite cannot import &#x27;acme_metrics&#x27; (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks &#x27;acme_metrics&#x27; (install the project&#x27;s dependencies and run Tracefix from that environment)</p><p class="rc-want">Known answer: exactly L0 · meets it</p></li>
+<li class="rc rc-cx" data-level="COUNTEREXAMPLE" data-reveal style="--d:2;view-transition-name:card-method_partial;view-transition-class:rc-card"><p class="rc-top"><span class="rc-name">method_partial</span><span class="lvl red" style="view-transition-name:lvl-method_partial;view-transition-class:rc-lvl">COUNTEREXAMPLE</span></p><h2 class="rc-title" style="view-transition-name:title-method_partial;view-transition-class:rc-title"><a href="method_partial/">Listener crashes when no port is configured</a></h2><p class="rc-fix">Handles an unset port on a default Listener but returns a hard-coded 8080: blank text still raises ValueError, and a Listener with its own default_port ignores it.</p><p class="rc-diff">2 files changed, +6 −0</p><ul class="rc-files"><li>src/gateway/listener.py</li><li>tests/test_listener.py</li></ul><p class="rc-head"><span class="label">Receipt</span>port(self=&#x27;Listener()&#x27;, raw=&#x27;&#x27;) → raises ValueError: invalid literal for int() with base 10: &#x27;&#x27;</p><p class="rc-want">Known answer: exactly COUNTEREXAMPLE · meets it</p></li>
+<li class="rc" data-level="L4" data-reveal style="--d:0;view-transition-name:card-method_good;view-transition-class:rc-card"><p class="rc-top"><span class="rc-name">method_good</span><span class="lvl" style="view-transition-name:lvl-method_good;view-transition-class:rc-lvl">L4</span></p><h2 class="rc-title" style="view-transition-name:title-method_good;view-transition-class:rc-title"><a href="method_good/">Minor bump keeps the old patch number</a></h2><p class="rc-fix">A minor bump now resets patch as documented; guarded by a new test.</p><p class="rc-diff">2 files changed, +5 −1</p><ul class="rc-files"><li>src/vtools/version.py</li><li>tests/test_version.py</li></ul><p class="rc-head"><span class="label">Receipt</span>Break My Fix attacked every changed function to the end and found nothing</p><p class="rc-want">Known answer: at least L2 · meets it</p></li>
+<li class="rc rc-cx" data-level="COUNTEREXAMPLE" data-reveal style="--d:1;view-transition-name:card-py39_partial;view-transition-class:rc-card"><p class="rc-top"><span class="rc-name">py39_partial</span><span class="lvl red" style="view-transition-name:lvl-py39_partial;view-transition-class:rc-lvl">COUNTEREXAMPLE</span></p><h2 class="rc-title" style="view-transition-name:title-py39_partial;view-transition-class:rc-title"><a href="py39_partial/">Final table says &quot;11st place&quot;</a></h2><p class="rc-fix">A Python 3.9 project (its package can&#x27;t be imported on 3.10+). The fix hard-codes 11, 12 and 13 to &quot;th&quot; instead of checking the last two digits, so 111, 112, 211 and every other number ending in 11-13 still get &quot;st&quot;, &quot;nd&quot; or &quot;rd&quot;.</p><p class="rc-diff">2 files changed, +8 −0</p><ul class="rc-files"><li>src/standings/ordinal.py</li><li>tests/test_ordinal.py</li></ul><p class="rc-head"><span class="label">Receipt</span>ordinal(n=111) → returns &#x27;111st&#x27;</p><p class="rc-want">Known answer: exactly COUNTEREXAMPLE · meets it</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- NEXT: from the fixtures to real fixes -->
+<section class="band" aria-label="Next page">
+  <div class="frame pad next">
+    <a class="next-card" href="../benchmark/" data-reveal>
+      <span class="eyebrow">Next</span>
+      <span class="next-title">Fixtures have known answers. Real fixes don’t. <span class="soft">How often it is right on real bug fixes, and every miss.</span></span>
+      <span class="next-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer class="band ink foot">
+  <div class="frame">
+    <img src="../assets/logo-reversed.svg" alt="Tracefix" width="100" height="36">
+    <nav aria-label="Footer">
+      <a href="../#levels">Evidence levels</a>
+      <a href="../benchmark/">Benchmark</a>
+      <a href="../receipts/">Receipts</a>
+      <a href="../method/">Method</a>
+      <a href="../talk/">Talk to me</a>
+      <a href="../talk/#feedback">Report a wrong receipt</a>
+      <a href="https://github.com/momirie/tracefix">GitHub (after release)</a>
+      <span>MIT licence</span>
+    </nav>
+    <div class="theme" role="group" aria-label="Colour theme">
+      <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+      <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+      <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<!-- The command palette (Ctrl or Cmd + K, or "/"): site.js fills it from the entries below
+     (scripts/site_palette.py) and shows the buttons that open it. -->
+<dialog id="palette" class="palette" aria-label="Search this site" data-root="../">
+  <div class="pal-top">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+    <input id="pal-in" type="text" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-autocomplete="list" aria-label="Search pages, receipts and sections" placeholder="Search pages, receipts and sections" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <button type="button" class="pal-close" data-palette-close>Esc</button>
+  </div>
+  <ul id="pal-list" class="pal-list" role="listbox" aria-label="Results"></ul>
+  <p id="pal-none" class="pal-none" role="status" hidden>Nothing matches. Try a fixture name, a level or a page.</p>
+  <p class="pal-foot" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></p>
+</dialog>
+<script type="application/json" id="palette-data">[{"g":"Pages","t":"Home","h":"Watch Tracefix break a fix","u":""},{"g":"Pages","t":"Benchmark","h":"How often it is right on real fixes, and every miss","u":"benchmark/"},{"g":"Pages","t":"Receipts","h":"What Tracefix hands back, for every fixture","u":"receipts/"},{"g":"Pages","t":"Method","h":"How it decides, and where it stops","u":"method/"},{"g":"Pages","t":"Talk to me","h":"A conversation before anything ships","u":"talk/"},{"g":"Receipts","t":"good_fix","h":"Orders list is missing the last order","u":"receipts/good_fix/","lv":"L4"},{"g":"Receipts","t":"partial_fix","h":"Service crashes at startup when PORT is not set","u":"receipts/partial_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"wrong_but_green","h":"Histogram buckets are wrong for large values","u":"receipts/wrong_but_green/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"test_weakened","h":"Trailing dash in slugs for titles ending in punctuation","u":"receipts/test_weakened/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"special_cased","h":"Lease schedule contains a payment on 29 Feb 2100","u":"receipts/special_cased/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"unguarded_test","h":"truncate() returns strings longer than max_len","u":"receipts/unguarded_test/","lv":"L1"},{"g":"Receipts","t":"no_fix","h":"Contact import creates duplicates for differently-capitalised emails","u":"receipts/no_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"env_broken","h":"weekly_report() week number off by one on Mondays","u":"receipts/env_broken/","lv":"L0"},{"g":"Receipts","t":"method_partial","h":"Listener crashes when no port is configured","u":"receipts/method_partial/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"method_good","h":"Minor bump keeps the old patch number","u":"receipts/method_good/","lv":"L4"},{"g":"Receipts","t":"py39_partial","h":"Final table says \"11st place\"","u":"receipts/py39_partial/","lv":"COUNTEREXAMPLE"},{"g":"Sections","t":"Replay the attack","h":"Home","u":"#attack"},{"g":"Sections","t":"Try your own input","h":"Home","u":"#try"},{"g":"Sections","t":"Where it stands","h":"Home","u":"#stands"},{"g":"Sections","t":"The Butterfly","h":"Home","u":"#butterfly"},{"g":"Sections","t":"The Hard-Code","h":"Home","u":"#hard-code"},{"g":"Sections","t":"The Lawyer","h":"Home","u":"#lawyer"},{"g":"Sections","t":"Evidence levels","h":"Home","u":"#levels"},{"g":"Sections","t":"Install","h":"Home","u":"#install"},{"g":"Sections","t":"Questions","h":"Home","u":"#faq"},{"g":"Sections","t":"Release gates","h":"Benchmark","u":"benchmark/#gates"},{"g":"Sections","t":"Results per slice","h":"Benchmark","u":"benchmark/#results"},{"g":"Sections","t":"Every counted miss","h":"Benchmark","u":"benchmark/#misses"},{"g":"Sections","t":"How it was measured","h":"Benchmark","u":"benchmark/#method"},{"g":"Sections","t":"The rule","h":"Method","u":"method/#rule"},{"g":"Sections","t":"The run, stage by stage","h":"Method","u":"method/#run"},{"g":"Sections","t":"The ladder and the strict L4 gate","h":"Method","u":"method/#ladder"},{"g":"Sections","t":"Isolation and the tamper watch","h":"Method","u":"method/#isolation"},{"g":"Sections","t":"In the pull request","h":"Method","u":"method/#loop"},{"g":"Sections","t":"Fork pull requests","h":"Method","u":"method/#forks"},{"g":"Sections","t":"What is sent to Anthropic","h":"Method","u":"method/#sent"},{"g":"Sections","t":"What I would ask","h":"Talk to me","u":"talk/#ask"},{"g":"Sections","t":"Report a wrong receipt","h":"Talk to me","u":"talk/#feedback"}]</script>
+<script src="../assets/site.js" onerror="tracefixShowAll()"></script>
+</body>
+</html>

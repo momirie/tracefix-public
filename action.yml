@@ -1,0 +1,225 @@
+# Tracefix as a GitHub Action (docs/GITHUB_ACTION.md). A composite action: the logic is Python
+# (src/tracefix/action.py); this file only wires its steps together.
+#
+# Rules this file keeps (tests/test_action_yml.py checks them):
+# - every `${{ }}` value reaches a script through `env:`, never inside `run:` (no injection);
+# - the model API key is only in the verify step's environment, the GitHub token only in
+#   prepare's and report's;
+# - every action used is pinned to a full commit id (Dependabot proposes updates);
+# - a verdict never fails the job: it is the check run's conclusion (the `conclusion` output).
+#   The job fails only on a misconfiguration or when Tracefix itself failed.
+name: Tracefix
+description: >-
+  Verify a pull request's bug fix and post its Fix Receipt: a check run, one PR comment edited in
+  place, inline annotations on the fixed lines, and the receipt folder as an artifact.
+author: momirie
+# The badge on the Marketplace listing: one of GitHub's Feather icons on one of its fixed colours.
+# Black, not red: the brand keeps red for a finding (docs/brand/GUIDELINES.md).
+branding:
+  icon: grid
+  color: black
+
+inputs:
+  anthropic-api-key:
+    description: The model API key (from a secret). Without it the run is skipped with a notice.
+    required: false
+    default: ""
+  github-token:
+    description: The token for the check run, the comment, the issue text and the last receipt.
+    required: false
+    default: ${{ github.token }}
+  python:
+    description: >-
+      The project's Python (3.9 or newer), whose environment holds the project and its test
+      dependencies; it gets Hypothesis 6.141+ if it has none or an older one. By default .venv's interpreter, else
+      `python` on PATH. Tracefix itself runs from its own Python 3.11.
+    required: false
+    default: ""
+  issue:
+    description: "The issue text (default: the issues the PR closes, else its title and description)."
+    required: false
+    default: ""
+  base:
+    description: "The base commit (default: the merge base of the pull request)."
+    required: false
+    default: ""
+  head:
+    description: "The head commit (default: the pull request's head commit)."
+    required: false
+    default: ""
+  config:
+    description: A tracefix.yml to use instead of the one at the base commit.
+    required: false
+    default: ""
+  min-level:
+    description: L1, L2, L3 or L4. A receipt below it (or no receipt) makes the check fail.
+    required: false
+    default: ""
+  trust:
+    description: auto, or untrusted (strict isolation required). It can only make a run stricter.
+    required: false
+    default: auto
+  comment:
+    description: Keep one PR comment with the receipt, edited in place on every push.
+    required: false
+    default: "true"
+  annotations:
+    description: Annotate findings, regressions and integrity flags on their lines.
+    required: false
+    default: "true"
+  previous:
+    description: Replay the last receipt's findings on this commit (shows which ones it fixed).
+    required: false
+    default: "true"
+  report:
+    description: >-
+      Post the check run and the comment in this job. The fork flow sets it to false and posts
+      from a second job (report/action.yml) that never holds the model key.
+    required: false
+    default: "true"
+
+outputs:
+  level:
+    description: The receipt's evidence level (L0-L4 or COUNTEREXAMPLE); empty without a receipt.
+    value: ${{ steps.report.outputs.level }}
+  status:
+    description: The receipt's status, or not_verified, or failed.
+    value: ${{ steps.report.outputs.status }}
+  conclusion:
+    description: The check run's conclusion (success, failure or neutral).
+    value: ${{ steps.report.outputs.conclusion }}
+  receipt-dir:
+    description: The folder with receipt.json, receipt.md, the finding files and state.json.
+    value: ${{ steps.prepare.outputs.receipt-dir }}
+  check-run-url:
+    description: The check run's page.
+    value: ${{ steps.report.outputs.check-run-url }}
+  comment-url:
+    description: The PR comment's link.
+    value: ${{ steps.report.outputs.comment-url }}
+
+runs:
+  using: composite
+  steps:
+    # Strict isolation (bubblewrap) on Linux; the same commands as Tracefix's own CI. Best effort:
+    # a trusted run falls back to basic isolation, an untrusted one is refused by prepare.
+    - name: Install bubblewrap (strict isolation, Linux)
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        if ! command -v bwrap > /dev/null; then
+          sudo apt-get update -q && sudo apt-get install -y -q bubblewrap \
+            || echo "tracefix: bubblewrap could not be installed (basic isolation)"
+        fi
+        # Ubuntu 24.04 restricts unprivileged user namespaces, which bubblewrap needs. Lifted only
+        # on GitHub's own runners (thrown away after the job): a self-hosted machine keeps its
+        # setting, so its owner decides (docs/GITHUB_ACTION.md).
+        if [ "${RUNNER_ENVIRONMENT:-}" = github-hosted ] && command -v bwrap > /dev/null \
+            && ! bwrap --ro-bind / / --unshare-all true; then
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+        fi
+
+    # No cache: under pull_request_target a cache written by PR code could poison later runs.
+    - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      with:
+        enable-cache: false
+
+    # Two environments (SPEC §4). The project's Python (3.9 or newer) only runs the project's
+    # tests (`tracefix verify --python`); it gets Hypothesis 6.141+ when it has none or an older
+    # one, for Break My Fix and the behaviour diff. Tracefix runs from its own: uv's Python 3.11 with the dependencies
+    # in its uv.lock, from this action's folder (the pinned commit).
+    - name: Install Tracefix
+      id: python
+      shell: bash
+      env:
+        PYTHON_INPUT: ${{ inputs.python }}
+      run: |
+        set -euo pipefail
+        if [ -n "$PYTHON_INPUT" ]; then project=$PYTHON_INPUT
+        elif [ -x .venv/bin/python ]; then project=$PWD/.venv/bin/python
+        elif [ -x .venv/Scripts/python.exe ]; then project=$PWD/.venv/Scripts/python.exe
+        else project=$(command -v python || command -v python3 || true)
+        fi
+        if [ -z "$project" ] \
+            || ! "$project" -I -c 'import sys; sys.exit(sys.version_info < (3, 9))'; then
+          echo "::error title=Tracefix::the project's Python must be 3.9 or newer (set the python input)"
+          exit 1
+        fi
+        # Its own name for itself: a path Tracefix can start (on Windows bash's /d/a/... isn't).
+        project=$("$project" -I -c 'import sys; print(sys.executable)')
+        # None, or one older than the oldest Tracefix's in-run code is tested with: upgrade it.
+        if ! "$project" -I -c 'import sys, hypothesis; sys.exit(hypothesis.__version_info__[:2] < (6, 141))' 2> /dev/null; then
+          system=()
+          "$project" -I -c 'import sys; sys.exit(sys.prefix == sys.base_prefix)' || system=(--system)
+          uv pip install --quiet --python "$project" "${system[@]}" "hypothesis>=6.141"
+        fi
+        pinned=$RUNNER_TEMP/tracefix-requirements.txt
+        uv export --frozen --no-dev --no-hashes --no-emit-project --quiet \
+          --project "$GITHUB_ACTION_PATH" -o "$pinned"
+        env=$RUNNER_TEMP/tracefix-env
+        uv venv --quiet --no-project --python-preference only-managed --python 3.11 "$env"
+        if [ -x "$env/bin/python" ]; then py=$env/bin/python; else py=$env/Scripts/python.exe; fi
+        uv pip install --quiet --python "$py" -r "$pinned"
+        uv pip install --quiet --python "$py" --no-deps "$GITHUB_ACTION_PATH"
+        echo "path=$py" >> "$GITHUB_OUTPUT"
+        echo "project=$project" >> "$GITHUB_OUTPUT"
+
+    - name: Prepare (trust, commits, issue text, last receipt)
+      id: prepare
+      shell: bash
+      env:
+        PY: ${{ steps.python.outputs.path }}
+        INPUT_GITHUB_TOKEN: ${{ inputs.github-token }}
+        INPUT_HAS_API_KEY: ${{ inputs.anthropic-api-key != '' }}
+        INPUT_ISSUE: ${{ inputs.issue }}
+        INPUT_BASE: ${{ inputs.base }}
+        INPUT_HEAD: ${{ inputs.head }}
+        INPUT_CONFIG: ${{ inputs.config }}
+        INPUT_MIN_LEVEL: ${{ inputs.min-level }}
+        INPUT_TRUST: ${{ inputs.trust }}
+        INPUT_COMMENT: ${{ inputs.comment }}
+        INPUT_ANNOTATIONS: ${{ inputs.annotations }}
+        INPUT_PREVIOUS: ${{ inputs.previous }}
+        INPUT_REPORT: ${{ inputs.report }}
+      run: '"$PY" -P -m tracefix.action prepare'
+
+    - name: Verify (tracefix verify)
+      id: verify
+      if: steps.prepare.outputs.skip == 'false'
+      shell: bash
+      env:
+        PY: ${{ steps.python.outputs.path }}
+        PROJECT_PYTHON: ${{ steps.python.outputs.project }}
+        ANTHROPIC_API_KEY: ${{ inputs.anthropic-api-key }}
+      run: '"$PY" -P -m tracefix.action verify'
+
+    # A skip has no receipt to keep, except in the fork flow, whose report job reads its state.
+    - name: Upload the receipt
+      if: >-
+        !cancelled() && steps.prepare.outcome == 'success'
+        && (steps.prepare.outputs.skip == 'false' || inputs.report != 'true')
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: ${{ steps.prepare.outputs.artifact-name }}
+        path: ${{ steps.prepare.outputs.receipt-dir }}
+        overwrite: true
+        if-no-files-found: error
+
+    - name: Report (check run, comment, annotations)
+      id: report
+      if: "!cancelled() && steps.prepare.outcome == 'success' && inputs.report == 'true'"
+      shell: bash
+      env:
+        PY: ${{ steps.python.outputs.path }}
+        INPUT_GITHUB_TOKEN: ${{ inputs.github-token }}
+        INPUT_ISSUE: ${{ inputs.issue }}
+        INPUT_BASE: ${{ inputs.base }}
+        INPUT_HEAD: ${{ inputs.head }}
+        INPUT_CONFIG: ${{ inputs.config }}
+        INPUT_MIN_LEVEL: ${{ inputs.min-level }}
+        INPUT_TRUST: ${{ inputs.trust }}
+        INPUT_COMMENT: ${{ inputs.comment }}
+        INPUT_ANNOTATIONS: ${{ inputs.annotations }}
+        INPUT_PREVIOUS: ${{ inputs.previous }}
+        INPUT_REPORT: ${{ inputs.report }}
+      run: '"$PY" -P -m tracefix.action report'

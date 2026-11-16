@@ -1,0 +1,6 @@
+[    0.0] tracefix: verifying db9d6ce..78b206d (isolation: basic)
+[    2.1] [1/9] environment: ENVIRONMENT_ERROR (2.0s)
+[    2.1] level: L0
+[    2.1] Fix Receipt: L0 (run status: ENVIRONMENT_ERROR)
+[    2.1] Summary by Tracefix: L0: the run stopped: the base test suite cannot import 'acme_metrics' (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks 'acme_metrics' (install the project's dependencies and run Tracefix from that environment).
+[    2.1] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json

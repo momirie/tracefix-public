@@ -1,0 +1,494 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T18:53:07+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 5 of 7 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "5ee512d803d1d6b49dc171e1114f0075618de78e"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "84b75b6129aa8f55b831b64a604410753e1665fc"
+  },
+  "issue": {
+    "title": "`params` overrides query string in url",
+    "sha256": "f3c62b22034b4766405dbb0063d0cce7b38976a932b8ae4a37c9cde13bef26e6"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The bug was reproduced: a test that checks `params` being merged into an existing URL query string fails before the fix and passes after it, but the regression run was inconclusive and the guard stage found the fix not guarded by mutation-killing tests. Next, get a conclusive regression run and add tests that pin the merge behaviour (for example, duplicate keys and empty query strings) so mutants…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 8.91,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (3 imports in all)",
+      "duration_s": 4.93,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 13.96,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/models/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 5 of 7 mutants; 80% is needed",
+      "duration_s": 317.4,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/models/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no final_test.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/models/test_url.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no local_final_test.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.714,
+        "repro_kill_rate": 0.714,
+        "pr_kill_rate": 0.714,
+        "mutants": 7,
+        "killed": 5,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 3,
+        "not_run": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-bfbe03b46d56",
+          "m-89ff61b8eeaa",
+          "m-2fa7ae9402b0",
+          "m-ffb8dad534a9",
+          "m-f28fb07f5a89"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.3,
+        "rule_kinds": [
+          "body: 1 of 2 killed",
+          "compare: 0 of 1 killed",
+          "logic: 1 of 2 killed",
+          "negate_if: 0 of 1 killed",
+          "constant: 0 of 1 killed",
+          "membership: 0 of 1 killed",
+          "drop_call: 1 of 1 killed",
+          "reraise: 0 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "arithmetic",
+          "loop"
+        ],
+        "pr_test_files": [
+          "comprehensive_test.py",
+          "final_test.py",
+          "tests/models/test_url.py"
+        ],
+        "findings": [
+          "low_kill_rate: the tests killed 5 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "inconclusive",
+      "reason": "not confirmed: tests/test_concurrency.py::test_lookup_backend",
+      "duration_s": 51.68,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/test_concurrency.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 460,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 1
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 5.77,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/models/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no comprehensive_test.py final_test.py local_final_test.py tests/models/test_url.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 35
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call (URL.__init__: a special method (such as __init__ or __eq__): not called yet; test_params_merge: new with the fix: nothing to compare)",
+      "duration_s": 0.23,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call (URL.__init__: a special method (such as __init__ or __eq__): not called yet; test_params_merge: it takes no parameters to vary)",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (2 reported)",
+      "duration_s": 6.93,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/models/test_url.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 2
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 16.26,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/models/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-0cf41a4b1891",
+      "origin": "model",
+      "file": "httpx/models.py",
+      "line": 99,
+      "original": "            query_string = str(existing_params)",
+      "replacement": "            query_string = str(existing_params) or self._uri_reference.query",
+      "description": "Falls back to the old query only when the merged string is empty, a barely visible change.",
+      "diff": "--- a/httpx/models.py\n+++ b/httpx/models.py\n@@ -98,3 +98,3 @@\n             existing_params.update(params)\n-            query_string = str(existing_params)\n+            query_string = str(existing_params) or self._uri_reference.query\n             self._uri_reference = self._uri_reference.copy_with(query=query_string)\n",
+      "words": "httpx/models.py:99: changing `            query_string = str(existing_params)` to `            query_string = str(existing_params) or self._uri...` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-00126e44b114",
+      "origin": "model",
+      "file": "httpx/models.py",
+      "line": 96,
+      "original": "            existing_params = QueryParams(self._uri_reference.query or \"\")",
+      "replacement": "            existing_params = QueryParams(self._uri_reference.query or params)",
+      "description": "Uses the new params as the base when there is no existing query, so they get applied twice.",
+      "diff": "--- a/httpx/models.py\n+++ b/httpx/models.py\n@@ -95,3 +95,3 @@\n             # Parse existing query parameters from the URL\n-            existing_params = QueryParams(self._uri_reference.query or \"\")\n+            existing_params = QueryParams(self._uri_reference.query or params)\n             # Merge with new parameters\n",
+      "words": "httpx/models.py:96: changing `            existing_params = QueryParams(self._uri_referenc...` to `            existing_params = QueryParams(self._uri_referenc...` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-1177efd36dc3",
+      "origin": "rule",
+      "file": "reproduce_issue.py",
+      "line": 52,
+      "original": "if __name__ == \"__main__\":",
+      "replacement": "if __name__ != \"__main__\":",
+      "description": "rule: `==` -> `!=`",
+      "diff": "--- a/reproduce_issue.py\n+++ b/reproduce_issue.py\n@@ -51,3 +51,3 @@\n \n-if __name__ == \"__main__\":\n+if __name__ != \"__main__\":\n     asyncio.run(test_params_merge())",
+      "words": "reproduce_issue.py:52: changing `if __name__ == \"__main__\":` to `if __name__ != \"__main__\":` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-42310889b159",
+      "origin": "rule",
+      "file": "reproduce_issue.py",
+      "line": 20,
+      "original": "        if 'a' in result and 'b' in result:",
+      "replacement": "        if not ('a' in result and 'b' in result):",
+      "description": "rule: `'a' in result and 'b' in result` -> `not ('a' in result and 'b' in result)`",
+      "diff": "--- a/reproduce_issue.py\n+++ b/reproduce_issue.py\n@@ -19,3 +19,3 @@\n         # Check if both parameters are present\n-        if 'a' in result and 'b' in result:\n+        if not ('a' in result and 'b' in result):\n             print(\"✅ PASS: Both parameters preserved (a=1, b=2)\")\n",
+      "words": "reproduce_issue.py:20: changing `        if 'a' in result and 'b' in result:` to `        if not ('a' in result and 'b' in result):` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "negate_if"
+    },
+    {
+      "id": "m-a84544ea0470",
+      "origin": "rule",
+      "file": "reproduce_issue.py",
+      "line": 15,
+      "original": "        response = await httpx.get(URL, params={'b': 2})",
+      "replacement": "        response = await httpx.get(URL, params={'b': 1})",
+      "description": "rule: `2` -> `1`",
+      "diff": "--- a/reproduce_issue.py\n+++ b/reproduce_issue.py\n@@ -14,3 +14,3 @@\n     try:\n-        response = await httpx.get(URL, params={'b': 2})\n+        response = await httpx.get(URL, params={'b': 1})\n         result = response.json()['args']\n",
+      "words": "reproduce_issue.py:15: changing `        response = await httpx.get(URL, params={'b': 2})` to `        response = await httpx.get(URL, params={'b': 1})` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-b6350c3ecdba",
+      "origin": "rule",
+      "file": "reproduce_issue.py",
+      "line": 20,
+      "original": "        if 'a' in result and 'b' in result:",
+      "replacement": "        if 'a' not in result and 'b' in result:",
+      "description": "rule: `in` -> `not in`",
+      "diff": "--- a/reproduce_issue.py\n+++ b/reproduce_issue.py\n@@ -19,3 +19,3 @@\n         # Check if both parameters are present\n-        if 'a' in result and 'b' in result:\n+        if 'a' not in result and 'b' in result:\n             print(\"✅ PASS: Both parameters preserved (a=1, b=2)\")\n",
+      "words": "reproduce_issue.py:20: changing `        if 'a' in result and 'b' in result:` to `        if 'a' not in result and 'b' in result:` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "membership"
+    },
+    {
+      "id": "m-b48e754da703",
+      "origin": "rule",
+      "file": "reproduce_issue.py",
+      "line": 28,
+      "original": "        print(f\"❌ ERROR: {e}\")",
+      "replacement": "        raise\n        print(f\"❌ ERROR: {e}\")",
+      "description": "rule: re-raise at the start of the `except` body",
+      "diff": "--- a/reproduce_issue.py\n+++ b/reproduce_issue.py\n@@ -27,2 +27,3 @@\n     except Exception as e:\n+        raise\n         print(f\"❌ ERROR: {e}\")\n",
+      "words": "reproduce_issue.py:28: changing `        print(f\"❌ ERROR: {e}\")` to `        raise\n        print(f\"❌ ERROR: {e}\")` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "reraise"
+    },
+    {
+      "id": "m-79aa96bbd647",
+      "origin": "rule",
+      "file": "reproduce_issue.py",
+      "line": 10,
+      "original": "    print(\"Testing params merging behavior...\")\n    \n    # Test with httpx\n    print(\"\\n=== Testing httpx ===\")\n    try:\n        response = await httpx.get(URL, params={'b': 2})\n        result = respo...",
+      "replacement": "    return None",
+      "description": "rule: body of `test_params_merge` -> `return None`",
+      "diff": "--- a/reproduce_issue.py\n+++ b/reproduce_issue.py\n@@ -9,43 +9,3 @@\n async def test_params_merge():\n-    print(\"Testing params merging behavior...\")\n-    \n-    # Test with httpx\n-    print(\"\\n=== Testing httpx ===\")\n-    try:\n-        response = await httpx.get(URL, params={'b': 2})\n-        result = response.json()['args']\n-        print(f\"httpx result: {result}\")\n-        \n-        # Check if both parameters are present\n-        if 'a' in result and 'b' in result:\n-            print(\"✅ PASS: Both parameters preserved (a=1, b=2)\")\n-        elif 'b' in result and 'a' not in result:\n-            print(\"❌ FAIL: Original parameter 'a' was lost, only 'b' present\")\n-        else:\n-            print(f\"? Unexpected result: {result}\")\n-            \n-    except Exception as e:\n-        print(f\"❌ ERROR: {e}\")\n-\n-    # Test URL construction directly\n-    print(\"\\n=== Testing URL construction ===\")\n-    url_with_params = httpx.URL(URL, params={'b': 2})\n-    print(f\"Original URL: {URL}\")\n-    print(f\"Constructed URL: {url_with_params}\")\n-    \n... 17 more lines",
+      "words": "reproduce_issue.py:10: changing `    print(\"Testing params merging behavior...\")\n    \n    # T...` to `    return None` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    },
+    {
+      "id": "m-2e4239211db2",
+      "origin": "rule",
+      "file": "reproduce_issue.py",
+      "line": 20,
+      "original": "        if 'a' in result and 'b' in result:",
+      "replacement": "        if 'a' in result or 'b' in result:",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/reproduce_issue.py\n+++ b/reproduce_issue.py\n@@ -19,3 +19,3 @@\n         # Check if both parameters are present\n-        if 'a' in result and 'b' in result:\n+        if 'a' in result or 'b' in result:\n             print(\"✅ PASS: Both parameters preserved (a=1, b=2)\")\n",
+      "words": "reproduce_issue.py:20: changing `        if 'a' in result and 'b' in result:` to `        if 'a' in result or 'b' in result:` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "httpx/models.py": [
+        96,
+        98,
+        99
+      ],
+      "reproduce_issue.py": [
+        3,
+        4,
+        7,
+        9,
+        10,
+        13,
+        14,
+        15,
+        16,
+        17,
+        20,
+        21,
+        22,
+        23,
+        25,
+        27,
+        28,
+        31,
+        32,
+        33,
+        34,
+        37,
+        38,
+        39,
+        40,
+        45,
+        46,
+        47,
+        48,
+        50,
+        52,
+        53
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 3,
+        "total": 35
+      },
+      {
+        "name": "pr_test",
+        "ran": 3,
+        "total": 35
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call (URL.__init__: a special method (such as __init__ or __eq__): not called yet; test_params_merge: new with the fix: nothing to compare))",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call (URL.__init__: a special method (such as __init__ or __eq__): not called yet; test_params_merge: it takes no parameters to vary))",
+    "Break My Fix could not attack URL.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "Break My Fix could not attack test_params_merge: it takes no parameters to vary",
+    "the behaviour diff could not compare URL.__init__: a special method (such as __init__ or __eq__): not called yet",
+    "the behaviour diff could not compare test_params_merge: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 19118,
+    "output_tokens": 1857,
+    "cost_estimate": {
+      "usd": 0.0608,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: style example tests/models/test_url.py truncated to 6000 characters for the prompt",
+    "guard: local_final_test.py has no tests, so it is not counted as a PR test",
+    "guard: 1 of the 8 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 41 rule mutants were run",
+    "blind: style example tests/models/test_url.py truncated to 6000 characters for the prompt"
+  ],
+  "previous": null,
+  "attack_targets": []
+}

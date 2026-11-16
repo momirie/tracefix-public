@@ -1,0 +1,11 @@
+{
+ "key": "399f14dd65b3298b945e7d4d25913c4bf95ca9d49794eb4718b71af3eb8b1734",
+ "model": "claude-sonnet-5-5",
+ "response": {
+  "input_tokens": 1471,
+  "output_tokens": 140,
+  "stop_reason": "end_turn",
+  "text": "{\"test_code\":\"from vtools.version import Version\\n\\n\\ndef test_bump_minor_resets_patch() -> None:\\n    assert Version(1, 2, 3).bump(\\\"minor\\\") == Version(1, 3, 0)\\n\",\"rationale\":\"Bumping the minor part of 1.2.3 should yield 1.3.0 with the patch reset to zero, but the current code keeps the patch as 3.\"}"
+ },
+ "role": "reproducer"
+}

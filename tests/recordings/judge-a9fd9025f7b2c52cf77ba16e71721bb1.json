@@ -1,0 +1,11 @@
+{
+ "key": "a9fd9025f7b2c52cf77ba16e71721bb1c932205d9f44cc5b897d8ae6c9581aab",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1152,
+  "output_tokens": 164,
+  "stop_reason": "end_turn",
+  "text": "{\"summary\":\"At L4, a test reproduced the minor-bump bug (1.2.3 becoming 1.3.3 instead of 1.3.0), passes after the fix, and fails when the fix is reverted or broken; Break My Fix found no breaking inputs, and the only behaviour change, in Version.bump, was labelled intended. Next, check that the tests also cover the patch reset on other bump paths, such as major bumps, since the issue only described the minor case.\",\"flag_notes\":[]}"
+ },
+ "role": "judge"
+}

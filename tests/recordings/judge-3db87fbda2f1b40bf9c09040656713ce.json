@@ -1,0 +1,11 @@
+{
+ "key": "3db87fbda2f1b40bf9c09040656713ceac3101687aa121ac4baf20182c9e3a2d",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 2193,
+  "output_tokens": 158,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"The issue names this call and expects 1.3.0; the docstring example now holds.\"},{\"change\":\"c2\",\"label\":\"intended\",\"reason\":\"The docstring says bumping \\\"minor\\\" resets patch; this is the same rule the issue reports, on another input.\"},{\"change\":\"c3\",\"label\":\"intended\",\"reason\":\"The docstring's \\\"minor resets patch\\\" rule from the issue, applied to a different patch value.\"}]}"
+ },
+ "role": "judge"
+}

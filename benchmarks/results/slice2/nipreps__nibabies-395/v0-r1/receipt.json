@@ -1,0 +1,592 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-22T19:33:35+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks nibabies.utils.bids.parse_bids_for_age_months",
+    "regression: nibabies/utils/tests/test_bids.py::test_get_age_from_tsv[session_id-x1-data0-False-None] passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "f7969c8f55b4a7d94b38a9b82a81c6e544b87d1e"
+  },
+  "head": {
+    "ref": "tf-v0",
+    "sha": "988408933c45b5373f1f18faf811403170f54e09"
+  },
+  "issue": {
+    "title": "Issue finding age in months from participants.tsv for v24.0.0",
+    "sha256": "4f75d1904f5cc1b73746999247f16ca2772b86a628216c0d72ac874dc050e548"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.10.16"
+  },
+  "summary": {
+    "text": "The verifier reproduced the participants.tsv age error and found counterexamples against the fix: an existing test (test_get_age_from_tsv[session_id-x1-data0-False-None]) passed before the fix and fails after it, and Break My Fix found an input that breaks parse_bids_for_age_months. Look first at that regressed test and at the new exceptions age_to_months now raises, which the Judge labelled susp…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 14.0,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (3 imports in all)",
+      "duration_s": 6.57,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 120.69,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no nibabies/interfaces/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 3 of 5 mutants; 80% is needed",
+      "duration_s": 434.58,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no nibabies/interfaces/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.6,
+        "repro_kill_rate": 0.4,
+        "pr_kill_rate": null,
+        "mutants": 5,
+        "killed": 3,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 2,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-f84cd676a4d1",
+          "m-47e0fd5abc3f",
+          "m-b9d1ac5e159f"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.4,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 3 of 5 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "1 confirmed: nibabies/utils/tests/test_bids.py::test_get_age_from_tsv[session_id-x1-data0-False-None]",
+      "duration_s": 57.84,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors nibabies/utils/tests/test_bids.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 21,
+        "not_run": 10,
+        "regressions": 1,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 14.78,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no nibabies/interfaces/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 19
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "428 input(s) compared on 2 function(s): 58 changed with the fix; not complete: _get_age_from_tsv: the comparison did not finish",
+      "duration_s": 64.11,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "finished": 2,
+        "inputs_compared": 428,
+        "changes": 58,
+        "groups": 3,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 85.42,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "inputs_tried": 831,
+        "properties_counted": 15,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 5
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "nibabies.utils.bids.parse_bids_for_age_months",
+      "call": "parse_bids_for_age_months(bids_root='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', subject_id='sub-100619')",
+      "input": {
+        "bids_root": "'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'",
+        "subject_id": "'sub-100619'"
+      },
+      "outcome": "raises OSError: [Errno 36] File name too long: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "base_outcome": "raises OSError: [Errno 36] File name too long: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "expected": null,
+      "property": {
+        "id": "t1.p1",
+        "name": "returns_int_or_none",
+        "kind": "raises_only",
+        "claim": "The function returns an age in months as an int, or None when no age is found",
+        "source": "signature",
+        "quote": "session_id: str | None = None, ) -> int | None:",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 1,
+      "relation": "the same before the fix, but the fix changed module-level code that runs when the module is imported (nibabies/utils/bids.py 274, 275), so it can't be shown untouched",
+      "file": "findings/finding_1.py",
+      "path": "nibabies/utils/bids.py",
+      "line": 215,
+      "expect": {
+        "types": [
+          "OSError"
+        ],
+        "in_file": false
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "nibabies.utils.bids.age_to_months",
+      "kind": "type",
+      "count": 55,
+      "before": "returns 6.0",
+      "after": "returns 6",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "Matches the docstring example the PR added (`age_to_months(0.5, 'years')` -> 6) and the `-> int` return annotation."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "Float ages now flow in from the TSV, and the `-> int` annotation requires an integer month count. Rounding 0.5 to 0 follows Python's round-half-to-even."
+        },
+        {
+          "change": "c3",
+          "label": "intended",
+          "reason": "The `-> int` contract applied to a float input; 0 is the correct integer month count."
+        },
+        {
+          "change": "c4",
+          "label": "intended",
+          "reason": "Same rule as the 0.5-year docstring example: fractional years are converted and rounded to an int, as the annotation says."
+        },
+        {
+          "change": "c5",
+          "label": "intended",
+          "reason": "The `-> int` rounding rule applied to a float month input. Negative ages are odd, but the type contract is the same."
+        },
+        {
+          "change": "c6",
+          "label": "intended",
+          "reason": "Same int-return rule from the `-> int` annotation and the new docstring example, applied to a large float."
+        },
+        {
+          "change": "c7",
+          "label": "intended",
+          "reason": "Same int-return rounding rule from the `-> int` annotation applied to a tiny float."
+        }
+      ],
+      "examples": [
+        {
+          "call": "age_to_months(age=0.5, units='years')",
+          "before": "returns 6.0",
+          "after": "returns 6"
+        },
+        {
+          "call": "age_to_months(age=0.5, units='months')",
+          "before": "returns 0.5",
+          "after": "returns 0"
+        },
+        {
+          "call": "age_to_months(age=-0.0, units='years')",
+          "before": "returns -0.0",
+          "after": "returns 0"
+        }
+      ]
+    },
+    {
+      "function": "nibabies.utils.bids.age_to_months",
+      "kind": "new_raise",
+      "count": 2,
+      "before": "returns -inf",
+      "after": "raises OverflowError",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c8",
+          "label": "suspicious",
+          "reason": "Nothing in the issue or docstring asks for a new OverflowError. The function used to return -inf without raising, and the fix adds a crash on this input."
+        },
+        {
+          "change": "c9",
+          "label": "suspicious",
+          "reason": "Nothing written asks age_to_months to raise on infinite input. This is a new OverflowError the issue does not mention."
+        }
+      ],
+      "examples": [
+        {
+          "call": "age_to_months(age=-1e+308, units='years')",
+          "before": "returns -inf",
+          "after": "raises OverflowError"
+        },
+        {
+          "call": "age_to_months(age=float(\"-inf\"), units='months')",
+          "before": "returns -inf",
+          "after": "raises OverflowError"
+        }
+      ]
+    },
+    {
+      "function": "nibabies.utils.bids.age_to_months",
+      "kind": "new_raise",
+      "count": 1,
+      "before": "returns nan",
+      "after": "raises ValueError",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c10",
+          "label": "suspicious",
+          "reason": "A NaN age, for example from a missing TSV value, now raises ValueError instead of passing through. The issue asked to stop crashes on participants.tsv, not to add new ones."
+        }
+      ],
+      "examples": [
+        {
+          "call": "age_to_months(age=float(\"nan\"), units='months')",
+          "before": "returns nan",
+          "after": "raises ValueError"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "nibabies/utils/tests/test_bids.py",
+      "test": "test_get_age_from_tsv[session_id-x1-data0-False-None]",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: NameError: name 'pd' is not defined",
+      "line": 42
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-50b7d078d86f",
+      "origin": "model",
+      "file": "nibabies/utils/bids.py",
+      "line": 290,
+      "original": "    if len(df) > 1:",
+      "replacement": "    if len(df) > 2:",
+      "description": "Warning on multiple matches is only emitted when more than two rows match.",
+      "diff": "--- a/nibabies/utils/bids.py\n+++ b/nibabies/utils/bids.py\n@@ -289,3 +289,3 @@\n     # Multiple indices may be present after matching\n-    if len(df) > 1:\n+    if len(df) > 2:\n         warnings.warn(\n",
+      "words": "nibabies/utils/bids.py:290: changing `    if len(df) > 1:` to `    if len(df) > 2:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-cb569da1fe7b",
+      "origin": "model",
+      "file": "nibabies/utils/bids.py",
+      "line": 250,
+      "original": "            index_val=r'^anat.*',",
+      "replacement": "            index_val=r'^func.*',",
+      "description": "Wrong filename pattern for the scans.tsv lookup (func instead of anat).",
+      "diff": "--- a/nibabies/utils/bids.py\n+++ b/nibabies/utils/bids.py\n@@ -249,3 +249,3 @@\n             index_column='filename',\n-            index_val=r'^anat.*',\n+            index_val=r'^func.*',\n         )\n",
+      "words": "nibabies/utils/bids.py:250: changing `            index_val=r'^anat.*',` to `            index_val=r'^func.*',` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-4ef81822a4b9",
+      "origin": "rule",
+      "file": "nibabies/utils/bids.py",
+      "line": 290,
+      "original": "    if len(df) > 1:",
+      "replacement": "    if not (len(df) > 1):",
+      "description": "rule: `len(df) > 1` -> `not (len(df) > 1)`",
+      "diff": "--- a/nibabies/utils/bids.py\n+++ b/nibabies/utils/bids.py\n@@ -289,3 +289,3 @@\n     # Multiple indices may be present after matching\n-    if len(df) > 1:\n+    if not (len(df) > 1):\n         warnings.warn(\n",
+      "words": "nibabies/utils/bids.py:290: changing `    if len(df) > 1:` to `    if not (len(df) > 1):` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-24f5649c9ac7",
+      "origin": "rule",
+      "file": "nibabies/utils/bids.py",
+      "line": 290,
+      "original": "    if len(df) > 1:",
+      "replacement": "    if len(df) >= 1:",
+      "description": "rule: `>` -> `>=`",
+      "diff": "--- a/nibabies/utils/bids.py\n+++ b/nibabies/utils/bids.py\n@@ -289,3 +289,3 @@\n     # Multiple indices may be present after matching\n-    if len(df) > 1:\n+    if len(df) >= 1:\n         warnings.warn(\n",
+      "words": "nibabies/utils/bids.py:290: changing `    if len(df) > 1:` to `    if len(df) >= 1:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-4548f90b5c82",
+      "origin": "rule",
+      "file": "nibabies/utils/bids.py",
+      "line": 290,
+      "original": "    if len(df) > 1:",
+      "replacement": "    if len(df) > 0:",
+      "description": "rule: `1` -> `0`",
+      "diff": "--- a/nibabies/utils/bids.py\n+++ b/nibabies/utils/bids.py\n@@ -289,3 +289,3 @@\n     # Multiple indices may be present after matching\n-    if len(df) > 1:\n+    if len(df) > 0:\n         warnings.warn(\n",
+      "words": "nibabies/utils/bids.py:290: changing `    if len(df) > 1:` to `    if len(df) > 0:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-50b7d078d86f",
+      "origin": "rule",
+      "file": "nibabies/utils/bids.py",
+      "line": 290,
+      "original": "    if len(df) > 1:",
+      "replacement": "    if len(df) > 2:",
+      "description": "rule: `1` -> `2`",
+      "diff": "--- a/nibabies/utils/bids.py\n+++ b/nibabies/utils/bids.py\n@@ -289,3 +289,3 @@\n     # Multiple indices may be present after matching\n-    if len(df) > 1:\n+    if len(df) > 2:\n         warnings.warn(\n",
+      "words": "nibabies/utils/bids.py:290: changing `    if len(df) > 1:` to `    if len(df) > 2:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-70d559b26ddc",
+      "origin": "rule",
+      "file": "nibabies/utils/bids.py",
+      "line": 293,
+      "original": "            stacklevel=1,",
+      "replacement": "            stacklevel=0,",
+      "description": "rule: `1` -> `0`",
+      "diff": "--- a/nibabies/utils/bids.py\n+++ b/nibabies/utils/bids.py\n@@ -292,3 +292,3 @@\n             f'Multiple matches for {index_column}:{index_value} found in {bids_tsv.name}.',\n-            stacklevel=1,\n+            stacklevel=0,\n         )\n",
+      "words": "nibabies/utils/bids.py:293: changing `            stacklevel=1,` to `            stacklevel=0,` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-441c9a60c829",
+      "origin": "rule",
+      "file": "nibabies/utils/bids.py",
+      "line": 293,
+      "original": "            stacklevel=1,",
+      "replacement": "            stacklevel=2,",
+      "description": "rule: `1` -> `2`",
+      "diff": "--- a/nibabies/utils/bids.py\n+++ b/nibabies/utils/bids.py\n@@ -292,3 +292,3 @@\n             f'Multiple matches for {index_column}:{index_value} found in {bids_tsv.name}.',\n-            stacklevel=1,\n+            stacklevel=2,\n         )\n",
+      "words": "nibabies/utils/bids.py:293: changing `            stacklevel=1,` to `            stacklevel=2,` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "nibabies/utils/bids.py": [
+        247,
+        248,
+        249,
+        250,
+        265,
+        266,
+        274,
+        275,
+        287,
+        290,
+        291,
+        292,
+        293,
+        298,
+        307,
+        308,
+        334,
+        353,
+        356
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 12,
+        "total": 19
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 9,
+    "input_tokens": 70441,
+    "output_tokens": 10470,
+    "cost_estimate": {
+      "usd": 0.4206,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "guard: only the first 10 of 14 rule mutants were run",
+    "regressions: 10 untouched test(s) that passed before the fix did not run after it (skipped or not collected), so they were not compared",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.10.16: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "nibabies.utils.bids.parse_bids_for_age_months",
+      "path": "nibabies/utils/bids.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 355,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "nibabies.utils.bids.age_to_months",
+      "path": "nibabies/utils/bids.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 476,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "nibabies.utils.bids._get_age_from_tsv",
+      "path": "nibabies/utils/bids.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    }
+  ]
+}

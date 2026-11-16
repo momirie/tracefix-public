@@ -1,0 +1,82 @@
+# The fork flow's second job (docs/GITHUB_ACTION.md, docs/examples/tracefix-fork.yml): posts the
+# receipt that the first job (`uses: momirie/tracefix` with `report: false`) uploaded. This job
+# holds the GitHub token with write access and never the model key, and runs no project code:
+# Tracefix runs from this action's own folder in a throwaway environment.
+#
+# The receipt artifact is untrusted data here: report checks that its state.json belongs to this
+# run and this pull request's head commit, validates receipt.json strictly, and re-renders the
+# receipt from it (the artifact's receipt.md is never posted).
+name: Tracefix report
+description: >-
+  Post a Tracefix receipt made by an earlier job of the same run (the fork-PR flow): the check
+  run, the PR comment and the annotations. Removes the maintainer's approval label.
+author: momirie
+
+inputs:
+  github-token:
+    description: The token for the check run, the comment and the label.
+    required: false
+    default: ${{ github.token }}
+  min-level:
+    description: L1, L2, L3 or L4. A receipt below it (or no receipt) makes the check fail.
+    required: false
+    default: ""
+  comment:
+    description: Keep one PR comment with the receipt, edited in place on every run.
+    required: false
+    default: "true"
+  annotations:
+    description: Annotate findings, regressions and integrity flags on their lines.
+    required: false
+    default: "true"
+
+outputs:
+  level:
+    description: The receipt's evidence level (L0-L4 or COUNTEREXAMPLE); empty without a receipt.
+    value: ${{ steps.report.outputs.level }}
+  status:
+    description: The receipt's status, or not_verified, or failed.
+    value: ${{ steps.report.outputs.status }}
+  conclusion:
+    description: The check run's conclusion (success, failure or neutral).
+    value: ${{ steps.report.outputs.conclusion }}
+  receipt-dir:
+    description: The downloaded receipt folder.
+    value: ${{ steps.report.outputs.receipt-dir }}
+  check-run-url:
+    description: The check run's page.
+    value: ${{ steps.report.outputs.check-run-url }}
+  comment-url:
+    description: The PR comment's link.
+    value: ${{ steps.report.outputs.comment-url }}
+
+runs:
+  using: composite
+  steps:
+    - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      with:
+        enable-cache: false
+
+    # Where the first job's prepare step put it: $RUNNER_TEMP/tracefix/receipt.
+    - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      with:
+        name: tracefix-receipt-pr-${{ github.event.pull_request.number }}
+        path: ${{ runner.temp }}/tracefix/receipt
+
+    - name: Report (check run, comment, annotations)
+      id: report
+      shell: bash
+      env:
+        INPUT_GITHUB_TOKEN: ${{ inputs.github-token }}
+        INPUT_MIN_LEVEL: ${{ inputs.min-level }}
+        INPUT_COMMENT: ${{ inputs.comment }}
+        INPUT_ANNOTATIONS: ${{ inputs.annotations }}
+      # Tracefix's dependencies at the versions in its uv.lock (this job holds a write token: no
+      # release newer than the pinned commit's lock gets in).
+      run: |
+        set -euo pipefail
+        pinned=$RUNNER_TEMP/tracefix-report-requirements.txt
+        uv export --frozen --no-dev --no-hashes --no-emit-project --quiet \
+          --project "$GITHUB_ACTION_PATH/.." -o "$pinned"
+        uv run --no-project --isolated --python 3.12 --with-requirements "$pinned" \
+          --with "$GITHUB_ACTION_PATH/.." python -P -m tracefix.action report

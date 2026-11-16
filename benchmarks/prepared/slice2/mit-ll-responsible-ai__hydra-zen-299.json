@@ -1,0 +1,110 @@
+{
+ "instance_id": "mit-ll-responsible-ai__hydra-zen-299",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "hydra.extra.pytest_plugin"
+ ],
+ "suite_seconds": 46.959,
+ "suite_timeout": 141,
+ "source_hunks": 3,
+ "variants": [
+  {
+   "index": 0,
+   "path": "src/hydra_zen/structured_configs/_implementations.py",
+   "old_start": 1367,
+   "old_len": 7,
+   "label": "no_effect",
+   "failing": 2,
+   "functions": [
+    {
+     "path": "src/hydra_zen/structured_configs/_implementations.py",
+     "function": "builds"
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "src/hydra_zen/structured_configs/_implementations.py",
+   "old_start": 1375,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "src/hydra_zen/structured_configs/_implementations.py",
+     "function": "builds"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "src/hydra_zen/structured_configs/_implementations.py",
+   "old_start": 1414,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 2,
+   "functions": [
+    {
+     "path": "src/hydra_zen/structured_configs/_implementations.py",
+     "function": "builds"
+    }
+   ]
+  }
+ ],
+ "kept": 0,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 15194,
+   "label": "partial",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "src/hydra_zen/structured_configs/_implementations.py",
+     "function": "builds"
+    }
+   ],
+   "differs": [
+    {
+     "path": "src/hydra_zen/structured_configs/_implementations.py",
+     "function": "builds"
+    }
+   ]
+  },
+  {
+   "kind": "agent_ok",
+   "source_row": 52101,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "src/hydra_zen/structured_configs/_implementations.py",
+     "function": "builds"
+    }
+   ],
+   "differs": [
+    {
+     "path": "src/hydra_zen/structured_configs/_implementations.py",
+     "function": "builds"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "4d90e3171c831baebe2796096234d10220be355b",
+  "gold": "ca4099a7062103194d23658e0c7f7a51e91022f3",
+  "v0": "ecadce5c4bed4b4d26ac27b864bc3e509f03bad7",
+  "agent_wrong": "1e1131ab4af7b2a8ef980441b5971f76f517a49e",
+  "agent_ok": "a2d9c35a49d815333a4d75bf7a886903db7ceed7"
+ },
+ "seconds": 170.094
+}

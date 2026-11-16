@@ -1,0 +1,11 @@
+{
+ "key": "9aca90d4f38ebcb8f0bee1c3b5ad3a3db2f1bfa5f2e139c8a4e5429a4973b742",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 2064,
+  "output_tokens": 72,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"The issue names this exact call and expects 1.3.0; the docstring says \\\"minor\\\" resets patch and its example shows patch=0.\"}]}"
+ },
+ "role": "judge"
+}

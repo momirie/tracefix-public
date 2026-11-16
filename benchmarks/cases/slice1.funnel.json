@@ -1,0 +1,4711 @@
+{
+ "source": {
+  "dataset": "nebius/SWE-rebench-leaderboard",
+  "config": "default",
+  "split": "test",
+  "revision": "34d5a58864acf91613740a09ec5d205228dcfa39",
+  "rows": 860,
+  "rows_sha256": "86855a01bc1d7092471825f9b003a121b9b64d4be018f750f966fce6902f98cb",
+  "license": "CC BY 4.0",
+  "url": "https://huggingface.co/datasets/nebius/SWE-rebench-leaderboard"
+ },
+ "slice": "slice1",
+ "limit": 80,
+ "considered": 860,
+ "excluded": {
+  "invalid_row": 10,
+  "python_below_3_11": 261,
+  "no_pytest_command": 1,
+  "compiled_sources": 3,
+  "no_source_change": 3,
+  "repo_cap": 96,
+  "over_limit": 406
+ },
+ "chosen": 80,
+ "splits": {
+  "dev": 48,
+  "held_out": 32
+ },
+ "rows": [
+  {
+   "row": 0,
+   "instance_id": "PennyLaneAI__pennylane-7671",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 2,
+   "instance_id": "deepset-ai__haystack-9527",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 3,
+   "instance_id": "feder-observatory__stellarphot-519",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 5,
+   "instance_id": "lmstudio-ai__venvstacks-197",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 6,
+   "instance_id": "matthewwithanm__python-markdownify-230",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 7,
+   "instance_id": "pybamm-team__PyBaMM-5061",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 8,
+   "instance_id": "python-pillow__Pillow-9023",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 9,
+   "instance_id": "sympy__sympy-28122",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 10,
+   "instance_id": "tobymao__sqlglot-5189",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 11,
+   "instance_id": "tobymao__sqlglot-5233",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 12,
+   "instance_id": "tobymao__sqlglot-5253",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 13,
+   "instance_id": "tobymao__sqlglot-5256",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 14,
+   "instance_id": "trinodb__trino-python-client-564",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 16,
+   "instance_id": "yt-dlp__yt-dlp-13403",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 17,
+   "instance_id": "zopefoundation__persistent-220",
+   "reason": "compiled_sources",
+   "detail": ""
+  },
+  {
+   "row": 18,
+   "instance_id": "BQSKit__bqskit-337",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 19,
+   "instance_id": "JonathonReinhart__scuba-269",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 20,
+   "instance_id": "agronholm__anyio-935",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 21,
+   "instance_id": "biopython__biopython-5005",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 22,
+   "instance_id": "bodo-ai__PyDough-368",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 23,
+   "instance_id": "catalystneuro__neuroconv-1406",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 24,
+   "instance_id": "geopandas__geopandas-3591",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 25,
+   "instance_id": "marcosschroh__dataclasses-avroschema-870",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 26,
+   "instance_id": "open-telemetry__opentelemetry-python-4614",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 28,
+   "instance_id": "python-trio__trio-3280",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 29,
+   "instance_id": "python-wheel-build__fromager-626",
+   "reason": "no_source_change",
+   "detail": ""
+  },
+  {
+   "row": 30,
+   "instance_id": "radiasoft__pykern-578",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 31,
+   "instance_id": "sympy__sympy-28137",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 32,
+   "instance_id": "sympy__sympy-28183",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 33,
+   "instance_id": "gitpython-developers__GitPython-2051",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 34,
+   "instance_id": "pymc-devs__pymc-7809",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 35,
+   "instance_id": "scipp__plopp-459",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 36,
+   "instance_id": "isledecomp__reccmp-142",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 37,
+   "instance_id": "lmstudio-ai__lmstudio-python-110",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 39,
+   "instance_id": "ome-zarr-models__ome-zarr-models-py-206",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 40,
+   "instance_id": "python-control__python-control-1138",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 41,
+   "instance_id": "RDFLib__pySHACL-285",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 42,
+   "instance_id": "MatterMiners__tardis-361",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 43,
+   "instance_id": "cneud__alto-tools-29",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 44,
+   "instance_id": "tobymao__sqlglot-4661",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 45,
+   "instance_id": "agronholm__sqlacodegen-371",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 46,
+   "instance_id": "Blaizzy__mlx-vlm-179",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 47,
+   "instance_id": "pydata__xarray-9974",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 48,
+   "instance_id": "probabl-ai__skore-1133",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 49,
+   "instance_id": "gerlero__foamlib-329",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 50,
+   "instance_id": "brightway-lca__brightway2-io-294",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 51,
+   "instance_id": "sphinx-doc__sphinx-13261",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 52,
+   "instance_id": "vyperlang__vyper-4462",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 53,
+   "instance_id": "CrossGL__crosstl-257",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 54,
+   "instance_id": "sphinx-doc__sphinx-13318",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 55,
+   "instance_id": "sympy__sympy-27809",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 56,
+   "instance_id": "sympy__sympy-27512",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 57,
+   "instance_id": "probabl-ai__skore-1229",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 58,
+   "instance_id": "brightway-lca__brightway2-data-235",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 59,
+   "instance_id": "fabfuel__circuitbreaker-67",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 60,
+   "instance_id": "ethereum__eth-account-317",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 61,
+   "instance_id": "Materials-Consortia__optimade-python-tools-2250",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 62,
+   "instance_id": "qBraid__pyqasm-120",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 63,
+   "instance_id": "astropy__astropy-17705",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 64,
+   "instance_id": "gerlero__foamlib-315",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 65,
+   "instance_id": "sympy__sympy-27462",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 66,
+   "instance_id": "zarr-developers__VirtualiZarr-410",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 67,
+   "instance_id": "unionai-oss__pandera-1898",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 69,
+   "instance_id": "omni-us__jsonargparse-667",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 70,
+   "instance_id": null,
+   "reason": "invalid_row",
+   "detail": "invalid fail_to_pass (string_pattern_mismatch)"
+  },
+  {
+   "row": 71,
+   "instance_id": "pandas-dev__pandas-60736",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 72,
+   "instance_id": "simonw__files-to-prompt-44",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 73,
+   "instance_id": "zarr-developers__zarr-python-2668",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 74,
+   "instance_id": "pgmpy__pgmpy-1905",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 75,
+   "instance_id": "kedro-org__kedro-4570",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 76,
+   "instance_id": "carsdotcom__skelebot-280",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 77,
+   "instance_id": "sympy__sympy-27559",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 78,
+   "instance_id": "zarr-developers__zarr-python-2709",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 79,
+   "instance_id": "ipython__ipython-14695",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 80,
+   "instance_id": "DS4SD__docling-824",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 81,
+   "instance_id": "pymc-devs__pymc-7658",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 82,
+   "instance_id": "noppanut15__depthviz-55",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 83,
+   "instance_id": "dag-hammarskjold-library__dlx-512",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 84,
+   "instance_id": "noppanut15__depthviz-56",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 85,
+   "instance_id": "modelcontextprotocol__python-sdk-222",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 86,
+   "instance_id": "twisted__towncrier-687",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 87,
+   "instance_id": "Toloka__crowd-kit-128",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 88,
+   "instance_id": "icloud-photos-downloader__icloud_photos_downloader-1060",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 89,
+   "instance_id": "streamlink__streamlink-6420",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 90,
+   "instance_id": "scott-huberty__eyelinkio-22",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 91,
+   "instance_id": "sympy__sympy-27510",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 92,
+   "instance_id": "lmfit__lmfit-py-989",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 93,
+   "instance_id": "IAMconsortium__nomenclature-460",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 94,
+   "instance_id": "zarr-developers__zarr-python-2638",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 95,
+   "instance_id": "astropy__astroquery-3275",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 96,
+   "instance_id": "beeware__briefcase-2114",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 97,
+   "instance_id": "probabl-ai__skore-1287",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 98,
+   "instance_id": "zarr-developers__zarr-python-2817",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 99,
+   "instance_id": "PyPSA__linopy-412",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 100,
+   "instance_id": "valohai__valohai-cli-321",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 101,
+   "instance_id": "GoogleCloudPlatform__cloud-sql-python-connector-1221",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 103,
+   "instance_id": "astropy__astropy-17748",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 104,
+   "instance_id": "oemof__oemof-solph-1180",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 105,
+   "instance_id": "lincc-frameworks__nested-pandas-221",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 106,
+   "instance_id": "getsentry__sentry-python-4179",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 107,
+   "instance_id": "bvanelli__actualpy-120",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 108,
+   "instance_id": "iris-hep__func_adl-185",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 109,
+   "instance_id": "Colin-b__httpx_auth-105",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 110,
+   "instance_id": "probabl-ai__skore-1136",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 111,
+   "instance_id": "zopefoundation__Zope-1243",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 112,
+   "instance_id": "zarr-developers__zarr-python-2758",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 113,
+   "instance_id": "movingpandas__movingpandas-444",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 114,
+   "instance_id": "terrapower__armi-2068",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 115,
+   "instance_id": "XKNX__xknx-1663",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 116,
+   "instance_id": "davep__braindrop-96",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 117,
+   "instance_id": "probabl-ai__skore-1335",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 118,
+   "instance_id": "mne-tools__mne-bids-1388",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 119,
+   "instance_id": "DARMA-tasking__LB-analysis-framework-585",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 120,
+   "instance_id": "tefra__xsdata-1132",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 121,
+   "instance_id": "huggingface__smolagents-285",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 122,
+   "instance_id": "zarr-developers__zarr-python-2679",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 124,
+   "instance_id": "Davidyz__VectorCode-27",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 125,
+   "instance_id": "jpadilla__pyjwt-1040",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 126,
+   "instance_id": "python-babel__babel-1163",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 127,
+   "instance_id": "angr__claripy-603",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 128,
+   "instance_id": "astropy__astroquery-3199",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 129,
+   "instance_id": "instructlab__sdg-484",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 130,
+   "instance_id": "probabl-ai__skore-1154",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 131,
+   "instance_id": "kaste__mockito-python-93",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 132,
+   "instance_id": "boxed__mutmut-363",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 133,
+   "instance_id": "marshmallow-code__marshmallow-sqlalchemy-645",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 134,
+   "instance_id": "sympy__sympy-27593",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 135,
+   "instance_id": "sympy__sympy-27708",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 136,
+   "instance_id": "mmcdermott__MEDS_transforms-242",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 137,
+   "instance_id": "dask__dask-11803",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 138,
+   "instance_id": "pandas-dev__pandas-61183",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 139,
+   "instance_id": "smarr__ReBench-278",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 140,
+   "instance_id": "canonical__charmcraft-2106",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 141,
+   "instance_id": "Point72__ccflow-24",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 142,
+   "instance_id": "dag-hammarskjold-library__dlx-534",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 143,
+   "instance_id": "tobymao__sqlglot-4643",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 144,
+   "instance_id": "scipp__plopp-422",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 145,
+   "instance_id": "lincc-frameworks__nested-pandas-190",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 146,
+   "instance_id": "instructlab__sdg-461",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 147,
+   "instance_id": "scrapy__scrapy-6671",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 148,
+   "instance_id": "tobymao__sqlglot-4563",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 149,
+   "instance_id": "sphinx-doc__sphinx-13382",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 150,
+   "instance_id": "ethereum__web3.py-3604",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 151,
+   "instance_id": "modin-project__modin-7434",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 152,
+   "instance_id": "zarr-developers__zarr-python-2629",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 153,
+   "instance_id": "astropy__astroquery-3224",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 154,
+   "instance_id": "zarr-developers__VirtualiZarr-395",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 155,
+   "instance_id": "tobymao__sqlglot-4683",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 156,
+   "instance_id": "marshmallow-code__marshmallow-sqlalchemy-640",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 157,
+   "instance_id": "yt-project__unyt-560",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 158,
+   "instance_id": "juaAI__stationbench-41",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 159,
+   "instance_id": "geopython__pygeoapi-1923",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 160,
+   "instance_id": "ets-labs__python-dependency-injector-852",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 161,
+   "instance_id": "scverse__spatialdata-822",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 162,
+   "instance_id": "pandas-dev__pandas-60896",
+   "reason": "compiled_sources",
+   "detail": ""
+  },
+  {
+   "row": 163,
+   "instance_id": "googlefonts__glyphsLib-1060",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 164,
+   "instance_id": "serge-sans-paille__beniget-121",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 165,
+   "instance_id": "Delgan__loguru-1306",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 166,
+   "instance_id": "fjosw__pyerrors-253",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 167,
+   "instance_id": "dask__dask-11698",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 168,
+   "instance_id": "sopel-irc__sopel-2653",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 169,
+   "instance_id": "googleapis__python-pubsub-1318",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 170,
+   "instance_id": "nhairs__python-json-logger-39",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 171,
+   "instance_id": "OpenFreeEnergy__openfe-1186",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 172,
+   "instance_id": "libp2p__py-libp2p-533",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 173,
+   "instance_id": "PennLINC__CuBIDS-438",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 174,
+   "instance_id": "SpikeInterface__spikeinterface-3778",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 175,
+   "instance_id": "PennyLaneAI__pennylane-6939",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 176,
+   "instance_id": "deepset-ai__haystack-9033",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 177,
+   "instance_id": "Lightning-AI__litdata-499",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 178,
+   "instance_id": "olofk__fusesoc-724",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 179,
+   "instance_id": "matplotlib__matplotlib-29411",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 180,
+   "instance_id": "AzureAD__microsoft-authentication-library-for-python-795",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 181,
+   "instance_id": "mesonbuild__meson-14291",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 182,
+   "instance_id": "wireservice__csvkit-1274",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 183,
+   "instance_id": "tefra__xsdata-1126",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 184,
+   "instance_id": "sdv-dev__SDMetrics-749",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 185,
+   "instance_id": "pybamm-team__PyBaMM-4871",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 186,
+   "instance_id": "pypa__twine-1225",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 187,
+   "instance_id": "zwicker-group__py-pde-683",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 188,
+   "instance_id": "google__flax-4580",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 189,
+   "instance_id": "agronholm__sqlacodegen-370",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 190,
+   "instance_id": "sympy__sympy-27685",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 191,
+   "instance_id": "pandas-dev__pandas-61105",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 192,
+   "instance_id": "bvanelli__actualpy-117",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 193,
+   "instance_id": "rayokota__jsonata-python-14",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 194,
+   "instance_id": "openforcefield__openff-toolkit-2026",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 195,
+   "instance_id": "sympy__sympy-27524",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 196,
+   "instance_id": "PrefectHQ__prefect-17123",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 197,
+   "instance_id": "marshmallow-code__marshmallow-sqlalchemy-648",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 198,
+   "instance_id": "scitokens__scitokens-202",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 199,
+   "instance_id": "tobymao__sqlglot-4696",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 200,
+   "instance_id": "scikit-rf__scikit-rf-1256",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 201,
+   "instance_id": "tianocore__edk2-pytool-library-698",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 202,
+   "instance_id": "asottile__dead-204",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 203,
+   "instance_id": "dask__dask-11727",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 204,
+   "instance_id": "modelcontextprotocol__python-sdk-384",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 205,
+   "instance_id": "autrainer__autrainer-115",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 206,
+   "instance_id": "probabl-ai__skore-1056",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 207,
+   "instance_id": "pandas-dev__pandas-60791",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 208,
+   "instance_id": "facelessuser__pymdown-extensions-2576",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 209,
+   "instance_id": "Delgan__loguru-1297",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 210,
+   "instance_id": "iris-hep__func_adl-184",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 211,
+   "instance_id": "Lightning-AI__litdata-461",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 212,
+   "instance_id": "marcosschroh__dataclasses-avroschema-835",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 213,
+   "instance_id": "probabl-ai__skore-1064",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 214,
+   "instance_id": "streamlink__streamlink-6439",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 215,
+   "instance_id": "astropy__astropy-17800",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 216,
+   "instance_id": "dandi__dandi-cli-1584",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 217,
+   "instance_id": "CWorthy-ocean__C-Star-227",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 218,
+   "instance_id": "scipp__plopp-428",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 219,
+   "instance_id": "ethereum__web3.py-3594",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 220,
+   "instance_id": "discos__srt-single-dish-tools-268",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 221,
+   "instance_id": "ryanhiebert__django-cmd-19",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 222,
+   "instance_id": "vitalik__django-ninja-1427",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 223,
+   "instance_id": "zarr-developers__zarr-python-2661",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 224,
+   "instance_id": "agronholm__sqlacodegen-391",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 225,
+   "instance_id": "dpkp__kafka-python-2548",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 226,
+   "instance_id": "python-babel__babel-1179",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 227,
+   "instance_id": "pyvista__pyvista-7258",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 228,
+   "instance_id": "sympy__sympy-27489",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 229,
+   "instance_id": "pgmpy__pgmpy-1906",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 230,
+   "instance_id": "autrainer__autrainer-105",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 231,
+   "instance_id": "canonical__charmcraft-2084",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 232,
+   "instance_id": "dask__dask-11723",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 233,
+   "instance_id": "ethereum__web3.py-3584",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 234,
+   "instance_id": "agronholm__sqlacodegen-375",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 235,
+   "instance_id": "SpikeInterface__spikeinterface-3737",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 236,
+   "instance_id": "python-scim__scim2-models-90",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 237,
+   "instance_id": "NeurodataWithoutBorders__pynwb-2052",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 238,
+   "instance_id": "probabl-ai__skore-1063",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 239,
+   "instance_id": "ipython__ipython-14693",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 240,
+   "instance_id": "sdv-dev__SDMetrics-723",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 241,
+   "instance_id": "pypa__virtualenv-2821",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 242,
+   "instance_id": "SpikeInterface__spikeinterface-3670",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 243,
+   "instance_id": "agronholm__sqlacodegen-368",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 244,
+   "instance_id": "iluvcapra__pycmx-12",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 245,
+   "instance_id": "model-bakers__model_bakery-520",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 247,
+   "instance_id": "pasteurlabs__tesseract-core-67",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 248,
+   "instance_id": "tobymao__sqlglot-4618",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 249,
+   "instance_id": "IAMconsortium__nomenclature-456",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 250,
+   "instance_id": "movingpandas__movingpandas-447",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 252,
+   "instance_id": "astropy__astropy-17822",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 253,
+   "instance_id": "sympy__sympy-27650",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 254,
+   "instance_id": "All-Hands-AI__openhands-aci-55",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 255,
+   "instance_id": "matthewwithanm__python-markdownify-200",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 256,
+   "instance_id": "pytransitions__transitions-694",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 257,
+   "instance_id": "zarr-developers__zarr-python-2851",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 258,
+   "instance_id": "networkx__networkx-7804",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 259,
+   "instance_id": "tobymao__sqlglot-4569",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 260,
+   "instance_id": "getsentry__sentry-python-3942",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 261,
+   "instance_id": "ua-parser__uap-python-255",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 263,
+   "instance_id": "mwouts__jupytext-1366",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 264,
+   "instance_id": "marshmallow-code__marshmallow-2800",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 265,
+   "instance_id": "pydata__xarray-10035",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 266,
+   "instance_id": "tlsfuzzer__python-ecdsa-358",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 267,
+   "instance_id": "probabl-ai__skore-1085",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 269,
+   "instance_id": "streamlink__streamlink-6455",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 270,
+   "instance_id": "owkin__PyDESeq2-356",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 271,
+   "instance_id": "neuroinformatics-unit__movement-432",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 272,
+   "instance_id": "duo-labs__py_webauthn-241",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 273,
+   "instance_id": "rollbar__pyrollbar-468",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 274,
+   "instance_id": "statsmodels__statsmodels-9468",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 275,
+   "instance_id": "pandas-dev__pandas-60691",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 276,
+   "instance_id": "ASPP__pelita-875",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 277,
+   "instance_id": "NeurodataWithoutBorders__pynwb-2056",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 278,
+   "instance_id": "NeurodataWithoutBorders__pynwb-2060",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 279,
+   "instance_id": "PennLINC__xcp_d-1433",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 280,
+   "instance_id": "PyPSA__linopy-438",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 281,
+   "instance_id": "SpikeInterface__spikeinterface-3829",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 282,
+   "instance_id": "astropy__astropy-17642",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 283,
+   "instance_id": "astropy__astropy-17984",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 285,
+   "instance_id": "beeware__briefcase-2241",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 286,
+   "instance_id": "conan-io__conan-18005",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 287,
+   "instance_id": "deepset-ai__haystack-9242",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 288,
+   "instance_id": "deepset-ai__haystack-9322",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 289,
+   "instance_id": "ej2__python-quickbooks-381",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 290,
+   "instance_id": "facelessuser__pymdown-extensions-2651",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 291,
+   "instance_id": "fox-it__dissect.cstruct-120",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 292,
+   "instance_id": "getsentry__sentry-python-4231",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 293,
+   "instance_id": "google__flax-4681",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 294,
+   "instance_id": "google__flax-4705",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 295,
+   "instance_id": "idaholab__MontePy-723",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 296,
+   "instance_id": "intel__code-base-investigator-178",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 297,
+   "instance_id": "iterative__dvc-10711",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 298,
+   "instance_id": "koxudaxi__datamodel-code-generator-2389",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 299,
+   "instance_id": "lincc-frameworks__nested-pandas-236",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 300,
+   "instance_id": "lincc-frameworks__nested-pandas-247",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 301,
+   "instance_id": "lincolnloop__goodconf-51",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 302,
+   "instance_id": "oemof__tespy-653",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 303,
+   "instance_id": "omni-us__jsonargparse-707",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 304,
+   "instance_id": "omni-us__jsonargparse-711",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 305,
+   "instance_id": "package-url__packageurl-python-178",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 306,
+   "instance_id": null,
+   "reason": "invalid_row",
+   "detail": "invalid fail_to_pass (string_pattern_mismatch)"
+  },
+  {
+   "row": 307,
+   "instance_id": "python-pillow__Pillow-8852",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 308,
+   "instance_id": "python-pillow__Pillow-8938",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 309,
+   "instance_id": "pyvista__pyvista-7455",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 310,
+   "instance_id": "qBraid__pyqasm-168",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 311,
+   "instance_id": "reframe-hpc__reframe-3449",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 312,
+   "instance_id": "scikit-hep__cabinetry-506",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 313,
+   "instance_id": "scipp__plopp-435",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 314,
+   "instance_id": "scipp__plopp-437",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 315,
+   "instance_id": "scipp__plopp-445",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 316,
+   "instance_id": "sloria__sphinx-issues-175",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 317,
+   "instance_id": "stuartmaxwell__djpress-117",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 318,
+   "instance_id": "sympy__sympy-27741",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 319,
+   "instance_id": "sympy__sympy-27904",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 320,
+   "instance_id": "tobymao__sqlglot-4935",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 321,
+   "instance_id": "tobymao__sqlglot-4941",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 322,
+   "instance_id": "tobymao__sqlglot-4987",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 323,
+   "instance_id": "tobymao__sqlglot-5015",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 324,
+   "instance_id": "wemake-services__wemake-python-styleguide-3382",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 326,
+   "instance_id": "zarr-developers__zarr-python-3015",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 327,
+   "instance_id": "Aunsiels__pyformlang-32",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 328,
+   "instance_id": "Aunsiels__pyformlang-35",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 329,
+   "instance_id": "MahjongRepository__mahjong-62",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 330,
+   "instance_id": "MindscapeHQ__raygun4py-119",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 331,
+   "instance_id": "SpikeInterface__spikeinterface-3934",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 332,
+   "instance_id": "beeware__briefcase-2302",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 333,
+   "instance_id": "cdent__gabbi-342",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 334,
+   "instance_id": "conan-io__conan-18327",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 335,
+   "instance_id": "dag-hammarskjold-library__dlx-564",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 336,
+   "instance_id": "dstl__Stone-Soup-1167",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 337,
+   "instance_id": "ethereum__web3.py-3690",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 338,
+   "instance_id": "ets-labs__python-dependency-injector-886",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 339,
+   "instance_id": "googleapis__python-api-core-821",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 340,
+   "instance_id": "lincc-frameworks__nested-pandas-261",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 341,
+   "instance_id": "macbre__sql-metadata-552",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 342,
+   "instance_id": "macbre__sql-metadata-553",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 343,
+   "instance_id": "materialsproject__custodian-379",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 344,
+   "instance_id": "materialsproject__custodian-381",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 345,
+   "instance_id": "mitmproxy__pdoc-806",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 346,
+   "instance_id": "modin-project__modin-7560",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 347,
+   "instance_id": "movingpandas__movingpandas-469",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 348,
+   "instance_id": "mwouts__itables-391",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 349,
+   "instance_id": "networkx__networkx-8055",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 350,
+   "instance_id": "openlawlibrary__pygls-524",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 351,
+   "instance_id": "pasqal-io__Pulser-865",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 352,
+   "instance_id": "pgmpy__pgmpy-2034",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 354,
+   "instance_id": "pgmpy__pgmpy-2111",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 355,
+   "instance_id": "prjemian__spec2nexus-315",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 356,
+   "instance_id": "pydata__sparse-870",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 357,
+   "instance_id": "pypest__pyemu-588",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 358,
+   "instance_id": "stfc__PSyclone-2983",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 359,
+   "instance_id": "stfc__PSyclone-2999",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 360,
+   "instance_id": "stfc__PSyclone-3000",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 361,
+   "instance_id": "sympy__sympy-28075",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 362,
+   "instance_id": "tobymao__sqlglot-5037",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 363,
+   "instance_id": "tobymao__sqlglot-5075",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 364,
+   "instance_id": "ultrabug__py3status-2286",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 365,
+   "instance_id": "unit8co__darts-2811",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 366,
+   "instance_id": "usnistgov__mass-330",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 367,
+   "instance_id": "CS-SI__eodag-1717",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 368,
+   "instance_id": "Kozea__WeasyPrint-2494",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 370,
+   "instance_id": "astropy__astropy-18424",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 371,
+   "instance_id": "astropy__ccdproc-901",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 372,
+   "instance_id": "beeware__briefcase-2401",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 373,
+   "instance_id": "boxed__mutmut-403",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 374,
+   "instance_id": "collective__icalendar-878",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 375,
+   "instance_id": "collective__icalendar-880",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 376,
+   "instance_id": "iris-hep__func_adl-199",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 377,
+   "instance_id": "isledecomp__reccmp-166",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 378,
+   "instance_id": "jlowin__fastmcp-1011",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 379,
+   "instance_id": "libp2p__py-libp2p-750",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 380,
+   "instance_id": "lincc-frameworks__nested-pandas-302",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 381,
+   "instance_id": "lincc-frameworks__nested-pandas-303",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 382,
+   "instance_id": "microsoft__fabric-cicd-394",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 383,
+   "instance_id": "openmrslab__suspect-183",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 384,
+   "instance_id": "opsmill__infrahub-sdk-python-476",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 385,
+   "instance_id": "pdm-project__pdm-3575",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 386,
+   "instance_id": "pydicom__pydicom-2251",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 387,
+   "instance_id": "pymc-devs__pymc-7858",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 388,
+   "instance_id": "python-wheel-build__fromager-653",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 389,
+   "instance_id": "qutech__qupulse-900",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 390,
+   "instance_id": "spdx__tools-python-855",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 391,
+   "instance_id": "stfc__PSyclone-3053",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 392,
+   "instance_id": "sympy__sympy-28207",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 393,
+   "instance_id": "tobymao__sqlglot-5359",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 394,
+   "instance_id": "tobymao__sqlglot-5431",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 395,
+   "instance_id": "tobymao__sqlglot-5352",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 396,
+   "instance_id": "tobymao__sqlglot-5438",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 397,
+   "instance_id": "cea-hpc__clustershell-592",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 398,
+   "instance_id": "quantumlib__ReCirq-410",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 399,
+   "instance_id": "schemathesis__schemathesis-2985",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 400,
+   "instance_id": "gidgethub__gidgethub-225",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 401,
+   "instance_id": "tobymao__sqlglot-5566",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 402,
+   "instance_id": "sunpy__sunpy-8316",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 403,
+   "instance_id": "biopython__biopython-5041",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 404,
+   "instance_id": "stanfordnlp__dspy-8607",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 405,
+   "instance_id": "databricks__dbt-databricks-1131",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 406,
+   "instance_id": "pyccel__pyccel-2418",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 407,
+   "instance_id": "sktime__skpro-574",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 408,
+   "instance_id": "stan-dev__cmdstanpy-801",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 409,
+   "instance_id": "pasteurlabs__tesseract-core-302",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 410,
+   "instance_id": "luolingchun__flask-openapi3-232",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 411,
+   "instance_id": "fsspec__universal_pathlib-395",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 413,
+   "instance_id": "All-Hands-AI__OpenHands-10628",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 414,
+   "instance_id": "iterative__dvc-10844",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 415,
+   "instance_id": "neurostuff__NiMARE-939",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 416,
+   "instance_id": "Ljzd-PRO__KToolBox-302",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 417,
+   "instance_id": "pypa__virtualenv-2921",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 418,
+   "instance_id": "jawah__niquests-277",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 420,
+   "instance_id": "nipreps__smriprep-487",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 422,
+   "instance_id": "BerriAI__litellm-13868",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 423,
+   "instance_id": "Ultraplot__UltraPlot-325",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 424,
+   "instance_id": "vprusso__toqito-1298",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 425,
+   "instance_id": "openatx__adbutils-188",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 426,
+   "instance_id": "yukinarit__pyserde-657",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 427,
+   "instance_id": "microsoft__fabric-cicd-465",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 428,
+   "instance_id": "reagento__dishka-512",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 429,
+   "instance_id": "hgrecco__pint-pandas-287",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 430,
+   "instance_id": "pypa__virtualenv-2940",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 432,
+   "instance_id": "google__adk-python-2478",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 433,
+   "instance_id": "pgmpy__pgmpy-2271",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 434,
+   "instance_id": "open-spaced-repetition__py-fsrs-127",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 435,
+   "instance_id": "oracle__macaron-1136",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 436,
+   "instance_id": "terrapower__armi-2245",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 438,
+   "instance_id": "expectedparrot__edsl-2151",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 439,
+   "instance_id": "getmoto__moto-9207",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 440,
+   "instance_id": "OpenMDAO__dymos-1204",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 441,
+   "instance_id": "biopragmatics__bioregistry-1644",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 442,
+   "instance_id": "spulec__freezegun-582",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 444,
+   "instance_id": "dask__fastparquet-961",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 445,
+   "instance_id": "mpmath__mpmath-992",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 446,
+   "instance_id": "macbre__sql-metadata-583",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 447,
+   "instance_id": "All-Hands-AI__openhands-aci-157",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 448,
+   "instance_id": "stfc__PSyclone-3093",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 449,
+   "instance_id": "BerriAI__litellm-14715",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 451,
+   "instance_id": "PlasmaControl__DESC-1901",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 453,
+   "instance_id": "All-Hands-AI__OpenHands-10867",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 454,
+   "instance_id": "pab1it0__prometheus-mcp-server-76",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 455,
+   "instance_id": "CQCL__guppylang-1259",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 456,
+   "instance_id": "Jc2k__aiohomekit-500",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 457,
+   "instance_id": "pasqal-io__Pulser-936",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 459,
+   "instance_id": "PyPSA__linopy-494",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 460,
+   "instance_id": "reframe-hpc__reframe-3553",
+   "reason": "no_pytest_command",
+   "detail": ""
+  },
+  {
+   "row": 461,
+   "instance_id": "Marker-Inc-Korea__AutoRAG-1147",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 462,
+   "instance_id": "prometheus__client_python-1134",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 463,
+   "instance_id": "astropy__astropy-18627",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 464,
+   "instance_id": "tskit-dev__tskit-3274",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 465,
+   "instance_id": "SciTools__iris-6719",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 466,
+   "instance_id": "python-trio__trio-3334",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 468,
+   "instance_id": "holoviz__param-1073",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 469,
+   "instance_id": "Ultraplot__UltraPlot-346",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 470,
+   "instance_id": "hynek__svcs-140",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 471,
+   "instance_id": "sympy__sympy-28382",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 472,
+   "instance_id": "google__secops-wrapper-119",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 473,
+   "instance_id": "octodns__octodns-1300",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 474,
+   "instance_id": "basicmachines-co__basic-memory-295",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 475,
+   "instance_id": "aiidateam__aiida-quantumespresso-1142",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 476,
+   "instance_id": "Spenhouet__confluence-markdown-exporter-92",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 481,
+   "instance_id": "travisghansen__hass-opnsense-433",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 483,
+   "instance_id": "reata__sqllineage-723",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 484,
+   "instance_id": "a2aproject__a2a-python-472",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 485,
+   "instance_id": "canopen-python__canopen-613",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 486,
+   "instance_id": "aws-powertools__powertools-lambda-python-7315",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 487,
+   "instance_id": "agronholm__anyio-975",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 488,
+   "instance_id": "terrapower__armi-2285",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 489,
+   "instance_id": "pydy__pydy-525",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 490,
+   "instance_id": "ipython__ipython-14982",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 491,
+   "instance_id": "UXARRAY__uxarray-1369",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 492,
+   "instance_id": "zwicker-group__py-pde-712",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 493,
+   "instance_id": "cubed-dev__cubed-799",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 494,
+   "instance_id": "openai__openai-agents-python-1782",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 495,
+   "instance_id": "Marker-Inc-Korea__AutoRAG-1150",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 496,
+   "instance_id": "materialsproject__fireworks-548",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 497,
+   "instance_id": "USNavalResearchLaboratory__eispac-124",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 498,
+   "instance_id": "stellarmesh__stellarmesh-51",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 499,
+   "instance_id": "BrianPugh__cyclopts-633",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 500,
+   "instance_id": "BrianPugh__cyclopts-609",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 501,
+   "instance_id": "PyPSA__PyPSA-1404",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 502,
+   "instance_id": "PyPSA__PyPSA-1414",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 504,
+   "instance_id": "adrn__gala-495",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 505,
+   "instance_id": "basicmachines-co__basic-memory-334",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 507,
+   "instance_id": "nilearn__nilearn-5741",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 508,
+   "instance_id": "pydata__xarray-10838",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 509,
+   "instance_id": "pydata__xarray-10863",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 510,
+   "instance_id": "strands-agents__sdk-python-994",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 511,
+   "instance_id": "sympy__sympy-28467",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 513,
+   "instance_id": "BerriAI__litellm-15753",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 514,
+   "instance_id": "SciTools__iris-6772",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 515,
+   "instance_id": "collective__icalendar-921",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 516,
+   "instance_id": "mwouts__jupytext-1443",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 517,
+   "instance_id": "Ultraplot__UltraPlot-357",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 518,
+   "instance_id": "basicmachines-co__basic-memory-341",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 519,
+   "instance_id": "equinor__ert-11988",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 520,
+   "instance_id": "getmoto__moto-9350",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 521,
+   "instance_id": "marimo-team__marimo-6629",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 522,
+   "instance_id": "marimo-team__marimo-6819",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 523,
+   "instance_id": "narwhals-dev__narwhals-3251",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 524,
+   "instance_id": "nilearn__nilearn-5739",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 525,
+   "instance_id": "openai__openai-agents-python-1965",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 527,
+   "instance_id": "pymc-devs__pytensor-1668",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 528,
+   "instance_id": "pymc-devs__pytensor-1701",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 529,
+   "instance_id": "stanfordnlp__dspy-8890",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 530,
+   "instance_id": "sympy__sympy-28454",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 531,
+   "instance_id": "tobymao__sqlglot-6174",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 532,
+   "instance_id": "tobymao__sqlglot-6067",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 533,
+   "instance_id": "piskvorky__smart_open-889",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 534,
+   "instance_id": "astropy__astropy-18752",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 535,
+   "instance_id": "scikit-rf__scikit-rf-1336",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 537,
+   "instance_id": "omni-us__jsonargparse-781",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 538,
+   "instance_id": "sdv-dev__SDV-2709",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 539,
+   "instance_id": "schemathesis__schemathesis-3195",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 540,
+   "instance_id": "astropy__astropy-18681",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 541,
+   "instance_id": "spacetelescope__jwst-9967",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 543,
+   "instance_id": "google__adk-python-3088",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 544,
+   "instance_id": "sdv-dev__SDV-2706",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 545,
+   "instance_id": "sktime__sktime-8921",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 546,
+   "instance_id": "dask__dask-12096",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 547,
+   "instance_id": "gitpython-developers__GitPython-2075",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 548,
+   "instance_id": "dask__dask-12119",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 551,
+   "instance_id": "sympy__sympy-28639",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 553,
+   "instance_id": "sympy__sympy-28564",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 555,
+   "instance_id": "astropy__astropy-18911",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 556,
+   "instance_id": "astropy__astropy-18868",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 557,
+   "instance_id": "astropy__astropy-18818",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 559,
+   "instance_id": "tobymao__sqlglot-6409",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 560,
+   "instance_id": "tobymao__sqlglot-6389",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 561,
+   "instance_id": "tobymao__sqlglot-6385",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 562,
+   "instance_id": "tobymao__sqlglot-6383",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 564,
+   "instance_id": "tobymao__sqlglot-6346",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 565,
+   "instance_id": "tobymao__sqlglot-6314",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 566,
+   "instance_id": "schemathesis__schemathesis-3334",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 567,
+   "instance_id": "schemathesis__schemathesis-3291",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 568,
+   "instance_id": "schemathesis__schemathesis-3270",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 569,
+   "instance_id": "cal-itp__benefits-3330",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 570,
+   "instance_id": "mmornati__home-assistant-csnet-home-132",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 571,
+   "instance_id": null,
+   "reason": "invalid_row",
+   "detail": "invalid fail_to_pass (string_pattern_mismatch)"
+  },
+  {
+   "row": 572,
+   "instance_id": "BrianPugh__cyclopts-701",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 574,
+   "instance_id": "BerriAI__litellm-17027",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 576,
+   "instance_id": "BerriAI__litellm-16943",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 577,
+   "instance_id": "BerriAI__litellm-16899",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 578,
+   "instance_id": "BerriAI__litellm-16864",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 579,
+   "instance_id": "BerriAI__litellm-16852",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 580,
+   "instance_id": "BerriAI__litellm-16550",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 581,
+   "instance_id": "BerriAI__litellm-16526",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 582,
+   "instance_id": "BerriAI__litellm-16487",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 583,
+   "instance_id": "BerriAI__litellm-16429",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 584,
+   "instance_id": "getmoto__moto-9440",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 585,
+   "instance_id": "BerriAI__litellm-16320",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 586,
+   "instance_id": "BerriAI__litellm-16315",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 588,
+   "instance_id": "idaholab__MontePy-850",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 589,
+   "instance_id": "mlte-team__mlte-809",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 590,
+   "instance_id": "pyccel__pyccel-2512",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 591,
+   "instance_id": "plone__cookieplone-templates-308",
+   "reason": "no_source_change",
+   "detail": ""
+  },
+  {
+   "row": 593,
+   "instance_id": "beeware__briefcase-2546",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 594,
+   "instance_id": "AbsaOSS__generate-release-notes-207",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 595,
+   "instance_id": "bas-amop__PolarRoute-server-159",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 596,
+   "instance_id": "cpp-linter__cpp-linter-hooks-142",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 599,
+   "instance_id": "tobymao__sqlglot-6632",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 600,
+   "instance_id": "tobymao__sqlglot-6610",
+   "reason": "compiled_sources",
+   "detail": ""
+  },
+  {
+   "row": 601,
+   "instance_id": "tobymao__sqlglot-6573",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 602,
+   "instance_id": "tobymao__sqlglot-6563",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 603,
+   "instance_id": "tobymao__sqlglot-6556",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 605,
+   "instance_id": "zwicker-group__py-pde-733",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 606,
+   "instance_id": "microsoft__Agents-for-python-264",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 607,
+   "instance_id": "calliope-project__calliope-854",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 608,
+   "instance_id": null,
+   "reason": "invalid_row",
+   "detail": "invalid row (too_many_tests)"
+  },
+  {
+   "row": 609,
+   "instance_id": "All-Hands-AI__OpenHands-11914",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 610,
+   "instance_id": "plone__cookieplone-templates-322",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 611,
+   "instance_id": "schemathesis__schemathesis-3405",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 612,
+   "instance_id": "schemathesis__schemathesis-3388",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 613,
+   "instance_id": "apache__iceberg-python-2797",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 614,
+   "instance_id": "spack__spack-51723",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 615,
+   "instance_id": "astropy__astropy-19055",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 616,
+   "instance_id": "conan-io__conan-19393",
+   "reason": "python_below_3_11",
+   "detail": ""
+  },
+  {
+   "row": 617,
+   "instance_id": "fsspec__universal_pathlib-495",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 618,
+   "instance_id": "Cambridge-ICCS__TCTrack-119",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 619,
+   "instance_id": "Cambridge-ICCS__TCTrack-118",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 620,
+   "instance_id": "iluvcapra__pycmx-15",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 621,
+   "instance_id": null,
+   "reason": "invalid_row",
+   "detail": "invalid pass_to_pass (string_pattern_mismatch)"
+  },
+  {
+   "row": 622,
+   "instance_id": null,
+   "reason": "invalid_row",
+   "detail": "invalid pass_to_pass (string_pattern_mismatch)"
+  },
+  {
+   "row": 623,
+   "instance_id": "DiamondLightSource__mx-bluesky-1519",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 624,
+   "instance_id": "PyPSA__PyPSA-1498",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 625,
+   "instance_id": "ag2ai__faststream-2701",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 626,
+   "instance_id": "bluesky__ophyd-async-1165",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 627,
+   "instance_id": "bluesky__ophyd-async-1164",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 629,
+   "instance_id": "aeye-lab__pymovements-1408",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 630,
+   "instance_id": "basicmachines-co__basic-memory-484",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 631,
+   "instance_id": "microsoft__fabric-cicd-670",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 632,
+   "instance_id": "UXARRAY__uxarray-1423",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 633,
+   "instance_id": "getmoto__moto-9590",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 634,
+   "instance_id": "getmoto__moto-9549",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 635,
+   "instance_id": "equinor__ert-12491",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 636,
+   "instance_id": "a2aproject__a2a-python-576",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 637,
+   "instance_id": "oOo0oOo__leanclient-24",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 639,
+   "instance_id": "sympy__sympy-28790",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 640,
+   "instance_id": "sympy__sympy-28738",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 641,
+   "instance_id": "sympy__sympy-28714",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 642,
+   "instance_id": "reata__sqllineage-743",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 644,
+   "instance_id": "openai__openai-agents-python-2144",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 645,
+   "instance_id": "linkml__linkml-3098",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 646,
+   "instance_id": "imperialcollegelondon__pyrealm-593",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 647,
+   "instance_id": "tox-dev__tox-3666",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 648,
+   "instance_id": "ardupilot__methodicconfigurator-1201",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 649,
+   "instance_id": "jsonpickle__jsonpickle-588",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 651,
+   "instance_id": "ncar__geocat-comp-811",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 652,
+   "instance_id": "ncar__geocat-comp-807",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 653,
+   "instance_id": "pytest-dev__pyfakefs-1269",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 654,
+   "instance_id": "nolar__kopf-1225",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 655,
+   "instance_id": "modelcontextprotocol__python-sdk-1864",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 656,
+   "instance_id": "python-scim__scim2-models-126",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 657,
+   "instance_id": "python-scim__scim2-models-120",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 658,
+   "instance_id": "sissbruecker__linkding-1291",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 659,
+   "instance_id": "sciunto-org__python-bibtexparser-515",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 660,
+   "instance_id": "avaiga__taipy-2797",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 661,
+   "instance_id": "chaoss__augur-3512",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 662,
+   "instance_id": "unit8co__darts-2985",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 663,
+   "instance_id": "lincc-frameworks__nested-pandas-425",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 664,
+   "instance_id": "allenneuraldynamics__aind-data-schema-1677",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 665,
+   "instance_id": "fsspec__universal_pathlib-529",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 667,
+   "instance_id": "hdmf-dev__hdmf-1374",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 668,
+   "instance_id": "pyfar__pyrato-113",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 669,
+   "instance_id": "idaholab__montepy-882",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 670,
+   "instance_id": "scipp__plopp-513",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 671,
+   "instance_id": "niconoe__pyinaturalist-643",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 672,
+   "instance_id": "pydap__pydap-624",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 673,
+   "instance_id": "python-markdown__markdown-1587",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 674,
+   "instance_id": "ethereum__web3.py-3800",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 675,
+   "instance_id": null,
+   "reason": "invalid_row",
+   "detail": "invalid row (too_many_tests)"
+  },
+  {
+   "row": 676,
+   "instance_id": "researchobject__ro-crate-py-248",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 677,
+   "instance_id": "yt-project__unyt-628",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 678,
+   "instance_id": "holoviz__holoviews-6783",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 679,
+   "instance_id": "genericmappingtools__pygmt-4371",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 680,
+   "instance_id": "genericmappingtools__pygmt-4342",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 681,
+   "instance_id": "scientific-python__docstub-123",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 682,
+   "instance_id": "careamics__careamics-688",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 683,
+   "instance_id": "vyperlang__vyper-4801",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 684,
+   "instance_id": "beeware__briefcase-2651",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 686,
+   "instance_id": "psf__black-4952",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 687,
+   "instance_id": null,
+   "reason": "invalid_row",
+   "detail": "invalid row (too_many_tests)"
+  },
+  {
+   "row": 688,
+   "instance_id": "pypa__virtualenv-3015",
+   "reason": "no_source_change",
+   "detail": ""
+  },
+  {
+   "row": 689,
+   "instance_id": "delgan__loguru-1425",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 690,
+   "instance_id": null,
+   "reason": "invalid_row",
+   "detail": "invalid row (too_many_tests)"
+  },
+  {
+   "row": 691,
+   "instance_id": "joke2k__faker-2309",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 692,
+   "instance_id": "sigstore__sigstore-python-1652",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 693,
+   "instance_id": "opsmill__infrahub-8423",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 694,
+   "instance_id": "opsmill__infrahub-8407",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 695,
+   "instance_id": "tox-dev__tox-3810",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 697,
+   "instance_id": "joshuadavidthomas__django-bird-239",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 698,
+   "instance_id": "tox-dev__tox-3759",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 699,
+   "instance_id": "pytest-dev__pyfakefs-1286",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 700,
+   "instance_id": "tox-dev__tox-3683",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 701,
+   "instance_id": "psd-tools__psd-tools-551",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 702,
+   "instance_id": "marimo-team__marimo-8401",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 703,
+   "instance_id": "jmcgeheeiv__pyfakefs-1286",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 704,
+   "instance_id": "keras-team__keras-22138",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 705,
+   "instance_id": "strands-agents__sdk-python-1734",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 706,
+   "instance_id": "strands-agents__sdk-python-1719",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 707,
+   "instance_id": "tox-dev__sphinx-autodoc-typehints-607",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 708,
+   "instance_id": "tox-dev__sphinx-autodoc-typehints-606",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 709,
+   "instance_id": "deepset-ai__haystack-10547",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 710,
+   "instance_id": "docling-project__docling-2998",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 711,
+   "instance_id": "docling-project__docling-2983",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 712,
+   "instance_id": "huggingface__transformers-44080",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 713,
+   "instance_id": "jlowin__fastmcp-3235",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 714,
+   "instance_id": "pyjanitor-devs__pyjanitor-1593",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 715,
+   "instance_id": "pandas-dev__pandas-64104",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 716,
+   "instance_id": "pandas-dev__pandas-64092",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 717,
+   "instance_id": "tobymao__sqlglot-6991",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 718,
+   "instance_id": "scikit-learn__scikit-learn-33168",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 720,
+   "instance_id": "astronomer__astronomer-cosmos-2332",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 721,
+   "instance_id": "aws-cloudformation__cfn-python-lint-4368",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 722,
+   "instance_id": "scrapy__scrapy-7255",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 723,
+   "instance_id": "skypilot-org__skypilot-8908",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 724,
+   "instance_id": "conan-io__conan-19604",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 725,
+   "instance_id": "koxudaxi__datamodel-code-generator-2998",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 726,
+   "instance_id": "koxudaxi__datamodel-code-generator-2996",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 727,
+   "instance_id": "koxudaxi__datamodel-code-generator-2993",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 728,
+   "instance_id": "omni-us__jsonargparse-839",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 729,
+   "instance_id": "open-telemetry__opentelemetry-python-4891",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 731,
+   "instance_id": "gammapy__gammapy-6409",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 732,
+   "instance_id": "skrub-data__skrub-1899",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 734,
+   "instance_id": "optuna__optuna-6428",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 735,
+   "instance_id": "narwhals-dev__narwhals-3480",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 736,
+   "instance_id": "narwhals-dev__narwhals-3478",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 737,
+   "instance_id": null,
+   "reason": "invalid_row",
+   "detail": "invalid pass_to_pass (string_pattern_mismatch)"
+  },
+  {
+   "row": 738,
+   "instance_id": "newton-physics__newton-1653",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 740,
+   "instance_id": "aws__bedrock-agentcore-sdk-python-279_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 741,
+   "instance_id": "marimo-team__marimo-8387_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 742,
+   "instance_id": "stravalib__stravalib-709_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 743,
+   "instance_id": "pytorch__ignite-3532_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 746,
+   "instance_id": "jlowin__fastmcp-3237_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 747,
+   "instance_id": "run-llama__llama_index-20748_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 748,
+   "instance_id": "litestar-org__advanced-alchemy-673_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 749,
+   "instance_id": "nilearn__nilearn-6031_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 750,
+   "instance_id": "pgmpy__pgmpy-3137",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 751,
+   "instance_id": "tox-dev__tox-3904",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 752,
+   "instance_id": "geopython__pygeoapi-2338",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 753,
+   "instance_id": "graphistry__pygraphistry-1107_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 754,
+   "instance_id": "databricks__dbt-databricks-1428",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 756,
+   "instance_id": "oemof__tespy-921",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 757,
+   "instance_id": "nesquena__hermes-webui-1818",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 759,
+   "instance_id": "tobymao__sqlglot-7479",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 760,
+   "instance_id": "agentscope-ai__qwenpaw-3278",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 761,
+   "instance_id": "python-wheel-build__fromager-1106",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 762,
+   "instance_id": "mempalace__mempalace-1004",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 763,
+   "instance_id": "idaholab__montepy-933_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 764,
+   "instance_id": "agronholm__anyio-1134",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 765,
+   "instance_id": "astropy__astropy-19438",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 766,
+   "instance_id": "getmoto__moto-9841",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 767,
+   "instance_id": "hiero-ledger__hiero-sdk-python-1914_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 768,
+   "instance_id": "stanfordnlp__dspy-9478_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 769,
+   "instance_id": "koxudaxi__datamodel-code-generator-3046",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 770,
+   "instance_id": "ucfopen__canvasapi-716",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 771,
+   "instance_id": "apache__iceberg-python-3295",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 772,
+   "instance_id": "raullenchai__rapid-mlx-289",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 774,
+   "instance_id": "cs-si__eodag-2176",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 775,
+   "instance_id": "vprusso__toqito-1484_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 776,
+   "instance_id": "python-scim__scim2-models-139_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 777,
+   "instance_id": "reframe-hpc__reframe-3660_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 778,
+   "instance_id": "alibaba__opensandbox-816",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 779,
+   "instance_id": "pdm-project__pdm-3759",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 780,
+   "instance_id": "schemathesis__schemathesis-3933",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 781,
+   "instance_id": "tobymao__sqlglot-7457",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 782,
+   "instance_id": "keras-team__keras-22330",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 783,
+   "instance_id": "sigma67__ytmusicapi-909_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 784,
+   "instance_id": "graphistry__pygraphistry-1277",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 786,
+   "instance_id": "schemathesis__schemathesis-3778",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 787,
+   "instance_id": "python-wheel-build__fromager-1124",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 788,
+   "instance_id": "keras-team__keras-22642",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 789,
+   "instance_id": "raullenchai__rapid-mlx-228",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 790,
+   "instance_id": "tobymao__sqlglot-7187",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 791,
+   "instance_id": "pypa__twine-1309",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 792,
+   "instance_id": "tox-dev__tox-3846",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 793,
+   "instance_id": "nesquena__hermes-webui-330_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 794,
+   "instance_id": "astronomy-commons__hats-648",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 795,
+   "instance_id": "marshmallow-code__marshmallow-2925_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 796,
+   "instance_id": "agronholm__anyio-1121",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 797,
+   "instance_id": "pyinfra-dev__pyinfra-1679_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 799,
+   "instance_id": "zauberzeug__nicegui-5914",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 802,
+   "instance_id": "destine-climate-dt__aqua-2768",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 803,
+   "instance_id": "pypa__build-1027",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 805,
+   "instance_id": "pypsa__pypsa-1653",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 806,
+   "instance_id": "koxudaxi__datamodel-code-generator-3070",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 808,
+   "instance_id": "raullenchai__rapid-mlx-227",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 809,
+   "instance_id": "astronomy-commons__lsdb-1349",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 810,
+   "instance_id": "pennylaneai__pennylane-9298",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 811,
+   "instance_id": "macbre__sql-metadata-625_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 812,
+   "instance_id": "sunpy__sunpy-8548_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 813,
+   "instance_id": "pallets-eco__wtforms-892_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 814,
+   "instance_id": "huggingface__huggingface_hub-4056",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 815,
+   "instance_id": "deltares__hydrolib-core-1049_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 816,
+   "instance_id": "conan-io__conan-19735_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 817,
+   "instance_id": "line__line-bot-sdk-python-981_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 819,
+   "instance_id": "olofk__fusesoc-776_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 820,
+   "instance_id": "scikit-learn__scikit-learn-33565",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 821,
+   "instance_id": "pallets__click-3239",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 822,
+   "instance_id": "pandas-dev__pandas-64816",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 823,
+   "instance_id": "hkuds__openharness-217",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 825,
+   "instance_id": "pyinfra-dev__pyinfra-1665",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 826,
+   "instance_id": "aallan__vera-662_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 827,
+   "instance_id": "getmoto__moto-9903",
+   "reason": "repo_cap",
+   "detail": ""
+  },
+  {
+   "row": 828,
+   "instance_id": "con__nwb2bids-347_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 830,
+   "instance_id": "keras-team__keras-22316",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 831,
+   "instance_id": "tox-dev__tox-3931",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 832,
+   "instance_id": "pyinfra-dev__pyinfra-1630",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 833,
+   "instance_id": "sqlfluff__sqlfluff-7622",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 834,
+   "instance_id": "celestoai__smolvm-172",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 835,
+   "instance_id": "zauberzeug__nicegui-5858",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 836,
+   "instance_id": "containers__ramalama-2487",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 837,
+   "instance_id": "spack__spack-52244",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 838,
+   "instance_id": "conan-io__conan-19750",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 839,
+   "instance_id": "koxudaxi__datamodel-code-generator-3071",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 840,
+   "instance_id": "pipecat-ai__pipecat-4283",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 841,
+   "instance_id": "beever-ai__beever-atlas-102",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 842,
+   "instance_id": "kubeflow__pipelines-13112",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 843,
+   "instance_id": "cpp-linter__cpp-linter-hooks-206_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 844,
+   "instance_id": "genericmappingtools__pygmt-4463",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 845,
+   "instance_id": "alibaba__opensandbox-426",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 846,
+   "instance_id": "vprusso__toqito-1538",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 847,
+   "instance_id": "delgan__loguru-1451",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 848,
+   "instance_id": "sqlfluff__sqlfluff-7617",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 849,
+   "instance_id": "raullenchai__rapid-mlx-341_interface",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 852,
+   "instance_id": "sqlfluff__sqlfluff-7615",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 853,
+   "instance_id": "azure-samples__azure-search-openai-demo-3025",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 855,
+   "instance_id": "psd-tools__psd-tools-593",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 858,
+   "instance_id": "meltano__meltano-9929",
+   "reason": "over_limit",
+   "detail": ""
+  },
+  {
+   "row": 859,
+   "instance_id": "pandas-dev__pandas-64797",
+   "reason": "repo_cap",
+   "detail": ""
+  }
+ ]
+}

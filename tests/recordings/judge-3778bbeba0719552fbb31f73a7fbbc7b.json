@@ -1,0 +1,11 @@
+{
+ "key": "3778bbeba0719552fbb31f73a7fbbc7b91833b8795d6fa7e725fc1435270ad4f",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 3360,
+  "output_tokens": 606,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"suspicious\",\"reason\":\"The issue asks for case-insensitive deduplication (Bob@Example.com vs bob@example.com); merging whitespace-padded addresses is not requested, even though the PR's tests call this input.\"},{\"change\":\"c2\",\"label\":\"suspicious\",\"reason\":\"The docstring only says to remove duplicates, so rewriting ' ' to '' alters a returned value that nothing in the issue or docstring asks to change.\"},{\"change\":\"c3\",\"label\":\"suspicious\",\"reason\":\"The input is a frozenset, so the reordered output likely reflects set iteration order rather than anything the issue about capitalisation asks for; it needs a human check.\"},{\"change\":\"c4\",\"label\":\"suspicious\",\"reason\":\"The fix strips the trailing \\\\x85 (NEL) from an entry and the output order changes; neither is requested by the capitalisation issue or the docstring's 'in order' contract.\"},{\"change\":\"c5\",\"label\":\"suspicious\",\"reason\":\"The fix strips a leading \\\\xa0 from an address, which is whitespace normalisation that the capitalisation issue does not ask for.\"}]}"
+ },
+ "role": "judge"
+}

@@ -1,0 +1,11 @@
+{
+ "key": "f0018f5812c3abbe45cd013a26d9029cd18b5c77da328d95f6172e9985270325",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 4115,
+  "output_tokens": 1261,
+  "stop_reason": "end_turn",
+  "text": "{\"labels\":[{\"change\":\"c1\",\"label\":\"intended\",\"reason\":\"The issue names this exact call. The result must be no longer than max_len=5, and 'hell\u2026' is 5 characters.\"},{\"change\":\"c2\",\"label\":\"intended\",\"reason\":\"Same rule from the issue: the result must fit max_len. The old 11-character result is now 8 characters with a multi-character ellipsis.\"},{\"change\":\"c3\",\"label\":\"intended\",\"reason\":\"The issue requires length <= max_len, and with max_len=0 the only string that fits is ''.\"},{\"change\":\"c4\",\"label\":\"intended\",\"reason\":\"Same overflow as the issue's example: 6 characters returned for max_len=5. It is now 5.\"},{\"change\":\"c5\",\"label\":\"intended\",\"reason\":\"max_len=0 means the only result that satisfies the issue's length bound is ''.\"},{\"change\":\"c6\",\"label\":\"intended\",\"reason\":\"max_len=0 with a custom ellipsis still has to return '' to stay within the bound the issue asks for.\"},{\"change\":\"c7\",\"label\":\"intended\",\"reason\":\"max_len=0 means the only result within the issue's length bound is ''.\"},{\"change\":\"c8\",\"label\":\"intended\",\"reason\":\"max_len=0 means the only result within the issue's length bound is ''.\"},{\"change\":\"c9\",\"label\":\"suspicious\",\"reason\":\"The issue only asks for length <= max_len. Returning half of the ellipsis instead of text[:1] is a choice backed only by the fix's own new docstring.\"},{\"change\":\"c10\",\"label\":\"intended\",\"reason\":\"With a 1-character ellipsis and max_len=1, keeping max_len-len(ellipsis) characters of text plus the ellipsis follows the same rule as the issue's example.\"},{\"change\":\"c11\",\"label\":\"suspicious\",\"reason\":\"Cutting the '\\\\r\\\\n' ellipsis to a bare '\\\\r' and dropping all text is not asked for by the issue. Only the fix's self-written docstring supports it.\"},{\"change\":\"c12\",\"label\":\"suspicious\",\"reason\":\"The output keeps no text and only a prefix of a long ellipsis. The issue says nothing about this; only the fix's new docstring wording covers it.\"}]}"
+ },
+ "role": "judge"
+}

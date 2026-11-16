@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "case": "test_weakened",
+  "summary": "Rewrites slugify so trailing punctuation no longer leaves a dash, but now produces double dashes ('Rock & Roll' -> 'rock--roll') and deletes the existing assert that caught it.",
+  "receipt": {
+    "status": "ok",
+    "level": {
+      "exactly": "COUNTEREXAMPLE"
+    },
+    "stages": {
+      "reproduce": "reproduced"
+    },
+    "must_find": [
+      {
+        "stage": "integrity",
+        "kind": "removed_assert",
+        "file": "tests/test_slug.py",
+        "detail": "assert slugify(\"Rock & Roll\") == \"rock-roll\""
+      }
+    ],
+    "must_not_find": []
+  },
+  "checks": [
+    {
+      "tests": "suite",
+      "ref": "base",
+      "expect": "pass"
+    },
+    {
+      "tests": "suite",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "base",
+      "expect": "fail",
+      "match": "assert 'hello-world-' == 'hello-world'"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_removed_assert.py",
+      "ref": "base",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_removed_assert.py",
+      "ref": "head",
+      "expect": "fail",
+      "match": "assert 'rock--roll' == 'rock-roll'"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+ "instance_id": "hgrecco__pint-1111",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 12.79,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 65885,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "pint/registry.py",
+     "function": "ContextRegistry._switch_context_cache_and_units"
+    }
+   ],
+   "differs": [
+    {
+     "path": "pint/registry.py",
+     "function": "ContextRegistry._switch_context_cache_and_units"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "af723faccff4d4778dd21cafc71de78b015b91c3",
+  "gold": "c7255508a64018636cee85d6a2b56312d6feca41",
+  "agent_ok": "55f8ba964aa46d4ab7e5ab0c0d178a7b55543b9f"
+ },
+ "seconds": 46.687
+}

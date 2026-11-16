@@ -1,0 +1,78 @@
+{
+ "instance_id": "ImperialCollegeLondon__virtual_ecosystem-1232",
+ "excluded": null,
+ "detail": "",
+ "python": "3.12.12",
+ "isolation": "strict",
+ "pip_changes": [
+  "anthropic - -> 1.15.0",
+  "docstring-parser - -> 0.18.0",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis 6.148.7 -> 6.170.0",
+  "idna 3.11 -> 3.20",
+  "jiter - -> 0.17.0",
+  "opentelemetry-api - -> 1.45.1",
+  "pydantic 2.12.5 -> 2.14.1",
+  "pydantic-core 2.41.5 -> 2.50.1",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.15.0 -> 4.16.0",
+  "typing-inspection 0.4.2 -> 0.4.4"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "_hypothesis_pytestplugin",
+  "anyio.pytest_plugin",
+  "pytest_datadir.plugin",
+  "pytest_mock",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist",
+  "typeguard._pytest_plugin"
+ ],
+ "suite_seconds": 176.067,
+ "suite_timeout": 529,
+ "source_hunks": 5,
+ "variants": [
+  {
+   "index": 0,
+   "path": "docs/source/virtual_ecosystem/implementation/var_generator.py",
+   "old_start": 143,
+   "old_len": 12,
+   "label": "hidden_tests_pass",
+   "failing": 0
+  },
+  {
+   "index": 1,
+   "path": "virtual_ecosystem/models/abiotic_simple/abiotic_simple_model.py",
+   "old_start": 64,
+   "old_len": 8,
+   "label": "no_effect",
+   "failing": 4
+  },
+  {
+   "index": 2,
+   "path": "virtual_ecosystem/models/abiotic_simple/abiotic_simple_model.py",
+   "old_start": 73,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 4
+  },
+  {
+   "index": 3,
+   "path": "virtual_ecosystem/models/abiotic_simple/abiotic_simple_model.py",
+   "old_start": 136,
+   "old_len": 18,
+   "label": "partial",
+   "failing": 1
+  }
+ ],
+ "kept": 3,
+ "commits": {
+  "base": "eb1cb98025eff192c5087283236040b42e08dd21",
+  "gold": "ec7cbe5cf437de0ef200e99895027c47d2fceb09",
+  "v3": "f95397db0541c00fbda4fb2a1345ee74a8c9fd09"
+ },
+ "seconds": 332.563
+}

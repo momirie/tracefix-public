@@ -1,0 +1,46 @@
+name: Tracefix failed to run
+description: A crash (exit code 3), a hang, an install problem, or the GitHub Action failing.
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For a receipt that was written but says something untrue, use "A receipt is wrong" instead.
+        Check what you paste for anything private (keys, internal code): this issue is public.
+  - type: textarea
+    id: happened
+    attributes:
+      label: What happened
+      description: The command or workflow you ran, and what you saw. Paste the last lines of the output.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+  - type: input
+    id: version
+    attributes:
+      label: Tracefix version or commit
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Operating system and Python versions
+      description: Tracefix's own Python, and the project's if you passed `--python`.
+      placeholder: Ubuntu 24.04, Python 3.12 (project on 3.10)
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where it ran
+      options:
+        - The command line
+        - The GitHub Action, on a pull request from this repository
+        - The GitHub Action, fork flow (label)
+    validations:
+      required: true

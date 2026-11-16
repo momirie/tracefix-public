@@ -1,0 +1,676 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-07T15:54:57+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the PR's test file test_fix.py does not fail with the fix reverted (passed)"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "728bfcbc9fa45e3ec152bcd5146291527a657b88"
+  },
+  "head": {
+    "ref": "tf-agent_wrong",
+    "sha": "cce69834bc2c0d8af60dc5eb0f66afaf2f28f48e"
+  },
+  "issue": {
+    "title": "dual boundary class can have a bad pair",
+    "sha256": "df0b89ebbdaec29b1769274cd6105d54d6735eaacf18bdeab34158668fce44bf"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier reproduced the bug with a test that fails before the fix and passes after it, but the PR's own test file test_fix.py still passes with the fix reverted, so it does not guard against this regression. The most important next step is to add or adjust a test that exercises a dual boundary pair with a good OCB and an out-of-range EAB index, so that it fails without the fix.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 99.56,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "3 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 3.39,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 3,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 9.18,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no ocbpy/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the PR's test file test_fix.py does not fail with the fix reverted (passed)",
+      "duration_s": 2022.11,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no ocbpy/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_fix.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.0,
+        "repro_kill_rate": 0.0,
+        "pr_kill_rate": 0.0,
+        "mutants": 3,
+        "killed": 0,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 6,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.0,
+        "rule_kinds": [
+          "body: 0 of 2 killed",
+          "compare: 0 of 2 killed",
+          "logic: 0 of 1 killed",
+          "negate_if: 0 of 1 killed",
+          "constant: 0 of 1 killed",
+          "arithmetic: 0 of 1 killed",
+          "drop_call: 0 of 1 killed",
+          "reraise: 0 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "membership",
+          "loop"
+        ],
+        "pr_test_files": [
+          "test_fix.py"
+        ],
+        "findings": [
+          "pr_tests_pass_on_revert: the PR's test file test_fix.py does not fail with the fix reverted (passed)",
+          "low_kill_rate: the tests killed 0 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 363 untouched tests that passed before the fix fails after it",
+      "duration_s": 100.55,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 363,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 4.47,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no ocbpy/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_fix.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 169
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call (DualBoundary.rec_ind: a property setter or deleter: not called yet; debug_dual_boundary_pairing: new with the fix: nothing to compare; debug_specific_timestamp: new with the fix: nothing to compare)",
+      "duration_s": 0.29,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call (debug_dual_boundary_pairing: it takes no parameters to vary; debug_specific_timestamp: it takes no parameters to vary; DualBoundary.rec_ind: a property setter or deleter: not called yet)",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (2 reported)",
+      "duration_s": 0.07,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 2
+      }
+    },
+    {
+      "name": "blind",
+      "status": "fails_on_head",
+      "reason": "attempt 2: fails the same way before and after the fix",
+      "duration_s": 175.91,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no ocbpy/tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-2e2ffff51f70",
+      "origin": "model",
+      "file": "ocbpy/_boundary.py",
+      "line": 1210,
+      "original": "            if ocb_target_ind < self.ocb.records:",
+      "replacement": "            if ocb_target_ind <= self.ocb.records:",
+      "description": "Loosened OCB bounds check so an index equal to records is used directly.",
+      "diff": "--- a/ocbpy/_boundary.py\n+++ b/ocbpy/_boundary.py\n@@ -1209,3 +1209,3 @@\n             \n-            if ocb_target_ind < self.ocb.records:\n+            if ocb_target_ind <= self.ocb.records:\n                 self.ocb.rec_ind = ocb_target_ind\n",
+      "words": "ocbpy/_boundary.py:1210: changing `            if ocb_target_ind < self.ocb.records:` to `            if ocb_target_ind <= self.ocb.records:` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-7dc17bc520ca",
+      "origin": "model",
+      "file": "ocbpy/_boundary.py",
+      "line": 1215,
+      "original": "            if eab_target_ind < self.eab.records:",
+      "replacement": "            if eab_target_ind <= self.eab.records:",
+      "description": "Loosened EAB bounds check so an index equal to records is used directly.",
+      "diff": "--- a/ocbpy/_boundary.py\n+++ b/ocbpy/_boundary.py\n@@ -1214,3 +1214,3 @@\n                 \n-            if eab_target_ind < self.eab.records:\n+            if eab_target_ind <= self.eab.records:\n                 self.eab.rec_ind = eab_target_ind\n",
+      "words": "ocbpy/_boundary.py:1215: changing `            if eab_target_ind < self.eab.records:` to `            if eab_target_ind <= self.eab.records:` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-f3a4eb64d07a",
+      "origin": "model",
+      "file": "ocbpy/_boundary.py",
+      "line": 1213,
+      "original": "                self.ocb.rec_ind = self.ocb.records  # Set to end marker",
+      "replacement": "                self.ocb.rec_ind = self.ocb.records - 1  # Set to end marker",
+      "description": "Out-of-range OCB index is set to the last record instead of the end marker.",
+      "diff": "--- a/ocbpy/_boundary.py\n+++ b/ocbpy/_boundary.py\n@@ -1212,3 +1212,3 @@\n             else:\n-                self.ocb.rec_ind = self.ocb.records  # Set to end marker\n+                self.ocb.rec_ind = self.ocb.records - 1  # Set to end marker\n                 \n",
+      "words": "ocbpy/_boundary.py:1213: changing `                self.ocb.rec_ind = self.ocb.records  # Set t...` to `                self.ocb.rec_ind = self.ocb.records - 1  # S...` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-3cc2e00d301c",
+      "origin": "rule",
+      "file": "debug_issue.py",
+      "line": 12,
+      "original": "    print(\"=== Debugging DualBoundary Pairing Logic ===\")\n    \n    # Use the exact time range from the issue\n    stime = dt.datetime(2000, 1, 1)\n    etime = dt.datetime(2005, 1, 1)\n    \n    print(f\"Ti...",
+      "replacement": "    return None",
+      "description": "rule: body of `debug_dual_boundary_pairing` -> `return None`",
+      "diff": "--- a/debug_issue.py\n+++ b/debug_issue.py\n@@ -11,66 +11,3 @@\n     \n-    print(\"=== Debugging DualBoundary Pairing Logic ===\")\n-    \n-    # Use the exact time range from the issue\n-    stime = dt.datetime(2000, 1, 1)\n-    etime = dt.datetime(2005, 1, 1)\n-    \n-    print(f\"Time range: {stime} to {etime}\")\n-    \n-    # Try to load with default files to see what happens\n-    try:\n-        print(\"Loading DualBoundary with default files...\")\n-        dual = ocbpy.DualBoundary(stime=stime, etime=etime, hemisphere=1, max_delta=600)\n-        \n-        print(f\"Successfully loaded DualBoundary:\")\n-        print(f\"  Records: {dual.records}\")\n-        print(f\"  EAB records: {dual.eab.records}\")\n-        print(f\"  OCB records: {dual.ocb.records}\")\n-        \n-        if dual.records > 0:\n-            print(f\"  Paired times from {dual.dtime[0]} to {dual.dtime[-1]}\")\n-            print(f\"  OCB indices: {dual.ocb_ind}\")\n-            print(f\"  EAB indices: {dual.eab_ind}\")\n-            \n-            # Check for any potential out-of-bounds issues\n-            print(f\"\\nChecking for bounds issues:\")\n-            print(f\"  dual.records: {dual.records}\")\n... 40 more lines",
+      "words": "debug_issue.py:12: changing `    print(\"=== Debugging DualBoundary Pairing Logic ===\")\n  ...` to `    return None` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    },
+    {
+      "id": "m-cc2b1d7950e6",
+      "origin": "rule",
+      "file": "debug_issue.py",
+      "line": 30,
+      "original": "        if dual.records > 0:",
+      "replacement": "        if dual.records >= 0:",
+      "description": "rule: `>` -> `>=`",
+      "diff": "--- a/debug_issue.py\n+++ b/debug_issue.py\n@@ -29,3 +29,3 @@\n         \n-        if dual.records > 0:\n+        if dual.records >= 0:\n             print(f\"  Paired times from {dual.dtime[0]} to {dual.dtime[-1]}\")\n",
+      "words": "debug_issue.py:30: changing `        if dual.records > 0:` to `        if dual.records >= 0:` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-d87761d4bf07",
+      "origin": "rule",
+      "file": "debug_issue.py",
+      "line": 125,
+      "original": "    if success1 and success2:",
+      "replacement": "    if success1 or success2:",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/debug_issue.py\n+++ b/debug_issue.py\n@@ -124,3 +124,3 @@\n     \n-    if success1 and success2:\n+    if success1 or success2:\n         print(\"\\nAll debug tests completed.\")\n",
+      "words": "debug_issue.py:125: changing `    if success1 and success2:` to `    if success1 or success2:` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    },
+    {
+      "id": "m-f0be09719aa7",
+      "origin": "rule",
+      "file": "debug_issue.py",
+      "line": 30,
+      "original": "        if dual.records > 0:",
+      "replacement": "        if not (dual.records > 0):",
+      "description": "rule: `dual.records > 0` -> `not (dual.records > 0)`",
+      "diff": "--- a/debug_issue.py\n+++ b/debug_issue.py\n@@ -29,3 +29,3 @@\n         \n-        if dual.records > 0:\n+        if not (dual.records > 0):\n             print(f\"  Paired times from {dual.dtime[0]} to {dual.dtime[-1]}\")\n",
+      "words": "debug_issue.py:30: changing `        if dual.records > 0:` to `        if not (dual.records > 0):` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "negate_if"
+    },
+    {
+      "id": "m-4d20c3f66347",
+      "origin": "rule",
+      "file": "debug_issue.py",
+      "line": 15,
+      "original": "    stime = dt.datetime(2000, 1, 1)",
+      "replacement": "    stime = dt.datetime(1999, 1, 1)",
+      "description": "rule: `2000` -> `1999`",
+      "diff": "--- a/debug_issue.py\n+++ b/debug_issue.py\n@@ -14,3 +14,3 @@\n     # Use the exact time range from the issue\n-    stime = dt.datetime(2000, 1, 1)\n+    stime = dt.datetime(1999, 1, 1)\n     etime = dt.datetime(2005, 1, 1)\n",
+      "words": "debug_issue.py:15: changing `    stime = dt.datetime(2000, 1, 1)` to `    stime = dt.datetime(1999, 1, 1)` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-37c329ad7ebf",
+      "origin": "rule",
+      "file": "debug_issue.py",
+      "line": 88,
+      "original": "    stime = target_time - dt.timedelta(days=30)",
+      "replacement": "    stime = target_time + dt.timedelta(days=30)",
+      "description": "rule: `-` -> `+`",
+      "diff": "--- a/debug_issue.py\n+++ b/debug_issue.py\n@@ -87,3 +87,3 @@\n     # Try a narrow time window around the problematic time\n-    stime = target_time - dt.timedelta(days=30)\n+    stime = target_time + dt.timedelta(days=30)\n     etime = target_time + dt.timedelta(days=30)\n",
+      "words": "debug_issue.py:88: changing `    stime = target_time - dt.timedelta(days=30)` to `    stime = target_time + dt.timedelta(days=30)` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "arithmetic"
+    },
+    {
+      "id": "m-454b3ef52bd6",
+      "origin": "rule",
+      "file": "debug_issue.py",
+      "line": 12,
+      "original": "    print(\"=== Debugging DualBoundary Pairing Logic ===\")",
+      "replacement": "    pass",
+      "description": "rule: `print(\"=== Debugging DualBoundary Pairing Logic ===\")` -> `pass`",
+      "diff": "--- a/debug_issue.py\n+++ b/debug_issue.py\n@@ -11,3 +11,3 @@\n     \n-    print(\"=== Debugging DualBoundary Pairing Logic ===\")\n+    pass\n     \n",
+      "words": "debug_issue.py:12: changing `    print(\"=== Debugging DualBoundary Pairing Logic ===\")` to `    pass` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "drop_call"
+    },
+    {
+      "id": "m-d4409e890539",
+      "origin": "rule",
+      "file": "debug_issue.py",
+      "line": 62,
+      "original": "                    print(f\"    ERROR: {e}\")",
+      "replacement": "                    raise\n                    print(f\"    ERROR: {e}\")",
+      "description": "rule: re-raise at the start of the `except` body",
+      "diff": "--- a/debug_issue.py\n+++ b/debug_issue.py\n@@ -61,2 +61,3 @@\n                 except Exception as e:\n+                    raise\n                     print(f\"    ERROR: {e}\")\n",
+      "words": "debug_issue.py:62: changing `                    print(f\"    ERROR: {e}\")` to `                    raise\n                    print(f\"    ER...` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "reraise"
+    },
+    {
+      "id": "m-89316997dc40",
+      "origin": "rule",
+      "file": "debug_issue.py",
+      "line": 81,
+      "original": "    print(\"\\n=== Debugging Specific Timestamp (2002-10-31 20:05:16) ===\")\n    \n    # Let's try to see what happens around that specific time\n    target_time = dt.datetime(2002, 10, 31, 20, 5, 16)\n    ...",
+      "replacement": "    return None",
+      "description": "rule: body of `debug_specific_timestamp` -> `return None`",
+      "diff": "--- a/debug_issue.py\n+++ b/debug_issue.py\n@@ -80,40 +80,3 @@\n     \n-    print(\"\\n=== Debugging Specific Timestamp (2002-10-31 20:05:16) ===\")\n-    \n-    # Let's try to see what happens around that specific time\n-    target_time = dt.datetime(2002, 10, 31, 20, 5, 16)\n-    print(f\"Target time: {target_time}\")\n-    \n-    # Try a narrow time window around the problematic time\n-    stime = target_time - dt.timedelta(days=30)\n-    etime = target_time + dt.timedelta(days=30)\n-    \n-    print(f\"Loading data from {stime} to {etime}\")\n-    \n-    try:\n-        dual = ocbpy.DualBoundary(stime=stime, etime=etime, hemisphere=1, max_delta=600)\n-        \n-        print(f\"Loaded DualBoundary with {dual.records} paired records\")\n-        \n-        if dual.records > 0:\n-            # Find records near the target time\n-            time_diffs = [abs((dtime - target_time).total_seconds()) for dtime in dual.dtime]\n-            closest_idx = np.argmin(time_diffs)\n-            closest_time = dual.dtime[closest_idx]\n-            \n-            print(f\"Closest paired time: {closest_time} (diff: {time_diffs[closest_idx]:.1f}s)\")\n-            \n-            # Test accessing the closest record\n... 14 more lines",
+      "words": "debug_issue.py:81: changing `    print(\"\\n=== Debugging Specific Timestamp (2002-10-31 20...` to `    return None` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    },
+    {
+      "id": "m-aec104221dca",
+      "origin": "rule",
+      "file": "debug_issue.py",
+      "line": 56,
+      "original": "                    if dual.ocb.rec_ind >= dual.ocb.records:",
+      "replacement": "                    if dual.ocb.rec_ind > dual.ocb.records:",
+      "description": "rule: `>=` -> `>`",
+      "diff": "--- a/debug_issue.py\n+++ b/debug_issue.py\n@@ -55,3 +55,3 @@\n                     # Check if indices are within bounds\n-                    if dual.ocb.rec_ind >= dual.ocb.records:\n+                    if dual.ocb.rec_ind > dual.ocb.records:\n                         print(f\"    WARNING: OCB index {dual.ocb.rec_ind} >= {dual.ocb.records}\")\n",
+      "words": "debug_issue.py:56: changing `                    if dual.ocb.rec_ind >= dual.ocb.records:` to `                    if dual.ocb.rec_ind > dual.ocb.records:` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "debug_issue.py": [
+        2,
+        4,
+        5,
+        6,
+        9,
+        12,
+        15,
+        16,
+        18,
+        21,
+        22,
+        23,
+        25,
+        26,
+        27,
+        28,
+        30,
+        31,
+        32,
+        33,
+        36,
+        37,
+        38,
+        39,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        51,
+        52,
+        53,
+        56,
+        57,
+        58,
+        59,
+        61,
+        62,
+        63,
+        64,
+        67,
+        69,
+        70,
+        71,
+        72,
+        73,
+        75,
+        78,
+        81,
+        84,
+        85,
+        88,
+        89,
+        91,
+        93,
+        94,
+        96,
+        98,
+        100,
+        101,
+        102,
+        104,
+        107,
+        108,
+        109,
+        110,
+        112,
+        113,
+        114,
+        115,
+        116,
+        118,
+        121,
+        122,
+        123,
+        125,
+        126,
+        128
+      ],
+      "ocbpy/_boundary.py": [
+        1207,
+        1208,
+        1210,
+        1211,
+        1213,
+        1215,
+        1216,
+        1218
+      ],
+      "reproduce_issue.py": [
+        2,
+        4,
+        5,
+        6,
+        9,
+        12,
+        15,
+        17,
+        18,
+        20,
+        21,
+        23,
+        24,
+        27,
+        29,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        49,
+        50,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        61,
+        62,
+        63,
+        64,
+        65,
+        67,
+        68,
+        69,
+        70,
+        71,
+        73,
+        76,
+        79,
+        80,
+        82,
+        85,
+        87,
+        89,
+        91,
+        92,
+        93,
+        96,
+        97,
+        98,
+        100,
+        103,
+        104,
+        106,
+        109,
+        110,
+        112,
+        114,
+        115,
+        116,
+        117,
+        120,
+        121,
+        123,
+        126,
+        127,
+        129,
+        130,
+        132,
+        133,
+        135
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 6,
+        "total": 169
+      },
+      {
+        "name": "pr_test",
+        "ran": 0,
+        "total": 169
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call (DualBoundary.rec_ind: a property setter or deleter: not called yet; debug_dual_boundary_pairing: new with the fix: nothing to compare; debug_specific_timestamp: new with the fix: nothing to compare))",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call (debug_dual_boundary_pairing: it takes no parameters to vary; debug_specific_timestamp: it takes no parameters to vary; DualBoundary.rec_ind: a property setter or deleter: not called yet))",
+    "Break My Fix could not attack debug_dual_boundary_pairing: it takes no parameters to vary",
+    "Break My Fix could not attack debug_specific_timestamp: it takes no parameters to vary",
+    "Break My Fix could not attack DualBoundary.rec_ind: a property setter or deleter: not called yet",
+    "Break My Fix could not attack test_dual_boundary_issue: it takes no parameters to vary",
+    "Break My Fix could not attack test_vort2ascii_with_dual_boundary: it takes no parameters to vary",
+    "the behaviour diff could not compare DualBoundary.rec_ind: a property setter or deleter: not called yet",
+    "the behaviour diff could not compare debug_dual_boundary_pairing: new with the fix: nothing to compare",
+    "the behaviour diff could not compare debug_specific_timestamp: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_dual_boundary_issue: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_vort2ascii_with_dual_boundary: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 25234,
+    "output_tokens": 2765,
+    "cost_estimate": {
+      "usd": 0.082,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 6 of the 9 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 196 rule mutants were run"
+  ],
+  "previous": null,
+  "attack_targets": []
+}

@@ -1,0 +1,386 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T14:15:20+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks standings.ordinal.ordinal"
+  ],
+  "repo": {
+    "name": "py39_partial"
+  },
+  "base": {
+    "ref": "base",
+    "sha": "1c75aaf86966fa1d45a089dd76567c995e49bb10"
+  },
+  "head": {
+    "ref": "head",
+    "sha": "d0df1eb141db41df36ec438e553bdf558382eca7"
+  },
+  "issue": {
+    "title": "Final table says \"11st place\"",
+    "sha256": "d9aee825b5d699005e3f8345fdf550897cb337d0b8b76bf7de2bf97df369c567"
+  },
+  "isolation": {
+    "level": "basic",
+    "why": "bubblewrap (bwrap) is not installed",
+    "warning": "Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.",
+    "python": "3.9.25"
+  },
+  "summary": {
+    "text": "The original bug was reproduced and the fix now passes the guard with no regressions found, but Break My Fix found an input that still breaks it: ordinal(111) returns '111st' instead of '111th'. Look next at how the fix handles the teens exception for numbers above 100 (for example 111, 112, 113), likely by checking n % 100 rather than n itself.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 1.26,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 2.28,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 6.78,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "basic"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 4 of 5 mutants",
+      "duration_s": 57.16,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_ordinal.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.8,
+        "repro_kill_rate": 0.8,
+        "pr_kill_rate": 0.8,
+        "mutants": 5,
+        "killed": 4,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-9b62a99db732",
+          "m-3bb654e063c9",
+          "m-5eb61969bbf4",
+          "m-852b4fc0af11"
+        ],
+        "rule_mutants": 8,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [
+          "tests/test_ordinal.py"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 3 untouched tests that passed before the fix fails after it",
+      "duration_s": 1.09,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 3,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.47,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_ordinal.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 2
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "14 input(s) compared on 1 function(s): 3 changed with the fix",
+      "duration_s": 5.01,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 14,
+        "changes": 3,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 12.45,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_ordinal.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 426,
+        "properties_counted": 5,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 4
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (3 reported)",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 3
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "standings.ordinal.ordinal",
+      "call": "ordinal(n=111)",
+      "input": {
+        "n": "111"
+      },
+      "outcome": "returns '111st'",
+      "base_outcome": "returns '111st'",
+      "expected": "'111th'",
+      "property": {
+        "id": "t1.p1",
+        "name": "teens_take_th",
+        "kind": "returns",
+        "claim": "Numbers ending in 11, 12 or 13 take th",
+        "source": "docstring",
+        "quote": "A number ending in 11, 12 or 13 takes \"th\"",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 3,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 17: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "src/standings/ordinal.py",
+      "line": 17,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "standings.ordinal.ordinal",
+      "kind": "value",
+      "count": 3,
+      "before": "returns '11st'",
+      "after": "returns '11th'",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The issue says 11 should read '11th', and the docstring lists \"11th\"."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "The issue says 12 should read '12th', and the docstring lists \"12th\"."
+        },
+        {
+          "change": "c3",
+          "label": "intended",
+          "reason": "The issue says 13 should read '13th', and the docstring lists \"13th\"."
+        }
+      ],
+      "examples": [
+        {
+          "call": "ordinal(n=11)",
+          "before": "returns '11st'",
+          "after": "returns '11th'"
+        },
+        {
+          "call": "ordinal(n=12)",
+          "before": "returns '12nd'",
+          "after": "returns '12th'"
+        },
+        {
+          "call": "ordinal(n=13)",
+          "before": "returns '13rd'",
+          "after": "returns '13th'"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-8597fce603ac",
+      "origin": "model",
+      "file": "src/standings/ordinal.py",
+      "line": 17,
+      "original": "    if n in (11, 12, 13):",
+      "replacement": "    if n % 1000 in (11, 12, 13):",
+      "description": "Applies the teen exception only to n%1000, so 111, 112, 113 etc. get wrong suffixes.",
+      "diff": "--- a/src/standings/ordinal.py\n+++ b/src/standings/ordinal.py\n@@ -16,3 +16,3 @@\n         raise ValueError(f\"not a position: {n!r}\")\n-    if n in (11, 12, 13):\n+    if n % 1000 in (11, 12, 13):\n         return f\"{n}th\"\n",
+      "words": "src/standings/ordinal.py:17: changing `    if n in (11, 12, 13):` to `    if n % 1000 in (11, 12, 13):` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "src/standings/ordinal.py": [
+        17,
+        18
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 2,
+        "total": 2
+      },
+      {
+        "name": "pr_test",
+        "ran": 2,
+        "total": 2
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 15709,
+    "output_tokens": 2932,
+    "cost_estimate": {
+      "usd": 0.1081,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.25: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "standings.ordinal.ordinal",
+      "path": "src/standings/ordinal.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 426,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

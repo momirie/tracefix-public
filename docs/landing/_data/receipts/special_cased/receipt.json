@@ -1,0 +1,376 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T14:16:49+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "Break My Fix finding 1: an input that breaks billing.calendar.days_in_month"
+  ],
+  "repo": {
+    "name": "special_cased"
+  },
+  "base": {
+    "ref": "base",
+    "sha": "9e0465b0bb1b4c839465cff36c62b3a5b405f537"
+  },
+  "head": {
+    "ref": "head",
+    "sha": "5678c1ff3d68dce79e54a06761f65dea0148af30"
+  },
+  "issue": {
+    "title": "Lease schedule contains a payment on 29 Feb 2100",
+    "sha256": "565ea0aae1a7ea87d95618a69da5d38edbb0bcbe44570c0fa07278726dd1949c"
+  },
+  "isolation": {
+    "level": "basic",
+    "why": "bubblewrap (bwrap) is not installed",
+    "warning": "Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.",
+    "python": null
+  },
+  "summary": {
+    "text": "The original bug was reproduced and the fix guards against it with no regressions found, but Break My Fix found that days_in_month(year=2200, month=2) still returns 29, so the leap-year logic appears to handle 2100 but not other century years. Look next at the century/400-year rule in billing.calendar.days_in_month and add a test covering years like 2200 and 2000.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 0.93,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 1.88,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 5.87,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "basic"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 5 of 6 mutants",
+      "duration_s": 29.84,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.833,
+        "repro_kill_rate": 0.833,
+        "pr_kill_rate": null,
+        "mutants": 6,
+        "killed": 5,
+        "survived": 1,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-8cf632709e7c",
+          "m-181fd43b68aa",
+          "m-564343c71852",
+          "m-747885fd6abe",
+          "m-c58f1162556e"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 5 untouched tests that passed before the fix fails after it",
+      "duration_s": 1.01,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 5,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 1.4,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 2
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "276 input(s) compared on 1 function(s): 1 changed with the fix",
+      "duration_s": 6.53,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 276,
+        "changes": 1,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 11.08,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_calendar.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 855,
+        "properties_counted": 7,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (1 reported)",
+      "duration_s": 2.72,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 1
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "billing.calendar.days_in_month",
+      "call": "days_in_month(year=2200, month=2)",
+      "input": {
+        "year": "2200",
+        "month": "2"
+      },
+      "outcome": "returns 29",
+      "base_outcome": "returns 29",
+      "expected": "28",
+      "property": {
+        "id": "t1.p1",
+        "name": "matches_gregorian_calendar",
+        "kind": "returns",
+        "claim": "The number of days equals the Gregorian calendar's count for every valid month and year, including all century years such as 1900, 2100, 2200, 2300.",
+        "source": "docstring",
+        "quote": "Return the number of days in `month` (1-12) of `year`.",
+        "origin": "model"
+      },
+      "also_violates": [
+        "february_century_rule",
+        "matches_gregorian_calendar"
+      ],
+      "other_inputs": 3,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 19: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "src/billing/calendar.py",
+      "line": 19,
+      "expect": {
+        "types": [
+          "AssertionError"
+        ],
+        "in_file": true
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "billing.calendar.days_in_month",
+      "kind": "value",
+      "count": 1,
+      "before": "returns 29",
+      "after": "returns 28",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The issue reports that 29 Feb 2100 does not exist, so February 2100 must have 28 days. The hardcoded special case is a narrow fix, but this specific input's change is exactly what the issue asks for."
+        }
+      ],
+      "examples": [
+        {
+          "call": "days_in_month(year=2100, month=2)",
+          "before": "returns 29",
+          "after": "returns 28"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-96df6c7e78cb",
+      "origin": "model",
+      "file": "src/billing/calendar.py",
+      "line": 19,
+      "original": "    if year == 2100 and month == 2:",
+      "replacement": "    if year >= 2100 and month == 2:",
+      "description": "Applies the 28-day override to all years from 2100 onward, not just 2100.",
+      "diff": "--- a/src/billing/calendar.py\n+++ b/src/billing/calendar.py\n@@ -18,3 +18,3 @@\n         raise ValueError(f\"month must be 1..12, got {month}\")\n-    if year == 2100 and month == 2:\n+    if year >= 2100 and month == 2:\n         return 28\n",
+      "words": "src/billing/calendar.py:19: changing `    if year == 2100 and month == 2:` to `    if year >= 2100 and month == 2:` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "days_in_month(year=2200, month=2)",
+          "fix": "returns 29",
+          "mutant": "returns 28"
+        },
+        {
+          "call": "days_in_month(year=1000000000000000000, month=2)",
+          "fix": "returns 29",
+          "mutant": "returns 28"
+        }
+      ]
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "src/billing/calendar.py": [
+        19,
+        20
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 2,
+        "total": 2
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 15182,
+    "output_tokens": 3535,
+    "cost_estimate": {
+      "usd": 0.1175,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: only the first 10 of 12 rule mutants were run"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "billing.calendar.days_in_month",
+      "path": "src/billing/calendar.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 855,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

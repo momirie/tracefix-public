@@ -1,0 +1,418 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T23:38:56+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 1 of 3 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "52068a62b13eaa1b2a1b3a80627a0d3df4b6a390"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "c0b4da0b4f2846dd4b2548fb162669fe637bd3f7"
+  },
+  "issue": {
+    "title": "`mpu.colorbar` overwrites gca",
+    "sha256": "1dd0b042efb5ca2f6e347102bef5136f99a33cfdf01a2b0ceb40ad7af0e69e36"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.10.16"
+  },
+  "summary": {
+    "text": "A test reproduced the bug, failing before the fix and passing after it, with no regressions or breaking inputs found and the fixed lines covered; the evidence stays at L1 because the tests did not kill enough mutants to reach L2. Next, look at strengthening the tests (the guard stage reported the fix as not guarded and the behaviour diff was inconclusive), for example by asserting that plt.gca()…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 10.33,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 6.82,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 22.02,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no mplotutils/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 1 of 3 mutants; 80% is needed",
+      "duration_s": 108.72,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no mplotutils/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.333,
+        "repro_kill_rate": 0.333,
+        "pr_kill_rate": null,
+        "mutants": 3,
+        "killed": 1,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 5,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-7200e09585eb"
+        ],
+        "rule_mutants": 5,
+        "rule_kill_rate": 0.6,
+        "rule_kinds": [
+          "body: 1 of 1 killed",
+          "membership: 1 of 1 killed",
+          "drop_call: 1 of 1 killed",
+          "reraise: 0 of 2 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "logic",
+          "negate_if",
+          "constant",
+          "arithmetic",
+          "loop"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 1 of 3 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 134 untouched tests that passed before the fix fails after it",
+      "duration_s": 10.58,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 134,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 4.12,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no mplotutils/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 9
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: colorbar: the comparison did not finish",
+      "duration_s": 3.93,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 3 inputs against 4 properties",
+      "duration_s": 23.93,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 3,
+        "properties_counted": 4,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 1,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 22.33,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no mplotutils/tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [
+    {
+      "number": 1,
+      "function": "mplotutils._colorbar.colorbar",
+      "call": "colorbar(mappable=None)",
+      "input": {
+        "mappable": "None"
+      },
+      "outcome": "raises TypeError: colorbar() missing 1 required positional argument: 'ax'",
+      "base_outcome": "raises TypeError: colorbar() missing 1 required positional argument: 'ax'",
+      "expected": null,
+      "property": {
+        "id": "t1.p1",
+        "name": "colorbar_does_not_become_current_axes",
+        "kind": "returns",
+        "claim": "After mpu.colorbar returns, the newly created colorbar axes must not have become the current axes of the figure (gca is not hijacked).",
+        "source": "issue",
+        "quote": "`mpu.colorbar` creates a new axes and hijacks `plt.gca()` - see if we can avoid this",
+        "origin": "model"
+      },
+      "also_violates": [
+        "colorbar_describes_mappable"
+      ],
+      "other_inputs": 2,
+      "relation": "pre-existing: the same before the fix, and the failing call runs none of the fix's lines",
+      "file": null,
+      "path": "mplotutils/_colorbar.py",
+      "line": 53,
+      "expect": {
+        "types": [
+          "TypeError"
+        ],
+        "in_file": false
+      },
+      "doubt": "refused"
+    }
+  ],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-0192bd1da2fe",
+      "origin": "model",
+      "file": "mplotutils/_colorbar.py",
+      "line": 216,
+      "original": "        original_ax = plt.gca()",
+      "replacement": "        original_ax = axs[0]",
+      "description": "Saves the first parent axes instead of the current axes, so the wrong axes is restored.",
+      "diff": "--- a/mplotutils/_colorbar.py\n+++ b/mplotutils/_colorbar.py\n@@ -215,3 +215,3 @@\n     try:\n-        original_ax = plt.gca()\n+        original_ax = axs[0]\n     except:\n",
+      "words": "mplotutils/_colorbar.py:216: changing `        original_ax = plt.gca()` to `        original_ax = axs[0]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-cca84a81f27d",
+      "origin": "model",
+      "file": "mplotutils/_colorbar.py",
+      "line": 219,
+      "original": "        original_ax = None",
+      "replacement": "        original_ax = axs[0]",
+      "description": "When there is no current axes, a restore target is set anyway instead of None, so the first axes becomes current.",
+      "diff": "--- a/mplotutils/_colorbar.py\n+++ b/mplotutils/_colorbar.py\n@@ -218,3 +218,3 @@\n         # If there's no current axes, we'll set it back to the first provided axis\n-        original_ax = None\n+        original_ax = axs[0]\n \n",
+      "words": "mplotutils/_colorbar.py:219: changing `        original_ax = None` to `        original_ax = axs[0]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-e279239b0c11",
+      "origin": "rule",
+      "file": "mplotutils/_colorbar.py",
+      "line": 219,
+      "original": "        original_ax = None",
+      "replacement": "        raise\n        original_ax = None",
+      "description": "rule: re-raise at the start of the `except` body",
+      "diff": "--- a/mplotutils/_colorbar.py\n+++ b/mplotutils/_colorbar.py\n@@ -218,2 +218,3 @@\n         # If there's no current axes, we'll set it back to the first provided axis\n+        raise\n         original_ax = None\n",
+      "words": "mplotutils/_colorbar.py:219: changing `        original_ax = None` to `        raise\n        original_ax = None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "reraise"
+    },
+    {
+      "id": "m-3055ac767a8e",
+      "origin": "rule",
+      "file": "mplotutils/_colorbar.py",
+      "line": 257,
+      "original": "            pass",
+      "replacement": "            raise\n            pass",
+      "description": "rule: re-raise at the start of the `except` body",
+      "diff": "--- a/mplotutils/_colorbar.py\n+++ b/mplotutils/_colorbar.py\n@@ -256,2 +256,3 @@\n             # If the original axes no longer exists, don't worry about it\n+            raise\n             pass\n",
+      "words": "mplotutils/_colorbar.py:257: changing `            pass` to `            raise\n            pass` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "reraise"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "mplotutils/_colorbar.py": [
+        215,
+        216,
+        217,
+        219,
+        252,
+        253,
+        254,
+        255,
+        257
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 5,
+        "total": 9
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 32287,
+    "output_tokens": 3724,
+    "cost_estimate": {
+      "usd": 0.1562,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 5 of the 8 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.10.16: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "mplotutils._colorbar.colorbar",
+      "path": "mplotutils/_colorbar.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 3,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T14:08:50+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L4",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "the tests guard the fix: they fail when it is reverted or broken",
+    "the behaviour diff found no unexplained change in what it observes",
+    "Break My Fix attacked every changed function to the end and found nothing"
+  ],
+  "repo": {
+    "name": "method_good"
+  },
+  "base": {
+    "ref": "base",
+    "sha": "daec69a8f868c6f3f28ef768317c7ea8b08c6f3c"
+  },
+  "head": {
+    "ref": "head",
+    "sha": "4b38a3a6f7d2aec65af8f240aed27226576e6cce"
+  },
+  "issue": {
+    "title": "Minor bump keeps the old patch number",
+    "sha256": "232692d1b25c5c959b6a0f543bcf71a10fad15ab46efcd72539a0bb739859d06"
+  },
+  "isolation": {
+    "level": "basic",
+    "why": "bubblewrap (bwrap) is not installed",
+    "warning": "Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.",
+    "python": null
+  },
+  "summary": {
+    "text": "At L4, a test reproduced the minor-bump bug (1.2.3 becoming 1.3.3 instead of 1.3.0), passes after the fix, and fails when the fix is reverted or broken; Break My Fix found no breaking inputs, and the only behaviour change, in Version.bump, was labelled intended. Next, check that the tests also cover the patch reset on other bump paths, such as major bumps, since the issue only described the minor…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 1.03,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 1.92,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 6.0,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "basic"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "guarded",
+      "reason": "the reproduction test fails with the fix reverted, and the tests killed 5 of 5 mutants",
+      "duration_s": 42.91,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_version.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 1.0,
+        "repro_kill_rate": 1.0,
+        "pr_kill_rate": 1.0,
+        "mutants": 5,
+        "killed": 5,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-b4af0f7b5950",
+          "m-690c7f7d501c",
+          "m-a1332cc12ff0",
+          "m-f55c91a06ea3",
+          "m-3d01126370d5"
+        ],
+        "rule_mutants": 6,
+        "rule_kill_rate": 1.0,
+        "pr_test_files": [
+          "tests/test_version.py"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 5 untouched tests that passed before the fix fails after it",
+      "duration_s": 0.95,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 5,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.96,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_version.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 1
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "compared",
+      "reason": "155 input(s) compared on 1 function(s): 3 changed with the fix",
+      "duration_s": 5.95,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 1,
+        "inputs_compared": 155,
+        "changes": 3,
+        "groups": 1,
+        "l3_checks": true,
+        "l3_gate": true,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 1255 inputs against 9 properties",
+      "duration_s": 128.96,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_version.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 1255,
+        "properties_counted": 9,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 10
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "vtools.version.Version.bump",
+      "kind": "value",
+      "count": 3,
+      "before": "returns Version(major=1, minor=3, patch=3)",
+      "after": "returns Version(major=1, minor=3, patch=0)",
+      "explained": [
+        "the reproduction test calls this input",
+        "the issue names this call",
+        "it now keeps the docstring example `>>> Version(1, 2, 3).bump(\"minor\") Version(major=1, minor=3, patch=0)`"
+      ],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "The issue names this call and expects 1.3.0; the docstring example now holds."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "The docstring says bumping \"minor\" resets patch; this is the same rule the issue reports, on another input."
+        },
+        {
+          "change": "c3",
+          "label": "intended",
+          "reason": "The docstring's \"minor resets patch\" rule from the issue, applied to a different patch value."
+        }
+      ],
+      "examples": [
+        {
+          "call": "bump(self='Version(1, 2, 3)', part='minor')",
+          "before": "returns Version(major=1, minor=3, patch=3)",
+          "after": "returns Version(major=1, minor=3, patch=0)"
+        },
+        {
+          "call": "bump(self='Version(major=1000000000000000000, minor=977, patch=977)', part='minor')",
+          "before": "returns Version(major=1000000000000000000, minor=978, patch=977)",
+          "after": "returns Version(major=1000000000000000000, minor=978, patch=0)"
+        },
+        {
+          "call": "bump(self='Version(major=1000000000000000000, minor=977, patch=15606)', part='minor')",
+          "before": "returns Version(major=1000000000000000000, minor=978, patch=15606)",
+          "after": "returns Version(major=1000000000000000000, minor=978, patch=0)"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "src/vtools/version.py": [
+        30
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 1,
+        "total": 1
+      },
+      {
+        "name": "pr_test",
+        "ran": 1,
+        "total": 1
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 7,
+    "input_tokens": 16966,
+    "output_tokens": 3444,
+    "cost_estimate": {
+      "usd": 0.1237,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "vtools.version.Version.bump",
+      "path": "src/vtools/version.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 1255,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

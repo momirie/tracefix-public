@@ -1,0 +1,853 @@
+{
+ "funnel": {
+  "cases": 150,
+  "prepared": 15,
+  "excluded": {
+   "base_suite_cannot_run": 4,
+   "fail_to_pass_passes_on_base": 1
+  },
+  "ready": 10,
+  "ready_with_partial": 6,
+  "agents": {
+   "agent_ok: hidden_tests_pass": 8,
+   "agent_wrong: hidden_tests_pass (not run)": 1,
+   "agent_wrong: no_effect": 5,
+   "agent_wrong: partial": 1,
+   "agent_wrong: unsettled (not run)": 1
+  },
+  "isolation_at_prepare": {
+   "strict": 10
+  },
+  "setup_commit_needed": 5,
+  "runs": {
+   "gold": {
+    "receipt": 5
+   },
+   "partial": {
+    "receipt": 3
+   },
+   "agent_wrong": {
+    "receipt": 2
+   },
+   "agent_ok": {
+    "receipt": 4
+   }
+  },
+  "receipt_status": {
+   "ok": 14
+  },
+  "exit_codes": {
+   "0": 14
+  },
+  "isolation": {
+   "strict": 14
+  },
+  "stage_errors": {}
+ },
+ "splits": {
+  "dev": 5
+ },
+ "set_aside": {
+  "gold": {
+   "n": 1,
+   "of": 5
+  },
+  "partial": {
+   "n": 1,
+   "of": 3
+  },
+  "agent_wrong": {
+   "n": 0,
+   "of": 2
+  },
+  "agent_ok": {
+   "n": 0,
+   "of": 4
+  },
+  "tasks": "python-cmd2__cmd2-115"
+ },
+ "gold": {
+  "levels": {
+   "COUNTEREXAMPLE": 0,
+   "L0": 0,
+   "L1": 4,
+   "L2": 0,
+   "L3": 0,
+   "L4": 0
+  },
+  "counterexample": {
+   "n": 0,
+   "of": 4
+  },
+  "false_alarm": {
+   "n": 0,
+   "of": 4
+  },
+  "real_bug_in_gold": {
+   "n": 0,
+   "of": 4
+  },
+  "false_alarm_proposed": {
+   "n": 0,
+   "of": 4
+  },
+  "unreviewed": {
+   "n": 0,
+   "of": 4
+  },
+  "at_least_l2": {
+   "n": 0,
+   "of": 4
+  },
+  "at_least_l3": {
+   "n": 0,
+   "of": 4
+  },
+  "l4": {
+   "n": 0,
+   "of": 4
+  }
+ },
+ "partial": {
+  "levels": {
+   "COUNTEREXAMPLE": 1,
+   "L0": 1,
+   "L1": 0,
+   "L2": 0,
+   "L3": 0,
+   "L4": 0
+  },
+  "detection": {
+   "n": 1,
+   "of": 2
+  },
+  "not_green_lit": {
+   "n": 2,
+   "of": 2
+  },
+  "false_pass_l2": {
+   "n": 0,
+   "of": 2
+  },
+  "false_pass_l3": {
+   "n": 0,
+   "of": 2
+  },
+  "leftover_found": {
+   "n": 1,
+   "of": 2
+  },
+  "real_bug_by_label": {
+   "n": 0,
+   "of": 2
+  },
+  "unreviewed": {
+   "n": 0,
+   "of": 2
+  }
+ },
+ "separation": {
+  "gold_above": {
+   "n": 2,
+   "of": 2
+  },
+  "same": {
+   "n": 0,
+   "of": 2
+  },
+  "gold_below": {
+   "n": 0,
+   "of": 2
+  }
+ },
+ "agent_wrong": {
+  "levels": {
+   "COUNTEREXAMPLE": 1,
+   "L0": 0,
+   "L1": 1,
+   "L2": 0,
+   "L3": 0,
+   "L4": 0
+  },
+  "detection": {
+   "n": 1,
+   "of": 2
+  },
+  "not_green_lit": {
+   "n": 2,
+   "of": 2
+  },
+  "false_pass_l2": {
+   "n": 0,
+   "of": 2
+  },
+  "false_pass_l3": {
+   "n": 0,
+   "of": 2
+  },
+  "leftover_found": {
+   "n": 0,
+   "of": 2
+  },
+  "real_bug_by_label": {
+   "n": 0,
+   "of": 2
+  },
+  "unreviewed": {
+   "n": 1,
+   "of": 2
+  }
+ },
+ "agent_ok": {
+  "levels": {
+   "COUNTEREXAMPLE": 0,
+   "L0": 0,
+   "L1": 3,
+   "L2": 1,
+   "L3": 0,
+   "L4": 0
+  },
+  "counterexample": {
+   "n": 0,
+   "of": 4
+  },
+  "false_alarm": {
+   "n": 0,
+   "of": 4
+  },
+  "real_bug_in_gold": {
+   "n": 0,
+   "of": 4
+  },
+  "false_alarm_proposed": {
+   "n": 0,
+   "of": 4
+  },
+  "unreviewed": {
+   "n": 0,
+   "of": 4
+  },
+  "at_least_l2": {
+   "n": 1,
+   "of": 4
+  },
+  "at_least_l3": {
+   "n": 0,
+   "of": 4
+  },
+  "l4": {
+   "n": 0,
+   "of": 4
+  },
+  "differs_from_gold": {
+   "n": 0,
+   "of": 4
+  }
+ },
+ "correct_fixes": {
+  "levels": {
+   "COUNTEREXAMPLE": 0,
+   "L0": 0,
+   "L1": 7,
+   "L2": 1,
+   "L3": 0,
+   "L4": 0
+  },
+  "counterexample": {
+   "n": 0,
+   "of": 8
+  },
+  "false_alarm": {
+   "n": 0,
+   "of": 8
+  },
+  "real_bug_in_gold": {
+   "n": 0,
+   "of": 8
+  },
+  "false_alarm_proposed": {
+   "n": 0,
+   "of": 8
+  },
+  "unreviewed": {
+   "n": 0,
+   "of": 8
+  },
+  "at_least_l2": {
+   "n": 1,
+   "of": 8
+  },
+  "at_least_l3": {
+   "n": 0,
+   "of": 8
+  },
+  "l4": {
+   "n": 0,
+   "of": 8
+  }
+ },
+ "separation_agent_wrong": {
+  "gold_above": {
+   "n": 1,
+   "of": 2
+  },
+  "same": {
+   "n": 1,
+   "of": 2
+  },
+  "gold_below": {
+   "n": 0,
+   "of": 2
+  }
+ },
+ "by_split": {
+  "dev": {
+   "correct_false_alarm": {
+    "n": 0,
+    "of": 8
+   },
+   "correct_unreviewed": {
+    "n": 0,
+    "of": 8
+   },
+   "partial_caught": {
+    "n": 1,
+    "of": 2
+   },
+   "partial_not_green_lit": {
+    "n": 2,
+    "of": 2
+   },
+   "partial_leftover_found": {
+    "n": 1,
+    "of": 2
+   },
+   "agent_wrong_caught": {
+    "n": 1,
+    "of": 2
+   },
+   "agent_wrong_not_green_lit": {
+    "n": 2,
+    "of": 2
+   },
+   "agent_wrong_leftover_found": {
+    "n": 0,
+    "of": 2
+   }
+  },
+  "held_out": {
+   "correct_false_alarm": {
+    "n": 0,
+    "of": 0
+   },
+   "correct_unreviewed": {
+    "n": 0,
+    "of": 0
+   },
+   "partial_caught": {
+    "n": 0,
+    "of": 0
+   },
+   "partial_not_green_lit": {
+    "n": 0,
+    "of": 0
+   },
+   "partial_leftover_found": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_caught": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_not_green_lit": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_leftover_found": {
+    "n": 0,
+    "of": 0
+   }
+  }
+ },
+ "by_python": {
+  "3.9/3.10": {
+   "correct_false_alarm": {
+    "n": 0,
+    "of": 8
+   },
+   "correct_unreviewed": {
+    "n": 0,
+    "of": 8
+   },
+   "partial_caught": {
+    "n": 1,
+    "of": 2
+   },
+   "partial_not_green_lit": {
+    "n": 2,
+    "of": 2
+   },
+   "partial_leftover_found": {
+    "n": 1,
+    "of": 2
+   },
+   "agent_wrong_caught": {
+    "n": 1,
+    "of": 2
+   },
+   "agent_wrong_not_green_lit": {
+    "n": 2,
+    "of": 2
+   },
+   "agent_wrong_leftover_found": {
+    "n": 0,
+    "of": 2
+   }
+  },
+  "3.11+": {
+   "correct_false_alarm": {
+    "n": 0,
+    "of": 0
+   },
+   "correct_unreviewed": {
+    "n": 0,
+    "of": 0
+   },
+   "partial_caught": {
+    "n": 0,
+    "of": 0
+   },
+   "partial_not_green_lit": {
+    "n": 0,
+    "of": 0
+   },
+   "partial_leftover_found": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_caught": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_not_green_lit": {
+    "n": 0,
+    "of": 0
+   },
+   "agent_wrong_leftover_found": {
+    "n": 0,
+    "of": 0
+   }
+  }
+ },
+ "reproducer": {
+  "statuses": {
+   "reproduced": 5
+  },
+  "fail_to_pass": {
+   "n": 5,
+   "of": 5
+  },
+  "fix_does_not_fix": {
+   "n": 0,
+   "of": 5
+  }
+ },
+ "guard": {
+  "gold": {
+   "statuses": {
+    "inconclusive": 1,
+    "not_guarded": 4
+   },
+   "guarded": {
+    "n": 0,
+    "of": 5
+   },
+   "kill_rate": {
+    "n": 5,
+    "mean": 0.547,
+    "median": 0.667,
+    "p90": 0.75,
+    "max": 0.75
+   },
+   "crash_only_kills": {
+    "n": 0,
+    "of": 12
+   }
+  },
+  "partial": {
+   "statuses": {
+    "not_guarded": 2,
+    "skipped": 1
+   },
+   "guarded": {
+    "n": 0,
+    "of": 3
+   },
+   "kill_rate": {
+    "n": 2,
+    "mean": 0.55,
+    "median": 0.55,
+    "p90": 0.6,
+    "max": 0.6
+   },
+   "crash_only_kills": {
+    "n": 0,
+    "of": 6
+   }
+  },
+  "agent_wrong": {
+   "statuses": {
+    "not_guarded": 2
+   },
+   "guarded": {
+    "n": 0,
+    "of": 2
+   },
+   "kill_rate": {
+    "n": 2,
+    "mean": 0.714,
+    "median": 0.714,
+    "p90": 0.714,
+    "max": 0.714
+   },
+   "crash_only_kills": {
+    "n": 0,
+    "of": 10
+   }
+  },
+  "agent_ok": {
+   "statuses": {
+    "guarded": 1,
+    "not_guarded": 3
+   },
+   "guarded": {
+    "n": 1,
+    "of": 4
+   },
+   "kill_rate": {
+    "n": 4,
+    "mean": 0.657,
+    "median": 0.732,
+    "p90": 0.833,
+    "max": 0.833
+   },
+   "crash_only_kills": {
+    "n": 0,
+    "of": 14
+   }
+  }
+ },
+ "break_my_fix": {
+  "gold": {
+   "statuses": {
+    "inconclusive": 3,
+    "none_found": 2
+   },
+   "skip_reasons": {
+    "Break My Fix can't run in the project's Python: the project's Python has Hypothesis N.N, older than N, the oldest Tracefix is tested with: upgrade it there (pyt": 2,
+    "the attack ran no input": 1
+   },
+   "targets": 5,
+   "inputs_per_target": 262.0,
+   "pre_existing": 0,
+   "first_l4_blocker": {}
+  },
+  "partial": {
+   "statuses": {
+    "found": 1,
+    "inconclusive": 1,
+    "none_found": 1
+   },
+   "skip_reasons": {
+    "Break My Fix can't run in the project's Python: the project's Python has Hypothesis N.N, older than N, the oldest Tracefix is tested with: upgrade it there (pyt": 1
+   },
+   "targets": 3,
+   "inputs_per_target": 140.7,
+   "pre_existing": 0,
+   "first_l4_blocker": {}
+  },
+  "agent_wrong": {
+   "statuses": {
+    "found": 1,
+    "inconclusive": 1
+   },
+   "skip_reasons": {
+    "the attack ran no input": 1
+   },
+   "targets": 2,
+   "inputs_per_target": 193.0,
+   "pre_existing": 0,
+   "first_l4_blocker": {}
+  },
+  "agent_ok": {
+   "statuses": {
+    "inconclusive": 3,
+    "none_found": 1
+   },
+   "skip_reasons": {
+    "Break My Fix can't run in the project's Python: the project's Python has Hypothesis N.N, older than N, the oldest Tracefix is tested with: upgrade it there (pyt": 2,
+    "the attack ran no input": 1
+   },
+   "targets": 3,
+   "inputs_per_target": 135.7,
+   "pre_existing": 0,
+   "first_l4_blocker": {}
+  }
+ },
+ "behaviour_diff": {
+  "gold": {
+   "statuses": {
+    "inconclusive": 5
+   },
+   "l3_gate_open": {
+    "n": 0,
+    "of": 5
+   },
+   "first_l3_blocker": {}
+  },
+  "partial": {
+   "statuses": {
+    "inconclusive": 3
+   },
+   "l3_gate_open": {
+    "n": 0,
+    "of": 3
+   },
+   "first_l3_blocker": {}
+  },
+  "agent_wrong": {
+   "statuses": {
+    "inconclusive": 2
+   },
+   "l3_gate_open": {
+    "n": 0,
+    "of": 2
+   },
+   "first_l3_blocker": {}
+  },
+  "agent_ok": {
+   "statuses": {
+    "inconclusive": 4
+   },
+   "l3_gate_open": {
+    "n": 0,
+    "of": 4
+   },
+   "first_l3_blocker": {
+    "<name>: before the fix it was not a method defined in class AutoSummClassDocumenter": 1
+   }
+  }
+ },
+ "report_only": {
+  "gold": {
+   "fix_line_coverage": {
+    "repro": {
+     "n": 8,
+     "of": 13
+    }
+   },
+   "regressions": {
+    "found": 1,
+    "none_found": 3,
+    "skipped": 1
+   }
+  },
+  "partial": {
+   "fix_line_coverage": {
+    "repro": {
+     "n": 5,
+     "of": 8
+    }
+   },
+   "regressions": {
+    "found": 2,
+    "none_found": 1
+   }
+  },
+  "agent_wrong": {
+   "fix_line_coverage": {
+    "pr_test": {
+     "n": 0,
+     "of": 11
+    },
+    "repro": {
+     "n": 18,
+     "of": 20
+    }
+   },
+   "regressions": {
+    "none_found": 2
+   }
+  },
+  "agent_ok": {
+   "fix_line_coverage": {
+    "pr_test": {
+     "n": 5,
+     "of": 96
+    },
+    "repro": {
+     "n": 12,
+     "of": 105
+    }
+   },
+   "regressions": {
+    "none_found": 3,
+    "skipped": 1
+   }
+  }
+ },
+ "cost_and_time": {
+  "usd_per_run": {
+   "n": 14,
+   "mean": 0.163,
+   "median": 0.144,
+   "p90": 0.35,
+   "max": 0.379
+  },
+  "usd_unknown": 0,
+  "usd_spent_live": 2.28,
+  "usd_spent_known": 2.28,
+  "live_attempts_cost_unknown": 0,
+  "calls": {
+   "n": 14,
+   "mean": 5.143,
+   "median": 5.0,
+   "p90": 7.0,
+   "max": 7.0
+  },
+  "tokens": {
+   "n": 14,
+   "mean": 32164.071,
+   "median": 30807.5,
+   "p90": 55699.0,
+   "max": 67088.0
+  },
+  "seconds_per_run": {
+   "n": 14,
+   "mean": 233.992,
+   "median": 151.219,
+   "p90": 750.313,
+   "max": 796.938
+  },
+  "seconds_per_stage": {
+   "behaviour_diff": {
+    "n": 14,
+    "mean": 3.532,
+    "median": 2.0,
+    "p90": 10.24,
+    "max": 18.63
+   },
+   "break_my_fix": {
+    "n": 14,
+    "mean": 35.291,
+    "median": 30.755,
+    "p90": 100.11,
+    "max": 110.09
+   },
+   "environment": {
+    "n": 14,
+    "mean": 9.92,
+    "median": 4.58,
+    "p90": 41.51,
+    "max": 41.66
+   },
+   "fix_line_coverage": {
+    "n": 14,
+    "mean": 1.864,
+    "median": 1.935,
+    "p90": 4.39,
+    "max": 5.2
+   },
+   "guard": {
+    "n": 14,
+    "mean": 122.82,
+    "median": 62.885,
+    "p90": 404.64,
+    "max": 450.29
+   },
+   "import_check": {
+    "n": 14,
+    "mean": 3.649,
+    "median": 3.665,
+    "p90": 4.3,
+    "max": 4.31
+   },
+   "integrity": {
+    "n": 14,
+    "mean": 0.023,
+    "median": 0.015,
+    "p90": 0.04,
+    "max": 0.09
+   },
+   "regressions": {
+    "n": 14,
+    "mean": 28.667,
+    "median": 4.555,
+    "p90": 169.78,
+    "max": 169.92
+   },
+   "reproduce": {
+    "n": 14,
+    "mean": 23.496,
+    "median": 19.635,
+    "p90": 33.53,
+    "max": 59.63
+   }
+  }
+ },
+ "stability": {
+  "groups": 0,
+  "level_flips": {
+   "n": 0,
+   "of": 0
+  },
+  "counterexample_flips": {
+   "n": 0,
+   "of": 0
+  },
+  "guard_flips": {
+   "n": 0,
+   "of": 0
+  },
+  "finding_flips": {
+   "n": 0,
+   "of": 0
+  }
+ },
+ "findings": [
+  {
+   "instance_id": "kpetremann__mqtt-exporter-37",
+   "run": "agent_wrong-r1",
+   "finding": 1,
+   "call": "_normalize_name_in_topic_msg(topic='shellies/living-room-3em/emeter/0/power', payload='10')",
+   "outcome": "returns ('shellies/living-room-3em', {'power': '10'})",
+   "expected": null,
+   "replay_on_gold": "still_fails",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "kpetremann__mqtt-exporter-37",
+   "run": "v1-r1",
+   "finding": 1,
+   "call": "_normalize_name_in_topic_msg(topic='shellies/power', payload='1')",
+   "outcome": "raises AttributeError: module 'mqtt_exporter.settings' has no attribute 'KEEP_FULL_TOPIC'",
+   "expected": null,
+   "replay_on_gold": "fixed",
+   "label": null,
+   "by": null
+  },
+  {
+   "instance_id": "python-cmd2__cmd2-115",
+   "run": "gold-r1",
+   "finding": 0,
+   "call": "(the run's level, not a finding)",
+   "outcome": "regression: tests/test_cmd2.py::test_base_help passed before the fix and fails after it (and 10 more)",
+   "expected": null,
+   "replay_on_gold": null,
+   "label": null,
+   "by": null
+  }
+ ]
+}

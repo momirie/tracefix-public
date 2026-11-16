@@ -1,0 +1,19 @@
+{
+  "inputs": {
+    "base": "v1.0",
+    "head": "fix-port"
+  },
+  "ref": "refs/heads/main",
+  "repository": {
+    "id": 900000001,
+    "name": "svc",
+    "full_name": "octo/svc",
+    "private": true
+  },
+  "sender": {
+    "login": "octo-dev",
+    "id": 5000001,
+    "type": "User"
+  },
+  "workflow": ".github/workflows/tracefix.yml"
+}

@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "case": "special_cased",
+  "summary": "Hard-codes February 2100 to 28 days instead of fixing the leap-year rule, so 1900, 2200 and every other century year are still wrong.",
+  "receipt": {
+    "status": "ok",
+    "level": {
+      "exactly": "COUNTEREXAMPLE"
+    },
+    "stages": {
+      "reproduce": "reproduced"
+    },
+    "must_find": [
+      {
+        "stage": "break_my_fix",
+        "function": "billing.calendar.days_in_month",
+        "input": {
+          "year": 2200,
+          "month": 2
+        },
+        "outcome": "returns 29, not 28"
+      }
+    ],
+    "must_not_find": [
+      "integrity_flag"
+    ]
+  },
+  "checks": [
+    {
+      "tests": "suite",
+      "ref": "base",
+      "expect": "pass"
+    },
+    {
+      "tests": "suite",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "base",
+      "expect": "fail",
+      "match": "where 29 = days_in_month(2100, 2)"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_general.py",
+      "ref": "base",
+      "expect": "fail",
+      "match": "where 29 = days_in_month(2200, 2)"
+    },
+    {
+      "tests": "oracle/test_general.py",
+      "ref": "head",
+      "expect": "fail",
+      "match": "where 29 = days_in_month(2200, 2)"
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+<main id="main" tabindex="-1" class="page">
+<!-- BENCHMARK. No number is typed here: every count, rate and limit fills a hole from
+     scripts/site_benchmark.py, which reads docs/landing/_data/ (scripts/site_data.py, from the repo).
+     tests/test_build_site.py fails if this file's text holds a digit outside a level name. -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow">Benchmark</p>
+    <h1 data-words>How often is it right? <span class="soft">Real fixes, real agent mistakes, every counted miss shown.</span></h1>
+    <p class="lede" data-reveal style="--d:3">Tracefix is measured on real bug fixes from open-source Python projects: correct fixes, which should get no counterexample, and wrong ones, which should not look verified. Every number on this page comes from the committed runs, receipts and labels.</p>
+    <p class="standing-line" data-reveal style="--d:4">{{standing}} Not yet good enough to gate merges on its own.</p>
+    <ul class="jump" aria-label="On this page" data-reveal style="--d:5">
+      <li><a href="#gates">Release gates: {{gates_holding}} of {{gates_total}} hold</a></li>
+      <li><a href="#results">Results per slice</a></li>
+      <li><a href="#misses">Every counted miss ({{misses_total}})</a></li>
+      <li><a href="#method">Method and caveats</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- GATES: the release gate table from docs/ROADMAP.md, one card per gate -->
+<section id="gates" class="band" aria-labelledby="gates-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="gates-h" class="h2" data-words>Release gates. <span class="soft">{{gates_holding}} of {{gates_total}} hold.</span></h2>
+      <p class="mute" data-reveal style="--d:2">Tracefix is not released until every gate holds. Whether one holds is the developer’s call, recorded in the roadmap and read on the held-out tasks, which stay unrun until the current round of changes is done. The newest slice is the development split, the tasks those changes are tuned on.</p>
+    </div>
+    <ol class="gates">
+{{gate_cards}}
+    </ol>
+  </div>
+</section>
+
+<!-- RESULTS: each slice's headline numbers side by side, then the levels per fix kind -->
+<section id="results" class="band" aria-labelledby="results-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="results-h" class="h2" data-words>Results per slice. <span class="soft">A slice is one batch of tasks, run once per fix.</span></h2>
+      <div class="funnels mute" data-reveal style="--d:3">
+{{funnels}}
+      </div>
+    </div>
+    <div class="table-wrap" data-reveal tabindex="0" role="region" aria-label="Results per slice">
+      <table class="results">
+{{results_table}}
+      </table>
+    </div>
+    <div class="sec-head sub" data-reveal>
+      <h3 class="h3">Where each fix landed on the ladder</h3>
+      <p class="mute">Correct fixes should get no counterexample; wrong fixes should stop at L1 or below. {{ladder_note}}<a href="../#levels">What each level means</a>.</p>
+      <ul class="legend" aria-label="Legend: press a level to pick it out in the bars" data-legend>
+        <li><button type="button" class="lg" data-lv="COUNTEREXAMPLE" aria-pressed="false"><i class="lv lv-counterexample" aria-hidden="true"></i>COUNTEREXAMPLE</button></li>
+        <li><button type="button" class="lg" data-lv="L0" aria-pressed="false"><i class="lv lv-l0" aria-hidden="true"></i>L0</button></li>
+        <li><button type="button" class="lg" data-lv="L1" aria-pressed="false"><i class="lv lv-l1" aria-hidden="true"></i>L1</button></li>
+        <li><button type="button" class="lg" data-lv="L2" aria-pressed="false"><i class="lv lv-l2" aria-hidden="true"></i>L2</button></li>
+        <li><button type="button" class="lg" data-lv="L3" aria-pressed="false"><i class="lv lv-l3" aria-hidden="true"></i>L3</button></li>
+        <li><button type="button" class="lg" data-lv="L4" aria-pressed="false"><i class="lv lv-l4" aria-hidden="true"></i>L4</button></li>
+      </ul>
+    </div>
+    <div class="filters" role="group" aria-label="Show a slice" data-slice-switch hidden>{{slice_switch}}</div>
+    <div class="slices">
+{{level_tables}}
+    </div>
+    <p class="mute small">Full tables, stability and where tasks were lost: {{reports}}.</p>
+  </div>
+</section>
+
+<!-- MISSES: every counted run that went against Tracefix, with its receipt -->
+<section id="misses" class="band" aria-labelledby="misses-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="misses-h" class="h2" data-words>Every counted miss. <span class="soft">With the receipt it came from.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The runs the benchmark counts against Tracefix: wrong agent fixes that still reached L2, and correct fixes given a counterexample the developer labelled a false alarm. None of those is left off. Runs set aside because they rest on tests the pull request itself updated, and repeat runs, are counted apart in the slice reports.</p>
+    </div>
+    <div class="miss-tools" data-miss-tools hidden>
+      <label class="search"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><span class="sr-only">Find a project</span><input type="search" placeholder="Find a project" autocomplete="off" spellcheck="false" data-miss-find></label>
+      <div class="filters" role="group" aria-label="Show misses from a slice"><button type="button" class="chip" data-miss-slice="all" aria-pressed="true">All slices</button>{{miss_slices}}</div>
+      <span class="label" aria-live="polite" data-miss-count></span>
+    </div>
+    <div class="miss-group" data-reveal>
+      <h3 class="h3">Wrong agent fixes that reached L2 <span class="soft">(<span data-group-count>{{misses_wrong_count}}</span>)</span></h3>
+      <p class="mute">In each, the test Tracefix wrote failed before the agent’s patch and passed after it, and the tests guarded the patch. Likely, not yet checked: the test read the issue the way the agent did, so the bug it reproduced is the one the agent fixed.</p>
+      <ul class="misses">
+{{misses_wrong}}
+      </ul>
+      <p class="mute none-match" hidden>No miss of this kind matches.</p>
+    </div>
+    <div class="miss-group" data-reveal>
+      <h3 class="h3">Correct fixes given a false alarm <span class="soft">(<span data-group-count>{{misses_false_count}}</span>)</span></h3>
+      <p class="mute">Each comes with the developer’s reason. They have named causes, written up for the next round of changes: attacking an abstract method, inputs outside a function’s domain, a regression the issue asked for, a project’s warning filter turning a warning into an error.</p>
+      <ul class="misses">
+{{misses_false}}
+      </ul>
+      <p class="mute none-match" hidden>No miss of this kind matches.</p>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD: docs/BENCHMARK.md, shortened; the limits come from scripts/bench/'s constants -->
+<section id="method" class="band" aria-labelledby="method-h">
+  <div class="frame pad method">
+    <div class="sec-head">
+      <h2 id="method-h" class="h2" data-words>Method. <span class="soft">And what the numbers don’t show.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The full method, the commands to run it again and every table: <a href="https://github.com/momirie/tracefix/blob/main/docs/BENCHMARK.md">docs/BENCHMARK.md</a>.</p>
+    </div>
+    <div class="cols">
+      <dl class="facts-list" data-reveal>
+        <div><dt>Tasks</dt><dd>Real merged bug fixes from SWE-rebench (Nebius, CC BY): each with a Docker image and hidden tests, the tests the upstream pull request added. At most {{per_repo}} tasks per project, in a fixed order, never hand-picked.</dd></div>
+        <div><dt>Fixes</dt><dd>Correct: the upstream fix, and agent fixes the hidden tests pass. Wrong: the upstream fix with one hunk removed (kept only when the hidden tests then fail), and agent fixes the hidden tests fail. The agent patches come from an OpenHands agent’s runs that Nebius published.</dd></div>
+        <div><dt>What Tracefix sees</dt><dd>What a reviewer would: the repo before the fix, the fix and the issue. Never the hidden tests: they stay out of every run’s container.</dd></div>
+        <div><dt>Checks first</dt><dd>Before any model call, a task must pass in its own container: the base suite passes within {{suite_cap}}, the hidden tests fail before the fix and pass on the upstream fix. A task that fails a check is left out, with its reason.</dd></div>
+        <div><dt>Runs</dt><dd><code>tracefix verify</code> once per fix, in Docker, with strict isolation and a limit of {{verify_timeout}} per run.</dd></div>
+        <div><dt>Labels</dt><dd>The developer judges every finding the numbers count: real bug, false alarm or unclear. A model may propose a label; only the developer’s labels count.</dd></div>
+        <div><dt>Set aside</dt><dd>A counterexample whose only cause is a regression in a test the upstream pull request itself changed says nothing about the fix, so it is counted apart.</dd></div>
+      </dl>
+      <div class="caveats" data-reveal style="--d:2">
+        <h3 class="h3">Caveats</h3>
+        <ul>
+          <li><b>Small numbers.</b> One run moves a wrong-fix rate by several points. Treat every rate as a measurement in progress.</li>
+          <li><b>Development split.</b> The newest numbers are from the tasks the next round of changes is tuned on; the gates are read on the held-out tasks after it.</li>
+          <li><b>One run per fix.</b> A second run of the same fix can land on a different level, and now and then a different verdict.</li>
+          <li><b>One agent.</b> Every agent patch comes from one agent setup. Other agents make other mistakes.</li>
+          <li><b>Seen before?</b> The tasks are public and likely older than the models’ training data, so a model may have seen the fix or its tests.</li>
+          <li><b>A skewed sample.</b> Only projects whose suite runs quickly in the published image qualify; large projects are not represented yet.</li>
+          <li><b>One person’s labels.</b> Written down with reasons, and linked from every miss above.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT: from the numbers to the receipts they come from -->
+<section class="band" aria-label="Next page">
+  <div class="frame pad next">
+    <a class="next-card" href="../receipts/" data-reveal>
+      <span class="eyebrow">Next</span>
+      <span class="next-title">Read the receipts. <span class="soft">Every fixture’s receipt, the way a PR comment shows it.</span></span>
+      <span class="next-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+</main>

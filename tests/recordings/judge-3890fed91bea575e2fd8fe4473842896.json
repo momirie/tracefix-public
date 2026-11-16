@@ -1,0 +1,11 @@
+{
+ "key": "3890fed91bea575e2fd8fe4473842896006a091fdf5b9fb726e7be32ea7e7dff",
+ "model": "claude-opus-5-5",
+ "response": {
+  "input_tokens": 1127,
+  "output_tokens": 137,
+  "stop_reason": "end_turn",
+  "text": "{\"summary\":\"The original bug was reproduced and the fix guards against it with no regressions found, but Break My Fix found that days_in_month(year=2200, month=2) still returns 29, so the leap-year logic appears to handle 2100 but not other century years. Look next at the century/400-year rule in billing.calendar.days_in_month and add a test covering years like 2200 and 2000.\",\"flag_notes\":[]}"
+ },
+ "role": "judge"
+}

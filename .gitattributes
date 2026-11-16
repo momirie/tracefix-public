@@ -1,0 +1,14 @@
+# Fixture sources must be byte-identical on every OS so built fixture commits are reproducible.
+tests/fixtures/** text eol=lf
+# Shell scripts run on Linux (the codespace): never Windows line endings.
+*.sh text eol=lf
+# Benchmark data is written with "\n" and compared byte for byte (slice1.jsonl's rewrite test):
+# a fresh Windows checkout (core.autocrlf, e.g. check_at.py's worktree) must not turn it into CRLF.
+benchmarks/** text eol=lf
+# The built site is compared byte for byte with a fresh build (build_site.py --check, written with "\n").
+docs/landing/** text eol=lf
+# ...except its fonts and images: as text, git would strip the CR of any CRLF byte pair in them
+# (newsreader-latin.woff2 has one) and corrupt the file on the next commit.
+docs/landing/**/*.woff2 binary
+docs/landing/**/*.png binary
+docs/landing/**/*.ico binary

@@ -1,0 +1,61 @@
+{
+ "instance_id": "MAIF__arta-50",
+ "excluded": null,
+ "detail": "",
+ "python": "3.13.13",
+ "isolation": "strict",
+ "pip_changes": [
+  "anthropic - -> 1.15.0",
+  "anyio - -> 4.15.1",
+  "defusedxml - -> 0.7.1",
+  "docstring-parser - -> 0.18.0",
+  "h11 - -> 0.16.0",
+  "httpcore2 - -> 2.13.1",
+  "httpx2 - -> 2.13.1",
+  "hypothesis - -> 6.170.0",
+  "idna - -> 3.20",
+  "jiter - -> 0.17.0",
+  "opentelemetry-api - -> 1.45.1",
+  "pydantic 2.13.2 -> 2.14.1",
+  "pydantic-core 2.46.2 -> 2.50.1",
+  "sniffio - -> 1.3.1",
+  "sortedcontainers - -> 2.4.0",
+  "tracefix - -> 0.0.1",
+  "truststore - -> 0.10.5",
+  "typing-extensions 4.15.0 -> 4.16.0",
+  "typing-inspection 0.4.2 -> 0.4.4"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 1.567,
+ "suite_timeout": 120,
+ "source_hunks": 2,
+ "variants": [
+  {
+   "index": 0,
+   "path": "src/arta/condition.py",
+   "old_start": 145,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 2
+  },
+  {
+   "index": 1,
+   "path": "src/arta/rule.py",
+   "old_start": 111,
+   "old_len": 18,
+   "label": "no_effect",
+   "failing": 2
+  }
+ ],
+ "kept": 0,
+ "commits": {
+  "base": "4554f44729b2c23fc1ac91c1701451666b5d5c4b",
+  "gold": "3c5430a33b9475f3f410927eaec2189eb65c44fb",
+  "v0": "6215d536dde381d11b1711af7e3e6db5e0a34f2f"
+ },
+ "seconds": 31.985
+}

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "case": "method_partial",
+  "summary": "Handles an unset port on a default Listener but returns a hard-coded 8080: blank text still raises ValueError, and a Listener with its own default_port ignores it.",
+  "receipt": {
+    "status": "ok",
+    "level": {
+      "exactly": "COUNTEREXAMPLE"
+    },
+    "stages": {
+      "reproduce": "reproduced"
+    },
+    "must_find": [
+      {
+        "stage": "break_my_fix",
+        "function": "gateway.listener.Listener.port",
+        "input": {
+          "raw": ""
+        },
+        "outcome": "ValueError"
+      },
+      {
+        "stage": "break_my_fix",
+        "function": "gateway.listener.Listener.port",
+        "input": {
+          "self": "Listener(default_port=9000)",
+          "raw": null
+        },
+        "outcome": "returns 8080"
+      }
+    ],
+    "must_not_find": [
+      "integrity_flag"
+    ]
+  },
+  "checks": [
+    {"tests": "suite", "ref": "base", "expect": "pass"},
+    {"tests": "suite", "ref": "head", "expect": "pass"},
+    {"tests": "oracle/test_repro.py", "ref": "base", "expect": "fail", "match": "AttributeError: 'NoneType' object has no attribute 'strip'"},
+    {"tests": "oracle/test_repro.py", "ref": "head", "expect": "pass"},
+    {"tests": "oracle/test_blank.py", "ref": "base", "expect": "fail", "match": "invalid literal for int() with base 10: ''"},
+    {"tests": "oracle/test_blank.py", "ref": "head", "expect": "fail", "match": "invalid literal for int() with base 10: ''"},
+    {"tests": "oracle/test_default_port.py", "ref": "base", "expect": "fail", "match": "AttributeError: 'NoneType' object has no attribute 'strip'"},
+    {"tests": "oracle/test_default_port.py", "ref": "head", "expect": "fail", "match": "assert 8080 == 9000"}
+  ]
+}

@@ -1,0 +1,47 @@
+{
+ "instance_id": "NREL__hescore-hpxml-197",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "anyio.pytest_plugin",
+  "pytest_asyncio.plugin",
+  "pytest_mock",
+  "tracefix_stub_cov",
+  "tracefix_stub_xdist"
+ ],
+ "suite_seconds": 8.932,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 29899,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "hescorehpxml/hpxml2.py",
+     "function": null
+    }
+   ],
+   "differs": []
+  }
+ ],
+ "commits": {
+  "base": "644f8f8cffa6910006c0f8d69404de33127fb7a3",
+  "gold": "01adc51af93b7f7a531e8eaae96322486b511769",
+  "agent_ok": "b47094e1bd066e84715a9414a7163046d82c6439"
+ },
+ "seconds": 67.578
+}

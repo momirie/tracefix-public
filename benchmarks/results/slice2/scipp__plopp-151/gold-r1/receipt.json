@@ -1,0 +1,551 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-22T20:08:24+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 2 of 9 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "df3a5f224ede8bd257882417f8e4a8c90d0a8be2"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "a11ae82ce954b13f291dc9d70e0e56afbe8335a5"
+  },
+  "issue": {
+    "title": "Cannot make 1d plot for data with datetime coord and variances",
+    "sha256": "30ebb317fbea9c21e2d8795faba583da1f6a9baba1dfd044727e8e15e540c900"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The bug was reproduced: a test that fails before the fix passes after it, no regressions were found, and the fixed lines were covered, but behaviour-diff and break-my-fix runs were inconclusive and the mutation check did not reach the threshold for a higher level. Next, check that the tests exercise the datetime bin-edge error-bar path in both the matplotlib and plotly backends, as the issue requ…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 24.05,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 5.65,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 22.36,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/backends/matplotlib/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 9 mutants; 80% is needed",
+      "duration_s": 510.92,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/backends/matplotlib/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.222,
+        "repro_kill_rate": 0.222,
+        "pr_kill_rate": null,
+        "mutants": 9,
+        "killed": 2,
+        "survived": 7,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-4cd87fd16b97",
+          "m-80ea6aead473"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.7,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 9 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 245 untouched tests that passed before the fix fails after it",
+      "duration_s": 23.23,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 245,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 3.55,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/backends/matplotlib/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 88
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: Line.update: the comparison did not finish",
+      "duration_s": 4.8,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 59.28,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "inputs_tried": 0,
+        "properties_counted": 14,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-f7bf27a83c90",
+      "origin": "model",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 182,
+      "original": "            y = sc.concat([y[0:1], y], dim=self._dim)",
+      "replacement": "            y = sc.concat([y[-1:], y], dim=self._dim)",
+      "description": "Pads step data with last value instead of first.",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -181,3 +181,3 @@\n         if hist:\n-            y = sc.concat([y[0:1], y], dim=self._dim)\n+            y = sc.concat([y[-1:], y], dim=self._dim)\n             if mask is not None:\n",
+      "words": "src/plopp/backends/matplotlib/line.py:182: changing `            y = sc.concat([y[0:1], y], dim=self._dim)` to `            y = sc.concat([y[-1:], y], dim=self._dim)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-07333422ca86",
+      "origin": "model",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 184,
+      "original": "                mask['y'] = np.concatenate([mask['y'][0:1], mask['y']])",
+      "replacement": "                mask['y'] = np.concatenate([mask['y'][-1:], mask['y']])",
+      "description": "Mask padding uses last value instead of first.",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -183,3 +183,3 @@\n             if mask is not None:\n-                mask['y'] = np.concatenate([mask['y'][0:1], mask['y']])\n+                mask['y'] = np.concatenate([mask['y'][-1:], mask['y']])\n         return {\n",
+      "words": "src/plopp/backends/matplotlib/line.py:184: changing `                mask['y'] = np.concatenate([mask['y'][0:1], ...` to `                mask['y'] = np.concatenate([mask['y'][-1:], ...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-ed32d9f70a95",
+      "origin": "model",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 178,
+      "original": "                'y': np.where(one_mask, y.values, np.nan),",
+      "replacement": "                'y': np.where(one_mask, np.nan, y.values),",
+      "description": "Mask values inverted, showing unmasked points.",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -177,3 +177,3 @@\n                 'x': x.values,\n-                'y': np.where(one_mask, y.values, np.nan),\n+                'y': np.where(one_mask, np.nan, y.values),\n                 'visible': True\n",
+      "words": "src/plopp/backends/matplotlib/line.py:178: changing `                'y': np.where(one_mask, y.values, np.nan),` to `                'y': np.where(one_mask, np.nan, y.values),` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-b9dae30b8fb3",
+      "origin": "model",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 208,
+      "original": "        if new_values['mask']['visible']:",
+      "replacement": "        if not new_values['mask']['visible']:",
+      "description": "Inverts mask visibility check on update.",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -207,3 +207,3 @@\n         self._line.set_data(new_values['values']['x'], new_values['values']['y'])\n-        if new_values['mask']['visible']:\n+        if not new_values['mask']['visible']:\n             self._mask.set_data(new_values['mask']['x'], new_values['mask']['y'])\n",
+      "words": "src/plopp/backends/matplotlib/line.py:208: changing `        if new_values['mask']['visible']:` to `        if not new_values['mask']['visible']:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-86a759553699",
+      "origin": "model",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 183,
+      "original": "                'x': sc.midpoints(x).values if hist else x.values,",
+      "replacement": "                'x': x.values,",
+      "description": "Errorbar x not set to midpoints for histograms.",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -182,3 +182,3 @@\n             error = {\n-                'x': sc.midpoints(x).values if hist else x.values,\n+                'x': x.values,\n                 'y': y.values,\n",
+      "words": "src/plopp/backends/plotly/line.py:183: changing `                'x': sc.midpoints(x).values if hist else x.v...` to `                'x': x.values,` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-28611a0a20ef",
+      "origin": "model",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 195,
+      "original": "            y = sc.concat([y[0:1], y], dim=self._dim)",
+      "replacement": "            y = sc.concat([y[-1:], y], dim=self._dim)",
+      "description": "Pads with last value instead of first.",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -194,3 +194,3 @@\n         if hist:\n-            y = sc.concat([y[0:1], y], dim=self._dim)\n+            y = sc.concat([y[-1:], y], dim=self._dim)\n             if mask is not None:\n",
+      "words": "src/plopp/backends/plotly/line.py:195: changing `            y = sc.concat([y[0:1], y], dim=self._dim)` to `            y = sc.concat([y[-1:], y], dim=self._dim)` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-011620fa43b0",
+      "origin": "model",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 235,
+      "original": "            if new_values['mask']['visible']:",
+      "replacement": "            if not new_values['mask']['visible']:",
+      "description": "Inverts mask visibility on update.",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -234,3 +234,3 @@\n \n-            if new_values['mask']['visible']:\n+            if not new_values['mask']['visible']:\n                 update = {'x': new_values['mask']['x'], 'y': new_values['mask']['y']}\n",
+      "words": "src/plopp/backends/plotly/line.py:235: changing `            if new_values['mask']['visible']:` to `            if not new_values['mask']['visible']:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-64fdb9ba5955",
+      "origin": "rule",
+      "file": "src/plopp/backends/plotly/line.py",
+      "line": 91,
+      "original": "        import plotly.graph_objects as go\n        from plotly.colors import qualitative as plotly_colors\n\n        default_colors = plotly_colors.Plotly\n        default_line_style = {'color': default_c...",
+      "replacement": "        return None",
+      "description": "rule: body of `_make_line` -> `return None`",
+      "diff": "--- a/src/plopp/backends/plotly/line.py\n+++ b/src/plopp/backends/plotly/line.py\n@@ -90,85 +90,3 @@\n         \"\"\"\n-        import plotly.graph_objects as go\n-        from plotly.colors import qualitative as plotly_colors\n-\n-        default_colors = plotly_colors.Plotly\n-        default_line_style = {'color': default_colors[number % len(default_colors)]}\n-        default_marker_style = {'symbol': number % 53}  # Plotly has 52 marker styles\n-\n-        line_shape = None\n-\n-        if data[\"hist\"]:\n-            line_shape = 'vh'\n-            mode = 'lines'\n-\n-        marker_style = default_marker_style if marker is None else marker\n-        line_style = {**default_line_style, **kwargs}\n-\n-        self._line = go.Scatter(x=np.asarray(data['values']['x']),\n-                                y=np.asarray(data['values']['y']),\n-                                name=self.label,\n-                                mode=mode,\n-                                marker=marker_style,\n-                                line_shape=line_shape,\n-                                line=line_style)\n-\n-        if errorbars and (data['stddevs'] is not None):\n-            self._error = go.Scatter(x=np.asarray(data['stddevs']['x']),\n... 59 more lines",
+      "words": "src/plopp/backends/plotly/line.py:91: changing `        import plotly.graph_objects as go\n        from plotl...` to `        return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-731c84b867ba",
+      "origin": "rule",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 124,
+      "original": "            self._mask = self._ax.step(data['mask']['x'], data['mask']['y'])[0]",
+      "replacement": "            self._mask = self._ax.step(data['mask']['x'], data['mask']['y'])[(-1)]",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -123,3 +123,3 @@\n \n-            self._mask = self._ax.step(data['mask']['x'], data['mask']['y'])[0]\n+            self._mask = self._ax.step(data['mask']['x'], data['mask']['y'])[(-1)]\n             self._mask.update_from(self._line)\n",
+      "words": "src/plopp/backends/matplotlib/line.py:124: changing `            self._mask = self._ax.step(data['mask']['x'], da...` to `            self._mask = self._ax.step(data['mask']['x'], da...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-9051b6ab831e",
+      "origin": "rule",
+      "file": "src/plopp/backends/matplotlib/line.py",
+      "line": 148,
+      "original": "                                       visible=data['mask']['visible'])[0]",
+      "replacement": "                                       visible=data['mask']['visible'])[(-1)]",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/src/plopp/backends/matplotlib/line.py\n+++ b/src/plopp/backends/matplotlib/line.py\n@@ -147,3 +147,3 @@\n                                        marker=self._line.get_marker(),\n-                                       visible=data['mask']['visible'])[0]\n+                                       visible=data['mask']['visible'])[(-1)]\n \n",
+      "words": "src/plopp/backends/matplotlib/line.py:148: changing `                                       visible=data['mask'][...` to `                                       visible=data['mask'][...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "src/plopp/backends/matplotlib/line.py": [
+        115,
+        116,
+        124,
+        130,
+        132,
+        133,
+        140,
+        141,
+        148,
+        151,
+        152,
+        153,
+        154,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        169,
+        170,
+        171,
+        172,
+        176,
+        177,
+        178,
+        179,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        190,
+        191,
+        192,
+        207,
+        208,
+        209,
+        214,
+        217,
+        218,
+        219
+      ],
+      "src/plopp/backends/plotly/line.py": [
+        94,
+        107,
+        108,
+        115,
+        116,
+        117,
+        124,
+        140,
+        141,
+        147,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        182,
+        183,
+        184,
+        185,
+        189,
+        190,
+        191,
+        192,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        203,
+        204,
+        205,
+        222,
+        223,
+        226,
+        228,
+        229,
+        231,
+        235,
+        236
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 29,
+        "total": 88
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 71464,
+    "output_tokens": 6872,
+    "cost_estimate": {
+      "usd": 0.3722,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 22 functions were shown",
+    "guard: only the first 10 of 52 rule mutants were run",
+    "guard: 1 of the rule mutant kills were crashes on the mutated line",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "plopp.backends.matplotlib.line.Line.update",
+      "path": "src/plopp/backends/matplotlib/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "plopp.backends.plotly.line.Line.update",
+      "path": "src/plopp/backends/plotly/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "plopp.backends.matplotlib.line.Line._make_line",
+      "path": "src/plopp/backends/matplotlib/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "plopp.backends.matplotlib.line.Line._make_data",
+      "path": "src/plopp/backends/matplotlib/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "plopp.backends.plotly.line.Line._make_line",
+      "path": "src/plopp/backends/plotly/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "plopp.backends.plotly.line.Line._make_data",
+      "path": "src/plopp/backends/plotly/line.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

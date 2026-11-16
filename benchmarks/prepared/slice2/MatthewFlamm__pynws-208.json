@@ -1,0 +1,86 @@
+{
+ "instance_id": "MatthewFlamm__pynws-208",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [
+  "src/pynws/_version.py"
+ ],
+ "changed_files": [],
+ "plugins": [
+  "pytest_aiohttp.plugin",
+  "pytest_asyncio.plugin",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 1.317,
+ "suite_timeout": 120,
+ "source_hunks": 2,
+ "variants": [
+  {
+   "index": 0,
+   "path": "src/pynws/simple_nws.py",
+   "old_start": 23,
+   "old_len": 6,
+   "label": "no_effect",
+   "failing": 19,
+   "functions": [
+    {
+     "path": "src/pynws/simple_nws.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "src/pynws/simple_nws.py",
+   "old_start": 177,
+   "old_len": 9,
+   "label": "no_effect",
+   "failing": 2,
+   "functions": [
+    {
+     "path": "src/pynws/simple_nws.py",
+     "function": "parse_icon"
+    }
+   ]
+  }
+ ],
+ "kept": 1,
+ "agents": [
+  {
+   "kind": "agent_ok",
+   "source_row": 40614,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "src/pynws/simple_nws.py",
+     "function": "parse_icon"
+    }
+   ],
+   "differs": [
+    {
+     "path": "src/pynws/simple_nws.py",
+     "function": null
+    },
+    {
+     "path": "src/pynws/simple_nws.py",
+     "function": "parse_icon"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "c02ab7a2d09bb28abf42f635b19a64851874c59c",
+  "gold": "428a0c644ada6c7039479295b91c4c2f23112e65",
+  "v1": "1811276dd7f9f578596b18a27c62c1e7e906d9fc",
+  "agent_ok": "c424482013f5e74e9c78e39cb22d749bfc4b20ff"
+ },
+ "seconds": 35.671
+}

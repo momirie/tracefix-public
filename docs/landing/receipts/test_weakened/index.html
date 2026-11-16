@@ -1,0 +1,469 @@
+<!doctype html>
+<!-- Built by scripts/build_site.py from docs/landing/_src/. Edit the source, then run the script. -->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>test_weakened: Trailing dash in slugs for titles ending in punctuation</title>
+<meta name="description" content="The receipt Tracefix wrote for the test_weakened fixture. Rewrites slugify so trailing punctuation no longer leaves a dash, but now produces double dashes (&#x27;Rock &amp; Roll&#x27; -&gt; &#x27;rock--roll&#x27;) and deletes the existing assert that caught it.">
+<!-- Search engines: SEARCHABLE in scripts/build_site.py, off while the site is a private preview
+     (until the release gates hold, DECISIONS 2026-11-06). -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0b" id="theme-color">
+<link rel="canonical" href="https://tracefix.dev/receipts/test_weakened/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tracefix.dev/receipts/test_weakened/">
+<meta property="og:title" content="test_weakened: Trailing dash in slugs for titles ending in punctuation">
+<meta property="og:description" content="The receipt Tracefix wrote for the test_weakened fixture. Rewrites slugify so trailing punctuation no longer leaves a dash, but now produces double dashes (&#x27;Rock &amp; Roll&#x27; -&gt; &#x27;rock--roll&#x27;) and deletes the existing assert that caught it.">
+<meta property="og:image" content="https://tracefix.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="preload" href="../../assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  // Before first paint: mark JS, and apply the theme: Dark unless the visitor saved Light or System.
+  (function () {
+    var d = document.documentElement, t = 'dark'; d.className = 'js';
+    try { var saved = localStorage.getItem('tracefix-theme'); if (saved === 'light' || saved === 'system') t = saved; } catch (e) {}
+    d.setAttribute('data-theme', t);
+    // Fail-safe: site.css hides the reveal blocks until site.js shows them. If site.js fails to load
+    // (its onerror) or has not started the reveals in 2.5 s, show every block as it is.
+    function showAll() {
+      if (d.classList.contains('reveals-on')) return;
+      var all = document.querySelectorAll('[data-reveal],[data-words],[data-reveal-group],.hero');
+      for (var i = 0; i < all.length; i++) all[i].classList.add('is-in');
+    }
+    window.tracefixShowAll = showAll;
+    setTimeout(showAll, 2500);
+  })();
+</script>
+<link rel="stylesheet" href="../../assets/site.css">
+<!-- Fetch a page of this site when a link to it is hovered or pressed, so the next page is ready. -->
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="preview-note" aria-label="Private preview"><p>Private preview: Tracefix is not released yet, so its GitHub links open only for collaborators. <a href="../../talk/">Talk to me</a></p></aside>
+
+<header class="site-head" id="head">
+  <div class="frame">
+    <a class="logo" href="../../#top" aria-label="Tracefix home"><img class="lt" src="../../assets/logo.svg" alt="" width="100" height="36"><img class="dk" src="../../assets/logo-reversed.svg" alt="" width="100" height="36"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="../../benchmark/">Benchmark<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../receipts/" aria-current="true">Receipts<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../method/">Method<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../#install">Install</a>
+      <button type="button" class="pal-open" data-palette-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><span class="pal-open-label">Search</span><kbd data-palette-key>Ctrl K</kbd></button>
+      <div class="theme" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+        <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+        <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+      </div>
+      <a class="btn btn-sm" href="../../talk/">Talk to me</a>
+    </nav>
+    <details class="menu">
+      <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span class="menu-label">Menu</span></summary>
+      <nav aria-label="Menu">
+        <a href="../../benchmark/">Benchmark</a>
+        <a href="../../receipts/" aria-current="true">Receipts</a>
+        <a href="../../method/">Method</a>
+        <a href="../../talk/">Talk to me</a>
+        <a href="../../#install">Install</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main" tabindex="-1" class="page rc-page">
+<!-- ONE RECEIPT. Every fact fills a hole from scripts/site_receipts.py: the receipt folder in
+     docs/landing/_data/receipts/test_weakened/ and the fixture in tests/fixtures/test_weakened/. -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow crumbs"><a href="../">Receipts</a> / test_weakened</p>
+    <h1 style="view-transition-name:title-test_weakened;view-transition-class:rc-title">Trailing dash in slugs for titles ending in punctuation</h1>
+    <p class="lede" data-reveal style="--d:1">Rewrites slugify so trailing punctuation no longer leaves a dash, but now produces double dashes (&#x27;Rock &amp; Roll&#x27; -&gt; &#x27;rock--roll&#x27;) and deletes the existing assert that caught it.</p>
+    <p class="rc-facts" data-reveal style="--d:2"><span class="lvl red" style="view-transition-name:lvl-test_weakened;view-transition-class:rc-lvl">COUNTEREXAMPLE</span><span>Known answer: exactly COUNTEREXAMPLE · meets it</span><span>run 1:15</span></p>
+    <ul class="jump" aria-label="On this page" data-reveal style="--d:3">
+      <li><a href="#fix">The issue and the fix</a></li>
+      <li><a href="#cx">The counterexample</a></li>
+      <li><a href="#receipt">The receipt</a></li>
+      <li><a href="#tests">The tests it wrote</a></li>
+      <li><a href="#run">The run</a></li>
+    </ul>
+  </div>
+</section>
+
+<section id="fix" class="band" aria-labelledby="fix-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="fix-h" class="h2" data-words>The issue and the fix. <span class="soft">What Tracefix was given.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The issue text, the commit before the fix and the commit with it. The known answer stays outside the repo Tracefix sees.</p>
+    </div>
+    <div class="rc-given">
+      <figure class="panel md md-issue" data-reveal><figcaption>ISSUE.md</figcaption><div class="md-body">
+<h3>Trailing dash in slugs for titles ending in punctuation</h3>
+<p>Slugs for titles ending in punctuation get a trailing dash: 'Hello World!' becomes
+<code>hello-world-</code>, and the URL looks broken (<code>/posts/hello-world-</code>).</p>
+
+      </div></figure>
+      <div class="rc-diffs" data-reveal style="--d:1">
+        <p class="label">2 files changed, +3 −3</p>
+<figure class="panel diff"><figcaption>src/blog/slug.py <span class="soft">+3 −2</span></figcaption><div class="lines" tabindex="0" role="region" aria-label="Diff of src/blog/slug.py"><div class="lines-in"><div class="d d-hunk">@@ -3,7 +3,7 @@</div><div class="d"> import re</div><div class="d"> import unicodedata</div><div class="d"> </div><div class="d d-del">-_SEPARATORS = re.compile(r&quot;[^a-z0-9]+&quot;)</div><div class="d d-add">+_UNSAFE = re.compile(r&quot;[^a-z0-9 -]&quot;)</div><div class="d"> </div><div class="d"> </div><div class="d"> def _ascii_fold(text: str) -&gt; str:</div><div class="d d-hunk">@@ -14,4 +14,5 @@</div><div class="d"> </div><div class="d"> def slugify(title: str) -&gt; str:</div><div class="d">     &quot;&quot;&quot;Turn a post title into a lowercase, dash-separated slug for its URL.&quot;&quot;&quot;</div><div class="d d-del">-    return _SEPARATORS.sub(&quot;-&quot;, _ascii_fold(title).lower())</div><div class="d d-add">+    cleaned = _UNSAFE.sub(&quot;&quot;, _ascii_fold(title).lower())</div><div class="d d-add">+    return cleaned.strip().replace(&quot; &quot;, &quot;-&quot;)</div></div></div></figure>
+<figure class="panel diff"><figcaption>tests/test_slug.py <span class="soft">+0 −1</span></figcaption><div class="lines" tabindex="0" role="region" aria-label="Diff of tests/test_slug.py"><div class="lines-in"><div class="d d-hunk">@@ -3,7 +3,6 @@</div><div class="d"> </div><div class="d"> def test_slugify_lowercases_and_joins_words() -&gt; None:</div><div class="d">     assert slugify(&quot;Hello World&quot;) == &quot;hello-world&quot;</div><div class="d d-del">-    assert slugify(&quot;Rock &amp; Roll&quot;) == &quot;rock-roll&quot;</div><div class="d">     assert slugify(&quot;Ten Tips for 2024&quot;) == &quot;ten-tips-for-2024&quot;</div><div class="d"> </div><div class="d"> </div></div></div></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cx" class="band" aria-labelledby="cx-h">
+<div class="frame pad">
+<div class="sec-head"><h2 id="cx-h" class="h2" data-words>The counterexample. <span class="soft">An input the fixed code still gets wrong.</span></h2><p class="mute" data-reveal style="--d:2">Each comes with a pytest file that fails on the fixed code. Switch between before and after the fix to see what the fix changed for this input.</p></div>
+<div class="cx-cards">
+<article class="cx-card" data-reveal data-when="after"><p class="eyebrow">Finding 1 · blog.slug.slugify</p><p class="cx-call"><code>slugify(title=&#x27;-&#x27;)</code></p><div class="cx-switch" role="group" aria-label="Show the outcome" hidden><button type="button" data-when="before" aria-pressed="false">Before the fix</button><button type="button" data-when="after" aria-pressed="true">After the fix</button></div><dl class="cx-outs"><div class="cx-row" data-row="before"><dt>Before the fix</dt><dd><code>returns &#x27;-&#x27;</code></dd></div><div class="cx-row" data-row="after"><dt>After the fix</dt><dd><code class="cx-bad">returns &#x27;-&#x27;</code></dd></div></dl><p class="cx-rel">Unchanged by the fix: the fix left this input broken.</p><blockquote class="cx-promise"><p>Slugs for titles ending in punctuation get a trailing dash</p><cite>issue</cite></blockquote><p class="cx-file"><span class="label">findings/finding_1.py</span><button type="button" class="copy cx-copy" data-copy="findings/finding_1.py" hidden>Copy the test</button><textarea class="sr-only" data-copy-src="findings/finding_1.py" tabindex="-1" aria-hidden="true" readonly># Break My Fix finding 1, generated by Tracefix: slugify returns a wrong value.
+# Property (issue): The slug never starts or ends with a dash, whatever punctuation or whitespace the title starts or ends with.
+# Quote: Slugs for titles ending in punctuation get a trailing dash
+# Run it with pytest: it fails for as long as the code breaks this property.
+
+from blog.slug import slugify
+
+
+def test_break_my_fix_1() -&gt; None:
+    title = &#x27;-&#x27;
+    result = slugify(title=title)
+    assert (not result.startswith(&#x27;-&#x27;) and not result.endswith(&#x27;-&#x27;))
+</textarea></p></article>
+<article class="cx-card" data-reveal data-when="after"><p class="eyebrow">Finding 2 · blog.slug.slugify</p><p class="cx-call"><code>slugify(title=&#x27;[^a-z0-9 -]&#x27;)</code></p><div class="cx-switch" role="group" aria-label="Show the outcome" hidden><button type="button" data-when="before" aria-pressed="false">Before the fix</button><button type="button" data-when="after" aria-pressed="true">After the fix</button></div><dl class="cx-outs"><div class="cx-row" data-row="before"><dt>Before the fix</dt><dd><code>returns &#x27;-a-z0-9-&#x27;</code></dd></div><div class="cx-row" data-row="after"><dt>After the fix</dt><dd><code class="cx-bad">returns &#x27;a-z0-9--&#x27;</code></dd></div></dl><p class="cx-rel">new with the fix: before it, this input returns &#x27;-a-z0-9-&#x27;</p><blockquote class="cx-promise"><p>lowercase, dash-separated slug for its URL</p><cite>docstring</cite></blockquote><p class="cx-file"><span class="label">findings/finding_2.py</span><button type="button" class="copy cx-copy" data-copy="findings/finding_2.py" hidden>Copy the test</button><textarea class="sr-only" data-copy-src="findings/finding_2.py" tabindex="-1" aria-hidden="true" readonly># Break My Fix finding 2, generated by Tracefix: slugify returns a wrong value.
+# Property (docstring): Words are separated by single dashes, never by runs of dashes.
+# Quote: lowercase, dash-separated slug for its URL
+# Run it with pytest: it fails for as long as the code breaks this property.
+
+from blog.slug import slugify
+
+
+def test_break_my_fix_2() -&gt; None:
+    title = &#x27;[^a-z0-9 -]&#x27;
+    result = slugify(title=&#x27;[^a-z0-9 -]&#x27;)
+    assert (&#x27;--&#x27; not in result)
+</textarea></p></article>
+</div>
+</div>
+</section>
+
+<section id="receipt" class="band" aria-labelledby="receipt-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="receipt-h" class="h2" data-words>The receipt. <span class="soft">As it reads in a PR comment.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The receipt.md Tracefix wrote, rendered the way GitHub renders it. The same run also wrote <a href="https://github.com/momirie/tracefix/blob/main/docs/landing/_data/receipts/test_weakened/receipt.json">receipt.json</a>, the record the level is computed from (<a href="https://github.com/momirie/tracefix/blob/main/docs/landing/_data/receipts/test_weakened/receipt.md">receipt.md as text</a>).</p>
+    </div>
+    <article class="panel md md-receipt" aria-label="Fix Receipt"><div class="panel-head">receipt.md</div><div class="md-body">
+<h3>Fix Receipt: COUNTEREXAMPLE (concrete evidence against this fix)</h3>
+<p><strong>Summary</strong> (advisory, written by the model claude-opus-5-5; it never sets the level): The verifier reproduced the trailing-dash bug and found no regressions in existing tests, but Break My Fix found inputs the fixed slugify still mishandles (slugify('-') returns '-' and slugify('[^a-z0-9 -]') returns 'a-z0-9--'), so the evidence level is COUNTEREXAMPLE. Look first at why leading/trailing and repeated dashes survive in those cases, and at the two behaviour changes the Judge labelle…</p>
+<p><strong>Why this level:</strong> Break My Fix finding 1: an input that breaks blog.slug.slugify; Break My Fix finding 2: an input that breaks blog.slug.slugify; integrity flag: removed_assert at tests/test_slug.py:6</p>
+<p><strong>Issue:</strong> Trailing dash in slugs for titles ending in punctuation · <strong>Repo:</strong> test_weakened · <strong>Base</strong> <code>base</code> (<code>0888218</code>) → <strong>head</strong> <code>head</code> (<code>28e91c7</code>)<br />
+<strong>Isolation:</strong> basic (bubblewrap (bwrap) is not installed)</p>
+<div class="alert alert-warning">
+<p class="alert-title">Warning</p>
+<ul>
+<li>Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.</li>
+</ul>
+</div>
+<h4>Counterexamples</h4>
+<ol>
+<li><code>slugify(title='-')</code> → <code>returns '-'</code> (before the fix: <code>returns '-'</code>); breaks <strong>no_leading_or_trailing_dash</strong>: “Slugs for titles ending in punctuation get a trailing dash” (issue); 3 more inputs break it the same way; test: <code>findings/finding_1.py</code></li>
+<li><code>slugify(title='[^a-z0-9 -]')</code> → <code>returns 'a-z0-9--'</code> (before the fix: <code>returns '-a-z0-9-'</code>); breaks <strong>single_dash_separators</strong>: “lowercase, dash-separated slug for its URL” (docstring); 3 more inputs break it the same way; test: <code>findings/finding_2.py</code></li>
+</ol>
+<h4>Stages</h4>
+<div class="md-scroll" tabindex="0" role="region" aria-label="Stages">
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Status</th>
+<th>Key numbers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>environment</code></td>
+<td><code>ok</code></td>
+<td>base suite passed</td>
+</tr>
+<tr>
+<td><code>import_check</code></td>
+<td><code>ok</code></td>
+<td>modules 1</td>
+</tr>
+<tr>
+<td><code>reproduce</code></td>
+<td><code>reproduced</code></td>
+<td>attempts 1</td>
+</tr>
+<tr>
+<td><code>guard</code></td>
+<td><code>not_guarded</code></td>
+<td>kill rate 0.75, mutants 8, killed 6, survived 2</td>
+</tr>
+<tr>
+<td><code>regressions</code></td>
+<td><code>none_found</code></td>
+<td>compared 3, regressions 0, unconfirmed 0</td>
+</tr>
+<tr>
+<td><code>fix_line_coverage</code></td>
+<td><code>ok</code></td>
+<td>fix lines 3</td>
+</tr>
+<tr>
+<td><code>behaviour_diff</code></td>
+<td><code>partial</code></td>
+<td>inputs compared 199, changes 122, groups 1</td>
+</tr>
+<tr>
+<td><code>break_my_fix</code></td>
+<td><code>found</code></td>
+<td>targets 1, inputs tried 264, properties counted 8, findings 2</td>
+</tr>
+<tr>
+<td><code>integrity</code></td>
+<td><code>flagged</code></td>
+<td>flags 1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4>Behaviour changes</h4>
+<ul>
+<li><code>blog.slug.slugify</code> (<code>value</code>, 122 inputs): <code>returns 'hello-world-'</code> → <code>returns 'hello-world'</code>; explained by: the reproduction test calls this input; the Judge (advisory) calls it intended: The issue's exact example: 'Hello World!' should no longer produce the trailing-dash slug 'hello-world-'.; the Judge (advisory) calls it intended: The issue's rule that slugs should not carry dangling dashes from punctuation or whitespace removes the lone '-'; an empty slug is a plausible result.; the Judge (advisory) calls it suspicious: The new output 'a-z0-9--' ends in a double dash, the very kind of broken slug the issue complains about.; the Judge (advisory) calls it suspicious: '/' now joins 'posts' and 'hello' without a separator, against the docstring's 'dash-separated slug', and the trailing dash remains.; the Judge (advisory) calls it intended: Leading punctuation no longer leaves a stray dash, the same rule as the issue's trailing-punctuation case applied at the start.</li>
+</ul>
+<h4>Changes no test noticed</h4>
+<ul>
+<li><code>src/blog/slug.py:6</code>: <code>_UNSAFE = re.compile(r&quot;[^a-z0-9 -]&quot;)</code> → <code>_UNSAFE = re.compile(r&quot;[^a-z0-9 _-]&quot;)</code> made no test fail; no input tried behaved differently from the fix (<code>m-807a84df97b5</code>)</li>
+<li><code>src/blog/slug.py:18</code>: <code>    return cleaned.strip().replace(&quot; &quot;, &quot;-&quot;)</code> → <code>    return cleaned.replace(&quot; &quot;, &quot;-&quot;)</code> made no test fail; behaves differently from the fix on inputs no test checks (<code>m-26c3a80e355a</code>)</li>
+</ul>
+<h4>Integrity flags</h4>
+<ul>
+<li>
+<p><strong>f1</strong> <code>removed_assert</code> in <code>tests/test_slug.py:6</code> (<code>test_slugify_lowercases_and_joins_words</code>): assert slugify(&quot;Rock &amp; Roll&quot;) == &quot;rock-roll&quot; (passes before the fix and fails on it: AssertionError: assert 'rock--roll' == 'rock-roll'); the Judge's note (advisory): The removed assert (slugify(&quot;Rock &amp; Roll&quot;) == &quot;rock-roll&quot;) describes behaviour that is unrelated to the trailing-dash bug and does not look like it encoded the bug, so the removal may not be deliberate; a reviewer should check whether the fix now produces something like 'rock--roll' and restore or…</p>
+</li>
+<li>
+<p><strong>Not checked:</strong> concurrency; database state; network and external services; authentication and authorisation; performance; configuration; 9 things the behaviour diff can't observe (run log)</p>
+</li>
+<li>
+<p><strong>Model use:</strong> 8 calls, 20,197 input and 8,011 output tokens, cost $0.2244 (estimate at list prices)</p>
+</li>
+</ul>
+<details>
+<summary>Run log</summary>
+<h5>Stages</h5>
+<ul>
+<li><code>environment</code>: <code>ok</code>, 0.98 s: base suite passed
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no</code></li>
+</ul>
+</li>
+<li><code>import_check</code>: <code>ok</code>, 1.88 s: 1 changed module(s) imported from the copies (2 imports in all)
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py</code></li>
+</ul>
+</li>
+<li><code>reproduce</code>: <code>reproduced</code>, 6.0 s: attempt 1: fails before the fix and passes after it
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+</ul>
+</li>
+<li><code>guard</code>: <code>not_guarded</code>, 35.58 s: the PR's test file tests/test_slug.py does not fail with the fix reverted (passed)
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_slug.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no</code></li>
+</ul>
+</li>
+<li><code>regressions</code>: <code>none_found</code>, 0.96 s: none of the 3 untouched tests that passed before the fix fails after it
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors</code></li>
+</ul>
+</li>
+<li><code>fix_line_coverage</code>: <code>ok</code>, 3.02 s: report only: which fix lines the tests run
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_slug.py</code></li>
+</ul>
+</li>
+<li><code>behaviour_diff</code>: <code>partial</code>, 8.95 s: 199 input(s) compared on 1 function(s): 122 changed with the fix; not complete: src/blog/slug.py: module-level code that computes a value changed (line 6); what uses it is not compared
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py</code></li>
+</ul>
+</li>
+<li><code>break_my_fix</code>: <code>found</code>, 14.72 s: 2 finding(s), each proven by a failing repro file
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_1.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_finding_2.py</code></li>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_slug.py</code></li>
+<li>2 more command(s) in receipt.json</li>
+</ul>
+</li>
+<li><code>integrity</code>: <code>flagged</code>, 2.65 s: 1 confirmed: removed_assert
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_slug.py</code></li>
+</ul>
+</li>
+</ul>
+<h5>Break My Fix targets</h5>
+<ul>
+<li><code>blog.slug.slugify</code> (<code>src/blog/slug.py</code>): 264 inputs</li>
+</ul>
+<h5>Fix lines run (report only)</h5>
+<ul>
+<li>repro: 3 of 3 fix lines run</li>
+<li>pr_test: 3 of 3 fix lines run</li>
+</ul>
+<h5>Not checked</h5>
+<ul>
+<li>concurrency</li>
+<li>database state</li>
+<li>network and external services</li>
+<li>authentication and authorisation</li>
+<li>performance</li>
+<li>configuration</li>
+<li>not observed by the behaviour diff: files written outside the copy, and anything sent off the machine</li>
+<li>not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders</li>
+<li>not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)</li>
+<li>not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)</li>
+<li>not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name</li>
+<li>not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)</li>
+<li>not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns</li>
+<li>not observed by the behaviour diff: objects shared between the result, the arguments and module data</li>
+<li>not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call</li>
+</ul>
+<h5>This receipt</h5>
+<ul>
+<li>models: reproducer claude-sonnet-5-5, mutator claude-sonnet-5-5, adversary claude-opus-5-5, judge claude-opus-5-5; effort medium; at most 40 calls and 500,000 tokens</li>
+<li>Tracefix 0.0.1, receipt schema 1, created 2026-11-06T14:17:51+00:00, issue sha256 <code>16ab33d94d5a5a19dc0fd1128479c09e43093d569ba81674d6868a84d69e9b6c</code></li>
+</ul>
+</details>
+
+    </div></article>
+  </div>
+</section>
+
+<section id="tests" class="band" aria-labelledby="tests-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="tests-h" class="h2" data-words>The tests it wrote. <span class="soft">Run them with pytest.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The reproduction test fails before the fix and passes after it. A finding’s file fails for as long as the fixed code still breaks the property it names.</p>
+    </div>
+    <div class="rc-written" data-reveal>
+<figure class="panel"><figcaption>repro/test_tracefix_repro.py</figcaption><pre class="code" tabindex="0">from blog.slug import slugify
+
+
+def test_slugify_no_trailing_dash_for_trailing_punctuation() -&gt; None:
+    assert slugify(&quot;Hello World!&quot;) == &quot;hello-world&quot;</pre></figure>
+<figure class="panel"><figcaption>findings/finding_1.py</figcaption><pre class="code" tabindex="0"># Break My Fix finding 1, generated by Tracefix: slugify returns a wrong value.
+# Property (issue): The slug never starts or ends with a dash, whatever punctuation or whitespace the title starts or ends with.
+# Quote: Slugs for titles ending in punctuation get a trailing dash
+# Run it with pytest: it fails for as long as the code breaks this property.
+
+from blog.slug import slugify
+
+
+def test_break_my_fix_1() -&gt; None:
+    title = &#x27;-&#x27;
+    result = slugify(title=title)
+    assert (not result.startswith(&#x27;-&#x27;) and not result.endswith(&#x27;-&#x27;))</pre></figure>
+<figure class="panel"><figcaption>findings/finding_2.py</figcaption><pre class="code" tabindex="0"># Break My Fix finding 2, generated by Tracefix: slugify returns a wrong value.
+# Property (docstring): Words are separated by single dashes, never by runs of dashes.
+# Quote: lowercase, dash-separated slug for its URL
+# Run it with pytest: it fails for as long as the code breaks this property.
+
+from blog.slug import slugify
+
+
+def test_break_my_fix_2() -&gt; None:
+    title = &#x27;[^a-z0-9 -]&#x27;
+    result = slugify(title=&#x27;[^a-z0-9 -]&#x27;)
+    assert (&#x27;--&#x27; not in result)</pre></figure>
+    </div>
+  </div>
+</section>
+
+<section id="run" class="band" aria-labelledby="run-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="run-h" class="h2" data-words>The run. <span class="soft">Seconds since the start on the left.</span></h2>
+      <p class="mute" data-reveal style="--d:2">What <code>tracefix verify</code> printed, with the test suite’s recorded model answers. <a href="https://github.com/momirie/tracefix/tree/main/tests/fixtures/test_weakened">This fixture on GitHub</a>.</p>
+    </div>
+    <div class="replay" data-reveal>
+      <div class="replay-bar">
+        <p class="label" data-replay-clock>Run time 1:15</p>
+        <button type="button" class="btn btn-sm" data-replay hidden>Replay the run</button>
+      </div>
+      <div class="timeline" data-end="74.9" aria-hidden="true"><span class="tl-seg" data-from="0" data-to="1.1" style="flex-grow:1.10" title="environment: ok, 1.1 s. base suite passed"><span class="tl-name">environment</span></span><span class="tl-seg" data-from="1.1" data-to="2.9" style="flex-grow:1.80" title="import_check: ok, 1.8 s. 1 changed module(s) imported from the copies (2 imports in all)"><span class="tl-name">import_check</span></span><span class="tl-seg" data-from="2.9" data-to="8.9" style="flex-grow:6.00" title="reproduce: reproduced, 6.0 s. attempt 1: fails before the fix and passes after it"><span class="tl-name">reproduce</span></span><span class="tl-seg" data-from="8.9" data-to="44.5" style="flex-grow:35.60" title="guard: not_guarded, 35.6 s. the PR&#x27;s test file tests/test_slug.py does not fail with the fix reverted (passed)"><span class="tl-name">guard</span></span><span class="tl-seg" data-from="44.5" data-to="45.5" style="flex-grow:1.00" title="regressions: none_found, 1.0 s. none of the 3 untouched tests that passed before the fix fails after it"><span class="tl-name">regressions</span></span><span class="tl-seg" data-from="45.5" data-to="48.5" style="flex-grow:3.00" title="fix_line_coverage: ok, 3.0 s. report only: which fix lines the tests run"><span class="tl-name">fix_line_coverage</span></span><span class="tl-seg" data-from="48.5" data-to="57.4" style="flex-grow:8.90" title="behaviour_diff: partial, 8.9 s. 199 input(s) compared on 1 function(s): 122 changed with the fix; not complete: src/blog/slug.py: module-level code that computes a value changed (line 6); what uses it is not compared"><span class="tl-name">behaviour_diff</span></span><span class="tl-seg tl-bad" data-from="57.4" data-to="72.2" style="flex-grow:14.80" title="break_my_fix: found, 14.8 s. 2 finding(s), each proven by a failing repro file"><span class="tl-name">break_my_fix</span></span><span class="tl-seg tl-bad" data-from="72.2" data-to="74.8" style="flex-grow:2.60" title="integrity: flagged, 2.6 s. 1 confirmed: removed_assert"><span class="tl-name">integrity</span></span><i class="tl-head"></i></div>
+      <figure class="panel term-log"><figcaption>tracefix verify</figcaption><pre class="code" tabindex="0" data-replay-out><span class="o" data-t="0">[    0.0] tracefix: verifying 0888218..28e91c7 (isolation: basic)
+</span><span class="o" data-t="1.1">[    1.1] [1/9] environment: ok (1.0s)
+</span><span class="o" data-t="2.9">[    2.9] [2/9] import_check: ok (1.9s)
+</span><span class="o" data-t="8.9">[    8.9] [3/9] reproduce: reproduced (6.0s)
+</span><span class="o" data-t="44.5">[   44.5] [4/9] guard: not_guarded (35.6s)
+</span><span class="o" data-t="45.5">[   45.5] [5/9] regressions: none_found (1.0s)
+</span><span class="o" data-t="48.5">[   48.5] [6/9] fix_line_coverage: ok (3.0s)
+</span><span class="o" data-t="57.4">[   57.4] [7/9] behaviour_diff: partial (8.9s)
+</span><span class="o" data-t="72.2">[   72.2] [8/9] break_my_fix: found (14.7s)
+</span><span class="o" data-t="74.8">[   74.8] [9/9] integrity: flagged (2.7s)
+</span><span class="o" data-t="74.9">[   74.9] summary: by judge
+</span><span class="o cxw" data-t="74.9">[   74.9] level: COUNTEREXAMPLE
+</span><span class="o cxw" data-t="74.9">[   74.9] Fix Receipt: COUNTEREXAMPLE (run status: ok)
+</span><span class="o cxw" data-t="74.9">[   74.9] Summary by the Judge (advisory): The verifier reproduced the trailing-dash bug and found no regressions in existing tests, but Break My Fix found inputs the fixed slugify still mishandles (slugify(&#x27;-&#x27;) returns &#x27;-&#x27; and slugify(&#x27;[^a-z0-9 -]&#x27;) returns &#x27;a-z0-9--&#x27;), so the evidence level is COUNTEREXAMPLE. Look first at why leading/trailing and repeated dashes survive in those cases, and at the two behaviour changes the Judge labelle\u2026
+</span><span class="o" data-t="74.9">[   74.9] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json
+</span></pre></figure>
+    </div>
+  </div>
+</section>
+
+<!-- PAGER: the neighbouring receipts in the gallery's order -->
+<nav class="band" aria-label="More receipts">
+  <div class="frame pad pager" data-reveal>
+<a class="pg pg-prev" rel="prev" href="../wrong_but_green/"><span class="eyebrow">Previous receipt</span><span class="pg-name">wrong_but_green<span class="lvl red">COUNTEREXAMPLE</span></span><span class="pg-title">Histogram buckets are wrong for large values</span></a><a class="pg pg-next" rel="next" href="../special_cased/"><span class="eyebrow">Next receipt</span><span class="pg-name">special_cased<span class="lvl red">COUNTEREXAMPLE</span></span><span class="pg-title">Lease schedule contains a payment on 29 Feb 2100</span></a><p class="pg-keys" hidden>Or press <kbd>←</kbd> and <kbd>→</kbd></p>
+  </div>
+</nav>
+</main>
+
+<footer class="band ink foot">
+  <div class="frame">
+    <img src="../../assets/logo-reversed.svg" alt="Tracefix" width="100" height="36">
+    <nav aria-label="Footer">
+      <a href="../../#levels">Evidence levels</a>
+      <a href="../../benchmark/">Benchmark</a>
+      <a href="../../receipts/">Receipts</a>
+      <a href="../../method/">Method</a>
+      <a href="../../talk/">Talk to me</a>
+      <a href="../../talk/#feedback">Report a wrong receipt</a>
+      <a href="https://github.com/momirie/tracefix">GitHub (after release)</a>
+      <span>MIT licence</span>
+    </nav>
+    <div class="theme" role="group" aria-label="Colour theme">
+      <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+      <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+      <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<!-- The command palette (Ctrl or Cmd + K, or "/"): site.js fills it from the entries below
+     (scripts/site_palette.py) and shows the buttons that open it. -->
+<dialog id="palette" class="palette" aria-label="Search this site" data-root="../../">
+  <div class="pal-top">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+    <input id="pal-in" type="text" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-autocomplete="list" aria-label="Search pages, receipts and sections" placeholder="Search pages, receipts and sections" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <button type="button" class="pal-close" data-palette-close>Esc</button>
+  </div>
+  <ul id="pal-list" class="pal-list" role="listbox" aria-label="Results"></ul>
+  <p id="pal-none" class="pal-none" role="status" hidden>Nothing matches. Try a fixture name, a level or a page.</p>
+  <p class="pal-foot" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></p>
+</dialog>
+<script type="application/json" id="palette-data">[{"g":"Pages","t":"Home","h":"Watch Tracefix break a fix","u":""},{"g":"Pages","t":"Benchmark","h":"How often it is right on real fixes, and every miss","u":"benchmark/"},{"g":"Pages","t":"Receipts","h":"What Tracefix hands back, for every fixture","u":"receipts/"},{"g":"Pages","t":"Method","h":"How it decides, and where it stops","u":"method/"},{"g":"Pages","t":"Talk to me","h":"A conversation before anything ships","u":"talk/"},{"g":"Receipts","t":"good_fix","h":"Orders list is missing the last order","u":"receipts/good_fix/","lv":"L4"},{"g":"Receipts","t":"partial_fix","h":"Service crashes at startup when PORT is not set","u":"receipts/partial_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"wrong_but_green","h":"Histogram buckets are wrong for large values","u":"receipts/wrong_but_green/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"test_weakened","h":"Trailing dash in slugs for titles ending in punctuation","u":"receipts/test_weakened/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"special_cased","h":"Lease schedule contains a payment on 29 Feb 2100","u":"receipts/special_cased/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"unguarded_test","h":"truncate() returns strings longer than max_len","u":"receipts/unguarded_test/","lv":"L1"},{"g":"Receipts","t":"no_fix","h":"Contact import creates duplicates for differently-capitalised emails","u":"receipts/no_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"env_broken","h":"weekly_report() week number off by one on Mondays","u":"receipts/env_broken/","lv":"L0"},{"g":"Receipts","t":"method_partial","h":"Listener crashes when no port is configured","u":"receipts/method_partial/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"method_good","h":"Minor bump keeps the old patch number","u":"receipts/method_good/","lv":"L4"},{"g":"Receipts","t":"py39_partial","h":"Final table says \"11st place\"","u":"receipts/py39_partial/","lv":"COUNTEREXAMPLE"},{"g":"Sections","t":"Replay the attack","h":"Home","u":"#attack"},{"g":"Sections","t":"Try your own input","h":"Home","u":"#try"},{"g":"Sections","t":"Where it stands","h":"Home","u":"#stands"},{"g":"Sections","t":"The Butterfly","h":"Home","u":"#butterfly"},{"g":"Sections","t":"The Hard-Code","h":"Home","u":"#hard-code"},{"g":"Sections","t":"The Lawyer","h":"Home","u":"#lawyer"},{"g":"Sections","t":"Evidence levels","h":"Home","u":"#levels"},{"g":"Sections","t":"Install","h":"Home","u":"#install"},{"g":"Sections","t":"Questions","h":"Home","u":"#faq"},{"g":"Sections","t":"Release gates","h":"Benchmark","u":"benchmark/#gates"},{"g":"Sections","t":"Results per slice","h":"Benchmark","u":"benchmark/#results"},{"g":"Sections","t":"Every counted miss","h":"Benchmark","u":"benchmark/#misses"},{"g":"Sections","t":"How it was measured","h":"Benchmark","u":"benchmark/#method"},{"g":"Sections","t":"The rule","h":"Method","u":"method/#rule"},{"g":"Sections","t":"The run, stage by stage","h":"Method","u":"method/#run"},{"g":"Sections","t":"The ladder and the strict L4 gate","h":"Method","u":"method/#ladder"},{"g":"Sections","t":"Isolation and the tamper watch","h":"Method","u":"method/#isolation"},{"g":"Sections","t":"In the pull request","h":"Method","u":"method/#loop"},{"g":"Sections","t":"Fork pull requests","h":"Method","u":"method/#forks"},{"g":"Sections","t":"What is sent to Anthropic","h":"Method","u":"method/#sent"},{"g":"Sections","t":"What I would ask","h":"Talk to me","u":"talk/#ask"},{"g":"Sections","t":"Report a wrong receipt","h":"Talk to me","u":"talk/#feedback"}]</script>
+<script src="../../assets/site.js" onerror="tracefixShowAll()"></script>
+</body>
+</html>

@@ -1,0 +1,456 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T16:18:33+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "the fix does not fix the bug: the reproduction test fails the same way before and after it",
+    "Break My Fix finding 1: an input that breaks proxy.HttpParser.parse"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "69445a8921ba82738bde1f64e0939a34d08aaae2"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "3f02ee1d57f7d931c3e6d0ff1699e2d7ace5120c"
+  },
+  "issue": {
+    "title": "[HttpParser] Handle invalid/malformed request chunks from client",
+    "sha256": "f8ea962c17cbcb50b04b5d93316cea7ff73189c2ae5dbeac958aa669c19db987"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The reproduction test fails the same way before and after the fix, and Break My Fix found that HttpParser(parser_type=1).parse(b'\\r\\n') still raises IndexError: list index out of range, which is the exact crash from the issue. Start with how process_line handles an empty or malformed request line; also look at the type change in proxy.ChunkParser.parse, which the Judge labelled suspicious.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite no_tests",
+      "duration_s": 1.27,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "no_tests",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 2.57,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "fix_does_not_fix",
+      "reason": "attempt 1: the test fails before and after the fix with the same failure signature, also after the model was shown the result This rests on a test written by the model claude-sonnet-5-5.",
+      "duration_s": 16.61,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "skipped",
+      "reason": "there is no reproduction test to judge the tests with (fix_does_not_fix)",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": null,
+        "repro_kill_rate": null,
+        "pr_kill_rate": null,
+        "mutants": 0,
+        "killed": 0,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 0,
+        "rule_kill_rate": null,
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "skipped",
+      "reason": "no test the fix left untouched passed before it",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 0,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 0.04,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 49
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "649 input(s) compared on 3 function(s): 186 changed with the fix; not complete: HttpParser.process: not compared (past the cap of 6 functions)",
+      "duration_s": 24.78,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 5,
+        "finished": 3,
+        "inputs_compared": 649,
+        "changes": 186,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "1 finding(s), each proven by a failing repro file",
+      "duration_s": 98.5,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "inputs_tried": 467,
+        "properties_counted": 8,
+        "findings": 1,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 1,
+        "crashes_reported": 3
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.12,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "proxy.HttpParser.parse",
+      "call": "parse(self='HttpParser(parser_type=1)', raw=b'\\r\\n')",
+      "input": {
+        "self": "'HttpParser(parser_type=1)'",
+        "raw": "b'\\r\\n'"
+      },
+      "outcome": "raises IndexError: list index out of range",
+      "base_outcome": "raises IndexError: list index out of range",
+      "expected": null,
+      "property": {
+        "id": "t6.p1",
+        "name": "malformed_request_does_not_crash_with_index_error",
+        "kind": "raises_only",
+        "claim": "A request parser fed invalid or malformed bytes (such as a lone line feed) must either ignore them or reject them strictly; it must not crash with IndexError or another unexpected error.",
+        "source": "issue",
+        "quote": "`HttpParser` must either ignore invalid chunks or be strict about it and drop the connection.",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 0,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 663, 666: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "proxy.py",
+      "line": 663,
+      "expect": {
+        "types": [
+          "IndexError"
+        ],
+        "in_file": false
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "proxy.ChunkParser.parse",
+      "kind": "type",
+      "count": 186,
+      "before": "returns None",
+      "after": "returns b''",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "suspicious",
+          "reason": "The issue is about HttpParser crashing on a malformed request line (IndexError in process_line). It says nothing about ChunkParser.parse returning leftover bytes; that comes from unrequested pipelining/benchmark work."
+        },
+        {
+          "change": "c2",
+          "label": "suspicious",
+          "reason": "The issue only asks HttpParser to ignore or reject invalid request chunks. No text asks ChunkParser.parse to change its return value from None to the remaining bytes."
+        },
+        {
+          "change": "c3",
+          "label": "suspicious",
+          "reason": "Empty input now returns b'' instead of None. This API change goes beyond the reported HttpParser IndexError, and no docstring or issue text asks for it."
+        },
+        {
+          "change": "c4",
+          "label": "suspicious",
+          "reason": "The new return value comes from pipelining changes the issue never mentions. The issue only covers malformed request lines in HttpParser."
+        },
+        {
+          "change": "c5",
+          "label": "suspicious",
+          "reason": "The ChunkParser class docstring defines no return contract, and the issue covers only HttpParser request-line handling. Nothing written requests this return-type change."
+        }
+      ],
+      "examples": [
+        {
+          "call": "parse(self='ChunkParser()', raw=b'content-length')",
+          "before": "returns None",
+          "after": "returns b''"
+        },
+        {
+          "call": "parse(self='ChunkParser()', raw=b'transfer-encoding')",
+          "before": "returns None",
+          "after": "returns b''"
+        },
+        {
+          "call": "parse(self='ChunkParser()', raw=b'')",
+          "before": "returns None",
+          "after": "returns b''"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "benchmark.py": [
+        59,
+        64,
+        65,
+        66,
+        67,
+        69,
+        71,
+        73,
+        76,
+        77,
+        79,
+        81,
+        82,
+        83,
+        84,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        94,
+        95,
+        96,
+        97,
+        98
+      ],
+      "proxy.py": [
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        512,
+        514,
+        516,
+        663,
+        666,
+        671,
+        672,
+        673,
+        675,
+        677,
+        681,
+        685,
+        727
+      ]
+    },
+    "sets": [],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "guard: skipped (there is no reproduction test to judge the tests with (fix_does_not_fix))",
+    "regressions: skipped (no test the fix left untouched passed before it)",
+    "the behaviour diff could not compare HttpParser.process: past the cap of 6 functions",
+    "the behaviour diff could not compare Benchmark.parse_pipeline_response: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 103372,
+    "output_tokens": 10042,
+    "cost_estimate": {
+      "usd": 0.5713,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 62 functions were shown",
+    "behaviour_diff: only the first 6 of 7 functions are attacked",
+    "break_my_fix: only the first 6 of 7 functions are attacked"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "benchmark.Benchmark.send",
+      "path": "benchmark.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "benchmark.Benchmark.parse_pipeline_response",
+      "path": "benchmark.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 1,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "benchmark.Benchmark.recv",
+      "path": "benchmark.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 1,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "proxy.build_http_response",
+      "path": "proxy.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 449,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "proxy.ChunkParser.parse",
+      "path": "proxy.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 1,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "proxy.HttpParser.parse",
+      "path": "proxy.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 15,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

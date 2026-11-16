@@ -1,0 +1,105 @@
+{
+ "columns": [
+  "#",
+  "Gate",
+  "Slice 1 (20 Oct 2026)",
+  "Slice 2, dev (4 Nov 2026)",
+  "Slice 2, dev, M11's code (13 Nov 2026)",
+  "Target",
+  "Status"
+ ],
+ "gates": [
+  {
+   "number": 1,
+   "title": "Certifies correct fixes",
+   "measures": "gold fixes at \u2265 L2 / \u2265 L3",
+   "results": {
+    "Slice 1 (20 Oct 2026)": "5/19 (26%) / 0",
+    "Slice 2, dev (4 Nov 2026)": "12/47 (26%) / 0",
+    "Slice 2, dev, M11's code (13 Nov 2026)": "11/47 (23%) / 0"
+   },
+   "target": "\u2265 50% / \u2265 20%",
+   "status": "Open",
+   "holds": false
+  },
+  {
+   "number": 2,
+   "title": "Few false alarms",
+   "measures": "correct fixes (gold and correct agent fixes) given a COUNTEREXAMPLE that the developer labels false",
+   "results": {
+    "Slice 1 (20 Oct 2026)": "3/19 (16%)",
+    "Slice 2, dev (4 Nov 2026)": "8/85 (9%)",
+    "Slice 2, dev, M11's code (13 Nov 2026)": "7/85 (8%)"
+   },
+   "target": "\u2264 5%",
+   "status": "Open",
+   "holds": false
+  },
+  {
+   "number": 3,
+   "title": "Catches real agent mistakes",
+   "measures": "wrong agent fixes not green-lit / caught (COUNTEREXAMPLE)",
+   "results": {
+    "Slice 1 (20 Oct 2026)": "not measured (synthetic partial fixes only: 11/12, 7/12)",
+    "Slice 2, dev (4 Nov 2026)": "16/20 (80%) / 6/20 (30%) (partial fixes: 26/28, 19/28)",
+    "Slice 2, dev, M11's code (13 Nov 2026)": "16/20 (80%) / 6/20 (30%) (partial fixes: 26/28, 19/28)"
+   },
+   "target": "\u2265 90% / \u2265 50%",
+   "status": "Open",
+   "holds": false
+  },
+  {
+   "number": 4,
+   "title": "Enough data",
+   "measures": "correct and wrong fixes in the measurement",
+   "results": {
+    "Slice 1 (20 Oct 2026)": "19 gold, 12 partial",
+    "Slice 2, dev (4 Nov 2026)": "85 correct (47 gold, 38 agent), 20 wrong agent (plus 28 partial)",
+    "Slice 2, dev, M11's code (13 Nov 2026)": "the same fixes"
+   },
+   "target": "\u2265 40 and \u2265 30",
+   "status": "Open (30 wrong agent fixes on held_out still needed)",
+   "holds": false
+  },
+  {
+   "number": 5,
+   "title": "Stable",
+   "measures": "COUNTEREXAMPLE verdict changes between two runs of the same fix / Break My Fix runs no input",
+   "results": {
+    "Slice 1 (20 Oct 2026)": "2/18 (11%) / 6/54 (11%)",
+    "Slice 2, dev (4 Nov 2026)": "not measured (no repeats) / 33/145 (23%)",
+    "Slice 2, dev, M11's code (13 Nov 2026)": "not measured (no repeats) / 31/144 (22%)"
+   },
+   "target": "\u2264 5% / \u2264 3%, over \u2265 20 repeated fixes",
+   "status": "Open",
+   "holds": false
+  },
+  {
+   "number": 6,
+   "title": "Fast enough for CI",
+   "measures": "median / 90th percentile time per run, two-hour timeouts",
+   "results": {
+    "Slice 1 (20 Oct 2026)": "6.5 min / 38 min, 2 timeouts in 36 runs",
+    "Slice 2, dev (4 Nov 2026)": "3.7 min / 16.5 min, no timeouts in 145 runs",
+    "Slice 2, dev, M11's code (13 Nov 2026)": "3.2 min / 14.7 min, 1 timeout in 145 runs (counted in both times)"
+   },
+   "target": "\u2264 5 min / \u2264 15 min, none",
+   "status": "Open",
+   "holds": false
+  },
+  {
+   "number": 7,
+   "title": "Someone wants it",
+   "measures": "conversations with people who review AI-written PRs",
+   "results": {
+    "Slice 1 (20 Oct 2026)": "0",
+    "Slice 2, dev (4 Nov 2026)": "0",
+    "Slice 2, dev, M11's code (13 Nov 2026)": "0"
+   },
+   "target": "\u2265 5, notes kept",
+   "status": "Open",
+   "holds": false
+  }
+ ],
+ "holding": 0
+}

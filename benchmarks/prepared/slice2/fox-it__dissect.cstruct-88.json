@@ -1,0 +1,475 @@
+{
+ "instance_id": "fox-it__dissect.cstruct-88",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "attrs - -> 26.1.0",
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 1.267,
+ "suite_timeout": 120,
+ "source_hunks": 4,
+ "variants": [
+  {
+   "index": 0,
+   "path": "dissect/cstruct/expression.py",
+   "old_start": 1,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "path": "dissect/cstruct/expression.py",
+   "old_start": 18,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": "ExpressionTokenizer.equal"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "path": "dissect/cstruct/expression.py",
+   "old_start": 42,
+   "old_len": 7,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "functions": [
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": "ExpressionTokenizer.match"
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "path": "dissect/cstruct/expression.py",
+   "old_start": 142,
+   "old_len": 7,
+   "label": "no_effect",
+   "failing": 2,
+   "functions": [
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": "ExpressionTokenizer.tokenize"
+    }
+   ]
+  }
+ ],
+ "kept": 3,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 54357,
+   "label": "no_effect",
+   "failing": 2,
+   "kept": true,
+   "functions": [
+    {
+     "path": "check_regex_issue.py",
+     "function": null
+    },
+    {
+     "path": "check_regex_issue.py",
+     "function": "analyze_regex_issue"
+    },
+    {
+     "path": "debug_constants_regex.py",
+     "function": null
+    },
+    {
+     "path": "debug_constants_regex.py",
+     "function": "test_individual_components"
+    },
+    {
+     "path": "debug_constants_regex.py",
+     "function": "test_regex_patterns"
+    },
+    {
+     "path": "debug_cstyleparser_detailed.py",
+     "function": null
+    },
+    {
+     "path": "debug_cstyleparser_detailed.py",
+     "function": "manual_test_constants_method"
+    },
+    {
+     "path": "debug_cstyleparser_detailed.py",
+     "function": "test_comment_removal"
+    },
+    {
+     "path": "debug_cstyleparser_detailed.py",
+     "function": "test_constants_step_by_step"
+    },
+    {
+     "path": "debug_legacy.py",
+     "function": null
+    },
+    {
+     "path": "debug_legacy.py",
+     "function": "debug_legacy_parser"
+    },
+    {
+     "path": "debug_legacy.py",
+     "function": "debug_tab_legacy_parser"
+    },
+    {
+     "path": "debug_newlines.py",
+     "function": null
+    },
+    {
+     "path": "debug_newlines.py",
+     "function": "test_cstyleparser_with_newlines"
+    },
+    {
+     "path": "debug_newlines.py",
+     "function": "test_newline_requirements"
+    },
+    {
+     "path": "dissect/cstruct/parser.py",
+     "function": "CStyleParser._constants"
+    },
+    {
+     "path": "final_debug.py",
+     "function": null
+    },
+    {
+     "path": "final_debug.py",
+     "function": "test_both_parsers"
+    },
+    {
+     "path": "final_debug.py",
+     "function": "test_evaluation_of_values"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_complex_expression_with_tabs"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_mixed_whitespace"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_normal_define"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_tab_in_define"
+    },
+    {
+     "path": "reproduce_issue_legacy.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue_legacy.py",
+     "function": "test_complex_expression_with_tabs_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy.py",
+     "function": "test_mixed_whitespace_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy.py",
+     "function": "test_normal_define_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy.py",
+     "function": "test_tab_in_define_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy_fixed.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue_legacy_fixed.py",
+     "function": "test_complex_expression_with_tabs_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy_fixed.py",
+     "function": "test_mixed_whitespace_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy_fixed.py",
+     "function": "test_normal_define_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy_fixed.py",
+     "function": "test_tab_in_define_legacy"
+    }
+   ],
+   "differs": [
+    {
+     "path": "check_regex_issue.py",
+     "function": null
+    },
+    {
+     "path": "check_regex_issue.py",
+     "function": "analyze_regex_issue"
+    },
+    {
+     "path": "debug_constants_regex.py",
+     "function": null
+    },
+    {
+     "path": "debug_constants_regex.py",
+     "function": "test_individual_components"
+    },
+    {
+     "path": "debug_constants_regex.py",
+     "function": "test_regex_patterns"
+    },
+    {
+     "path": "debug_cstyleparser_detailed.py",
+     "function": null
+    },
+    {
+     "path": "debug_cstyleparser_detailed.py",
+     "function": "manual_test_constants_method"
+    },
+    {
+     "path": "debug_cstyleparser_detailed.py",
+     "function": "test_comment_removal"
+    },
+    {
+     "path": "debug_cstyleparser_detailed.py",
+     "function": "test_constants_step_by_step"
+    },
+    {
+     "path": "debug_legacy.py",
+     "function": null
+    },
+    {
+     "path": "debug_legacy.py",
+     "function": "debug_legacy_parser"
+    },
+    {
+     "path": "debug_legacy.py",
+     "function": "debug_tab_legacy_parser"
+    },
+    {
+     "path": "debug_newlines.py",
+     "function": null
+    },
+    {
+     "path": "debug_newlines.py",
+     "function": "test_cstyleparser_with_newlines"
+    },
+    {
+     "path": "debug_newlines.py",
+     "function": "test_newline_requirements"
+    },
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": null
+    },
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": "ExpressionTokenizer.equal"
+    },
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": "ExpressionTokenizer.match"
+    },
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": "ExpressionTokenizer.tokenize"
+    },
+    {
+     "path": "dissect/cstruct/parser.py",
+     "function": "CStyleParser._constants"
+    },
+    {
+     "path": "final_debug.py",
+     "function": null
+    },
+    {
+     "path": "final_debug.py",
+     "function": "test_both_parsers"
+    },
+    {
+     "path": "final_debug.py",
+     "function": "test_evaluation_of_values"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_complex_expression_with_tabs"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_mixed_whitespace"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_normal_define"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_tab_in_define"
+    },
+    {
+     "path": "reproduce_issue_legacy.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue_legacy.py",
+     "function": "test_complex_expression_with_tabs_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy.py",
+     "function": "test_mixed_whitespace_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy.py",
+     "function": "test_normal_define_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy.py",
+     "function": "test_tab_in_define_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy_fixed.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue_legacy_fixed.py",
+     "function": "test_complex_expression_with_tabs_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy_fixed.py",
+     "function": "test_mixed_whitespace_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy_fixed.py",
+     "function": "test_normal_define_legacy"
+    },
+    {
+     "path": "reproduce_issue_legacy_fixed.py",
+     "function": "test_tab_in_define_legacy"
+    }
+   ]
+  },
+  {
+   "kind": "agent_ok",
+   "source_row": 57618,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": "ExpressionTokenizer.tokenize"
+    },
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_exact_issue_example"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_various_tab_formats"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_mixed_whitespace"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_normal_spaces"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_tab_in_define"
+    }
+   ],
+   "differs": [
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": null
+    },
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": "ExpressionTokenizer.equal"
+    },
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": "ExpressionTokenizer.match"
+    },
+    {
+     "path": "dissect/cstruct/expression.py",
+     "function": "ExpressionTokenizer.tokenize"
+    },
+    {
+     "path": "final_verification.py",
+     "function": null
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_exact_issue_example"
+    },
+    {
+     "path": "final_verification.py",
+     "function": "test_various_tab_formats"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": null
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_mixed_whitespace"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_normal_spaces"
+    },
+    {
+     "path": "reproduce_issue.py",
+     "function": "test_tab_in_define"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "95a4928dbb48ff8761163c21d576a055c4155a9f",
+  "gold": "ee2d29aaaccd43274e9e66be5bb9586314758b07",
+  "v3": "78585223913f6fd291e318b7d27515f3dfc0ef1b",
+  "agent_wrong": "0fd6f075fd83004a37d3be661ff58e21845c7aa7",
+  "agent_ok": "0d420a7c42e531173925482f4f7efb1aafe980aa"
+ },
+ "seconds": 32.172
+}

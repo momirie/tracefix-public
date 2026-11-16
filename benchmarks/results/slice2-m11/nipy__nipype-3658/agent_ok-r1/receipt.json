@@ -1,0 +1,674 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T18:59:27+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the PR's test file test_5ttgen_issue.py does not fail with the fix reverted (passed)"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "e03ab6f99f85fb54bc5f1ed2d9222af8f5bd66e0"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "83bd9e1cbd5f4c1866a19be61db1633171478597"
+  },
+  "issue": {
+    "title": "[ENH] Enhance implementation of 5ttgen",
+    "sha256": "7b35bf59a6794ddaae6c84c7c52d1688c89340fa5a23d7318626b39b1e4e041d"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "At L1, the bug was reproduced: a test fails before the fix and passes after it, but the PR's own test file test_5ttgen_issue.py still passed with the fix reverted, so it does not guard against this bug. The most important next step is to strengthen test_5ttgen_issue.py so it exercises the new 5ttgen inputs and fails without the fix; regression and break-my-fix stages were skipped.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 141.56,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (3 imports in all)",
+      "duration_s": 5.41,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 17.74,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no nipype/algorithms/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the PR's test file test_5ttgen_issue.py does not fail with the fix reverted (passed)",
+      "duration_s": 4089.16,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no nipype/algorithms/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_5ttgen_issue.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.625,
+        "repro_kill_rate": 0.625,
+        "pr_kill_rate": 0.0,
+        "mutants": 8,
+        "killed": 5,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 0,
+        "not_run": 2,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-9a0ab752fb59",
+          "m-fa25d22d164f",
+          "m-ad05eaa29a10",
+          "m-c9564bfe6b02",
+          "m-f4cfd730d434"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.0,
+        "rule_kinds": [
+          "body: 0 of 2 killed",
+          "compare: 0 of 1 killed",
+          "logic: 0 of 2 killed",
+          "negate_if: 0 of 1 killed",
+          "constant: 0 of 1 killed",
+          "membership: 0 of 1 killed",
+          "drop_call: 0 of 1 killed",
+          "reraise: 0 of 1 killed"
+        ],
+        "rule_kinds_absent": [
+          "arithmetic",
+          "loop"
+        ],
+        "pr_test_files": [
+          "test_5ttgen_issue.py"
+        ],
+        "findings": [
+          "pr_tests_pass_on_revert: the PR's test file test_5ttgen_issue.py does not fail with the fix reverted (passed)",
+          "low_kill_rate: the tests killed 5 of 8 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "skipped",
+      "reason": "no test the fix left untouched passed before it",
+      "duration_s": 3.19,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 0,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 7.07,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no nipype/algorithms/tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_5ttgen_issue.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 164
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "skipped",
+      "reason": "the fix changes no function the behaviour diff can call (test_fsl_algorithm: new with the fix: nothing to compare; test_freesurfer_algorithm: new with the fix: nothing to compare; test_hsvs_algorithm: new with the fix: nothing to compare)",
+      "duration_s": 3.14,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "skipped",
+      "reason": "the fix changes no function Break My Fix can call (cleanup_dummy_files: it takes no parameters to vary; test_freesurfer_algorithm: it takes no parameters to vary; test_fsl_algorithm: it takes no parameters to vary)",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 0,
+        "inputs_tried": 0,
+        "properties_counted": 0,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (1 reported)",
+      "duration_s": 0.03,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 1
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 17.26,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no nipype/algorithms/tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-8db581a1799d",
+      "origin": "model",
+      "file": "nipype/interfaces/mrtrix3/utils.py",
+      "line": 270,
+      "original": "        argstr=\"-template %s\",",
+      "replacement": "        argstr=\"-templates %s\",",
+      "description": "template flag is misspelled.",
+      "diff": "--- a/nipype/interfaces/mrtrix3/utils.py\n+++ b/nipype/interfaces/mrtrix3/utils.py\n@@ -269,3 +269,3 @@\n         exists=True,\n-        argstr=\"-template %s\",\n+        argstr=\"-templates %s\",\n         desc=\"Provide an image that will form the template for the generated 5TT image. (Only for 'hsvs' algorithm)\",\n",
+      "words": "nipype/interfaces/mrtrix3/utils.py:270: changing `        argstr=\"-template %s\",` to `        argstr=\"-templates %s\",` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-0d7b2fbcf2fb",
+      "origin": "model",
+      "file": "nipype/interfaces/mrtrix3/utils.py",
+      "line": 277,
+      "original": "        argstr=\"-hippocampi %s\",",
+      "replacement": "        argstr=\"-hippocampus %s\",",
+      "description": "hippocampi flag is wrong.",
+      "diff": "--- a/nipype/interfaces/mrtrix3/utils.py\n+++ b/nipype/interfaces/mrtrix3/utils.py\n@@ -276,3 +276,3 @@\n         \"aseg\",\n-        argstr=\"-hippocampi %s\",\n+        argstr=\"-hippocampus %s\",\n         desc=\"Choose the method used to segment the hippocampi. (Only for 'freesurfer' algorithm)\",\n",
+      "words": "nipype/interfaces/mrtrix3/utils.py:277: changing `        argstr=\"-hippocampi %s\",` to `        argstr=\"-hippocampus %s\",` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-93028da08d73",
+      "origin": "model",
+      "file": "nipype/interfaces/mrtrix3/utils.py",
+      "line": 275,
+      "original": "        \"first\",",
+      "replacement": "        \"fist\",",
+      "description": "Enum value 'first' is misspelled.",
+      "diff": "--- a/nipype/interfaces/mrtrix3/utils.py\n+++ b/nipype/interfaces/mrtrix3/utils.py\n@@ -274,3 +274,3 @@\n         \"subfields\",\n-        \"first\",\n+        \"fist\",\n         \"aseg\",\n",
+      "words": "nipype/interfaces/mrtrix3/utils.py:275: changing `        \"first\",` to `        \"fist\",` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-392499a0829d",
+      "origin": "rule",
+      "file": "comprehensive_test_5ttgen.py",
+      "line": 33,
+      "original": "    print(\"=== TESTING FSL ALGORITHM ===\")\n    \n    try:\n        gen5tt = Generate5tt()\n        gen5tt.inputs.in_file = '<tmp>/test_T1.nii.gz'\n        gen5tt.inputs.algorithm = 'fsl'\n        gen5tt.inp...",
+      "replacement": "    return None",
+      "description": "rule: body of `test_fsl_algorithm` -> `return None`",
+      "diff": "--- a/comprehensive_test_5ttgen.py\n+++ b/comprehensive_test_5ttgen.py\n@@ -32,45 +32,3 @@\n     \"\"\"Test FSL algorithm with its specific parameters\"\"\"\n-    print(\"=== TESTING FSL ALGORITHM ===\")\n-    \n-    try:\n-        gen5tt = Generate5tt()\n-        gen5tt.inputs.in_file = '<tmp>/test_T1.nii.gz'\n-        gen5tt.inputs.algorithm = 'fsl'\n-        gen5tt.inputs.out_file = 'fsl_5tt.mif'\n-        \n-        # FSL-specific parameters\n-        gen5tt.inputs.t2_image = '<tmp>/test_T2.nii.gz'\n-        gen5tt.inputs.mask_file = '<tmp>/test_mask.nii.gz'\n-        gen5tt.inputs.premasked = True\n-        gen5tt.inputs.nocrop = True\n-        gen5tt.inputs.sgm_amyg_hipp = True\n-        \n-        cmdline = gen5tt.cmdline\n-        print(f\"FSL command line: {cmdline}\")\n-        \n-        # Check all expected parts are present\n-        expected_parts = [\n-            '5ttgen',\n-            '-t2 <tmp>/test_T2.nii.gz',\n-            '-mask <tmp>/test_mask.nii.gz', \n-            '-premasked',\n-            '-nocrop',\n-            '-sgm_amyg_hipp',\n... 19 more lines",
+      "words": "comprehensive_test_5ttgen.py:33: changing `    print(\"=== TESTING FSL ALGORITHM ===\")\n    \n    try:\n   ...` to `    return None` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    },
+    {
+      "id": "m-9986e6ba9325",
+      "origin": "rule",
+      "file": "comprehensive_test_5ttgen.py",
+      "line": 206,
+      "original": "if __name__ == \"__main__\":",
+      "replacement": "if __name__ != \"__main__\":",
+      "description": "rule: `==` -> `!=`",
+      "diff": "--- a/comprehensive_test_5ttgen.py\n+++ b/comprehensive_test_5ttgen.py\n@@ -205,3 +205,3 @@\n \n-if __name__ == \"__main__\":\n+if __name__ != \"__main__\":\n     print(\"Running comprehensive 5ttgen parameter tests...\")\n",
+      "words": "comprehensive_test_5ttgen.py:206: changing `if __name__ == \"__main__\":` to `if __name__ != \"__main__\":` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "compare"
+    },
+    {
+      "id": "m-f67ffe4bbf49",
+      "origin": "rule",
+      "file": "comprehensive_test_5ttgen.py",
+      "line": 21,
+      "original": "    if not os.path.exists(dummy_file):",
+      "replacement": "    if os.path.exists(dummy_file):",
+      "description": "rule: drop `not`",
+      "diff": "--- a/comprehensive_test_5ttgen.py\n+++ b/comprehensive_test_5ttgen.py\n@@ -20,3 +20,3 @@\n for dummy_file in dummy_files:\n-    if not os.path.exists(dummy_file):\n+    if os.path.exists(dummy_file):\n         # Create empty files (some as txt for LUT)\n",
+      "words": "comprehensive_test_5ttgen.py:21: changing `    if not os.path.exists(dummy_file):` to `    if os.path.exists(dummy_file):` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    },
+    {
+      "id": "m-f14ae51c7eac",
+      "origin": "rule",
+      "file": "comprehensive_test_5ttgen.py",
+      "line": 226,
+      "original": "    if all_passed:",
+      "replacement": "    if not (all_passed):",
+      "description": "rule: `all_passed` -> `not (all_passed)`",
+      "diff": "--- a/comprehensive_test_5ttgen.py\n+++ b/comprehensive_test_5ttgen.py\n@@ -225,3 +225,3 @@\n     \n-    if all_passed:\n+    if not (all_passed):\n         print(\"\\n🎉 ALL COMPREHENSIVE TESTS PASSED!\")\n",
+      "words": "comprehensive_test_5ttgen.py:226: changing `    if all_passed:` to `    if not (all_passed):` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "negate_if"
+    },
+    {
+      "id": "m-ec51e93482b0",
+      "origin": "rule",
+      "file": "comprehensive_test_5ttgen.py",
+      "line": 9,
+      "original": "sys.path.insert(0, '/workspace/nipy__nipype__1.8')",
+      "replacement": "sys.path.insert((-1), '/workspace/nipy__nipype__1.8')",
+      "description": "rule: `0` -> `(-1)`",
+      "diff": "--- a/comprehensive_test_5ttgen.py\n+++ b/comprehensive_test_5ttgen.py\n@@ -8,3 +8,3 @@\n import os\n-sys.path.insert(0, '/workspace/nipy__nipype__1.8')\n+sys.path.insert((-1), '/workspace/nipy__nipype__1.8')\n \n",
+      "words": "comprehensive_test_5ttgen.py:9: changing `sys.path.insert(0, '/workspace/nipy__nipype__1.8')` to `sys.path.insert((-1), '/workspace/nipy__nipype__1.8')` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "constant"
+    },
+    {
+      "id": "m-70262a6fb28c",
+      "origin": "rule",
+      "file": "comprehensive_test_5ttgen.py",
+      "line": 66,
+      "original": "            if part in cmdline:",
+      "replacement": "            if part not in cmdline:",
+      "description": "rule: `in` -> `not in`",
+      "diff": "--- a/comprehensive_test_5ttgen.py\n+++ b/comprehensive_test_5ttgen.py\n@@ -65,3 +65,3 @@\n         for part in expected_parts:\n-            if part in cmdline:\n+            if part not in cmdline:\n                 print(f\"  ✓ Found: {part}\")\n",
+      "words": "comprehensive_test_5ttgen.py:66: changing `            if part in cmdline:` to `            if part not in cmdline:` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "membership"
+    },
+    {
+      "id": "m-a29076f3e8fa",
+      "origin": "rule",
+      "file": "comprehensive_test_5ttgen.py",
+      "line": 9,
+      "original": "sys.path.insert(0, '/workspace/nipy__nipype__1.8')",
+      "replacement": "pass",
+      "description": "rule: `sys.path.insert(0, '/workspace/nipy__nipype__1.8')` -> `pass`",
+      "diff": "--- a/comprehensive_test_5ttgen.py\n+++ b/comprehensive_test_5ttgen.py\n@@ -8,3 +8,3 @@\n import os\n-sys.path.insert(0, '/workspace/nipy__nipype__1.8')\n+pass\n \n",
+      "words": "comprehensive_test_5ttgen.py:9: changing `sys.path.insert(0, '/workspace/nipy__nipype__1.8')` to `pass` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "drop_call"
+    },
+    {
+      "id": "m-370b19f93144",
+      "origin": "rule",
+      "file": "comprehensive_test_5ttgen.py",
+      "line": 28,
+      "original": "    print(f\"Failed to import Generate5tt: {e}\")",
+      "replacement": "    raise\n    print(f\"Failed to import Generate5tt: {e}\")",
+      "description": "rule: re-raise at the start of the `except` body",
+      "diff": "--- a/comprehensive_test_5ttgen.py\n+++ b/comprehensive_test_5ttgen.py\n@@ -27,2 +27,3 @@\n except Exception as e:\n+    raise\n     print(f\"Failed to import Generate5tt: {e}\")\n",
+      "words": "comprehensive_test_5ttgen.py:28: changing `    print(f\"Failed to import Generate5tt: {e}\")` to `    raise\n    print(f\"Failed to import Generate5tt: {e}\")` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "reraise"
+    },
+    {
+      "id": "m-f3ef341fc6dc",
+      "origin": "rule",
+      "file": "comprehensive_test_5ttgen.py",
+      "line": 79,
+      "original": "    print(\"\\n=== TESTING FREESURFER ALGORITHM ===\")\n    \n    try:\n        gen5tt = Generate5tt()\n        gen5tt.inputs.in_file = '<tmp>/test_T1.nii.gz'\n        gen5tt.inputs.algorithm = 'freesurfer'\n  ...",
+      "replacement": "    return None",
+      "description": "rule: body of `test_freesurfer_algorithm` -> `return None`",
+      "diff": "--- a/comprehensive_test_5ttgen.py\n+++ b/comprehensive_test_5ttgen.py\n@@ -78,40 +78,3 @@\n     \"\"\"Test FreeSurfer algorithm with its specific parameters\"\"\"\n-    print(\"\\n=== TESTING FREESURFER ALGORITHM ===\")\n-    \n-    try:\n-        gen5tt = Generate5tt()\n-        gen5tt.inputs.in_file = '<tmp>/test_T1.nii.gz'\n-        gen5tt.inputs.algorithm = 'freesurfer'\n-        gen5tt.inputs.out_file = 'fs_5tt.mif'\n-        \n-        # FreeSurfer-specific parameters\n-        gen5tt.inputs.hippocampi = 'subfields'\n-        gen5tt.inputs.lut_file = '<tmp>/test_lut.txt'\n-        gen5tt.inputs.sgm_amyg_hipp = True\n-        \n-        cmdline = gen5tt.cmdline\n-        print(f\"FreeSurfer command line: {cmdline}\")\n-        \n-        expected_parts = [\n-            '5ttgen',\n-            '-hippocampi subfields',\n-            '-lut <tmp>/test_lut.txt',\n-            '-sgm_amyg_hipp',\n-            'freesurfer',\n-            '<tmp>/test_T1.nii.gz',\n-            'fs_5tt.mif'\n-        ]\n-        \n... 14 more lines",
+      "words": "comprehensive_test_5ttgen.py:79: changing `    print(\"\\n=== TESTING FREESURFER ALGORITHM ===\")\n    \n   ...` to `    return None` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    },
+    {
+      "id": "m-5ee36189f397",
+      "origin": "rule",
+      "file": "comprehensive_test_5ttgen.py",
+      "line": 224,
+      "original": "    all_passed = fsl_ok and fs_ok and hsvs_ok and general_ok",
+      "replacement": "    all_passed = fsl_ok or fs_ok and hsvs_ok and general_ok",
+      "description": "rule: `and` -> `or`",
+      "diff": "--- a/comprehensive_test_5ttgen.py\n+++ b/comprehensive_test_5ttgen.py\n@@ -223,3 +223,3 @@\n     \n-    all_passed = fsl_ok and fs_ok and hsvs_ok and general_ok\n+    all_passed = fsl_ok or fs_ok and hsvs_ok and general_ok\n     \n",
+      "words": "comprehensive_test_5ttgen.py:224: changing `    all_passed = fsl_ok and fs_ok and hsvs_ok and general_ok` to `    all_passed = fsl_ok or fs_ok and hsvs_ok and general_ok` made no test fail",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "comprehensive_test_5ttgen.py": [
+        2,
+        7,
+        8,
+        9,
+        12,
+        20,
+        21,
+        23,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        33,
+        35,
+        36,
+        37,
+        38,
+        39,
+        42,
+        43,
+        44,
+        45,
+        46,
+        48,
+        49,
+        52,
+        64,
+        65,
+        66,
+        67,
+        69,
+        70,
+        72,
+        73,
+        74,
+        75,
+        77,
+        79,
+        81,
+        82,
+        83,
+        84,
+        85,
+        88,
+        89,
+        90,
+        92,
+        93,
+        95,
+        105,
+        106,
+        107,
+        108,
+        110,
+        111,
+        113,
+        114,
+        115,
+        116,
+        118,
+        120,
+        122,
+        123,
+        124,
+        125,
+        126,
+        129,
+        130,
+        131,
+        133,
+        134,
+        136,
+        146,
+        147,
+        148,
+        149,
+        151,
+        152,
+        154,
+        155,
+        156,
+        157,
+        159,
+        161,
+        163,
+        164,
+        165,
+        166,
+        167,
+        170,
+        171,
+        173,
+        174,
+        176,
+        185,
+        186,
+        187,
+        188,
+        190,
+        191,
+        193,
+        194,
+        195,
+        196,
+        198,
+        200,
+        201,
+        202,
+        203,
+        204,
+        206,
+        207,
+        210,
+        211,
+        212,
+        213,
+        216,
+        218,
+        219,
+        220,
+        221,
+        222,
+        224,
+        226,
+        227,
+        228,
+        230,
+        231
+      ],
+      "nipype/interfaces/mrtrix3/utils.py": [
+        246,
+        247,
+        248,
+        249,
+        251,
+        252,
+        253,
+        254,
+        256,
+        257,
+        258,
+        260,
+        261,
+        262,
+        264,
+        265,
+        266,
+        268,
+        269,
+        270,
+        271,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        280,
+        281,
+        282,
+        284,
+        285,
+        286,
+        287
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 34,
+        "total": 164
+      },
+      {
+        "name": "pr_test",
+        "ran": 34,
+        "total": 164
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "regressions: skipped (no test the fix left untouched passed before it)",
+    "behaviour_diff: skipped (the fix changes no function the behaviour diff can call (test_fsl_algorithm: new with the fix: nothing to compare; test_freesurfer_algorithm: new with the fix: nothing to compare; test_hsvs_algorithm: new with the fix: nothing to compare))",
+    "break_my_fix: skipped (the fix changes no function Break My Fix can call (cleanup_dummy_files: it takes no parameters to vary; test_freesurfer_algorithm: it takes no parameters to vary; test_fsl_algorithm: it takes no parameters to vary))",
+    "Break My Fix could not attack cleanup_dummy_files: it takes no parameters to vary",
+    "Break My Fix could not attack test_freesurfer_algorithm: it takes no parameters to vary",
+    "Break My Fix could not attack test_fsl_algorithm: it takes no parameters to vary",
+    "Break My Fix could not attack test_general_parameters: it takes no parameters to vary",
+    "Break My Fix could not attack test_hsvs_algorithm: it takes no parameters to vary",
+    "the behaviour diff could not compare test_fsl_algorithm: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_freesurfer_algorithm: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_hsvs_algorithm: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_general_parameters: new with the fix: nothing to compare",
+    "the behaviour diff could not compare cleanup_dummy_files: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 26619,
+    "output_tokens": 2410,
+    "cost_estimate": {
+      "usd": 0.0817,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 2 of the 10 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 89 rule mutants were run"
+  ],
+  "previous": null,
+  "attack_targets": []
+}

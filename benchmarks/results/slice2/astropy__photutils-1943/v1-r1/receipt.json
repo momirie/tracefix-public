@@ -1,0 +1,401 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-22T18:27:48+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "the fix does not fix the bug: the reproduction test fails the same way before and after it",
+    "Break My Fix finding 1: an input that breaks photutils.detection.peakfinder.find_peaks",
+    "Break My Fix finding 2: an input that breaks photutils.detection.peakfinder.find_peaks"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "8735398edc10de91f4704f8c84e1699805ac60c3"
+  },
+  "head": {
+    "ref": "tf-v1",
+    "sha": "6ac466ff173bee99262138f0cc2e98463b25b9c1"
+  },
+  "issue": {
+    "title": "IRAFStarFinder Error: self.cutout_data_nosub is size (0,)",
+    "sha256": "a2211dd712e1f7629dce5130a03d1e69e121f6cbfde432dbdfd95a863006bd7d"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.10.16"
+  },
+  "summary": {
+    "text": "The verifier's reproduction test for the empty cutout_data_nosub broadcasting error in IRAFStarFinder failed the same way before and after this fix, and Break My Fix found two inputs to find_peaks (an all-zero 6x6 array that raises NoDetectionsWarning, and a 5x5 array with border_width=1 that returns two peaks) that it flagged as breaking the fixed code. Start by checking why the reproduction sti…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 109.76,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "4 changed module(s) imported from the copies (8 imports in all)",
+      "duration_s": 7.22,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 4,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "fix_does_not_fix",
+      "reason": "attempt 1: the test fails before and after the fix with the same failure signature, also after the model was shown the result This rests on a test written by the model claude-sonnet-5-5.",
+      "duration_s": 44.13,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no photutils/aperture/tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "skipped",
+      "reason": "there is no reproduction test to judge the tests with (fix_does_not_fix)",
+      "duration_s": 0.0,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": null,
+        "repro_kill_rate": null,
+        "pr_kill_rate": null,
+        "mutants": 0,
+        "killed": 0,
+        "survived": 0,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [],
+        "rule_mutants": 0,
+        "rule_kill_rate": null,
+        "pr_test_files": [],
+        "findings": []
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 1658 untouched tests that passed before the fix fails after it",
+      "duration_s": 109.75,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 1658,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 0.02,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 12
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: _IRAFStarFinderCatalog.sky: it could not be loaded after the fix: _IRAFStarFinderCatalog.sky is a property here, not a method",
+      "duration_s": 5.59,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "found",
+      "reason": "2 finding(s), each proven by a failing repro file",
+      "duration_s": 130.25,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_1.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_finding_2.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_attack.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_tracefix_probe.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "inputs_tried": 537,
+        "properties_counted": 10,
+        "findings": 2,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 6
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (2 reported)",
+      "duration_s": 0.07,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 2
+      }
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "function": "photutils.detection.peakfinder.find_peaks",
+      "call": "find_peaks(data=[[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]], threshold=0.0)",
+      "input": {
+        "data": "[[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]",
+        "threshold": "0.0"
+      },
+      "outcome": "raises NoDetectionsWarning: Input data is constant. No local peaks can be found.",
+      "base_outcome": "raises NoDetectionsWarning: Input data is constant. No local peaks can be found.",
+      "expected": null,
+      "property": {
+        "id": "t3.p5",
+        "name": "peaks_above_threshold",
+        "kind": "returns",
+        "claim": "Every returned peak value is above the scalar threshold",
+        "source": "docstring",
+        "quote": "Peaks are the maxima above the ``threshold`` within a local",
+        "origin": "model"
+      },
+      "also_violates": [
+        "constant_data_none"
+      ],
+      "other_inputs": 1,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 128, 129: the fix touched this path and left it broken",
+      "file": "findings/finding_1.py",
+      "path": "photutils/detection/peakfinder.py",
+      "line": 128,
+      "expect": {
+        "types": [
+          "NoDetectionsWarning"
+        ],
+        "in_file": false
+      }
+    },
+    {
+      "number": 2,
+      "function": "photutils.detection.peakfinder.find_peaks",
+      "call": "find_peaks(data=[[0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 5.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 9.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0]], threshold=1.0, border_width=1)",
+      "input": {
+        "data": "[[0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 5.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 9.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0]]",
+        "threshold": "1.0",
+        "border_width": "1"
+      },
+      "outcome": "returns <QTable length=2>\n  id  x_peak y_peak peak_value\nint64 int64  int64   float64  \n----- ------ ------ ----------\n    1      1      1        5.0\n    2      3      3        9.0",
+      "base_outcome": "returns <QTable length=2>\n  id  x_peak y_peak peak_value\nint64 int64  int64   float64  \n----- ------ ------ ----------\n    1      1      1        5.0\n    2      3      3        9.0",
+      "expected": null,
+      "property": {
+        "id": "t3.p4",
+        "name": "larger_border_fewer_peaks",
+        "kind": "relation",
+        "claim": "Excluding a wider border never yields more peaks",
+        "source": "docstring",
+        "quote": "The width in pixels to exclude around the border of the",
+        "origin": "model"
+      },
+      "also_violates": [],
+      "other_inputs": 1,
+      "relation": "the same before the fix, but the failing call runs the fix's line(s) 128, 129, 142, 144, 168: the fix touched this path and left it broken",
+      "file": "findings/finding_2.py",
+      "path": "photutils/detection/peakfinder.py",
+      "line": 128,
+      "expect": {
+        "types": [],
+        "in_file": null
+      }
+    }
+  ],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [],
+  "fix_line_coverage": {
+    "lines": {
+      "photutils/detection/irafstarfinder.py": [
+        419,
+        455
+      ],
+      "photutils/detection/peakfinder.py": [
+        22,
+        128,
+        129,
+        142,
+        143,
+        144,
+        145,
+        168
+      ],
+      "photutils/detection/starfinder.py": [
+        99,
+        100
+      ]
+    },
+    "sets": [],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "guard: skipped (there is no reproduction test to judge the tests with (fix_does_not_fix))"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 119938,
+    "output_tokens": 11394,
+    "cost_estimate": {
+      "usd": 0.6096,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 10 functions were shown",
+    "reproduce: pyproject truncated to 3000 characters for the prompt"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "photutils.detection.irafstarfinder._IRAFStarFinderCatalog.sky",
+      "path": "photutils/detection/irafstarfinder.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    },
+    {
+      "function": "photutils.detection.irafstarfinder._IRAFStarFinderCatalog.cutout_convdata",
+      "path": "photutils/detection/irafstarfinder.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    },
+    {
+      "function": "photutils.detection.peakfinder.find_peaks",
+      "path": "photutils/detection/peakfinder.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 537,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "photutils.detection.core.StarFinderBase._find_stars",
+      "path": "photutils/detection/core.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    },
+    {
+      "function": "photutils.detection.starfinder.StarFinder._get_raw_catalog",
+      "path": "photutils/detection/starfinder.py",
+      "via": "",
+      "attacked": false,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": "no property to check it against"
+    },
+    {
+      "function": "photutils.detection.starfinder.StarFinder.find_stars",
+      "path": "photutils/detection/starfinder.py",
+      "via": "a public caller of the changed StarFinder._get_raw_catalog",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

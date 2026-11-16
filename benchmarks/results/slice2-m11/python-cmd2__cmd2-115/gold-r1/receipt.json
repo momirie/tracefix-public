@@ -1,0 +1,476 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-06T16:58:49+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "COUNTEREXAMPLE",
+  "level_reasons": [
+    "regression: tests/test_cmd2.py::test_base_help passed before the fix and fails after it",
+    "regression: tests/test_cmd2.py::test_base_help_history passed before the fix and fails after it",
+    "regression: tests/test_cmd2.py::test_base_list passed before the fix and fails after it",
+    "regression: tests/test_cmd2.py::test_list_with_string_argument passed before the fix and fails after it",
+    "regression: tests/test_cmd2.py::test_list_with_integer_argument passed before the fix and fails after it",
+    "regression: tests/test_cmd2.py::test_list_with_integer_span passed before the fix and fails after it",
+    "regression: tests/test_cmd2.py::test_base_cmdenvironment passed before the fix and fails after it",
+    "regression: tests/test_cmd2.py::test_allow_redirection passed before the fix and fails after it",
+    "regression: tests/test_cmd2.py::test_input_redirection passed before the fix and fails after it",
+    "regression: tests/test_transcript.py::test_base_with_transcript passed before the fix and fails after it",
+    "regression: tests/test_transcript.py::test_transcript_from_cmdloop passed before the fix and fails after it"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "a0d829e4105cd431198feb43534adaf953b090ba"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "e61360e53f3915e3e64b9c36129939ae78fccec1"
+  },
+  "issue": {
+    "title": "history and list commands are largely redundant",
+    "sha256": "3c9998a1fd0f2909352cb6bbb58917e86ffe3e472d45d9963596de8f9c96e90b"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "The verifier found 11 regressions: tests in tests/test_cmd2.py (including test_base_help, test_base_list, the test_list_with_* tests and test_base_cmdenvironment) and tests/test_transcript.py passed before this change and fail after it, which is consistent with removing the list command without updating the tests and transcripts that still exercise it. Next, check each failing test to see whether…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 42.56,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 2.44,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 6.82,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 3 of 5 mutants; 80% is needed",
+      "duration_s": 523.91,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.6,
+        "repro_kill_rate": 0.4,
+        "pr_kill_rate": null,
+        "mutants": 5,
+        "killed": 3,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 4,
+        "not_run": 3,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-05fd6f650c76",
+          "m-16abd119b35c",
+          "m-aabf1b71afd2"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.8,
+        "rule_kinds": [
+          "body: 2 of 3 killed",
+          "logic: 1 of 2 killed",
+          "negate_if: 1 of 1 killed",
+          "constant: 2 of 2 killed",
+          "membership: 2 of 2 killed"
+        ],
+        "rule_kinds_absent": [
+          "compare",
+          "arithmetic",
+          "loop",
+          "drop_call",
+          "reraise"
+        ],
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 3 of 5 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "found",
+      "reason": "11 confirmed: tests/test_cmd2.py::test_base_help, tests/test_cmd2.py::test_base_help_history, tests/test_cmd2.py::test_base_list, tests/test_cmd2.py::test_list_with_string_argument, tests/test_cmd2.py::test_list_with_integer_argument and 6 more",
+      "duration_s": 174.99,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors tests/test_cmd2.py tests/test_transcript.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 79,
+        "not_run": 0,
+        "regressions": 11,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 1.78,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 7
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: Cmd.do_list: removed by the fix (nothing can be compared)",
+      "duration_s": 1.91,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 77 inputs against 13 properties",
+      "duration_s": 6.01,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 3,
+        "inputs_tried": 77,
+        "properties_counted": 13,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.04,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    },
+    {
+      "name": "blind",
+      "status": "reproduced",
+      "reason": "attempt 2: fails before the fix and passes after it",
+      "duration_s": 24.03,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_blind.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 2,
+        "test_file": "repro/test_tracefix_blind.py",
+        "oracle": "a test written by the model claude-sonnet-5-5, not shown the fix",
+        "report_only": true
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [
+    {
+      "file": "tests/test_cmd2.py",
+      "test": "test_base_help",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert ['Documented ...   shortcuts'] == ['Documented ... shell  show']",
+      "line": 28
+    },
+    {
+      "file": "tests/test_cmd2.py",
+      "test": "test_base_help_history",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert ['history [ar... search', ...] == ['history [ar... search', ...]",
+      "line": 34
+    },
+    {
+      "file": "tests/test_cmd2.py",
+      "test": "test_base_list",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert ['*** Unknown syntax: list'] == ['-----------..., 'shortcuts']",
+      "line": 146
+    },
+    {
+      "file": "tests/test_cmd2.py",
+      "test": "test_list_with_string_argument",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert ['*** Unknown...x: list help'] == ['-----------..., 'help list']",
+      "line": 157
+    },
+    {
+      "file": "tests/test_cmd2.py",
+      "test": "test_list_with_integer_argument",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert ['*** Unknown syntax: list 1'] == ['-----------...-[1]', 'help']",
+      "line": 171
+    },
+    {
+      "file": "tests/test_cmd2.py",
+      "test": "test_list_with_integer_span",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert ['*** Unknown...x: list 1..2'] == ['-----------..., 'shortcuts']",
+      "line": 182
+    },
+    {
+      "file": "tests/test_cmd2.py",
+      "test": "test_base_cmdenvironment",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert False",
+      "line": 196
+    },
+    {
+      "file": "tests/test_cmd2.py",
+      "test": "test_allow_redirection",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert ['Documented ...   shortcuts'] == ['Documented ... shell  show']",
+      "line": 331
+    },
+    {
+      "file": "tests/test_cmd2.py",
+      "test": "test_input_redirection",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert ['history [ar... search', ...] == ['history [ar... search', ...]",
+      "line": 346
+    },
+    {
+      "file": "tests/test_transcript.py",
+      "test": "test_base_with_transcript",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert ['Documented ...tcuts  speak'] == ['Documented ...  set   show']",
+      "line": 102
+    },
+    {
+      "file": "tests/test_transcript.py",
+      "test": "test_transcript_from_cmdloop",
+      "evidence": "passed before the fix (also when its file ran alone); fails after it in all 4 attempts: AssertionError: assert False",
+      "line": 258
+    }
+  ],
+  "survivors": [
+    {
+      "id": "m-d9590eda06dc",
+      "origin": "model",
+      "file": "cmd2.py",
+      "line": 1612,
+      "original": "            if '..' in arg or ':' in arg:",
+      "replacement": "            if ':' in arg:",
+      "description": "Dot-dot spans no longer routed to span().",
+      "diff": "--- a/cmd2.py\n+++ b/cmd2.py\n@@ -1611,3 +1611,3 @@\n             # If a character indicating a slice is present, retrieve a slice of the history\n-            if '..' in arg or ':' in arg:\n+            if ':' in arg:\n                 # Get a slice of history\n",
+      "words": "cmd2.py:1612: changing `            if '..' in arg or ':' in arg:` to `            if ':' in arg:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-dec777a6603d",
+      "origin": "model",
+      "file": "cmd2.py",
+      "line": 2155,
+      "original": "        start = self._to_index(results.group('start')) or 0  # Ensure start is not None",
+      "replacement": "        start = self._to_index(results.group('start'))  # Ensure start is not None",
+      "description": "Removes the None guard for start, breaking '..b' spans.",
+      "diff": "--- a/cmd2.py\n+++ b/cmd2.py\n@@ -2154,3 +2154,3 @@\n             return [self[self._to_index(results.group('start'))]]\n-        start = self._to_index(results.group('start')) or 0  # Ensure start is not None\n+        start = self._to_index(results.group('start'))  # Ensure start is not None\n         end = self._to_index(results.group('end'))\n",
+      "words": "cmd2.py:2155: changing `        start = self._to_index(results.group('start')) or 0 ...` to `        start = self._to_index(results.group('start'))  # En...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": null
+    },
+    {
+      "id": "m-3d960091bed8",
+      "origin": "rule",
+      "file": "cmd2.py",
+      "line": 1119,
+      "original": "        self.stdout.write(\"\"\"\n        Commands are case-sensitive: {}\n        Commands may be terminated with: {}\n        Command-line arguments allowed: {}\n        Output redirection and pipes allowe...",
+      "replacement": "        return None",
+      "description": "rule: body of `do_cmdenvironment` -> `return None`",
+      "diff": "--- a/cmd2.py\n+++ b/cmd2.py\n@@ -1118,13 +1118,3 @@\n         \"\"\"Summary report of interactive parameters.\"\"\"\n-        self.stdout.write(\"\"\"\n-        Commands are case-sensitive: {}\n-        Commands may be terminated with: {}\n-        Command-line arguments allowed: {}\n-        Output redirection and pipes allowed: {}\n-        Parsing of @options commands:\n-            Use POSIX-style argument parser (vs Windows): {}\n-            Strip Quotes when using Windows-style argument parser: {}\n-            Use a list of arguments instead of a single argument string: {}\n-        \\n\"\"\".format(not self.case_insensitive, str(self.terminators), self.allow_cli_args, self.allow_redirection,\n-                     POSIX_SHLEX, STRIP_QUOTES_FOR_NON_POSIX, USE_ARG_LIST))\n+        return None\n \n",
+      "words": "cmd2.py:1119: changing `        self.stdout.write(\"\"\"\n        Commands are case-sens...` to `        return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "body"
+    },
+    {
+      "id": "m-fc6533b4203c",
+      "origin": "rule",
+      "file": "cmd2.py",
+      "line": 1128,
+      "original": "        \\n\"\"\".format(not self.case_insensitive, str(self.terminators), self.allow_cli_args, self.allow_redirection,",
+      "replacement": "        \\n\"\"\".format(self.case_insensitive, str(self.terminators), self.allow_cli_args, self.allow_redirection,",
+      "description": "rule: drop `not`",
+      "diff": "--- a/cmd2.py\n+++ b/cmd2.py\n@@ -1127,3 +1127,3 @@\n             Use a list of arguments instead of a single argument string: {}\n-        \\n\"\"\".format(not self.case_insensitive, str(self.terminators), self.allow_cli_args, self.allow_redirection,\n+        \\n\"\"\".format(self.case_insensitive, str(self.terminators), self.allow_cli_args, self.allow_redirection,\n                      POSIX_SHLEX, STRIP_QUOTES_FOR_NON_POSIX, USE_ARG_LIST))\n",
+      "words": "cmd2.py:1128: changing `        \\n\"\"\".format(not self.case_insensitive, str(self.ter...` to `        \\n\"\"\".format(self.case_insensitive, str(self.termina...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": [],
+      "kind": "logic"
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "cmd2.py": [
+        1128,
+        1129,
+        1612,
+        1614,
+        1617,
+        1645,
+        2155
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 3,
+        "total": 7
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 10,
+    "input_tokens": 66819,
+    "output_tokens": 11283,
+    "cost_estimate": {
+      "usd": 0.4241,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: 3 of the 8 mutants were not run: the tests could no longer reach 80% even if they killed them all",
+    "guard: only the first 10 of 12 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "cmd2.Cmd.do_cmdenvironment",
+      "path": "cmd2.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 1,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "cmd2.Cmd.do_history",
+      "path": "cmd2.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 17,
+      "finished": true,
+      "reason": ""
+    },
+    {
+      "function": "cmd2.History.span",
+      "path": "cmd2.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 59,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

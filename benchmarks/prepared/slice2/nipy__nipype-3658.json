@@ -1,0 +1,115 @@
+{
+ "instance_id": "nipy__nipype-3658",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "pytest_doctestplus.plugin",
+  "pytest_env.plugin",
+  "pytest_timeout",
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 139.349,
+ "suite_timeout": 419,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 37044,
+   "label": "no_effect",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "nipype/interfaces/mrtrix3/utils.py",
+     "function": null
+    }
+   ],
+   "differs": [
+    {
+     "path": "nipype/interfaces/mrtrix3/utils.py",
+     "function": null
+    }
+   ]
+  },
+  {
+   "kind": "agent_ok",
+   "source_row": 40577,
+   "label": "hidden_tests_pass",
+   "failing": 0,
+   "kept": true,
+   "functions": [
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": null
+    },
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": "cleanup_dummy_files"
+    },
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": "test_freesurfer_algorithm"
+    },
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": "test_fsl_algorithm"
+    },
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": "test_general_parameters"
+    },
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": "test_hsvs_algorithm"
+    },
+    {
+     "path": "nipype/interfaces/mrtrix3/utils.py",
+     "function": null
+    }
+   ],
+   "differs": [
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": null
+    },
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": "cleanup_dummy_files"
+    },
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": "test_freesurfer_algorithm"
+    },
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": "test_fsl_algorithm"
+    },
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": "test_general_parameters"
+    },
+    {
+     "path": "comprehensive_test_5ttgen.py",
+     "function": "test_hsvs_algorithm"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "e03ab6f99f85fb54bc5f1ed2d9222af8f5bd66e0",
+  "gold": "d4a576fa329b67a796c5b00967655bddf372e871",
+  "agent_wrong": "fa1b45c21dda46883acc4718377fe207499b94f0",
+  "agent_ok": "83bd9e1cbd5f4c1866a19be61db1633171478597"
+ },
+ "seconds": 178.281
+}

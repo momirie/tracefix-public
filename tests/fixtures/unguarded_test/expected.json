@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "case": "unguarded_test",
+  "summary": "Correctly reserves room for the ellipsis so results never exceed max_len, but the only added test also passes on the buggy code, so nothing guards the fix.",
+  "receipt": {
+    "status": "ok",
+    "level": {
+      "exactly": "L1"
+    },
+    "stages": {
+      "reproduce": "reproduced",
+      "guard": "not_guarded"
+    },
+    "must_find": [
+      {
+        "stage": "guard",
+        "kind": "pr_tests_pass_on_revert",
+        "file": "tests/test_trunc.py"
+      }
+    ],
+    "must_not_find": [
+      "break_my_fix_finding",
+      "integrity_flag"
+    ]
+  },
+  "checks": [
+    {
+      "tests": "suite",
+      "ref": "base",
+      "expect": "pass"
+    },
+    {
+      "tests": "suite",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "base",
+      "expect": "fail",
+      "match": "assert 6 <= 5"
+    },
+    {
+      "tests": "oracle/test_repro.py",
+      "ref": "head",
+      "expect": "pass"
+    },
+    {
+      "tests": "head:tests/test_trunc.py",
+      "ref": "base",
+      "expect": "pass"
+    }
+  ]
+}

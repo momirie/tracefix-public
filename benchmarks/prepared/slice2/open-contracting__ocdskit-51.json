@@ -1,0 +1,56 @@
+{
+ "instance_id": "open-contracting__ocdskit-51",
+ "excluded": null,
+ "detail": "",
+ "python": "3.9.21",
+ "isolation": "strict",
+ "pip_changes": [
+  "hypothesis - -> 6.141.1",
+  "sortedcontainers - -> 2.4.0"
+ ],
+ "setup_files": [],
+ "changed_files": [],
+ "plugins": [
+  "tracefix_stub_cov"
+ ],
+ "suite_seconds": 2.62,
+ "suite_timeout": 120,
+ "source_hunks": 1,
+ "variants": [],
+ "kept": null,
+ "agents": [
+  {
+   "kind": "agent_wrong",
+   "source_row": 8306,
+   "label": "no_effect",
+   "failing": 1,
+   "kept": true,
+   "functions": [
+    {
+     "path": "ocdskit/cli/commands/mapping_sheet.py",
+     "function": "Command.handle.display_properties"
+    }
+   ],
+   "differs": [
+    {
+     "path": "ocdskit/cli/commands/mapping_sheet.py",
+     "function": "Command.handle"
+    },
+    {
+     "path": "ocdskit/cli/commands/mapping_sheet.py",
+     "function": "Command.handle.display_properties"
+    },
+    {
+     "path": "ocdskit/cli/commands/mapping_sheet.py",
+     "function": "Command.handle.make_row"
+    }
+   ]
+  }
+ ],
+ "commits": {
+  "base": "c7aa01345a2d8b7c140faddf06412d34c1c707f6",
+  "gold": "ad9aebf7e1bcaf6efba17071536221cb82fac2ac",
+  "agent_wrong": "5f1721a576a6930e01a55619ad8b891bd5f79a29"
+ },
+ "seconds": 33.64
+}

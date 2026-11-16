@@ -1,0 +1,1449 @@
+{
+  "$defs": {
+    "AttackTargetEntry": {
+      "additionalProperties": false,
+      "description": "One function Break My Fix set out to attack, and how many inputs it ran against it\n(M11; facts from our own runs, report only: it sets no level).",
+      "properties": {
+        "attacked": {
+          "title": "Attacked",
+          "type": "boolean"
+        },
+        "finished": {
+          "title": "Finished",
+          "type": "boolean"
+        },
+        "function": {
+          "title": "Function",
+          "type": "string"
+        },
+        "inputs_tried": {
+          "title": "Inputs Tried",
+          "type": "integer"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "via": {
+          "title": "Via",
+          "type": "string"
+        }
+      },
+      "required": [
+        "function",
+        "path",
+        "via",
+        "attacked",
+        "inputs_tried",
+        "finished",
+        "reason"
+      ],
+      "title": "AttackTargetEntry",
+      "type": "object"
+    },
+    "BehaviourChange": {
+      "additionalProperties": false,
+      "properties": {
+        "after": {
+          "title": "After",
+          "type": "string"
+        },
+        "before": {
+          "title": "Before",
+          "type": "string"
+        },
+        "contradicts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Contradicts",
+          "type": "array"
+        },
+        "count": {
+          "title": "Count",
+          "type": "integer"
+        },
+        "examples": {
+          "items": {
+            "$ref": "#/$defs/Example"
+          },
+          "title": "Examples",
+          "type": "array"
+        },
+        "explained": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Explained",
+          "type": "array"
+        },
+        "function": {
+          "title": "Function",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "labels": {
+          "items": {
+            "$ref": "#/$defs/ChangeLabel"
+          },
+          "title": "Labels",
+          "type": "array"
+        }
+      },
+      "required": [
+        "function",
+        "kind",
+        "count",
+        "before",
+        "after",
+        "explained",
+        "contradicts",
+        "labels",
+        "examples"
+      ],
+      "title": "BehaviourChange",
+      "type": "object"
+    },
+    "ChangeLabel": {
+      "additionalProperties": false,
+      "properties": {
+        "change": {
+          "title": "Change",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "change",
+        "label",
+        "reason"
+      ],
+      "title": "ChangeLabel",
+      "type": "object"
+    },
+    "Cost": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "usd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Usd"
+        }
+      },
+      "required": [
+        "usd",
+        "label"
+      ],
+      "title": "Cost",
+      "type": "object"
+    },
+    "CoverageSet": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "ran": {
+          "title": "Ran",
+          "type": "integer"
+        },
+        "total": {
+          "title": "Total",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "ran",
+        "total"
+      ],
+      "title": "CoverageSet",
+      "type": "object"
+    },
+    "EvidenceLevel": {
+      "enum": [
+        "COUNTEREXAMPLE",
+        "L0",
+        "L1",
+        "L2",
+        "L3",
+        "L4"
+      ],
+      "title": "EvidenceLevel",
+      "type": "string"
+    },
+    "Example": {
+      "additionalProperties": false,
+      "properties": {
+        "after": {
+          "title": "After",
+          "type": "string"
+        },
+        "before": {
+          "title": "Before",
+          "type": "string"
+        },
+        "call": {
+          "title": "Call",
+          "type": "string"
+        }
+      },
+      "required": [
+        "call",
+        "before",
+        "after"
+      ],
+      "title": "Example",
+      "type": "object"
+    },
+    "Expect": {
+      "additionalProperties": false,
+      "description": "The failure a finding's file must end with on head: one of `types` (empty: any test\nfailure), raised inside the file (True), outside it (False) or anywhere (None).",
+      "properties": {
+        "in_file": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "In File"
+        },
+        "types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Types",
+          "type": "array"
+        }
+      },
+      "required": [
+        "types",
+        "in_file"
+      ],
+      "title": "Expect",
+      "type": "object"
+    },
+    "FindingEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "also_violates": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Also Violates",
+          "type": "array"
+        },
+        "base_outcome": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Base Outcome"
+        },
+        "call": {
+          "title": "Call",
+          "type": "string"
+        },
+        "doubt": {
+          "anyOf": [
+            {
+              "enum": [
+                "os_limit",
+                "finished_object",
+                "refused"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Doubt"
+        },
+        "expect": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Expect"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "expected": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected"
+        },
+        "file": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "File"
+        },
+        "function": {
+          "title": "Function",
+          "type": "string"
+        },
+        "input": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Input",
+          "type": "object"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line"
+        },
+        "number": {
+          "title": "Number",
+          "type": "integer"
+        },
+        "other_inputs": {
+          "title": "Other Inputs",
+          "type": "integer"
+        },
+        "outcome": {
+          "title": "Outcome",
+          "type": "string"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        },
+        "property": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PropertyInfo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "relation": {
+          "title": "Relation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "number",
+        "function",
+        "call",
+        "input",
+        "outcome",
+        "base_outcome",
+        "expected",
+        "property",
+        "also_violates",
+        "other_inputs",
+        "relation",
+        "file"
+      ],
+      "title": "FindingEntry",
+      "type": "object"
+    },
+    "FixLineCoverageEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "lines": {
+          "additionalProperties": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "title": "Lines",
+          "type": "object"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        },
+        "sets": {
+          "items": {
+            "$ref": "#/$defs/CoverageSet"
+          },
+          "title": "Sets",
+          "type": "array"
+        }
+      },
+      "required": [
+        "lines",
+        "sets",
+        "notes"
+      ],
+      "title": "FixLineCoverageEntry",
+      "type": "object"
+    },
+    "IntegrityFlagEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        },
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        },
+        "file": {
+          "title": "File",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "line": {
+          "title": "Line",
+          "type": "integer"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "test": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Test"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "file",
+        "line",
+        "test",
+        "detail",
+        "evidence"
+      ],
+      "title": "IntegrityFlagEntry",
+      "type": "object"
+    },
+    "IsolationInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "enum": [
+            "strict",
+            "basic"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "python": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Python"
+        },
+        "warning": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Warning"
+        },
+        "why": {
+          "title": "Why",
+          "type": "string"
+        }
+      },
+      "required": [
+        "level",
+        "why"
+      ],
+      "title": "IsolationInfo",
+      "type": "object"
+    },
+    "IssueInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "sha256"
+      ],
+      "title": "IssueInfo",
+      "type": "object"
+    },
+    "LLMSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "effort": {
+          "title": "Effort",
+          "type": "string"
+        },
+        "max_calls": {
+          "title": "Max Calls",
+          "type": "integer"
+        },
+        "max_tokens": {
+          "title": "Max Tokens",
+          "type": "integer"
+        },
+        "models": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Models",
+          "type": "object"
+        },
+        "token_budget": {
+          "title": "Token Budget",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "models",
+        "effort",
+        "max_tokens",
+        "max_calls",
+        "token_budget"
+      ],
+      "title": "LLMSettings",
+      "type": "object"
+    },
+    "LLMUse": {
+      "additionalProperties": false,
+      "properties": {
+        "calls": {
+          "title": "Calls",
+          "type": "integer"
+        },
+        "cost_estimate": {
+          "$ref": "#/$defs/Cost"
+        },
+        "input_tokens": {
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "problems": {
+          "items": {
+            "$ref": "#/$defs/ModelProblem"
+          },
+          "title": "Problems",
+          "type": "array"
+        },
+        "settings": {
+          "$ref": "#/$defs/LLMSettings"
+        }
+      },
+      "required": [
+        "calls",
+        "input_tokens",
+        "output_tokens",
+        "cost_estimate",
+        "settings",
+        "problems"
+      ],
+      "title": "LLMUse",
+      "type": "object"
+    },
+    "ModelProblem": {
+      "additionalProperties": false,
+      "properties": {
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "stage": {
+          "title": "Stage",
+          "type": "string"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Status"
+        },
+        "words": {
+          "title": "Words",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stage",
+        "role",
+        "model",
+        "kind",
+        "status",
+        "words",
+        "detail"
+      ],
+      "title": "ModelProblem",
+      "type": "object"
+    },
+    "OpenFinding": {
+      "additionalProperties": false,
+      "description": "An old finding no run has shown fixed yet: the next run replays its file.",
+      "properties": {
+        "call": {
+          "title": "Call",
+          "type": "string"
+        },
+        "expect": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Expect"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "file": {
+          "title": "File",
+          "type": "string"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line"
+        },
+        "number": {
+          "title": "Number",
+          "type": "integer"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        }
+      },
+      "required": [
+        "number",
+        "call",
+        "file",
+        "expect"
+      ],
+      "title": "OpenFinding",
+      "type": "object"
+    },
+    "PreviousInfo": {
+      "additionalProperties": false,
+      "description": "The last receipt's findings, run again on this commit (`--previous`, added in M9), and\nthe old findings still open after this run (carried, so the next run replays them).",
+      "properties": {
+        "created_at": {
+          "title": "Created At",
+          "type": "string"
+        },
+        "findings": {
+          "items": {
+            "$ref": "#/$defs/ReplayedFinding"
+          },
+          "title": "Findings",
+          "type": "array"
+        },
+        "head_sha": {
+          "title": "Head Sha",
+          "type": "string"
+        },
+        "level": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvidenceLevel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "still_open": {
+          "items": {
+            "$ref": "#/$defs/OpenFinding"
+          },
+          "title": "Still Open",
+          "type": "array"
+        },
+        "still_open_known": {
+          "title": "Still Open Known",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "head_sha",
+        "level",
+        "created_at",
+        "findings",
+        "still_open",
+        "still_open_known"
+      ],
+      "title": "PreviousInfo",
+      "type": "object"
+    },
+    "PropertyInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "claim": {
+          "title": "Claim",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "origin": {
+          "title": "Origin",
+          "type": "string"
+        },
+        "quote": {
+          "title": "Quote",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "claim",
+        "source",
+        "quote",
+        "origin"
+      ],
+      "title": "PropertyInfo",
+      "type": "object"
+    },
+    "Ref": {
+      "additionalProperties": false,
+      "properties": {
+        "ref": {
+          "title": "Ref",
+          "type": "string"
+        },
+        "sha": {
+          "title": "Sha",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ref",
+        "sha"
+      ],
+      "title": "Ref",
+      "type": "object"
+    },
+    "RegressionEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        },
+        "file": {
+          "title": "File",
+          "type": "string"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line"
+        },
+        "test": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Test"
+        }
+      },
+      "required": [
+        "file",
+        "test",
+        "evidence"
+      ],
+      "title": "RegressionEntry",
+      "type": "object"
+    },
+    "Replay": {
+      "enum": [
+        "fixed",
+        "still_fails",
+        "fails_differently",
+        "cannot_run",
+        "flaky",
+        "unfinished"
+      ],
+      "title": "Replay",
+      "type": "string"
+    },
+    "ReplayedFinding": {
+      "additionalProperties": false,
+      "properties": {
+        "call": {
+          "title": "Call",
+          "type": "string"
+        },
+        "carried": {
+          "default": false,
+          "title": "Carried",
+          "type": "boolean"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        },
+        "file": {
+          "title": "File",
+          "type": "string"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line"
+        },
+        "number": {
+          "title": "Number",
+          "type": "integer"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        },
+        "result": {
+          "$ref": "#/$defs/Replay"
+        }
+      },
+      "required": [
+        "number",
+        "call",
+        "file",
+        "result",
+        "detail"
+      ],
+      "title": "ReplayedFinding",
+      "type": "object"
+    },
+    "RepoInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "RepoInfo",
+      "type": "object"
+    },
+    "RunStatus": {
+      "enum": [
+        "ok",
+        "ENVIRONMENT_ERROR",
+        "INVALID",
+        "ERROR"
+      ],
+      "title": "RunStatus",
+      "type": "string"
+    },
+    "StageEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "commands": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Commands",
+          "type": "array"
+        },
+        "duration_s": {
+          "title": "Duration S",
+          "type": "number"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Error"
+        },
+        "evidence": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Evidence",
+          "type": "object"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "problems": {
+          "items": {
+            "$ref": "#/$defs/ModelProblem"
+          },
+          "title": "Problems",
+          "type": "array"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "status",
+        "reason",
+        "duration_s",
+        "commands",
+        "problems",
+        "error",
+        "evidence"
+      ],
+      "title": "StageEntry",
+      "type": "object"
+    },
+    "Summary": {
+      "additionalProperties": false,
+      "properties": {
+        "by": {
+          "enum": [
+            "judge",
+            "tracefix"
+          ],
+          "title": "By",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "by"
+      ],
+      "title": "Summary",
+      "type": "object"
+    },
+    "Survivor": {
+      "additionalProperties": false,
+      "description": "A change to the fixed code that no test noticed (a Guard mutant that survived).",
+      "properties": {
+        "check": {
+          "title": "Check",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "diff": {
+          "title": "Diff",
+          "type": "string"
+        },
+        "examples": {
+          "items": {
+            "$ref": "#/$defs/SurvivorExample"
+          },
+          "title": "Examples",
+          "type": "array"
+        },
+        "file": {
+          "title": "File",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kind"
+        },
+        "line": {
+          "title": "Line",
+          "type": "integer"
+        },
+        "origin": {
+          "title": "Origin",
+          "type": "string"
+        },
+        "original": {
+          "title": "Original",
+          "type": "string"
+        },
+        "replacement": {
+          "title": "Replacement",
+          "type": "string"
+        },
+        "words": {
+          "title": "Words",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "origin",
+        "file",
+        "line",
+        "original",
+        "replacement",
+        "description",
+        "diff",
+        "words",
+        "check",
+        "examples"
+      ],
+      "title": "Survivor",
+      "type": "object"
+    },
+    "SurvivorExample": {
+      "additionalProperties": false,
+      "properties": {
+        "call": {
+          "title": "Call",
+          "type": "string"
+        },
+        "fix": {
+          "title": "Fix",
+          "type": "string"
+        },
+        "mutant": {
+          "title": "Mutant",
+          "type": "string"
+        }
+      },
+      "required": [
+        "call",
+        "fix",
+        "mutant"
+      ],
+      "title": "SurvivorExample",
+      "type": "object"
+    },
+    "Tampering": {
+      "additionalProperties": false,
+      "properties": {
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        },
+        "stage": {
+          "title": "Stage",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stage",
+        "detail"
+      ],
+      "title": "Tampering",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A Fix Receipt, schema v1: what Tracefix's own runs showed about one bug fix. `level` is\ncomputed by Tracefix's code from the stages' results; model text never sets it.",
+  "properties": {
+    "attack_targets": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/AttackTargetEntry"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Attack Targets"
+    },
+    "base": {
+      "$ref": "#/$defs/Ref"
+    },
+    "behaviour_changes": {
+      "items": {
+        "$ref": "#/$defs/BehaviourChange"
+      },
+      "title": "Behaviour Changes",
+      "type": "array"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "findings": {
+      "items": {
+        "$ref": "#/$defs/FindingEntry"
+      },
+      "title": "Findings",
+      "type": "array"
+    },
+    "fix_line_coverage": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/FixLineCoverageEntry"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "head": {
+      "$ref": "#/$defs/Ref"
+    },
+    "integrity_flags": {
+      "items": {
+        "$ref": "#/$defs/IntegrityFlagEntry"
+      },
+      "title": "Integrity Flags",
+      "type": "array"
+    },
+    "isolation": {
+      "$ref": "#/$defs/IsolationInfo"
+    },
+    "issue": {
+      "$ref": "#/$defs/IssueInfo"
+    },
+    "level": {
+      "$ref": "#/$defs/EvidenceLevel"
+    },
+    "level_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Level Reasons",
+      "type": "array"
+    },
+    "llm": {
+      "$ref": "#/$defs/LLMUse"
+    },
+    "notes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Notes",
+      "type": "array"
+    },
+    "pre_existing": {
+      "items": {
+        "$ref": "#/$defs/FindingEntry"
+      },
+      "title": "Pre Existing",
+      "type": "array"
+    },
+    "previous": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PreviousInfo"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "regressions": {
+      "items": {
+        "$ref": "#/$defs/RegressionEntry"
+      },
+      "title": "Regressions",
+      "type": "array"
+    },
+    "repo": {
+      "$ref": "#/$defs/RepoInfo"
+    },
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "stages": {
+      "items": {
+        "$ref": "#/$defs/StageEntry"
+      },
+      "title": "Stages",
+      "type": "array"
+    },
+    "status": {
+      "$ref": "#/$defs/RunStatus"
+    },
+    "status_reason": {
+      "title": "Status Reason",
+      "type": "string"
+    },
+    "summary": {
+      "$ref": "#/$defs/Summary"
+    },
+    "survivors": {
+      "items": {
+        "$ref": "#/$defs/Survivor"
+      },
+      "title": "Survivors",
+      "type": "array"
+    },
+    "tampering": {
+      "items": {
+        "$ref": "#/$defs/Tampering"
+      },
+      "title": "Tampering",
+      "type": "array"
+    },
+    "tracefix_version": {
+      "title": "Tracefix Version",
+      "type": "string"
+    },
+    "unchecked": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unchecked",
+      "type": "array"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "tracefix_version",
+    "created_at",
+    "status",
+    "status_reason",
+    "level",
+    "level_reasons",
+    "repo",
+    "base",
+    "head",
+    "issue",
+    "isolation",
+    "summary",
+    "stages",
+    "findings",
+    "pre_existing",
+    "behaviour_changes",
+    "integrity_flags",
+    "regressions",
+    "survivors",
+    "fix_line_coverage",
+    "unchecked",
+    "llm",
+    "tampering",
+    "warnings",
+    "notes"
+  ],
+  "title": "Receipt",
+  "type": "object"
+}

@@ -1,0 +1,534 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-15T17:30:12+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 2 of 7 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "b766b7f7596e931f141d3ad26a507807baa69774"
+  },
+  "head": {
+    "ref": "tf-v2",
+    "sha": "278294850ecd27316491e7202315759049e9e658"
+  },
+  "issue": {
+    "title": "Custom provider name containing parentheses and port leads to corrupted model string (\"15721):deepseek-v4-flash\")",
+    "sha256": "0ccf920ad7e71c8f2e6ee755c5252cc27bf23c4b445fb607da873a269fd0ea76"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null
+  },
+  "summary": {
+    "text": "The evidence reached L1: a test reproduced the corrupted model string bug by failing before the fix and passing after it, with no regressions or breaking inputs found, but the tests did not kill enough mutants to show the fix is guarded. The most important thing to look at next is the value changes in api.config._custom_provider_slug_from_name, where three of the six behaviour changes were labell…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 63.51,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "2 changed module(s) imported from the copies (4 imports in all)",
+      "duration_s": 6.32,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 2,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 24.67,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 2 of 7 mutants; 80% is needed",
+      "duration_s": 1727.9,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.286,
+        "repro_kill_rate": 0.143,
+        "pr_kill_rate": null,
+        "mutants": 7,
+        "killed": 2,
+        "survived": 5,
+        "discarded": 0,
+        "rejected": 1,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-46845b0c1bb2",
+          "m-f624199dbaba"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.5,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 2 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 4908 untouched tests that passed before the fix fails after it",
+      "duration_s": 252.33,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 4908,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 4.01,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 23
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "partial",
+      "reason": "638 input(s) compared on 5 function(s): 19 changed with the fix; not complete: get_available_models._build_available_models_uncached._configured_provider_for_base_url: not compared (a nested function: it can't be imported, not attacked yet)",
+      "duration_s": 85.77,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 5,
+        "finished": 5,
+        "inputs_compared": 638,
+        "changes": 19,
+        "groups": 1,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "labelled"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 1601 inputs against 15 properties",
+      "duration_s": 124.46,
+      "commands": [
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_issue1094_provider_bugs.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_issue1500_lmstudio_env_var_alignment.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_issue2025_xiaomi_env_key.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_provider_management.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_provider_quota_status.py",
+        "python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 6,
+        "inputs_tried": 1601,
+        "properties_counted": 15,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.1,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [
+    {
+      "function": "api.config._custom_provider_slug_from_name",
+      "kind": "value",
+      "count": 19,
+      "before": "returns 'custom:local-(127.0.0.1:15721)'",
+      "after": "returns 'custom:local-127.0.0.1-15721'",
+      "explained": [],
+      "contradicts": [],
+      "labels": [
+        {
+          "change": "c1",
+          "label": "intended",
+          "reason": "This is the exact case in the issue: 'Local (127.0.0.1:15721)' should not keep the ':' or parentheses, and the slug now matches the suggested 'local-127.0.0.1-15721'."
+        },
+        {
+          "change": "c2",
+          "label": "intended",
+          "reason": "The issue's Fix 1 says to strip or replace '(', ')' and other non-alphanumeric characters in the name-derived slug, and that is what happens here."
+        },
+        {
+          "change": "c3",
+          "label": "suspicious",
+          "reason": "The issue only asks to remove problematic characters like parentheses and colons; dropping a leading '-' silently renames an otherwise valid slug."
+        },
+        {
+          "change": "c4",
+          "label": "intended",
+          "reason": "Quotes and backslashes are non-alphanumeric decorations, so replacing them follows the Fix 1 sanitization rule in the issue."
+        },
+        {
+          "change": "c5",
+          "label": "suspicious",
+          "reason": "Stripping the leading hyphen from '-inf' is not asked for; the issue only targets characters such as ':' and parentheses that break the @provider:model grammar."
+        },
+        {
+          "change": "c6",
+          "label": "suspicious",
+          "reason": "Stripping the leading '-' and turning '+' into '-' gives 'e-88', a different name that can collide with another one; the issue asks for nothing beyond stripping parentheses and colons."
+        }
+      ],
+      "examples": [
+        {
+          "call": "_custom_provider_slug_from_name(name='Local (127.0.0.1:15721)')",
+          "before": "returns 'custom:local-(127.0.0.1:15721)'",
+          "after": "returns 'custom:local-127.0.0.1-15721'"
+        },
+        {
+          "call": "_custom_provider_slug_from_name(name=(255, 39))",
+          "before": "returns 'custom:(255,-39)'",
+          "after": "returns 'custom:255-39'"
+        },
+        {
+          "call": "_custom_provider_slug_from_name(name=-3954091877)",
+          "before": "returns 'custom:-3954091877'",
+          "after": "returns 'custom:3954091877'"
+        }
+      ]
+    }
+  ],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-baa296c00ee8",
+      "origin": "model",
+      "file": "api/config.py",
+      "line": 755,
+      "original": "    slug = re.sub(r\"-{2,}\", \"-\", slug)",
+      "replacement": "    slug = re.sub(r\"-{3,}\", \"-\", slug)",
+      "description": "Only collapses runs of three or more dashes, leaving double dashes.",
+      "diff": "--- a/api/config.py\n+++ b/api/config.py\n@@ -754,3 +754,3 @@\n     slug = re.sub(r\"[^a-z0-9._-]+\", \"-\", raw).strip(\"-\")\n-    slug = re.sub(r\"-{2,}\", \"-\", slug)\n+    slug = re.sub(r\"-{3,}\", \"-\", slug)\n     if not slug:\n",
+      "words": "api/config.py:755: changing `    slug = re.sub(r\"-{2,}\", \"-\", slug)` to `    slug = re.sub(r\"-{3,}\", \"-\", slug)` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-0d6f038a4725",
+      "origin": "model",
+      "file": "api/config.py",
+      "line": 754,
+      "original": "    slug = re.sub(r\"[^a-z0-9._-]+\", \"-\", raw).strip(\"-\")",
+      "replacement": "    slug = re.sub(r\"[^a-z0-9._-]+\", \"-\", raw)",
+      "description": "Stops stripping leading and trailing dashes from the slug.",
+      "diff": "--- a/api/config.py\n+++ b/api/config.py\n@@ -753,3 +753,3 @@\n     # friendly name like \"Local (127.0.0.1:15721)\" should not preserve ':'.\n-    slug = re.sub(r\"[^a-z0-9._-]+\", \"-\", raw).strip(\"-\")\n+    slug = re.sub(r\"[^a-z0-9._-]+\", \"-\", raw)\n     slug = re.sub(r\"-{2,}\", \"-\", slug)\n",
+      "words": "api/config.py:754: changing `    slug = re.sub(r\"[^a-z0-9._-]+\", \"-\", raw).strip(\"-\")` to `    slug = re.sub(r\"[^a-z0-9._-]+\", \"-\", raw)` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "_custom_provider_slug_from_name(name='Local (127.0.0.1:15721)')",
+          "fix": "returns 'custom:local-127.0.0.1-15721'",
+          "mutant": "returns 'custom:local-127.0.0.1-15721-'"
+        },
+        {
+          "call": "_custom_provider_slug_from_name(name='ÑYm\\U00061ee2\\x18º\\x97\\U000bb1aci²\\x1fR\\x9fÃõ,TG')",
+          "fix": "returns 'custom:ym-i-r-tg'",
+          "mutant": "returns 'custom:-ym-i-r-tg'"
+        },
+        {
+          "call": "_custom_provider_slug_from_name(name=b'C(\\xb4{{=p\\xe2\\x0c\\xcf\\x92\\xc0')",
+          "fix": "returns 'custom:b-c-xb4-p-xe2-x0c-xcf-x92-xc0'",
+          "mutant": "returns 'custom:b-c-xb4-p-xe2-x0c-xcf-x92-xc0-'"
+        }
+      ]
+    },
+    {
+      "id": "m-5d6d6233ce3f",
+      "origin": "model",
+      "file": "api/config.py",
+      "line": 754,
+      "original": "    slug = re.sub(r\"[^a-z0-9._-]+\", \"-\", raw).strip(\"-\")",
+      "replacement": "    slug = re.sub(r\"[^a-z0-9-]+\", \"-\", raw).strip(\"-\")",
+      "description": "Drops '.' and '_' from the allowed characters, so they become dashes in the slug.",
+      "diff": "--- a/api/config.py\n+++ b/api/config.py\n@@ -753,3 +753,3 @@\n     # friendly name like \"Local (127.0.0.1:15721)\" should not preserve ':'.\n-    slug = re.sub(r\"[^a-z0-9._-]+\", \"-\", raw).strip(\"-\")\n+    slug = re.sub(r\"[^a-z0-9-]+\", \"-\", raw).strip(\"-\")\n     slug = re.sub(r\"-{2,}\", \"-\", slug)\n",
+      "words": "api/config.py:754: changing `    slug = re.sub(r\"[^a-z0-9._-]+\", \"-\", raw).strip(\"-\")` to `    slug = re.sub(r\"[^a-z0-9-]+\", \"-\", raw).strip(\"-\")` made no test fail; it behaves differently from the fix on inputs no test checks",
+      "check": "differs",
+      "examples": [
+        {
+          "call": "_custom_provider_slug_from_name(name='Local (127.0.0.1:15721)')",
+          "fix": "returns 'custom:local-127.0.0.1-15721'",
+          "mutant": "returns 'custom:local-127-0-0-1-15721'"
+        },
+        {
+          "call": "_custom_provider_slug_from_name(name=764797136200106.0)",
+          "fix": "returns 'custom:764797136200106.0'",
+          "mutant": "returns 'custom:764797136200106-0'"
+        },
+        {
+          "call": "_custom_provider_slug_from_name(name=-2.0308878784930057e+88)",
+          "fix": "returns 'custom:2.0308878784930057e-88'",
+          "mutant": "returns 'custom:2-0308878784930057e-88'"
+        }
+      ]
+    },
+    {
+      "id": "m-1f18a1d75574",
+      "origin": "model",
+      "file": "api/providers.py",
+      "line": 51,
+      "original": "    return pid in candidates",
+      "replacement": "    return pid in candidates and pid != slug",
+      "description": "Excludes the slug itself from matching, so slug-based provider IDs no longer match their name.",
+      "diff": "--- a/api/providers.py\n+++ b/api/providers.py\n@@ -50,3 +50,3 @@\n         candidates.add(slug)\n-    return pid in candidates\n+    return pid in candidates and pid != slug\n \n",
+      "words": "api/providers.py:51: changing `    return pid in candidates` to `    return pid in candidates and pid != slug` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-a143756ff0c6",
+      "origin": "model",
+      "file": "api/providers.py",
+      "line": 48,
+      "original": "    candidates = {raw_name, f\"custom:{raw_name}\"}",
+      "replacement": "    candidates = {raw_name}",
+      "description": "Drops the raw custom:<name> candidate, so IDs with unsanitized names (e.g. colons) no longer match.",
+      "diff": "--- a/api/providers.py\n+++ b/api/providers.py\n@@ -47,3 +47,3 @@\n     slug = _custom_provider_slug_from_name(raw_name)\n-    candidates = {raw_name, f\"custom:{raw_name}\"}\n+    candidates = {raw_name}\n     if slug:\n",
+      "words": "api/providers.py:48: changing `    candidates = {raw_name, f\"custom:{raw_name}\"}` to `    candidates = {raw_name}` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-63a666445e5b",
+      "origin": "rule",
+      "file": "api/config.py",
+      "line": 2868,
+      "original": "            target = _normalize_base_url_for_match(base_url)\n            if not target:\n                return \"\"\n\n            if isinstance(model_cfg, dict):\n                model_base_url = _normali...",
+      "replacement": "            return \"\"",
+      "description": "rule: body of `_configured_provider_for_base_url` -> `return \"\"`",
+      "diff": "--- a/api/config.py\n+++ b/api/config.py\n@@ -2867,43 +2867,2 @@\n         def _configured_provider_for_base_url(base_url: object) -> str:\n-            target = _normalize_base_url_for_match(base_url)\n-            if not target:\n-                return \"\"\n-\n-            if isinstance(model_cfg, dict):\n-                model_base_url = _normalize_base_url_for_match(model_cfg.get(\"base_url\"))\n-                if model_base_url == target:\n-                    provider_hint = _resolve_configured_provider_id(\n-                        model_cfg.get(\"provider\"),\n-                        cfg,\n-                        base_url=base_url,\n-                    )\n-                    if provider_hint:\n-                        return str(provider_hint).strip().lower()\n-\n-            providers_cfg = cfg.get(\"providers\", {})\n-            if isinstance(providers_cfg, dict):\n-                for provider_key, provider_cfg in providers_cfg.items():\n-                    if not isinstance(provider_cfg, dict):\n-                        continue\n-                    provider_base_url = _normalize_base_url_for_match(\n-                        provider_cfg.get(\"base_url\")\n-                    )\n-                    if provider_base_url == target:\n-                        provider_hint = _resolve_provider_alias(provider_key)\n-                        if provider_hint:\n... 16 more lines",
+      "words": "api/config.py:2868: changing `            target = _normalize_base_url_for_match(base_url)...` to `            return \"\"` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-a7c884ac19f5",
+      "origin": "rule",
+      "file": "api/providers.py",
+      "line": 43,
+      "original": "    pid = str(provider_id or \"\").strip().lower()",
+      "replacement": "    pid = str(provider_id and \"\").strip().lower()",
+      "description": "rule: `or` -> `and`",
+      "diff": "--- a/api/providers.py\n+++ b/api/providers.py\n@@ -42,3 +42,3 @@\n     \"\"\"Return True when *provider_id* refers to a named custom provider.\"\"\"\n-    pid = str(provider_id or \"\").strip().lower()\n+    pid = str(provider_id and \"\").strip().lower()\n     raw_name = str(name or \"\").strip().lower()\n",
+      "words": "api/providers.py:43: changing `    pid = str(provider_id or \"\").strip().lower()` to `    pid = str(provider_id and \"\").strip().lower()` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-20c053bc5b6b",
+      "origin": "rule",
+      "file": "api/providers.py",
+      "line": 44,
+      "original": "    raw_name = str(name or \"\").strip().lower()",
+      "replacement": "    raw_name = str(name and \"\").strip().lower()",
+      "description": "rule: `or` -> `and`",
+      "diff": "--- a/api/providers.py\n+++ b/api/providers.py\n@@ -43,3 +43,3 @@\n     pid = str(provider_id or \"\").strip().lower()\n-    raw_name = str(name or \"\").strip().lower()\n+    raw_name = str(name and \"\").strip().lower()\n     if not pid or not raw_name:\n",
+      "words": "api/providers.py:44: changing `    raw_name = str(name or \"\").strip().lower()` to `    raw_name = str(name and \"\").strip().lower()` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-167929147b17",
+      "origin": "rule",
+      "file": "api/providers.py",
+      "line": 45,
+      "original": "    if not pid or not raw_name:",
+      "replacement": "    if pid or not raw_name:",
+      "description": "rule: drop `not`",
+      "diff": "--- a/api/providers.py\n+++ b/api/providers.py\n@@ -44,3 +44,3 @@\n     raw_name = str(name or \"\").strip().lower()\n-    if not pid or not raw_name:\n+    if pid or not raw_name:\n         return False\n",
+      "words": "api/providers.py:45: changing `    if not pid or not raw_name:` to `    if pid or not raw_name:` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    },
+    {
+      "id": "m-ee151d0d07c2",
+      "origin": "rule",
+      "file": "api/providers.py",
+      "line": 45,
+      "original": "    if not pid or not raw_name:",
+      "replacement": "    if not (not pid or not raw_name):",
+      "description": "rule: `not pid or not raw_name` -> `not (not pid or not raw_name)`",
+      "diff": "--- a/api/providers.py\n+++ b/api/providers.py\n@@ -44,3 +44,3 @@\n     raw_name = str(name or \"\").strip().lower()\n-    if not pid or not raw_name:\n+    if not (not pid or not raw_name):\n         return False\n",
+      "words": "api/providers.py:45: changing `    if not pid or not raw_name:` to `    if not (not pid or not raw_name):` made no test fail; no input tried behaved differently from the fix (it may be equivalent)",
+      "check": "no_difference_found",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "api/config.py": [
+        18,
+        754,
+        755,
+        756,
+        757,
+        758,
+        2906
+      ],
+      "api/providers.py": [
+        41,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        412,
+        456,
+        1048,
+        1049,
+        1050,
+        1223
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 5,
+        "total": 23
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack get_available_models._build_available_models_uncached._configured_provider_for_base_url: a nested function: it can't be imported, not attacked yet",
+    "Break My Fix could not attack get_providers: it takes no parameters to vary",
+    "the behaviour diff could not compare get_available_models._build_available_models_uncached._configured_provider_for_base_url: a nested function: it can't be imported, not attacked yet",
+    "the behaviour diff could not compare get_available_models: past the cap of 6 functions",
+    "the behaviour diff could not compare get_provider_quota: past the cap of 6 functions",
+    "the behaviour diff could not compare remove_provider_key: past the cap of 6 functions",
+    "the behaviour diff could not compare _custom_provider_name_matches: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 8,
+    "input_tokens": 100951,
+    "output_tokens": 10670,
+    "cost_estimate": {
+      "usd": 0.5571,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: only the first 8 of 16 functions were shown",
+    "guard: only the first 10 of 28 rule mutants were run",
+    "guard: 1 of the rule mutant kills were crashes on the mutated line",
+    "behaviour_diff: only the first 6 of 9 functions are attacked",
+    "break_my_fix: only the first 6 of 7 functions are attacked"
+  ],
+  "previous": null
+}

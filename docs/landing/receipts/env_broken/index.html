@@ -1,0 +1,292 @@
+<!doctype html>
+<!-- Built by scripts/build_site.py from docs/landing/_src/. Edit the source, then run the script. -->
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>env_broken: weekly_report() week number off by one on Mondays</title>
+<meta name="description" content="The receipt Tracefix wrote for the env_broken fixture. The fix itself is correct, but the project imports an internal package (acme_metrics) that cannot be installed, so no test can run on either ref.">
+<!-- Search engines: SEARCHABLE in scripts/build_site.py, off while the site is a private preview
+     (until the release gates hold, DECISIONS 2026-11-06). -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0b" id="theme-color">
+<link rel="canonical" href="https://tracefix.dev/receipts/env_broken/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tracefix.dev/receipts/env_broken/">
+<meta property="og:title" content="env_broken: weekly_report() week number off by one on Mondays">
+<meta property="og:description" content="The receipt Tracefix wrote for the env_broken fixture. The fix itself is correct, but the project imports an internal package (acme_metrics) that cannot be installed, so no test can run on either ref.">
+<meta property="og:image" content="https://tracefix.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="preload" href="../../assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  // Before first paint: mark JS, and apply the theme: Dark unless the visitor saved Light or System.
+  (function () {
+    var d = document.documentElement, t = 'dark'; d.className = 'js';
+    try { var saved = localStorage.getItem('tracefix-theme'); if (saved === 'light' || saved === 'system') t = saved; } catch (e) {}
+    d.setAttribute('data-theme', t);
+    // Fail-safe: site.css hides the reveal blocks until site.js shows them. If site.js fails to load
+    // (its onerror) or has not started the reveals in 2.5 s, show every block as it is.
+    function showAll() {
+      if (d.classList.contains('reveals-on')) return;
+      var all = document.querySelectorAll('[data-reveal],[data-words],[data-reveal-group],.hero');
+      for (var i = 0; i < all.length; i++) all[i].classList.add('is-in');
+    }
+    window.tracefixShowAll = showAll;
+    setTimeout(showAll, 2500);
+  })();
+</script>
+<link rel="stylesheet" href="../../assets/site.css">
+<!-- Fetch a page of this site when a link to it is hovered or pressed, so the next page is ready. -->
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="preview-note" aria-label="Private preview"><p>Private preview: Tracefix is not released yet, so its GitHub links open only for collaborators. <a href="../../talk/">Talk to me</a></p></aside>
+
+<header class="site-head" id="head">
+  <div class="frame">
+    <a class="logo" href="../../#top" aria-label="Tracefix home"><img class="lt" src="../../assets/logo.svg" alt="" width="100" height="36"><img class="dk" src="../../assets/logo-reversed.svg" alt="" width="100" height="36"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="../../benchmark/">Benchmark<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../receipts/" aria-current="true">Receipts<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../method/">Method<i class="nm" aria-hidden="true"></i></a>
+      <a href="../../#install">Install</a>
+      <button type="button" class="pal-open" data-palette-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><span class="pal-open-label">Search</span><kbd data-palette-key>Ctrl K</kbd></button>
+      <div class="theme" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+        <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+        <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+      </div>
+      <a class="btn btn-sm" href="../../talk/">Talk to me</a>
+    </nav>
+    <details class="menu">
+      <summary><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span class="menu-label">Menu</span></summary>
+      <nav aria-label="Menu">
+        <a href="../../benchmark/">Benchmark</a>
+        <a href="../../receipts/" aria-current="true">Receipts</a>
+        <a href="../../method/">Method</a>
+        <a href="../../talk/">Talk to me</a>
+        <a href="../../#install">Install</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main" tabindex="-1" class="page rc-page">
+<!-- ONE RECEIPT. Every fact fills a hole from scripts/site_receipts.py: the receipt folder in
+     docs/landing/_data/receipts/env_broken/ and the fixture in tests/fixtures/env_broken/. -->
+<section class="page-head">
+  <div class="frame">
+    <p class="eyebrow crumbs"><a href="../">Receipts</a> / env_broken</p>
+    <h1 style="view-transition-name:title-env_broken;view-transition-class:rc-title">weekly_report() week number off by one on Mondays</h1>
+    <p class="lede" data-reveal style="--d:1">The fix itself is correct, but the project imports an internal package (acme_metrics) that cannot be installed, so no test can run on either ref.</p>
+    <p class="rc-facts" data-reveal style="--d:2"><span class="lvl" style="view-transition-name:lvl-env_broken;view-transition-class:rc-lvl">L0</span><span>Known answer: exactly L0 · meets it</span><span>run 0:02</span></p>
+    <ul class="jump" aria-label="On this page" data-reveal style="--d:3">
+      <li><a href="#fix">The issue and the fix</a></li>
+      
+      <li><a href="#receipt">The receipt</a></li>
+      <li><a href="#tests">The tests it wrote</a></li>
+      <li><a href="#run">The run</a></li>
+    </ul>
+  </div>
+</section>
+
+<section id="fix" class="band" aria-labelledby="fix-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="fix-h" class="h2" data-words>The issue and the fix. <span class="soft">What Tracefix was given.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The issue text, the commit before the fix and the commit with it. The known answer stays outside the repo Tracefix sees.</p>
+    </div>
+    <div class="rc-given">
+      <figure class="panel md md-issue" data-reveal><figcaption>ISSUE.md</figcaption><div class="md-body">
+<h3>weekly_report() week number off by one on Mondays</h3>
+<p><code>weekly_report()</code> shows the week number off by one on Mondays. Running it on Monday
+30 March 2026 prints <code>Week 13, 2026</code>; the same report on Tuesday prints <code>Week 14, 2026</code>.</p>
+
+      </div></figure>
+      <div class="rc-diffs" data-reveal style="--d:1">
+        <p class="label">1 file changed, +2 −5</p>
+<figure class="panel diff"><figcaption>src/metrics/report.py <span class="soft">+2 −5</span></figcaption><div class="lines" tabindex="0" role="region" aria-label="Diff of src/metrics/report.py"><div class="lines-in"><div class="d d-hunk">@@ -1,16 +1,13 @@</div><div class="d"> &quot;&quot;&quot;Weekly metrics report, built on the internal acme_metrics client.&quot;&quot;&quot;</div><div class="d"> </div><div class="d d-del">-from datetime import date, timedelta</div><div class="d d-add">+from datetime import date</div><div class="d"> </div><div class="d"> import acme_metrics</div><div class="d"> </div><div class="d"> </div><div class="d"> def iso_week(day: date) -&gt; int:</div><div class="d">     &quot;&quot;&quot;ISO 8601 week number of `day`: weeks start on Monday, week 1 holds 4 January.&quot;&quot;&quot;</div><div class="d d-del">-    jan4 = date(day.year, 1, 4)</div><div class="d d-del">-    week1_monday = jan4 - timedelta(days=jan4.weekday())</div><div class="d d-del">-    days_after_monday = (day - week1_monday).days - 1</div><div class="d d-del">-    return days_after_monday // 7 + 1</div><div class="d d-add">+    return day.isocalendar().week</div><div class="d"> </div><div class="d"> </div><div class="d"> def weekly_report(day: date) -&gt; str:</div></div></div></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="receipt" class="band" aria-labelledby="receipt-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="receipt-h" class="h2" data-words>The receipt. <span class="soft">As it reads in a PR comment.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The receipt.md Tracefix wrote, rendered the way GitHub renders it. The same run also wrote <a href="https://github.com/momirie/tracefix/blob/main/docs/landing/_data/receipts/env_broken/receipt.json">receipt.json</a>, the record the level is computed from (<a href="https://github.com/momirie/tracefix/blob/main/docs/landing/_data/receipts/env_broken/receipt.md">receipt.md as text</a>).</p>
+    </div>
+    <article class="panel md md-receipt" aria-label="Fix Receipt"><div class="panel-head">receipt.md</div><div class="md-body">
+<h3>Fix Receipt: L0 (no evidence for this fix)</h3>
+<p><strong>Run stopped (ENVIRONMENT_ERROR):</strong> the base test suite cannot import 'acme_metrics' (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks 'acme_metrics' (install the project's dependencies and run Tracefix from that environment)</p>
+<p><strong>Summary:</strong> L0: the run stopped: the base test suite cannot import 'acme_metrics' (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks 'acme_metrics' (install the project's dependencies and run Tracefix from that environment).</p>
+<p><strong>Why this level:</strong> the run stopped: the base test suite cannot import 'acme_metrics' (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks 'acme_metrics' (install the project's dependencies and run Tracefix from that environment)</p>
+<p><strong>Issue:</strong> weekly_report() week number off by one on Mondays · <strong>Repo:</strong> env_broken · <strong>Base</strong> <code>base</code> (<code>db9d6ce</code>) → <strong>head</strong> <code>head</code> (<code>78b206d</code>)<br />
+<strong>Isolation:</strong> basic (bubblewrap (bwrap) is not installed)</p>
+<div class="alert alert-warning">
+<p class="alert-title">Warning</p>
+<ul>
+<li>Generated tests ran with basic isolation only (no bubblewrap sandbox): tampering inside the watched folders is detected, but code could still read or write elsewhere on this machine, and a process that escaped could influence a later run. For untrusted changes run Tracefix in GitHub Actions or on Linux with bubblewrap.</li>
+</ul>
+</div>
+<h4>Counterexamples</h4>
+<p>None found.</p>
+<h4>Stages</h4>
+<div class="md-scroll" tabindex="0" role="region" aria-label="Stages">
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Status</th>
+<th>Key numbers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>environment</code></td>
+<td><code>ENVIRONMENT_ERROR</code></td>
+<td>base suite error</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>Not checked:</strong> concurrency; database state; network and external services; authentication and authorisation; performance; configuration; import_check: did not run; reproduce: did not run; guard: did not run; regressions: did not run; and 5 more in receipt.json</li>
+<li><strong>Model use:</strong> 0 calls, 0 input and 0 output tokens, cost $0.0000 (estimate at list prices)</li>
+</ul>
+<details>
+<summary>Run log</summary>
+<h5>Stages</h5>
+<ul>
+<li><code>environment</code>: <code>ENVIRONMENT_ERROR</code>, 1.99 s: the base test suite cannot import 'acme_metrics' (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks 'acme_metrics' (install the project's dependencies and run Tracefix from that environment)
+<ul>
+<li><code>python -P -m pytest -q -p no:cacheprovider --tb=long -rN --color=no</code></li>
+</ul>
+</li>
+</ul>
+<h5>Not checked</h5>
+<ul>
+<li>concurrency</li>
+<li>database state</li>
+<li>network and external services</li>
+<li>authentication and authorisation</li>
+<li>performance</li>
+<li>configuration</li>
+<li>not observed by the behaviour diff: files written outside the copy, and anything sent off the machine</li>
+<li>not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders</li>
+<li>not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)</li>
+<li>not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)</li>
+<li>not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name</li>
+<li>not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)</li>
+<li>not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns</li>
+<li>not observed by the behaviour diff: objects shared between the result, the arguments and module data</li>
+<li>not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call</li>
+<li>import_check: did not run</li>
+<li>reproduce: did not run</li>
+<li>guard: did not run</li>
+<li>regressions: did not run</li>
+<li>fix_line_coverage: did not run</li>
+<li>behaviour_diff: did not run</li>
+<li>break_my_fix: did not run</li>
+<li>integrity: did not run</li>
+</ul>
+<h5>This receipt</h5>
+<ul>
+<li>models: reproducer claude-sonnet-5-5, mutator claude-sonnet-5-5, adversary claude-opus-5-5, judge claude-opus-5-5; effort medium; at most 40 calls and 500,000 tokens</li>
+<li>Tracefix 0.0.1, receipt schema 1, created 2026-11-06T14:07:16+00:00, issue sha256 <code>3bbde04962bcafbc320882956cc6adfd29d492d89372c7d0a84c539a5ee7201a</code></li>
+</ul>
+</details>
+
+    </div></article>
+  </div>
+</section>
+
+<section id="tests" class="band" aria-labelledby="tests-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="tests-h" class="h2" data-words>The tests it wrote. <span class="soft">Run them with pytest.</span></h2>
+      <p class="mute" data-reveal style="--d:2">The reproduction test fails before the fix and passes after it. A finding’s file fails for as long as the fixed code still breaks the property it names.</p>
+    </div>
+    <div class="rc-written" data-reveal>
+<p class="mute">This run wrote no test files: it stopped before the reproduction stage.</p>
+    </div>
+  </div>
+</section>
+
+<section id="run" class="band" aria-labelledby="run-h">
+  <div class="frame pad">
+    <div class="sec-head">
+      <h2 id="run-h" class="h2" data-words>The run. <span class="soft">Seconds since the start on the left.</span></h2>
+      <p class="mute" data-reveal style="--d:2">What <code>tracefix verify</code> printed, with the test suite’s recorded model answers. <a href="https://github.com/momirie/tracefix/tree/main/tests/fixtures/env_broken">This fixture on GitHub</a>.</p>
+    </div>
+    <div class="replay" data-reveal>
+      <div class="replay-bar">
+        <p class="label" data-replay-clock>Run time 0:02</p>
+        <button type="button" class="btn btn-sm" data-replay hidden>Replay the run</button>
+      </div>
+      <div class="timeline" data-end="2.1" aria-hidden="true"><span class="tl-seg" data-from="0" data-to="2.1" style="flex-grow:2.10" title="environment: ENVIRONMENT_ERROR, 2.1 s. the base test suite cannot import &#x27;acme_metrics&#x27; (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks &#x27;acme_metrics&#x27; (install the project&#x27;s dependencies and run Tracefix from that environment)"><span class="tl-name">environment</span></span><i class="tl-head"></i></div>
+      <figure class="panel term-log"><figcaption>tracefix verify</figcaption><pre class="code" tabindex="0" data-replay-out><span class="o" data-t="0">[    0.0] tracefix: verifying db9d6ce..78b206d (isolation: basic)
+</span><span class="o" data-t="2.1">[    2.1] [1/9] environment: ENVIRONMENT_ERROR (2.0s)
+</span><span class="o" data-t="2.1">[    2.1] level: L0
+</span><span class="o" data-t="2.1">[    2.1] Fix Receipt: L0 (run status: ENVIRONMENT_ERROR)
+</span><span class="o" data-t="2.1">[    2.1] Summary by Tracefix: L0: the run stopped: the base test suite cannot import &#x27;acme_metrics&#x27; (ModuleNotFoundError), before and after the fix: the environment Tracefix runs in lacks &#x27;acme_metrics&#x27; (install the project&#x27;s dependencies and run Tracefix from that environment).
+</span><span class="o" data-t="2.1">[    2.1] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json
+</span></pre></figure>
+    </div>
+  </div>
+</section>
+
+<!-- PAGER: the neighbouring receipts in the gallery's order -->
+<nav class="band" aria-label="More receipts">
+  <div class="frame pad pager" data-reveal>
+<a class="pg pg-prev" rel="prev" href="../no_fix/"><span class="eyebrow">Previous receipt</span><span class="pg-name">no_fix<span class="lvl red">COUNTEREXAMPLE</span></span><span class="pg-title">Contact import creates duplicates for differently-capitalised emails</span></a><a class="pg pg-next" rel="next" href="../method_partial/"><span class="eyebrow">Next receipt</span><span class="pg-name">method_partial<span class="lvl red">COUNTEREXAMPLE</span></span><span class="pg-title">Listener crashes when no port is configured</span></a><p class="pg-keys" hidden>Or press <kbd>←</kbd> and <kbd>→</kbd></p>
+  </div>
+</nav>
+</main>
+
+<footer class="band ink foot">
+  <div class="frame">
+    <img src="../../assets/logo-reversed.svg" alt="Tracefix" width="100" height="36">
+    <nav aria-label="Footer">
+      <a href="../../#levels">Evidence levels</a>
+      <a href="../../benchmark/">Benchmark</a>
+      <a href="../../receipts/">Receipts</a>
+      <a href="../../method/">Method</a>
+      <a href="../../talk/">Talk to me</a>
+      <a href="../../talk/#feedback">Report a wrong receipt</a>
+      <a href="https://github.com/momirie/tracefix">GitHub (after release)</a>
+      <span>MIT licence</span>
+    </nav>
+    <div class="theme" role="group" aria-label="Colour theme">
+      <button type="button" data-theme-pick="system" aria-pressed="false" aria-label="System theme" title="System theme"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg></button>
+      <button type="button" data-theme-pick="light" aria-pressed="false" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3"/></svg></button>
+      <button type="button" data-theme-pick="dark" aria-pressed="true" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<!-- The command palette (Ctrl or Cmd + K, or "/"): site.js fills it from the entries below
+     (scripts/site_palette.py) and shows the buttons that open it. -->
+<dialog id="palette" class="palette" aria-label="Search this site" data-root="../../">
+  <div class="pal-top">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
+    <input id="pal-in" type="text" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-autocomplete="list" aria-label="Search pages, receipts and sections" placeholder="Search pages, receipts and sections" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <button type="button" class="pal-close" data-palette-close>Esc</button>
+  </div>
+  <ul id="pal-list" class="pal-list" role="listbox" aria-label="Results"></ul>
+  <p id="pal-none" class="pal-none" role="status" hidden>Nothing matches. Try a fixture name, a level or a page.</p>
+  <p class="pal-foot" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></p>
+</dialog>
+<script type="application/json" id="palette-data">[{"g":"Pages","t":"Home","h":"Watch Tracefix break a fix","u":""},{"g":"Pages","t":"Benchmark","h":"How often it is right on real fixes, and every miss","u":"benchmark/"},{"g":"Pages","t":"Receipts","h":"What Tracefix hands back, for every fixture","u":"receipts/"},{"g":"Pages","t":"Method","h":"How it decides, and where it stops","u":"method/"},{"g":"Pages","t":"Talk to me","h":"A conversation before anything ships","u":"talk/"},{"g":"Receipts","t":"good_fix","h":"Orders list is missing the last order","u":"receipts/good_fix/","lv":"L4"},{"g":"Receipts","t":"partial_fix","h":"Service crashes at startup when PORT is not set","u":"receipts/partial_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"wrong_but_green","h":"Histogram buckets are wrong for large values","u":"receipts/wrong_but_green/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"test_weakened","h":"Trailing dash in slugs for titles ending in punctuation","u":"receipts/test_weakened/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"special_cased","h":"Lease schedule contains a payment on 29 Feb 2100","u":"receipts/special_cased/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"unguarded_test","h":"truncate() returns strings longer than max_len","u":"receipts/unguarded_test/","lv":"L1"},{"g":"Receipts","t":"no_fix","h":"Contact import creates duplicates for differently-capitalised emails","u":"receipts/no_fix/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"env_broken","h":"weekly_report() week number off by one on Mondays","u":"receipts/env_broken/","lv":"L0"},{"g":"Receipts","t":"method_partial","h":"Listener crashes when no port is configured","u":"receipts/method_partial/","lv":"COUNTEREXAMPLE"},{"g":"Receipts","t":"method_good","h":"Minor bump keeps the old patch number","u":"receipts/method_good/","lv":"L4"},{"g":"Receipts","t":"py39_partial","h":"Final table says \"11st place\"","u":"receipts/py39_partial/","lv":"COUNTEREXAMPLE"},{"g":"Sections","t":"Replay the attack","h":"Home","u":"#attack"},{"g":"Sections","t":"Try your own input","h":"Home","u":"#try"},{"g":"Sections","t":"Where it stands","h":"Home","u":"#stands"},{"g":"Sections","t":"The Butterfly","h":"Home","u":"#butterfly"},{"g":"Sections","t":"The Hard-Code","h":"Home","u":"#hard-code"},{"g":"Sections","t":"The Lawyer","h":"Home","u":"#lawyer"},{"g":"Sections","t":"Evidence levels","h":"Home","u":"#levels"},{"g":"Sections","t":"Install","h":"Home","u":"#install"},{"g":"Sections","t":"Questions","h":"Home","u":"#faq"},{"g":"Sections","t":"Release gates","h":"Benchmark","u":"benchmark/#gates"},{"g":"Sections","t":"Results per slice","h":"Benchmark","u":"benchmark/#results"},{"g":"Sections","t":"Every counted miss","h":"Benchmark","u":"benchmark/#misses"},{"g":"Sections","t":"How it was measured","h":"Benchmark","u":"benchmark/#method"},{"g":"Sections","t":"The rule","h":"Method","u":"method/#rule"},{"g":"Sections","t":"The run, stage by stage","h":"Method","u":"method/#run"},{"g":"Sections","t":"The ladder and the strict L4 gate","h":"Method","u":"method/#ladder"},{"g":"Sections","t":"Isolation and the tamper watch","h":"Method","u":"method/#isolation"},{"g":"Sections","t":"In the pull request","h":"Method","u":"method/#loop"},{"g":"Sections","t":"Fork pull requests","h":"Method","u":"method/#forks"},{"g":"Sections","t":"What is sent to Anthropic","h":"Method","u":"method/#sent"},{"g":"Sections","t":"What I would ask","h":"Talk to me","u":"talk/#ask"},{"g":"Sections","t":"Report a wrong receipt","h":"Talk to me","u":"talk/#feedback"}]</script>
+<script src="../../assets/site.js" onerror="tracefixShowAll()"></script>
+</body>
+</html>

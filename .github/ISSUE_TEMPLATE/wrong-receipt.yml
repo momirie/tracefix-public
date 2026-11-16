@@ -1,0 +1,56 @@
+name: A receipt is wrong
+description: The receipt says something that is not true about the fix. A wrong receipt is a bug in Tracefix.
+title: "Wrong receipt: "
+labels: ["wrong receipt"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Every verdict in a receipt comes from a run, so a wrong one can be traced and fixed.
+        Receipts mask local paths, but check what you paste for anything private: this issue is public.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is wrong
+      options:
+        - A counterexample that is not a real failure (false alarm)
+        - A wrong fix that got a level it should not have
+        - A correct fix that got a lower level than it should
+        - A stage that says "invalid" or "error" and should not
+        - Something else in the receipt
+    validations:
+      required: true
+  - type: textarea
+    id: says
+    attributes:
+      label: What the receipt says
+      description: The level, and the lines that are wrong. Attach `receipt.json` if you can.
+    validations:
+      required: true
+  - type: textarea
+    id: truth
+    attributes:
+      label: What is true instead, and how you know
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce it
+      description: The repository (if public), the base and head commits, the issue text, and the command or workflow.
+  - type: input
+    id: version
+    attributes:
+      label: Tracefix version or commit
+    validations:
+      required: true
+  - type: dropdown
+    id: isolation
+    attributes:
+      label: Isolation level shown in the receipt
+      options:
+        - strict
+        - basic
+        - I don't know
+    validations:
+      required: true

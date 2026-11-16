@@ -1,0 +1,15 @@
+[    0.0] tracefix: verifying 0888218..28e91c7 (isolation: basic)
+[    1.1] [1/9] environment: ok (1.0s)
+[    2.9] [2/9] import_check: ok (1.9s)
+[    8.9] [3/9] reproduce: reproduced (6.0s)
+[   44.5] [4/9] guard: not_guarded (35.6s)
+[   45.5] [5/9] regressions: none_found (1.0s)
+[   48.5] [6/9] fix_line_coverage: ok (3.0s)
+[   57.4] [7/9] behaviour_diff: partial (8.9s)
+[   72.2] [8/9] break_my_fix: found (14.7s)
+[   74.8] [9/9] integrity: flagged (2.7s)
+[   74.9] summary: by judge
+[   74.9] level: COUNTEREXAMPLE
+[   74.9] Fix Receipt: COUNTEREXAMPLE (run status: ok)
+[   74.9] Summary by the Judge (advisory): The verifier reproduced the trailing-dash bug and found no regressions in existing tests, but Break My Fix found inputs the fixed slugify still mishandles (slugify('-') returns '-' and slugify('[^a-z0-9 -]') returns 'a-z0-9--'), so the evidence level is COUNTEREXAMPLE. Look first at why leading/trailing and repeated dashes survive in those cases, and at the two behaviour changes the Judge labelle\u2026
+[   74.9] Written to tracefix-receipt/receipt.md and tracefix-receipt/receipt.json

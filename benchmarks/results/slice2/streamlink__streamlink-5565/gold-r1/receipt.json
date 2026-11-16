@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-11-03T17:38:00+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 4 of 7 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "22f191705ef6ae1ab61081034a2921fa3d2de976"
+  },
+  "head": {
+    "ref": "tf-gold",
+    "sha": "a495227e58818fc88355aa2cc9bb0ce0ae60fcd0"
+  },
+  "issue": {
+    "title": "plugins.nos: No playable streams found on this URL",
+    "sha256": "fd8de88cf76ee41447cf118e1c6440e69fc732b7c61984b31f27958027add3dc"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.9.21"
+  },
+  "summary": {
+    "text": "A test reproduced the NOS livestream bug, failing before the fix and passing after it, with no regressions found and the changed lines covered, but the evidence stays at L1 because the tests did not kill enough mutants and the behaviour-diff and Break My Fix stages were inconclusive. Next, strengthen the tests around the fixed plugin code so they catch mutants, and check the fix against a live NO…",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite failed",
+      "duration_s": 23.5,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "failed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "1 changed module(s) imported from the copies (2 imports in all)",
+      "duration_s": 4.48,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 1,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 22.72,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no build_backend/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 4 of 7 mutants; 80% is needed",
+      "duration_s": 476.26,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no build_backend/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.571,
+        "repro_kill_rate": 0.429,
+        "pr_kill_rate": null,
+        "mutants": 7,
+        "killed": 4,
+        "survived": 3,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-15511f8cdb53",
+          "m-6dd4607c8b88",
+          "m-44c87e70b212",
+          "m-9231fd419231"
+        ],
+        "rule_mutants": 7,
+        "rule_kill_rate": 0.429,
+        "pr_test_files": [],
+        "findings": [
+          "low_kill_rate: the tests killed 4 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 3736 untouched tests that passed before the fix fails after it",
+      "duration_s": 95.44,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 3736,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 2.99,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no build_backend/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 27
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: src/streamlink/plugins/nos.py: module-level code that computes a value changed (line 22, 24); what uses it is not compared",
+      "duration_s": 3.62,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "inconclusive",
+      "reason": "the attack ran no input",
+      "duration_s": 25.43,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 0,
+        "properties_counted": 3,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "nothing suspicious in the fix's test or source changes",
+      "duration_s": 0.01,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 0
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-d6b57d0baaf5",
+      "origin": "model",
+      "file": "src/streamlink/plugins/nos.py",
+      "line": 54,
+      "original": "        if res.status_code >= 400:",
+      "replacement": "        if res.status_code > 400:",
+      "description": "Off-by-one: status 400 is no longer treated as inaccessible.",
+      "diff": "--- a/src/streamlink/plugins/nos.py\n+++ b/src/streamlink/plugins/nos.py\n@@ -53,3 +53,3 @@\n         res = self.session.http.get(hls_url, raise_for_status=False)\n-        if res.status_code >= 400:\n+        if res.status_code > 400:\n             log.error(\"Content is inaccessible or may have expired\")\n",
+      "words": "src/streamlink/plugins/nos.py:54: changing `        if res.status_code >= 400:` to `        if res.status_code > 400:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-e8805e394706",
+      "origin": "model",
+      "file": "src/streamlink/plugins/nos.py",
+      "line": 54,
+      "original": "        if res.status_code >= 400:",
+      "replacement": "        if res.status_code >= 500:",
+      "description": "Client errors such as 403/404 are no longer detected as inaccessible.",
+      "diff": "--- a/src/streamlink/plugins/nos.py\n+++ b/src/streamlink/plugins/nos.py\n@@ -53,3 +53,3 @@\n         res = self.session.http.get(hls_url, raise_for_status=False)\n-        if res.status_code >= 400:\n+        if res.status_code >= 500:\n             log.error(\"Content is inaccessible or may have expired\")\n",
+      "words": "src/streamlink/plugins/nos.py:54: changing `        if res.status_code >= 400:` to `        if res.status_code >= 500:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-8fe2492af878",
+      "origin": "model",
+      "file": "src/streamlink/plugins/nos.py",
+      "line": 51,
+      "original": "        hls_url, self.id, self.title = data",
+      "replacement": "        hls_url, self.title, self.id = data",
+      "description": "Swaps id and title assignments.",
+      "diff": "--- a/src/streamlink/plugins/nos.py\n+++ b/src/streamlink/plugins/nos.py\n@@ -50,3 +50,3 @@\n \n-        hls_url, self.id, self.title = data\n+        hls_url, self.title, self.id = data\n \n",
+      "words": "src/streamlink/plugins/nos.py:51: changing `        hls_url, self.id, self.title = data` to `        hls_url, self.title, self.id = data` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-5cad14b46a36",
+      "origin": "rule",
+      "file": "src/streamlink/plugins/nos.py",
+      "line": 53,
+      "original": "        res = self.session.http.get(hls_url, raise_for_status=False)",
+      "replacement": "        res = self.session.http.get(hls_url, raise_for_status=True)",
+      "description": "rule: `False` -> `True`",
+      "diff": "--- a/src/streamlink/plugins/nos.py\n+++ b/src/streamlink/plugins/nos.py\n@@ -52,3 +52,3 @@\n \n-        res = self.session.http.get(hls_url, raise_for_status=False)\n+        res = self.session.http.get(hls_url, raise_for_status=True)\n         if res.status_code >= 400:\n",
+      "words": "src/streamlink/plugins/nos.py:53: changing `        res = self.session.http.get(hls_url, raise_for_statu...` to `        res = self.session.http.get(hls_url, raise_for_statu...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-d6b57d0baaf5",
+      "origin": "rule",
+      "file": "src/streamlink/plugins/nos.py",
+      "line": 54,
+      "original": "        if res.status_code >= 400:",
+      "replacement": "        if res.status_code > 400:",
+      "description": "rule: `>=` -> `>`",
+      "diff": "--- a/src/streamlink/plugins/nos.py\n+++ b/src/streamlink/plugins/nos.py\n@@ -53,3 +53,3 @@\n         res = self.session.http.get(hls_url, raise_for_status=False)\n-        if res.status_code >= 400:\n+        if res.status_code > 400:\n             log.error(\"Content is inaccessible or may have expired\")\n",
+      "words": "src/streamlink/plugins/nos.py:54: changing `        if res.status_code >= 400:` to `        if res.status_code > 400:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-1dc148cfb1e0",
+      "origin": "rule",
+      "file": "src/streamlink/plugins/nos.py",
+      "line": 54,
+      "original": "        if res.status_code >= 400:",
+      "replacement": "        if res.status_code >= 399:",
+      "description": "rule: `400` -> `399`",
+      "diff": "--- a/src/streamlink/plugins/nos.py\n+++ b/src/streamlink/plugins/nos.py\n@@ -53,3 +53,3 @@\n         res = self.session.http.get(hls_url, raise_for_status=False)\n-        if res.status_code >= 400:\n+        if res.status_code >= 399:\n             log.error(\"Content is inaccessible or may have expired\")\n",
+      "words": "src/streamlink/plugins/nos.py:54: changing `        if res.status_code >= 400:` to `        if res.status_code >= 399:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-9cb7ade435c5",
+      "origin": "rule",
+      "file": "src/streamlink/plugins/nos.py",
+      "line": 54,
+      "original": "        if res.status_code >= 400:",
+      "replacement": "        if res.status_code >= 401:",
+      "description": "rule: `400` -> `401`",
+      "diff": "--- a/src/streamlink/plugins/nos.py\n+++ b/src/streamlink/plugins/nos.py\n@@ -53,3 +53,3 @@\n         res = self.session.http.get(hls_url, raise_for_status=False)\n-        if res.status_code >= 400:\n+        if res.status_code >= 401:\n             log.error(\"Content is inaccessible or may have expired\")\n",
+      "words": "src/streamlink/plugins/nos.py:54: changing `        if res.status_code >= 400:` to `        if res.status_code >= 401:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "src/streamlink/plugins/nos.py": [
+        13,
+        22,
+        24,
+        25,
+        26,
+        27,
+        28,
+        30,
+        31,
+        32,
+        34,
+        35,
+        36,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        48,
+        49,
+        51,
+        53,
+        54,
+        55,
+        56,
+        58
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 24,
+        "total": 27
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call"
+  ],
+  "llm": {
+    "calls": 6,
+    "input_tokens": 36346,
+    "output_tokens": 2780,
+    "cost_estimate": {
+      "usd": 0.1691,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "reproduce: pyproject truncated to 3000 characters for the prompt",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.9.21: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "streamlink.plugins.nos.NOS._get_streams",
+      "path": "src/streamlink/plugins/nos.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 0,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}

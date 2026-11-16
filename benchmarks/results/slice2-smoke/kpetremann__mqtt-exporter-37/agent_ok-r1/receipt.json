@@ -1,0 +1,552 @@
+{
+  "schema_version": 1,
+  "tracefix_version": "0.0.1",
+  "created_at": "2026-10-22T11:06:24+00:00",
+  "status": "ok",
+  "status_reason": "",
+  "level": "L1",
+  "level_reasons": [
+    "the bug was reproduced: a test fails before the fix and passes after it",
+    "not L2: the tests killed 5 of 7 mutants; 80% is needed"
+  ],
+  "repo": {
+    "name": "testbed"
+  },
+  "base": {
+    "ref": "tf-base",
+    "sha": "4126ec64830517ee43384dde82fa43d807701f57"
+  },
+  "head": {
+    "ref": "tf-agent_ok",
+    "sha": "d40d01e5422656b6724e5b2b0f4aa0e027f15b0b"
+  },
+  "issue": {
+    "title": "Doesn't support Shelly 3EM format very well",
+    "sha256": "30d313b29c762ef5dfe77bb749b6a9c32038847e555576df2c995ada678eaade"
+  },
+  "isolation": {
+    "level": "strict",
+    "why": "bubblewrap works",
+    "warning": null,
+    "python": "3.10.16"
+  },
+  "summary": {
+    "text": "A test reproduced the Shelly 3EM bug, failing before the fix and passing after it, and no regressions or breaking inputs were found, but the evidence stays at L1 because the tests did not kill enough mutants to show the fix is guarded. The most important next step is to strengthen the tests so they would catch mutations of the fix, and to check why the behaviour diff came out inconclusive.",
+    "by": "judge"
+  },
+  "stages": [
+    {
+      "name": "environment",
+      "status": "ok",
+      "reason": "base suite passed",
+      "duration_s": 1.9,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "base_suite": "passed",
+        "error": null,
+        "module": null
+      }
+    },
+    {
+      "name": "import_check",
+      "status": "ok",
+      "reason": "4 changed module(s) imported from the copies (5 imports in all)",
+      "duration_s": 3.66,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_imports.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "modules": 4,
+        "outside_copy": []
+      }
+    },
+    {
+      "name": "reproduce",
+      "status": "reproduced",
+      "reason": "attempt 1: fails before the fix and passes after it",
+      "duration_s": 16.12,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "attempts": 1,
+        "test_file": "repro/test_tracefix_repro.py",
+        "oracle": "a test written by the model claude-sonnet-5-5",
+        "isolation": "strict"
+      }
+    },
+    {
+      "name": "guard",
+      "status": "not_guarded",
+      "reason": "the tests killed 5 of 7 mutants; 80% is needed",
+      "duration_s": 128.98,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_edge_cases.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_edge_cases_detailed.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_shelly_3em.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_edge_cases.py test_edge_cases_detailed.py test_shelly_3em.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "kill_rate": 0.714,
+        "repro_kill_rate": 0.571,
+        "pr_kill_rate": 0.714,
+        "mutants": 7,
+        "killed": 5,
+        "survived": 2,
+        "discarded": 0,
+        "rejected": 0,
+        "crash_kills": 0,
+        "killed_ids": [
+          "m-cfc338b44fc8",
+          "m-17726c7ac06b",
+          "m-ffef25288cec",
+          "m-5108011d006b",
+          "m-84bce5df3991"
+        ],
+        "rule_mutants": 10,
+        "rule_kill_rate": 0.1,
+        "pr_test_files": [
+          "test_edge_cases.py",
+          "test_edge_cases_detailed.py",
+          "test_shelly_3em.py"
+        ],
+        "findings": [
+          "low_kill_rate: the tests killed 5 of 7 mutants; 80% is needed"
+        ]
+      }
+    },
+    {
+      "name": "regressions",
+      "status": "none_found",
+      "reason": "none of the 10 untouched tests that passed before the fix fails after it",
+      "duration_s": 1.97,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no --continue-on-collection-errors"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "compared": 10,
+        "not_run": 0,
+        "regressions": 0,
+        "unconfirmed": 0
+      }
+    },
+    {
+      "name": "fix_line_coverage",
+      "status": "ok",
+      "reason": "report only: which fix lines the tests run",
+      "duration_s": 4.39,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_repro.py",
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no test_edge_cases.py test_edge_cases_detailed.py test_shelly_3em.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "fix_lines": 96
+      }
+    },
+    {
+      "name": "behaviour_diff",
+      "status": "inconclusive",
+      "reason": "nothing was compared: debug_edge_case.py: module-level code that computes a value changed (line 8, 19, 20); what uses it is not compared",
+      "duration_s": 2.17,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no -s tests/test_tracefix_diff.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "finished": 0,
+        "inputs_compared": 0,
+        "changes": 0,
+        "groups": 0,
+        "l3_checks": false,
+        "l3_gate": false,
+        "judge": "not_needed"
+      }
+    },
+    {
+      "name": "break_my_fix",
+      "status": "none_found",
+      "reason": "no counterexample found in 407 inputs against 8 properties",
+      "duration_s": 54.12,
+      "commands": [
+        "python -c import sys; sys.path[:1] == [''] and sys.path.pop(0); import runpy; runpy.run_module('pytest', run_name='__main__', alter_sys=True) -q -p no:cacheprovider --tb=long -rN --color=no tests/test_tracefix_attack.py"
+      ],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "targets": 1,
+        "inputs_tried": 407,
+        "properties_counted": 8,
+        "findings": 0,
+        "unconfirmed": 0,
+        "pre_existing": 0,
+        "discarded": 0,
+        "crashes_reported": 0
+      }
+    },
+    {
+      "name": "integrity",
+      "status": "clean",
+      "reason": "no candidate was confirmed (8 reported)",
+      "duration_s": 0.03,
+      "commands": [],
+      "problems": [],
+      "error": null,
+      "evidence": {
+        "flags": 0,
+        "candidates": 8
+      }
+    }
+  ],
+  "findings": [],
+  "pre_existing": [],
+  "behaviour_changes": [],
+  "integrity_flags": [],
+  "regressions": [],
+  "survivors": [
+    {
+      "id": "m-5acf36e13dfc",
+      "origin": "model",
+      "file": "mqtt_exporter/main.py",
+      "line": 171,
+      "original": "        if len(info) >= 5 and info[0] == \"shellies\" and info[2] == \"emeter\":",
+      "replacement": "        if len(info) >= 4 and info[0] == \"shellies\" and info[2] == \"emeter\":",
+      "description": "Loosened length check lets 4-part emeter topics into the phase branch, wrongly treating the metric as the phase.",
+      "diff": "--- a/mqtt_exporter/main.py\n+++ b/mqtt_exporter/main.py\n@@ -170,3 +170,3 @@\n         # Format: shellies/device-id/emeter/phase/metric\n-        if len(info) >= 5 and info[0] == \"shellies\" and info[2] == \"emeter\":\n+        if len(info) >= 4 and info[0] == \"shellies\" and info[2] == \"emeter\":\n             # Include the emeter and phase information in the topic\n",
+      "words": "mqtt_exporter/main.py:171: changing `        if len(info) >= 5 and info[0] == \"shellies\" and info...` to `        if len(info) >= 4 and info[0] == \"shellies\" and info...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-b7e4341fa2c1",
+      "origin": "model",
+      "file": "mqtt_exporter/main.py",
+      "line": 173,
+      "original": "            topic = f\"{info[0]}/{info[1]}/{info[2]}/{info[3]}\".lower()",
+      "replacement": "            topic = f\"{info[0]}/{info[1]}/{info[2]}/{info[3]}\"",
+      "description": "Drops lowercasing of the topic for emeter devices.",
+      "diff": "--- a/mqtt_exporter/main.py\n+++ b/mqtt_exporter/main.py\n@@ -172,3 +172,3 @@\n             # Include the emeter and phase information in the topic\n-            topic = f\"{info[0]}/{info[1]}/{info[2]}/{info[3]}\".lower()\n+            topic = f\"{info[0]}/{info[1]}/{info[2]}/{info[3]}\"\n             payload_dict = {info[-1]: payload}\n",
+      "words": "mqtt_exporter/main.py:173: changing `            topic = f\"{info[0]}/{info[1]}/{info[2]}/{info[3]...` to `            topic = f\"{info[0]}/{info[1]}/{info[2]}/{info[3]...` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-c5c49624dcb6",
+      "origin": "rule",
+      "file": "debug_edge_case.py",
+      "line": 12,
+      "original": "    topic = \"shellies/livingroom/relay/0\"\n    payload = \"ON\"\n    \n    print(f\"Debugging: {topic} = {payload}\")\n    parsed_topic, parsed_payload = _parse_message(topic, payload)\n    print(f\"Result: top...",
+      "replacement": "    return None",
+      "description": "rule: body of `debug_shelly_relay` -> `return None`",
+      "diff": "--- a/debug_edge_case.py\n+++ b/debug_edge_case.py\n@@ -11,8 +11,3 @@\n     \"\"\"Debug the relay case.\"\"\"\n-    topic = \"shellies/livingroom/relay/0\"\n-    payload = \"ON\"\n-    \n-    print(f\"Debugging: {topic} = {payload}\")\n-    parsed_topic, parsed_payload = _parse_message(topic, payload)\n-    print(f\"Result: topic={parsed_topic}, payload={parsed_payload}\")\n+    return None\n \n",
+      "words": "debug_edge_case.py:12: changing `    topic = \"shellies/livingroom/relay/0\"\n    payload = \"ON\"...` to `    return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-e7ade1299659",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 9,
+      "original": "    print(\"Testing exact Shelly 3EM scenario from issue description...\")\n    \n    # Exact topics from the issue\n    topics_from_issue = [\n        \"shellies/shelly-deviceid1234/emeter/0/power\",\n       ...",
+      "replacement": "    return None",
+      "description": "rule: body of `test_exact_issue_scenario` -> `return None`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -8,85 +8,3 @@\n     \n-    print(\"Testing exact Shelly 3EM scenario from issue description...\")\n-    \n-    # Exact topics from the issue\n-    topics_from_issue = [\n-        \"shellies/shelly-deviceid1234/emeter/0/power\",\n-        \"shellies/shelly-deviceid1234/emeter/0/pf\", \n-        \"shellies/shelly-deviceid1234/emeter/0/current\",\n-        \"shellies/shelly-deviceid1234/emeter/0/voltage\",\n-        \"shellies/shelly-deviceid1234/emeter/0/total\",\n-        \"shellies/shelly-deviceid1234/emeter/0/total_returned\",\n-        \"shellies/shelly-deviceid1234/emeter/1/power\",\n-        \"shellies/shelly-deviceid1234/emeter/1/pf\",\n-        \"shellies/shelly-deviceid1234/emeter/1/current\",\n-        \"shellies/shelly-deviceid1234/emeter/1/voltage\",\n-        \"shellies/shelly-deviceid1234/emeter/1/total\",\n-        \"shellies/shelly-deviceid1234/emeter/1/total_returned\",\n-        \"shellies/shelly-deviceid1234/emeter/2/power\",\n-        \"shellies/shelly-deviceid1234/emeter/2/pf\",\n-        \"shellies/shelly-deviceid1234/emeter/2/current\",\n-        \"shellies/shelly-deviceid1234/emeter/2/voltage\",\n-        \"shellies/shelly-deviceid1234/emeter/2/total\",\n-        \"shellies/shelly-deviceid1234/emeter/2/total_returned\",\n-    ]\n-    \n-    results = {}\n-    \n... 59 more lines",
+      "words": "final_verification.py:9: changing `    print(\"Testing exact Shelly 3EM scenario from issue desc...` to `    return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-65f2cea7485b",
+      "origin": "rule",
+      "file": "reproduce_issue.py",
+      "line": 9,
+      "original": "    print(\"Testing Shelly 3EM phase separation issue...\")\n    \n    # Simulate the three phases from one Shelly 3EM device\n    test_cases = [\n        (\"shellies/shelly-deviceid1234/emeter/0/power\", \"10...",
+      "replacement": "    return None",
+      "description": "rule: body of `test_shelly_3em_issue` -> `return None`",
+      "diff": "--- a/reproduce_issue.py\n+++ b/reproduce_issue.py\n@@ -8,49 +8,3 @@\n     \n-    print(\"Testing Shelly 3EM phase separation issue...\")\n-    \n-    # Simulate the three phases from one Shelly 3EM device\n-    test_cases = [\n-        (\"shellies/shelly-deviceid1234/emeter/0/power\", \"100.5\"),\n-        (\"shellies/shelly-deviceid1234/emeter/1/power\", \"150.2\"), \n-        (\"shellies/shelly-deviceid1234/emeter/2/power\", \"200.8\"),\n-        (\"shellies/shelly-deviceid1234/emeter/0/voltage\", \"230.1\"),\n-        (\"shellies/shelly-deviceid1234/emeter/1/voltage\", \"231.2\"),\n-        (\"shellies/shelly-deviceid1234/emeter/2/voltage\", \"229.8\"),\n-    ]\n-    \n-    results = []\n-    \n-    for topic, payload in test_cases:\n-        print(f\"\\nProcessing: {topic} = {payload}\")\n-        parsed_topic, parsed_payload = _parse_message(topic, payload)\n-        print(f\"  Parsed topic: {parsed_topic}\")\n-        print(f\"  Parsed payload: {parsed_payload}\")\n-        \n-        if parsed_topic and parsed_payload:\n-            results.append((topic, parsed_topic, parsed_payload))\n-    \n-    print(\"\\n\" + \"=\"*60)\n-    print(\"ANALYSIS:\")\n-    print(\"=\"*60)\n... 23 more lines",
+      "words": "reproduce_issue.py:9: changing `    print(\"Testing Shelly 3EM phase separation issue...\")\n  ...` to `    return None` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-c65ccef7769b",
+      "origin": "rule",
+      "file": "debug_edge_case.py",
+      "line": 19,
+      "original": "if __name__ == \"__main__\":",
+      "replacement": "if __name__ != \"__main__\":",
+      "description": "rule: `==` -> `!=`",
+      "diff": "--- a/debug_edge_case.py\n+++ b/debug_edge_case.py\n@@ -18,3 +18,3 @@\n \n-if __name__ == \"__main__\":\n+if __name__ != \"__main__\":\n     debug_shelly_relay()",
+      "words": "debug_edge_case.py:19: changing `if __name__ == \"__main__\":` to `if __name__ != \"__main__\":` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-ca5102d1d5cc",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 47,
+      "original": "        metric_name = topic.split('/')[-1]",
+      "replacement": "        metric_name = topic.split('/')[+1]",
+      "description": "rule: `-` -> `+`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -46,3 +46,3 @@\n         # Extract metric name (last part of topic)\n-        metric_name = topic.split('/')[-1]\n+        metric_name = topic.split('/')[+1]\n         payload = sample_values.get(metric_name, '123.45')\n",
+      "words": "final_verification.py:47: changing `        metric_name = topic.split('/')[-1]` to `        metric_name = topic.split('/')[+1]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-e305373f9143",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 47,
+      "original": "        metric_name = topic.split('/')[-1]",
+      "replacement": "        metric_name = topic.split('/')[-0]",
+      "description": "rule: `1` -> `0`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -46,3 +46,3 @@\n         # Extract metric name (last part of topic)\n-        metric_name = topic.split('/')[-1]\n+        metric_name = topic.split('/')[-0]\n         payload = sample_values.get(metric_name, '123.45')\n",
+      "words": "final_verification.py:47: changing `        metric_name = topic.split('/')[-1]` to `        metric_name = topic.split('/')[-0]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-da170cbe9197",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 47,
+      "original": "        metric_name = topic.split('/')[-1]",
+      "replacement": "        metric_name = topic.split('/')[-2]",
+      "description": "rule: `1` -> `2`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -46,3 +46,3 @@\n         # Extract metric name (last part of topic)\n-        metric_name = topic.split('/')[-1]\n+        metric_name = topic.split('/')[-2]\n         payload = sample_values.get(metric_name, '123.45')\n",
+      "words": "final_verification.py:47: changing `        metric_name = topic.split('/')[-1]` to `        metric_name = topic.split('/')[-2]` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-6b587546d66b",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 52,
+      "original": "        if parsed_topic not in results:",
+      "replacement": "        if parsed_topic in results:",
+      "description": "rule: `not in` -> `in`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -51,3 +51,3 @@\n         \n-        if parsed_topic not in results:\n+        if parsed_topic in results:\n             results[parsed_topic] = []\n",
+      "words": "final_verification.py:52: changing `        if parsed_topic not in results:` to `        if parsed_topic in results:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    },
+    {
+      "id": "m-c7f1b1e160e9",
+      "origin": "rule",
+      "file": "final_verification.py",
+      "line": 61,
+      "original": "        if '_emeter_' in parsed_topic:",
+      "replacement": "        if '_emeter_' not in parsed_topic:",
+      "description": "rule: `in` -> `not in`",
+      "diff": "--- a/final_verification.py\n+++ b/final_verification.py\n@@ -60,3 +60,3 @@\n     for parsed_topic in results:\n-        if '_emeter_' in parsed_topic:\n+        if '_emeter_' not in parsed_topic:\n             phase = parsed_topic.split('_emeter_')[-1]\n",
+      "words": "final_verification.py:61: changing `        if '_emeter_' in parsed_topic:` to `        if '_emeter_' not in parsed_topic:` made no test fail; not compared with the fix: no compared function in its file",
+      "check": "not_checked",
+      "examples": []
+    }
+  ],
+  "fix_line_coverage": {
+    "lines": {
+      "debug_edge_case.py": [
+        2,
+        4,
+        5,
+        8,
+        10,
+        12,
+        13,
+        15,
+        16,
+        17,
+        19,
+        20
+      ],
+      "final_verification.py": [
+        2,
+        4,
+        6,
+        9,
+        12,
+        33,
+        35,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        47,
+        48,
+        50,
+        52,
+        53,
+        54,
+        56,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65,
+        67,
+        68,
+        69,
+        70,
+        71,
+        74,
+        75,
+        76,
+        78,
+        79,
+        81,
+        84,
+        85,
+        86,
+        87,
+        89,
+        91,
+        93,
+        94
+      ],
+      "mqtt_exporter/main.py": [
+        171,
+        173,
+        174,
+        177,
+        178
+      ],
+      "reproduce_issue.py": [
+        2,
+        4,
+        6,
+        9,
+        12,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        29,
+        30,
+        32,
+        33,
+        34,
+        37,
+        38,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        46,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        57,
+        58
+      ]
+    },
+    "sets": [
+      {
+        "name": "repro",
+        "ran": 3,
+        "total": 96
+      },
+      {
+        "name": "pr_test",
+        "ran": 5,
+        "total": 96
+      }
+    ],
+    "notes": []
+  },
+  "unchecked": [
+    "concurrency",
+    "database state",
+    "network and external services",
+    "authentication and authorisation",
+    "performance",
+    "configuration",
+    "not observed by the behaviour diff: files written outside the copy, and anything sent off the machine",
+    "not observed by the behaviour diff: in the copy: folders made or removed, file modes and other metadata, and files under __pycache__, .pytest_cache, .hypothesis or .git folders",
+    "not observed by the behaviour diff: state of dependencies and C extensions (an lru_cache's contents, a C object's fields)",
+    "not observed by the behaviour diff: process-wide state the function's code doesn't reach by name (os.environ, the working directory, sys.path, logging setup beyond the loggers it reaches, the decimal context, warning filters, the random module's state)",
+    "not observed by the behaviour diff: module data reached only through importlib, sys.modules or getattr with a computed name",
+    "not observed by the behaviour diff: code put into module data during a call (it is walked as it was before the first call)",
+    "not observed by the behaviour diff: threads and processes a call starts, and what they do after it returns",
+    "not observed by the behaviour diff: objects shared between the result, the arguments and module data",
+    "not observed by the behaviour diff: output past 1 MB, and output a C library flushes after the call",
+    "Break My Fix could not attack debug_shelly_relay: it takes no parameters to vary",
+    "Break My Fix could not attack test_exact_issue_scenario: it takes no parameters to vary",
+    "Break My Fix could not attack test_shelly_3em_issue: it takes no parameters to vary",
+    "the behaviour diff could not compare debug_shelly_relay: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_exact_issue_scenario: new with the fix: nothing to compare",
+    "the behaviour diff could not compare test_shelly_3em_issue: new with the fix: nothing to compare"
+  ],
+  "llm": {
+    "calls": 5,
+    "input_tokens": 38522,
+    "output_tokens": 6441,
+    "cost_estimate": {
+      "usd": 0.2412,
+      "label": "estimate at list prices"
+    },
+    "settings": {
+      "models": {
+        "reproducer": "claude-sonnet-5-5",
+        "mutator": "claude-sonnet-5-5",
+        "adversary": "claude-opus-5-5",
+        "judge": "claude-opus-5-5"
+      },
+      "effort": "medium",
+      "max_tokens": 16000,
+      "max_calls": 40,
+      "token_budget": 500000
+    },
+    "problems": []
+  },
+  "tampering": [],
+  "warnings": [],
+  "notes": [
+    "guard: only the first 10 of 55 rule mutants were run",
+    "behaviour_diff: the reproduction test's calls are not proven on Python 3.10.16: the call recorder places calls by line and column, which Python gives from 3.11 on, so none of them counts as compared"
+  ],
+  "previous": null,
+  "attack_targets": [
+    {
+      "function": "mqtt_exporter.main._normalize_name_in_topic_msg",
+      "path": "mqtt_exporter/main.py",
+      "via": "",
+      "attacked": true,
+      "inputs_tried": 407,
+      "finished": true,
+      "reason": ""
+    }
+  ]
+}
